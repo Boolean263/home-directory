@@ -4,6 +4,8 @@
 " marks the end of what vim parses. This is useful for mapping command
 " keystrokes and the like.
 
+"map <leader>hello :call PerlExample()<CR>
+
 finish
 
 # Now we're in perl.
