@@ -1,0 +1,58 @@
+/XXX|TODO/   black yellow
+
+[cdiff]
+/^\+[^\+].*$/   blue
+/^-[^-].*$/    red
+/^---.*$/ bold red black
+/^\+\+\+.*$/ bold cyan black
+/^(diff|Index:|RCS file:|===).*$/ bold green black
+/^\@.*$/   green
+/XXX/ red yellow
+
+[bashx]
+/^\+.*$/ blue
+
+[patch]
+/FAILED/    black red
+/succeeded/ black yellow
+
+[grep]
+/^\S*:/ black yellow
+
+[diffdiff]
+/^\+[\+\-].*$/   blue
+/^-[\+\-].*$/    red
+/XXX/ red yellow
+
+[red]
+/^.*$/ red
+[blue]
+/^.*$/ blue
+[green]
+/^.*$/ green
+[yellow]
+/^.*$/ yellow
+[purple]
+/^.*$/ purple
+[cyan]
+/^.*$/ cyan
+[white]
+/^.*$/ white
+[boldred]
+/^.*$/ bold red
+[boldblue]
+/^.*$/ bold blue
+[boldgreen]
+/^.*$/ bold green
+[boldyellow]
+/^.*$/ bold yellow
+[boldpurple]
+/^.*$/ bold purple
+[boldcyan]
+/^.*$/ bold cyan
+[boldwhite]
+/^.*$/ bold white
+
+[stng]
+/DAVIDP:.*$/ bold yellow
+

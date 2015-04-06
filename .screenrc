@@ -1,0 +1,80 @@
+# My custom .screenrc file
+
+# no annoying audible bell, please
+vbell on
+
+# detach on hangup
+autodetach on
+
+# don't display the copyright page
+startup_message off
+
+# emulate .logout message
+pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
+
+# make the shell in every window a login shell
+#shell -$SHELL
+
+hardstatus alwayslastline
+#hardstatus string '%H [%n%?|%t%?] %h'
+hardstatus string '%{= bk}%H%{= bw} %-w%{=b bW}[%n%?|%t%?]%{= bw}%+w | %h'
+
+defscrollback 1000
+
+# don't kill window after the process died
+#zombie "^?^["
+
+# Fun messages
+nethack on
+
+# Support alternative screens
+altscreen on
+
+# 256 color xterm
+# allow bold colors - necessary for some reason
+attrcolor b ".I"
+# tell screen how to set colors. AB = background, AF=foreground
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+# erase background with current bg color
+defbce "on"
+
+################
+#
+# keybindings
+#
+
+#remove some stupid / dangerous key bindings
+bind k
+bind ^k
+bind .
+bind ^\
+bind \\
+bind ^h
+bind h
+#make them better
+bind 'K' kill
+bind 'I' login on
+bind 'O' login off
+bind '}' history
+
+# Don't do this, it messes with bash's partial matching stuff
+#bindkey -k kP prev
+#bindkey -k kN next
+
+
+################
+#
+# default windows
+#
+
+# screen -t local 0
+# screen -t mail 1 elm
+# screen -t 40 2 rlogin faui40
+
+# bind = resize =
+# bind + resize +1
+# bind - resize -1
+# bind _ resize max
+#
+# attrcolor u "-u b"
+# attrcolor b "R"

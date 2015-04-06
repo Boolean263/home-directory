@@ -1,0 +1,9 @@
+{
+    colour => {
+        number => 'cyan',
+        string => 'green',
+    },
+    filters => {
+        DateTime => sub { "DateTime:'$_[0]'" },
+    },
+};

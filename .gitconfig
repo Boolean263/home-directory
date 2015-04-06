@@ -1,0 +1,104 @@
+[user]
+    name = David Perry
+    email = d.perry@utoronto.ca
+
+[core]
+    editor = vim -f
+    pager = less -FRSX
+    excludesfile = /home/perry/.gitignore
+
+[push]
+    default = current
+
+[apply]
+    whitespace = fix
+
+[diff]
+    #tool = kdiff3
+
+[http]
+    cookiefile = /home/smiley/.gitcookies
+
+[alias]
+    # lots stolen from https://git.wiki.kernel.org/index.php/Aliases
+    # and https://gist.github.com/992097
+
+    #diff
+    cdiff = diff --cached
+    vdiff = !git diff ${1+"$@"} | vless
+    vcdiff = !git diff --cached ${1+"$@"} | vless
+
+    changes= diff --name-status -r
+
+    # log
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    lc = log ORIG_HEAD.. --stat --no-merges
+    l = log --pretty=format:\"%h %ad | %s%Cgreen%d%Creset [%Cblue%an%Creset]\" --date=short --graph
+
+    graphviz = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
+
+    # push
+    sp = safepush
+
+    # commit
+    ci = commit
+    amend = commit --amend
+
+    # checkout
+    switch = checkout
+    co = checkout
+    cob = checkout -b
+    revert-file = checkout HEAD --
+
+    # reset
+    undo = reset --hard
+    clear = reset --hard HEAD
+    undo-commit = reset --soft HEAD~1
+    unstage = reset HEAD --
+    wipe = clean -df
+
+    # gitk
+    gitkconflict = !gitk --left-right HEAD...MERGE_HEAD
+    k = !gitk
+
+    # misc
+    serve = daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
+    prune-all = !git remote | xargs -n 1 git remote prune
+    whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+    whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+    alias = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'
+    pick = cherry-pick
+    archeology = blame -w -C -n
+    mergefeature = merge --no-ff
+    human = name-rev --name-only --refs=refs/heads/*
+
+    tags = tag -l
+    remotes = remote -v
+    branches = branch -v
+    refs = for-each-ref
+
+    vi = !gvim -f "${1+$@}" && git add "${1+$@}"
+    vim = !gvim -f "${1+$@}" && git add "${1+$@}"
+
+
+[color]
+    branch = true
+    interactive = auto
+    status = auto
+    diff = auto
+    ui = auto
+    pager = true
+
+[github]
+    user = Boolean263
+
+[push]
+    default = tracking
+
+[giggle]
+    main-window-maximized = false
+    main-window-geometry = 994x550+118+26
+    history-view-vpane-position = 226
+    main-window-view = HistoryView
+    file-view-vpane-position = 229
+

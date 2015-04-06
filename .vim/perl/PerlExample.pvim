@@ -1,0 +1,16 @@
+""; <<'finish';
+
+" Vim commands go between here and the 'finish' line below, which
+" marks the end of what vim parses. This is useful for mapping command
+" keystrokes and the like.
+
+finish
+
+# Now we're in perl.
+
+use Vim::X;
+
+sub PerlExample :Vim()
+{
+    vim_msg("Hi there");
+}

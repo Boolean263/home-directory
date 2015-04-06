@@ -1,0 +1,15 @@
+#!/bin/sh
+#alsactl restore -f $HOME/.alsactl
+#killall gnome-screensaver 2>/dev/null
+#pgrep xscreensaver || xscreensaver -nosplash &
+#xset +fp $HOME/.fonts
+#xrdb .Xdefaults
+xmodmap /etc/X11/Xmodmap
+xmodmap $HOME/.Xmodmap
+#devilspie &
+#xset b 100 900 30
+#stty erase ^H
+ssh-add < /dev/null &
+#XCreateMouseVoid 0 768 1364 1200 u >/dev/null &
+#xfce4-panel --restart
+#~/bin/random-nasa-wallpaper.pl >/dev/null 2>&1 &
