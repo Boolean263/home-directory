@@ -1,0 +1,4 @@
+#!/bin/bash
+
+$HOME/src/obkey-1.0/obkey $HOME/.config/openbox/lubuntu-rc.xml
+openbox --reconfigure

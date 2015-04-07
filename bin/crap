@@ -1,0 +1,137 @@
+#!/usr/bin/env perl
+
+# crap -- colour wrap
+# By and (c) David Perry
+# Licensed under the GPL
+
+use strict;
+use warnings;
+use Getopt::Long qw(:config bundling);
+use Term::ANSIColor;
+
+my $Pager;
+my @Expr;
+my $CfgFile = "$ENV{HOME}/.craprc";
+GetOptions(
+    'pager|P=s'=> \$Pager,
+    'p' => sub { $Pager = '' },
+    'expr|e=s@' => \@Expr,
+    'config-file|f=s' => \$CfgFile,
+    'help|h' => \&usage,
+    'version|v' => \&usage,
+);
+
+my $Section = shift || '';
+
+my @CfgLines;
+if(@Expr)
+{
+    @CfgLines = map { split /\n/m } @Expr;
+}
+else
+{
+    my $CurSec = '';
+    my $FoundOurSec = ($Section eq '' ? 1 : 0);
+    if(open CFGFILE, $CfgFile) {
+        while( <CFGFILE> ) {
+            chomp;
+            if( m/^\s*\[(\w+)\]\s*$/ )
+            {
+                $CurSec = $1;
+                if( $Section && $CurSec eq $Section )
+                {
+                    @CfgLines = ();
+                    $FoundOurSec = 1;
+                }
+                last if $FoundOurSec && $CurSec ne $Section;
+                next;
+            }
+            elsif( !$CurSec || $CurSec eq $Section )
+            {
+                push @CfgLines, $_;
+            }
+        }
+        close CFGFILE;
+        warn( "crap: Couldn't find section $Section, using default section\n" )
+            unless $FoundOurSec || $Section eq '';
+    }
+    else
+    {
+        warn( "crap: Couldn't read config file $CfgFile\n" );
+    }
+}
+
+my @Opts;
+foreach ( @CfgLines )
+{
+    #/^\s*#.*$/ and next;
+    chomp;
+    next if /^\s*#.*$/ or /^\s*$/;
+    # Many many thanks to Jody McIntyre for this behemoth of a regexp
+    if( m(
+        (^\s*               # leading whitespace
+        (.)                 # opening delimiter
+        (
+        (?:(?:[^\2])|\\\2)+ # not the (unescaped) closing delmiter
+        (?<!\\)             # } Any closing delimiter not after a backslash
+        )
+        \2                  # } (the delimiter)
+        ([cgimos]*)         # the modifiers we support
+        )
+        \s*
+        (.*)$               # the colour codes for this regexp
+    )x )
+    {
+        push @Opts, [qr/(?$4-:$3)/, $5];
+    }
+    else
+    {
+        warn( "crap: Ignoring screwy line '$_'\n" );
+    }
+}
+
+$|=1;
+if( defined $Pager ) {
+    open MYOUT, "|$ENV{PAGER} $Pager";
+}
+else {
+    open MYOUT, ">&1";
+}
+select MYOUT;
+$|=1;
+while( <STDIN> ) {
+    foreach my $key ( @Opts ) {
+        my ($RE, $C) = @$key;
+        s/$RE/colored($&,$C)/eg;
+    }
+
+    print $_;
+}
+close MYOUT;
+select STDOUT;
+exit;
+
+# Only subs below
+
+sub usage {
+    my $G = color('bold');
+    my $P = color('reset');
+    print STDERR <<EOF;
+** ${G}crap${P} -- ${G}c${P}olour w${G}rap${P} **
+Version 0.002 -- by David Perry
+
+Usage:  <command> | crap [options] [sectionname]
+Options:
+    -fFILE, --config-file=FILE
+        Read from FILE instead of ~/.craprc
+
+    -eEXPR, --expr=EXPR
+        Use expressions in EXPR instead of parsing configuration file
+        (may be repeated)
+
+    -p[opts], --pager[=opts]
+        Pipe output through \$PAGER, passing it opts as command line arguments
+EOF
+    exit 0;
+}
+
