@@ -56,3 +56,5 @@ export PYTHONUSERBASE="$HOME"
 export PYTHONPATH="$HOME/lib/python2.7/site-packages"
 
 export ANDROID_HOME="$HOME/Android/Sdk"
+
+[ -f "$HOME/.profile.local" ] && . "$HOME/.profile.local"

@@ -6,6 +6,7 @@
     editor = vim -f
     pager = less -FRSX
     excludesfile = /home/perry/.gitignore
+    fileMode = false
 
 [push]
     default = current

@@ -19,6 +19,8 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+. "$HOME/env/git-prompt.sh"
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -38,7 +40,7 @@ fi
 
 
 # Don't know why I need this
-bind -f $INPUTRC
+bind -f "$INPUTRC"
 
 # Terminal setup
 /bin/stty stop undef start undef

@@ -1,4 +1,6 @@
+set nocompatible
 
+set backspace=indent,eol,start
 set autoindent
 set expandtab
 set tabstop=4
