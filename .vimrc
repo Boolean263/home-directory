@@ -1,5 +1,9 @@
 set nocompatible
 
+let mapleader=" "
+
+map <Leader>h :noh
+
 set backspace=indent,eol,start
 set autoindent
 set expandtab
@@ -7,6 +11,7 @@ set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set ruler
+set hlsearch
 
 set scrolloff=10
 

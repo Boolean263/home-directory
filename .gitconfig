@@ -5,7 +5,7 @@
 [core]
     editor = vim -f
     pager = less -FRSX
-    excludesfile = /home/perry/.gitignore
+    excludesfile = $HOME/.gitignore
     fileMode = false
 
 [push]
@@ -18,7 +18,7 @@
     #tool = kdiff3
 
 [http]
-    cookiefile = /home/smiley/.gitcookies
+    cookiefile = $HOME/.gitcookies
 
 [alias]
     # lots stolen from https://git.wiki.kernel.org/index.php/Aliases
