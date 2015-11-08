@@ -33,3 +33,8 @@ set background=dark
 
 perl use Vim::X;
 perl Vim::X::source_function_dir("~/.vim/perl");
+
+call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+call plug#end()
