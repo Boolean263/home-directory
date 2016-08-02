@@ -1,9 +1,22 @@
 set nocompatible
+language en_US.UTF-8
+set encoding=utf-8
+set fileencodings=ucs-bom,utf-8,latin1
+
+" *** For vim-plug
+"call plug#begin('~/.vim/plugged')
+"Plug 'tpope/vim-fugitive'
+"Plug 'tpope/vim-repeat'
+"call plug#end()
+
+" *** For vim-pathogen
+source ~/.vim/bundle/vim-pathogen/autoload/pathogen.vim
+execute pathogen#infect()
+
 syntax on
 
 let mapleader=" "
-
-map <Leader>h :noh
+nnoremap <Leader>h :noh<CR>
 
 set backspace=indent,eol,start
 set autoindent
@@ -18,7 +31,6 @@ set scrolloff=10
 
 set pastetoggle=<F9>
 
-set fileencodings=ucs-bom,utf-8,latin1
 
 set list listchars=tab:>·,trail:·,extends:>
 
@@ -31,10 +43,12 @@ set background=dark
 "colorscheme asu1dark
 "colorscheme solarized
 
+nnoremap <S-Insert> :set paste<CR>"*p:set nopaste<CR>
+inoremap <S-Insert> <C-O>:set paste<CR><C-O>"*p<C-O>:set nopaste<CR>
+
+" This lets us write plugins in perl, but really slows down vim's startup
+let $PERL5LIB="/home/David/perl5/lib/perl5"
 perl use Vim::X;
 perl Vim::X::source_function_dir("~/.vim/perl");
 
-call plug#begin('~/.vim/plugged')
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-repeat'
-call plug#end()
+"echo "Cygwin vimrc loaded"

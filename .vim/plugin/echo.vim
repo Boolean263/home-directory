@@ -1,0 +1,1 @@
+"echo "Cygwin plugin subdirectory"
