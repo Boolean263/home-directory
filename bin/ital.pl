@@ -7,9 +7,9 @@ use warnings;
 use Getopt::Long qw(:config bundling permute no_ignore_case);
 use List::MoreUtils ();
 
-binmode( STDIN, ':utf8' );
-binmode( STDOUT, ':utf8' );
-binmode( STDERR, ':utf8' );
+binmode( STDIN, ':raw:utf8' );
+binmode( STDOUT, ':raw:utf8' );
+binmode( STDERR, ':raw:utf8' );
 
 my @alphabet = ('A'..'Z', 'a'..'z');
 my %transforms = (
@@ -25,9 +25,10 @@ my %transforms = (
     fraktur => [ 0x1D504, 0x1D505, 0x212D, 0x1D507..0x1D50A, 0x210C, 0x2111, 0x1D50D..0x1D514, 0x211C, 0x1D516..0x1D51C, 0x2128,
     0x1D51E..0x1D537 ],
     bold_fraktur => [ 0x1D56C..0x1D59F ],
+    monospace => [ 0x1D670..0x1D6A3 ],
 );
 
-my ($italic, $bold, $sans_serif, $script, $double, $fraktur);
+my ($italic, $bold, $sans_serif, $script, $double, $fraktur, $mono);
 
 GetOptions(
     'italic|i'      => \$italic,
@@ -36,12 +37,14 @@ GetOptions(
     'script|S'      => \$script,
     'double|d'      => \$double,
     'fraktur|f'     => \$fraktur,
+    'monospace|m'   => \$mono,
     'help|h|?'      => \&usage) or usage();
 
 my $xform =
     $bold && $fraktur ? 'bold_fraktur'
     : $fraktur ? 'fraktur'
     : $double ? 'double'
+    : $mono ? 'monospace'
     : $bold && $script ? 'bold_script'
     : $script ? 'script'
     : $sans_serif && $bold ? 'ss_bold_italic'
@@ -71,8 +74,9 @@ Options:
     -b, --bold          Make text bold
     -s, --sans-serif    Make text sans-serif
     -S, --script        Script text (no italic)
-    -d, --double        Double-strike text (no bold or italic)
     -f, --fraktur       Fraktur (no italic)
+    -d, --double        Double-strike text (no bold or italic)
+    -m, --monospace     Monospaced text (no bold or italic)
     -?, -h, --help      This help message
 
 EOT

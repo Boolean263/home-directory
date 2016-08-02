@@ -4,9 +4,9 @@ use 5.016;
 use strict;
 use warnings;
 
-binmode( STDIN, ':utf8' );
-binmode( STDOUT, ':utf8' );
-binmode( STDERR, ':utf8' );
+binmode( STDIN, ':raw:utf8' );
+binmode( STDOUT, ':raw:utf8' );
+binmode( STDERR, ':raw:utf8' );
 
 use Getopt::Long qw(:config bundling permute no_ignore_case);
 
@@ -25,6 +25,7 @@ my %charmap = (
     "screen" => "\x{20E2}",             # COMBINING ENCLOSING SCREEN
     "keycap|k" => "\x{20E3}",           # COMBINING ENCLOSING KEYCAP
     "triangle|t" => "\x{20E4}", # COMBINING ENCLOSING UPWARD POINTING TRIANGLE
+    "dotted-underline|D" => "\x{0324}", # COMBINING DIARESIS BELOW
 );
 
 my @optsArgs = ();
