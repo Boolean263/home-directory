@@ -1,0 +1,9 @@
+partial alphanumeric_keys
+xkb_symbols "my_8level" {
+    key <Num8> { [ 8, asterisk, U2022, U2B51 ] };
+};
+
+partial modifier_keys
+xkb_symbols "num_bksp" {
+    replace key <NMLK> { [ BackSpace ] };
+};

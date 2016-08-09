@@ -1,0 +1,4 @@
+#!/bin/sh
+[ -n "$DISPLAY" ] || exit 1
+XKBHOME="$HOME/.config/xkb"
+xkbcomp -w 1 -I$XKBHOME $XKBHOME/keymap/default $DISPLAY

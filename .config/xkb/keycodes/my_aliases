@@ -1,0 +1,25 @@
+default
+xkb_keycodes "num_punc" {
+    alias <Num1> = <AE01>;
+    alias <Num2> = <AE02>;
+    alias <Num3> = <AE03>;
+    alias <Num4> = <AE04>;
+    alias <Num5> = <AE05>;
+    alias <Num6> = <AE06>;
+    alias <Num7> = <AE07>;
+    alias <Num8> = <AE08>;
+    alias <Num9> = <AE09>;
+    alias <Num0> = <AE10>;
+    alias <Pnc-> = <AE11>;
+    alias <Pnc=> = <AE12>;
+
+    alias <Pnc[> = <AD11>;
+    alias <Pnc]> = <AD12>;
+
+    alias <Pnc;> = <AC10>;
+    alias <Pnc'> = <AC11>;
+
+    alias <Pnc,> = <AB08>;
+    alias <Pnc.> = <AB09>;
+    alias <Pnc/> = <AB10>;
+};

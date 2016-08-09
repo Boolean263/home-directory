@@ -1,0 +1,46 @@
+// See also the files in /usr/share/X11/xlb
+default xkb_keymap "default" {
+    xkb_keycodes {
+        include "evdev"
+        include "+aliases(qwerty)"
+        include "+my_aliases(num_punc)"
+    };
+    xkb_types {
+      //include "complete"
+        include "basic"
+      //include "mousekeys"
+        include "pc"
+        include "iso9995"
+        include "level5"
+        include "extra"
+      //include "numpad"
+        include "+numpad(mac)"
+    };
+    xkb_compat {
+      //include "complete"
+        include "basic"
+        augment "iso9995"
+      //augment "mousekeys"
+      //augment "accessx(full)"
+        augment "misc"
+        augment "xfree86"
+        augment "level5"
+        augment "caps(caps_lock)"
+      //include "+ledscroll(group_lock)"
+        include "+my_leds(show_lv3_5)"
+    };
+    xkb_symbols {
+        include "pc"
+        include "+us"
+      //include "+inet(evdev)"
+      //include "+group(switch)"
+        include "+level3(ralt_switch)"
+        include "+level5(rctrl_switch)"
+        include "+ctrl(nocaps)"
+        include "+shift(both_capslock)"
+        include "+daperry(my_8level)"
+        include "+daperry(num_bksp)"
+        include "+compose(menu)"
+    };
+    xkb_geometry { include "pc(pc104)" };
+};

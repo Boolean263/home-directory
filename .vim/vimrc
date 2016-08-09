@@ -47,7 +47,8 @@ nnoremap <S-Insert> :set paste<CR>"*p:set nopaste<CR>
 inoremap <S-Insert> <C-O>:set paste<CR><C-O>"*p<C-O>:set nopaste<CR>
 
 " This lets us write plugins in perl, but really slows down vim's startup
-let $PERL5LIB="/home/David/perl5/lib/perl5"
+let home=expand('~')
+let $PERL5LIB=home."/perl5/lib/perl5/x86_64-linux-gnu-thread-multi:".home."/perl5/lib/perl5"
 perl use Vim::X;
 perl Vim::X::source_function_dir("~/.vim/perl");
 

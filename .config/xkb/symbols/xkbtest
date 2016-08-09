@@ -1,0 +1,13 @@
+partial alphanumeric_keys
+xkb_symbols "dashes" {
+    key <AE11> {
+        symbols[Group2] = [ endash, U2022 ]
+    };
+};
+
+partial modifier_keys
+xkb_symbols "num_bksp" {
+    replace key <NMLK> {
+        [ BackSpace ]
+    };
+};

@@ -1,0 +1,11 @@
+// My attempt at using Num Lock LED to show level5 state
+// Also using Scroll Lock LED for Level3 state
+
+default partial xkb_compatibility "show_lv3_5" {
+    indicator "Num Lock" {
+        modifiers=LevelFive;
+    };
+    indicator "Scroll Lock" {
+        modifiers=LevelThree;
+    };
+};
