@@ -31,6 +31,9 @@ set scrolloff=10
 
 set pastetoggle=<F9>
 
+" Set Ctrl-Backspace to delete word
+noremap! <C-BS> <C-W>
+noremap! <C-W> <Nop>
 
 set list listchars=tab:>·,trail:·,extends:>
 
@@ -43,8 +46,8 @@ set background=dark
 "colorscheme asu1dark
 "colorscheme solarized
 
-nnoremap <S-Insert> :set paste<CR>"*p:set nopaste<CR>
-inoremap <S-Insert> <C-O>:set paste<CR><C-O>"*p<C-O>:set nopaste<CR>
+nnoremap <S-Insert> :set paste<CR><C-R>*:set nopaste<CR>
+inoremap <S-Insert> <C-O>:set paste<CR><C-R>*<C-O>:set nopaste<CR>
 
 " This lets us write plugins in perl, but really slows down vim's startup
 let home=expand('~')

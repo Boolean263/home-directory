@@ -4,6 +4,10 @@
 # environment settings are in .profile, and .bash_profile is just a
 # call to .bashrc.
 
+is_interactive(){
+    [ -n "$PS1" ]
+}
+
 # Anything after this case will not be done in non-interactive shells
 case $- in
     *i*) ;;
@@ -43,10 +47,12 @@ fi
 bind -f "$INPUTRC"
 
 # Terminal setup
-/bin/stty stop undef start undef
+/bin/stty stop undef start undef erase ^? werase ^H
 
 alias g=gvim
 alias gro="gvim +'set ro' +'set noswapfile'"
+
+alias grep="/bin/grep --colour"
 
 alias nssh="ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null"
 alias nscp="scp -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null"

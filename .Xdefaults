@@ -1,0 +1,108 @@
+! xscreensaver ---------------------------------------------------------------
+
+!font settings
+xscreensaver.Dialog.headingFont:        -*-dina-bold-r-*-*-10-*-*-*-*-*-*-*
+xscreensaver.Dialog.bodyFont:           -*-dina-medium-r-*-*-10-*-*-*-*-*-*-*
+xscreensaver.Dialog.labelFont:          -*-dina-medium-r-*-*-10-*-*-*-*-*-*-*
+xscreensaver.Dialog.unameFont:          -*-dina-medium-r-*-*-10-*-*-*-*-*-*-*
+xscreensaver.Dialog.buttonFont:         -*-dina-bold-r-*-*-10-*-*-*-*-*-*-*
+xscreensaver.Dialog.dateFont:           -*-dina-medium-r-*-*-10-*-*-*-*-*-*-*
+xscreensaver.passwd.passwdFont:         -*-dina-bold-r-*-*-10-*-*-*-*-*-*-*
+!general dialog box (affects main hostname, username, password text)
+xscreensaver.Dialog.foreground:         #EDEDED
+xscreensaver.Dialog.background:         #202020
+xscreensaver.Dialog.topShadowColor:     #202024
+xscreensaver.Dialog.bottomShadowColor:  #202024
+xscreensaver.Dialog.Button.foreground:  #EDEDFF
+xscreensaver.Dialog.Button.background:  #444
+!username/password input box and date text colour
+xscreensaver.Dialog.text.foreground:    #EDEDFF
+xscreensaver.Dialog.text.background:    #444
+xscreensaver.Dialog.internalBorderWidth:24
+xscreensaver.Dialog.borderWidth:        0
+xscreensaver.Dialog.shadowThickness:    2
+!timeout bar (background is actually determined by Dialog.text.background)
+xscreensaver.passwd.thermometer.foreground:  #A9B7C4
+xscreensaver.passwd.thermometer.background:  #202020
+xscreensaver.passwd.thermometer.width:       8
+!datestamp format--see the strftime(3) manual page for details
+xscreensaver.dateFormat:    %I:%M%P %a %b %d, %Y
+
+! rxvt-unicode ---------------------------------------------------------------
+
+!general settings
+Rxvt*termName:          rxvt
+Rxvt*geometry:          80x50
+Rxvt*scrollBar:         false
+Rxvt*scrollTtyOutput:   false
+Rxvt*scrollTtyKeypress: true
+
+
+!font settings
+Rxvt*font:              xft:Ubuntu Mono:size=10
+
+!colour settings
+Rxvt*background:        #000000
+Rxvt*foreground:        #CCCCCC
+Rxvt*color0:            #000000
+Rxvt*color1:            #AA0000
+Rxvt*color2:            #44AA44
+Rxvt*color3:            #AA5500
+Rxvt*color4:            #0345C8
+Rxvt*color5:            #AA22AA
+Rxvt*color6:            #1A92AA
+Rxvt*color7:            #AAAAAA
+Rxvt*color8:            #777777
+Rxvt*color9:            #FF8787
+Rxvt*color10:           #4CE64C
+Rxvt*color11:           #DED82C
+Rxvt*color12:           #226BFC
+Rxvt*color13:           #CC58CC
+Rxvt*color14:           #4CCCE6
+Rxvt*color15:           #FFFFFF
+
+! xterm ----------------------------------------------------------------------
+
+!general settings
+XTerm*termName:         xterm
+XTerm*geometry:         80x50
+XTerm*scrollBar:        false
+XTerm*scrollTtyOutput:  false
+XTerm*scrollKey:        true
+XTerm*eightBitInput:    true
+XTerm*eightBitOutput:   true
+XTerm*locale:           true
+XTerm*utf8:             2
+XTerm*utf8Fonts:        true
+XTerm*utf8Title:        true
+
+!font settings
+XTerm*renderFont:       true
+XTerm*faceName:         DejaVu Sans Mono:size=9
+XTerm*allowBoldFonts:   true
+XTerm*colorBDMode:      false
+XTerm*colorBLMode:      false
+XTerm*colorITMode:      false
+XTerm*colorRVMode:      false
+XTerm*colorULMode:      false
+XTerm*underLine:        true
+
+!colour settings
+XTerm*background:       #000000
+XTerm*foreground:       #CCCCCC
+XTerm*color0:           #000000
+XTerm*color1:           #AA0000
+XTerm*color2:           #44AA44
+XTerm*color3:           #AA5500
+XTerm*color4:           #0345C8
+XTerm*color5:           #AA22AA
+XTerm*color6:           #1A92AA
+XTerm*color7:           #AAAAAA
+XTerm*color8:           #777777
+XTerm*color9:           #FF8787
+XTerm*color10:          #4CE64C
+XTerm*color11:          #DED82C
+XTerm*color12:          #226BFC
+XTerm*color13:          #CC58CC
+XTerm*color14:          #4CCCE6
+XTerm*color15:          #FFFFFF

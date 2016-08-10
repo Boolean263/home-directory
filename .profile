@@ -30,7 +30,7 @@ export BC_ENV_ARGS="$HOME/.bcrc"
 export VISUAL='/usr/bin/vim'
 export EDITOR="$VISUAL"
 export INPUTRC="$HOME/.inputrc"
-export GREP_OPTIONS="--colour --exclude-dir=.svn"
+#export GREP_OPTIONS="--colour --exclude-dir=.svn"
 export LESS="-R"
 
 export HISTCONTROL="ignorespace:ignoredups"
