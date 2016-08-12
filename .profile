@@ -16,13 +16,13 @@
 #    fi
 #fi
 
+. $HOME/etc/env/path_functions.bash
+
 # set PATH so it includes user's private bin if it exists
 #if [ -d "$HOME/.plenv/bin" ] ; then
 #    export PATH="$HOME/.plenv/bin:$PATH"
 #fi
-if [ -d "$HOME/bin" ] ; then
-    export PATH="$HOME/bin:$PATH"
-fi
+add_to_path PATH "$HOME/bin"
 
 export LC_COLLATE=POSIX
 export PAGER="`which less` -R"
@@ -43,8 +43,8 @@ export UBUNTU_MENUPROXY=
 
 export PERL_CPANM_OPT="-n"
 export MYPERLDIR="$HOME/perl5"
-export PATH="$MYPERLDIR/bin${PATH+:}$PATH"
-export PERL5LIB="$MYPERLDIR/lib/perl5${PERL5LIB+:}$PERL5LIB"
+add_to_path PATH "$MYPERLDIR/bin"
+add_to_path PERL5LIB "$MYPERLDIR/lib/perl5"
 export PERL_LOCAL_LIB_ROOT="$MYPERLDIR${PERL_LOCAL_LIB_ROOT+:}$PERL_LOCAL_LIB_ROOT"
 export PERL_MB_OPT="--install_base \"$MYPERLDIR\""
 export PERL_MM_OPT="INSTALL_BASE=$MYPERLDIR"

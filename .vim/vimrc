@@ -12,6 +12,7 @@ set fileencodings=ucs-bom,utf-8,latin1
 " *** For vim-pathogen
 source ~/.vim/bundle/vim-pathogen/autoload/pathogen.vim
 execute pathogen#infect()
+"call pathogen#runtime_append_all_bundles()
 
 syntax on
 

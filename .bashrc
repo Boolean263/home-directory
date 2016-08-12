@@ -64,7 +64,7 @@ alias gitka="gitk --all"
 
 alias ls="ls --color=auto"
 
-#[ -f "$PERLBREW_ROOT/etc/bashrc" ] && . "$PERLBREW_ROOT/etc/bashrc" 
+#[ -f "$PERLBREW_ROOT/etc/bashrc" ] && . "$PERLBREW_ROOT/etc/bashrc"
 
 
 # plenv is incompatible with perlbrew
