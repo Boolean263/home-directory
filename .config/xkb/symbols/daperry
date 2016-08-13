@@ -1,6 +1,67 @@
+// key <symb> { [ plain, shift, lv3, lv3+shift ] } ;
+// or
+// key <symb> { type="EIGHT_LEVEL", [ plain, shift, lv3, lv3+shift, lv5, lv5+shift, lv3+lv5, lv3+lv5+shift ] } ;
+
 partial alphanumeric_keys
 xkb_symbols "my_8level" {
-    key <Num8> { [ 8, asterisk, U2022, U2B51 ] };
+    //key <TLDE>
+    //key <Num1>
+    //key <Num2>
+    //key <Num3>
+    //key <Num4>
+    //key <Num5>
+    //key <Num6>
+    //key <Num7>
+    key <Num8>  { [ 8,  asterisk,   U2022,  U2B51 ] };
+    //key <Num9>
+    //key <Num0>
+    key <Pnc->  { type="EIGHT_LEVEL", [
+                    minus, underscore, endash, emdash,
+                    U2011, U2323, U203F, U263A
+                ] };
+    //key <Pnc=>
+
+    //key <LatQ>
+    //key <LatW>
+    //key <LatE>
+    //key <LatR>
+    //key <LatT>
+    //key <LatY>
+    //key <LatU>
+    //key <LatI>
+    //key <LatO>
+    //key <LatP>
+    key <Pnc[>  { [ bracketleft, braceleft, leftsinglequotemark, leftdoublequotemark ] } ;
+    key <Pnc]>  { [ bracketright, braceright, rightsinglequotemark, rightdoublequotemark ] } ;
+    //key <BKSL>
+
+    //key <LatA>
+    //key <LatS>
+    //key <LatD>
+    //key <LatF>
+    //key <LatG>
+    //key <LatH>
+    //key <LatJ>
+    //key <LatK>
+    //key <LatL>
+    //key <Pnc;>
+    //key <Pnc'>
+
+    //key <LatZ>
+    //key <LatX>
+    //key <LatC>
+    //key <LatV>
+    //key <LatB>
+    //key <LatN>
+    //key <LatM>
+    //key <Pnc,>
+    //key <Pnc.>
+    key <Pnc/>  { [ slash,  question, UFFFD,    UFFFD ] };
+
+    key <UP>    { [ Up,     Up,     uparrow,    U21D1 ] };
+    key <DOWN>  { [ Down,   Down,   downarrow,  U21D3 ] };
+    key <LEFT>  { [ Left,   Left,   leftarrow,  U21D0 ] };
+    key <RGHT>  { [ Right,  Right,  rightarrow, U21D2 ] };
 };
 
 partial modifier_keys

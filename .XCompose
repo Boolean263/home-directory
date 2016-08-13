@@ -1,0 +1,5 @@
+# Include the standard xcompose bindings
+include "%L"
+
+# Define my own
+<Multi_key> <less> <3> : U2665
