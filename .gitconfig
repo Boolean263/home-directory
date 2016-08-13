@@ -82,6 +82,7 @@
     vim = !gvim -f "${1+$@}" && git add "${1+$@}"
 
     st = status -uno
+    s = status -uno --short
 
 
 [color]

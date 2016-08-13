@@ -61,6 +61,7 @@ alias rdesk="rdesktop -0 -a 16 -z -x m"
 
 alias ghist="history | grep"
 alias gitka="gitk --all"
+alias gits='git s'
 
 alias ls="ls --color=auto"
 
