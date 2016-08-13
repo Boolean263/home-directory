@@ -79,6 +79,7 @@ XTerm*utf8Title:        true
 !font settings
 XTerm*renderFont:       true
 XTerm*faceName:         DejaVu Sans Mono:size=9
+!XTerm*faceName:         Ubuntu Mono:size=10
 XTerm*allowBoldFonts:   true
 XTerm*colorBDMode:      false
 XTerm*colorBLMode:      false

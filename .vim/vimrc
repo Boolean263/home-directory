@@ -46,6 +46,7 @@ set background=dark
 "colorscheme desert256
 "colorscheme asu1dark
 "colorscheme solarized
+colorscheme apprentice
 
 nnoremap <S-Insert> :set paste<CR><C-R>*:set nopaste<CR>
 inoremap <S-Insert> <C-O>:set paste<CR><C-R>*<C-O>:set nopaste<CR>
