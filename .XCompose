@@ -3,3 +3,69 @@ include "%L"
 
 # Define my own
 <Multi_key> <less> <3> : U2665
+
+
+#
+# Copied these from my Windows .XCompose.txt -- may need to update that.
+#
+
+<Multi_key> <o> <underscore> <o>         : "ಠ_ಠ"" # Disapproval.
+
+# Superscripts and subscripts. Inspired by eg. ^0 - ^9 and _0 - _9,
+<Multi_key> <asciicircum> <i> : "ⁱ" U2071 # Superscript i
+<Multi_key> <asciicircum> <n> : "ⁿ" U207F # Superscript n
+<Multi_key> <asciicircum> <plus> : "⁺" U207A # Superscript plus
+<Multi_key> <asciicircum> <minus>: "⁻" U207B # Superscript minus
+<Multi_key> <asciicircum> <equal>: "⁼" U207C # Superscript equals
+<Multi_key> <asciicircum> <parenleft>: "⁽" U207D # Superscript (
+<Multi_key> <asciicircum> <parenright>: "⁾" U207E # Superscript )
+
+<Multi_key> <underscore> <a>    : "ₐ" U2090 # Subscript a
+<Multi_key> <underscore> <e>    : "ₑ" U2091 # Subscript e
+<Multi_key> <underscore> <i>    : "ᵢ" U1D62 # Subscript i
+<Multi_key> <underscore> <h>    : "ₕ" U2095 # Subscript h
+<Multi_key> <underscore> <j>    : "ⱼ" U2C7C # Subscript j
+<Multi_key> <underscore> <k>    : "ₖ" U2095 # Subscript k
+<Multi_key> <underscore> <l>    : "ₗ" U2097 # Subscript l
+<Multi_key> <underscore> <m>    : "ₘ" U2098 # Subscript m
+<Multi_key> <underscore> <n>    : "ₙ" U2099 # Subscript n
+<Multi_key> <underscore> <o>    : "ₒ" U2092 # Subscript o
+<Multi_key> <underscore> <p>    : "ₚ" U209A # Subscript p
+<Multi_key> <underscore> <r>    : "ᵣ" U1D63 # Subscript r
+<Multi_key> <underscore> <s>    : "ₛ" U209B # Subscript s
+<Multi_key> <underscore> <t>    : "ₜ" U209C # Subscript t
+<Multi_key> <underscore> <u>    : "ᵤ" U1D64 # Subscript u
+<Multi_key> <underscore> <v>    : "ᵥ" U1D65 # Subscript v
+<Multi_key> <underscore> <x>    : "ₓ" U2093 # Subscript x
+<Multi_key> <underscore> <plus> : "₊" U208A # Subscript plus
+<Multi_key> <underscore> <minus>: "₋" U208B # Subscript minus
+<Multi_key> <underscore> <equal>: "₌" U208C # Subscript equals
+<Multi_key> <underscore> <parenleft>: "₍" U208D # Subscript (
+<Multi_key> <underscore> <parenright>: "₎" U208E # Subscript )
+
+
+
+# Emoticons (Some of these are shorter versions of included emoticons)
+<Multi_key> <semicolon> <parenright> : "😉" # ;)
+<Multi_key> <colon> <D>         : "😃" # :D
+<Multi_key> <D> <colon>         : "😞" # D:
+<Multi_key> <colon> <O>         : "😲" # :O
+<Multi_key> <asciicircum> <underscore> <asciicircum> : "😊" # ^_^
+<Multi_key> <minus> <underscore> <minus> : "😒" # -_-
+<Multi_key> <greater> <underscore> <less> : "😣" # >_<
+<Multi_key> <colon> <9>         : "😋" # :9
+<Multi_key> <colon> <asterisk>  : "😘" # :*
+<Multi_key> <semicolon> <P>     : "😜" # :P
+<Multi_key> <X> <P>             : "😝" # XP
+<Multi_key> <X> <D>             : "😆" # XD
+<Multi_key> <at> <underscore> <at> : "😵" # @_@
+<Multi_key> <O> <colon> <parenright> : "😇" # O:)
+<Multi_key> <braceright> <colon> <parenright> : "😈" # }:)
+<Multi_key> <B> <parenright>    : "😎" # B)
+<Multi_key> <colon> <bar>       : "😐" # :|
+
+<Multi_key> <o> <k>             : "👌" # ok
+<Multi_key> <less> <slash> <3>  : "💔" # broken heart
+
+<Multi_key> <Multi_key> <g> <r> <r> : "💢" # grr
+<Multi_key> <Multi_key> <z> <z> <z> : "💤" # zzz
