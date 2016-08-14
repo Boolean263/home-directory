@@ -131,12 +131,8 @@
       <property name="Left" type="string" value="left_key"/>
       <property name="&lt;Alt&gt;Tab" type="string" value="cycle_windows_key"/>
       <property name="&lt;Alt&gt;&lt;Shift&gt;Tab" type="string" value="cycle_reverse_windows_key"/>
-      <property name="&lt;Alt&gt;Insert" type="string" value="add_workspace_key"/>
-      <property name="&lt;Primary&gt;&lt;Alt&gt;Right" type="string" value="right_workspace_key"/>
       <property name="&lt;Primary&gt;&lt;Shift&gt;&lt;Alt&gt;Right" type="string" value="move_window_right_key"/>
       <property name="&lt;Primary&gt;&lt;Alt&gt;d" type="string" value="show_desktop_key"/>
-      <property name="&lt;Primary&gt;&lt;Alt&gt;Up" type="string" value="up_workspace_key"/>
-      <property name="&lt;Primary&gt;&lt;Alt&gt;Down" type="string" value="down_workspace_key"/>
       <property name="&lt;Primary&gt;&lt;Shift&gt;&lt;Alt&gt;Left" type="string" value="move_window_left_key"/>
       <property name="&lt;Alt&gt;F5" type="string" value="maximize_horiz_key"/>
       <property name="&lt;Alt&gt;F4" type="string" value="close_window_key"/>
@@ -151,8 +147,6 @@
       <property name="Down" type="string" value="down_key"/>
       <property name="&lt;Alt&gt;F6" type="string" value="maximize_vert_key"/>
       <property name="Right" type="string" value="right_key"/>
-      <property name="&lt;Primary&gt;&lt;Alt&gt;Left" type="string" value="left_workspace_key"/>
-      <property name="&lt;Alt&gt;Delete" type="string" value="del_workspace_key"/>
       <property name="&lt;Alt&gt;space" type="string" value="popup_menu_key"/>
       <property name="override" type="bool" value="true"/>
       <property name="&lt;Super&gt;a" type="string" value="raise_window_key"/>
@@ -177,6 +171,10 @@
       <property name="&lt;Super&gt;7" type="string" value="workspace_7_key"/>
       <property name="&lt;Super&gt;8" type="string" value="workspace_8_key"/>
       <property name="&lt;Super&gt;9" type="string" value="workspace_9_key"/>
+      <property name="&lt;Super&gt;Left" type="string" value="left_workspace_key"/>
+      <property name="&lt;Super&gt;Right" type="string" value="right_workspace_key"/>
+      <property name="&lt;Super&gt;Down" type="string" value="down_workspace_key"/>
+      <property name="&lt;Super&gt;Up" type="string" value="up_workspace_key"/>
     </property>
   </property>
   <property name="providers" type="array">
