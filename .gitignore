@@ -1,8 +1,12 @@
-/*
-!.git*
-.git*.swp
-.*.swp
+# This is the gitingore file for my home-directory repo.
+# See git-config/gitignore for global git ignore settings.
 
+# Ignore everything by default, add files using -f
+/*
+
+# Include specific directories
+!.git*
+!git-config
 !.vim
 !.Xresources.d
 !.config/devilspie2

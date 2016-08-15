@@ -1,0 +1,40 @@
+# vim:set filetype=gitconfig:
+#
+# This file contains git diff and filter drivers as used in my
+# gitattributes file. It's included from my ~/.gitconfig file,
+# and uses the same syntax.
+
+
+##### diff drivers #####
+#
+# According to gitattributes(5), these diff drivers are built in:
+#  ada bibtex cpp csharp fortran fountain html java matlab objc
+#  pascal perl php python ruby tex
+
+[diff "filesize"]
+    binary = true
+    textconv = "ls -l"
+
+[diff "exif"]
+    binary = true
+    textconv = exif
+
+[diff "image"]
+    binary = true
+    textconv = identify
+
+# lesspipe (provided by less) includes a nice wrapper for listing
+# the files in an archive.
+[diff "lesspipe"]
+    binary = true
+    textconv = lesspipe
+
+
+##### filter drivers #####
+
+# If I'm unlucky enough to work with DOS-format files,
+# convert their line endings to unix format on checkout,
+# and back to CRLF on checkin.
+[filter "dostext"]
+    smudge = dos2unix
+    clean = unix2dos

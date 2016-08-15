@@ -1,0 +1,4 @@
+# Global gitignore file
+
+.*.sw*
+.DS_Store

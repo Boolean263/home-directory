@@ -2,14 +2,26 @@
     name = David Perry
     email = d.perry@utoronto.ca
 
+[github]
+    user = Boolean263
+
 [core]
     editor = vim -f
     pager = less -FRSX
-    excludesfile = $HOME/.gitignore
+    excludesFile = ~/git-config/gitignore
+    attributesFile = ~/git-config/gitattributes
     fileMode = false
 
+[color]
+    branch = true
+    interactive = auto
+    status = auto
+    diff = auto
+    ui = auto
+    pager = true
+
 [push]
-    default = current
+    default = tracking
 
 [apply]
     whitespace = fix
@@ -18,7 +30,10 @@
     #tool = kdiff3
 
 [http]
-    cookiefile = $HOME/.gitcookies
+    cookiefile = ~/git-config/gitcookies
+
+[include]
+    file = ~/git-config/git-filters
 
 [alias]
     # lots stolen from https://git.wiki.kernel.org/index.php/Aliases
@@ -83,26 +98,4 @@
 
     st = status -uno
     s = status -uno --short
-
-
-[color]
-    branch = true
-    interactive = auto
-    status = auto
-    diff = auto
-    ui = auto
-    pager = true
-
-[github]
-    user = Boolean263
-
-[push]
-    default = tracking
-
-[giggle]
-    main-window-maximized = false
-    main-window-geometry = 994x550+118+26
-    history-view-vpane-position = 226
-    main-window-view = HistoryView
-    file-view-vpane-position = 229
 
