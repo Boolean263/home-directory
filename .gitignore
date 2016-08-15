@@ -2,4 +2,6 @@
 !.git*
 .git*.swp
 .*.swp
+
 !.vim
+!.Xresources.d

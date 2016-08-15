@@ -1,0 +1,47 @@
+! vim:setfiletype=xdefaults:
+! xterm ----------------------------------------------------------------------
+
+!general settings
+XTerm*termName:         xterm
+XTerm*geometry:         80x50
+XTerm*scrollBar:        false
+XTerm*scrollTtyOutput:  false
+XTerm*scrollKey:        true
+XTerm*eightBitInput:    true
+XTerm*eightBitOutput:   true
+XTerm*locale:           true
+XTerm*utf8:             2
+XTerm*utf8Fonts:        true
+XTerm*utf8Title:        true
+
+!font settings
+XTerm*renderFont:       true
+XTerm*faceName:         DejaVu Sans Mono:size=9
+!XTerm*faceName:         Ubuntu Mono:size=10
+XTerm*allowBoldFonts:   true
+XTerm*colorBDMode:      false
+XTerm*colorBLMode:      false
+XTerm*colorITMode:      false
+XTerm*colorRVMode:      false
+XTerm*colorULMode:      false
+XTerm*underLine:        true
+
+!colour settings
+XTerm*background:       #000000
+XTerm*foreground:       #CCCCCC
+XTerm*color0:           #000000
+XTerm*color1:           #AA0000
+XTerm*color2:           #44AA44
+XTerm*color3:           #AA5500
+XTerm*color4:           #0345C8
+XTerm*color5:           #AA22AA
+XTerm*color6:           #1A92AA
+XTerm*color7:           #AAAAAA
+XTerm*color8:           #777777
+XTerm*color9:           #FF8787
+XTerm*color10:          #4CE64C
+XTerm*color11:          #DED82C
+XTerm*color12:          #226BFC
+XTerm*color13:          #CC58CC
+XTerm*color14:          #4CCCE6
+XTerm*color15:          #FFFFFF
