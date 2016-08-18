@@ -57,4 +57,11 @@ export PYTHONPATH="$HOME/lib/python2.7/site-packages"
 
 export ANDROID_HOME="$HOME/Android/Sdk"
 
+# Force apps to use the classic X input method, chiefly to support
+# the settings in my .XCompose file.
+export CLUTTER_IM_MODULE=xim
+export QT_IM_MODULE=xim
+export QT4_IM_MODULE=xim
+export GTK_IM_MODULE=xim
+
 [ -f "$HOME/.profile.local" ] && . "$HOME/.profile.local"
