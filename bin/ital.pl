@@ -26,9 +26,10 @@ my %transforms = (
     0x1D51E..0x1D537 ],
     bold_fraktur => [ 0x1D56C..0x1D59F ],
     monospace => [ 0x1D670..0x1D6A3 ],
+    region => [ 0x1F1E6..0x1F1FF, 0x1F1E6..0x1F1FF ],
 );
 
-my ($italic, $bold, $sans_serif, $script, $double, $fraktur, $mono);
+my ($italic, $bold, $sans_serif, $script, $double, $fraktur, $mono, $region);
 
 GetOptions(
     'italic|i'      => \$italic,
@@ -38,12 +39,14 @@ GetOptions(
     'double|d'      => \$double,
     'fraktur|f'     => \$fraktur,
     'monospace|m'   => \$mono,
+    'region|r'      => \$region,
     'help|h|?'      => \&usage) or usage();
 
 my $xform =
     $bold && $fraktur ? 'bold_fraktur'
     : $fraktur ? 'fraktur'
     : $double ? 'double'
+    : $region ? 'region'
     : $mono ? 'monospace'
     : $bold && $script ? 'bold_script'
     : $script ? 'script'
@@ -75,8 +78,9 @@ Options:
     -s, --sans-serif    Make text sans-serif
     -S, --script        Script text (no italic)
     -f, --fraktur       Fraktur (no italic)
-    -d, --double        Double-strike text (no bold or italic)
-    -m, --monospace     Monospaced text (no bold or italic)
+    -d, --double        Double-strike text (no other formatting)
+    -m, --monospace     Monospaced text (no other formatting)
+    -m, --region        Regional indicator letters (no other formatting)
     -?, -h, --help      This help message
 
 EOT
