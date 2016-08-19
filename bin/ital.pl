@@ -56,10 +56,20 @@ my $xform =
     : 'italic';
 
 my %xform = List::MoreUtils::pairwise { $a => chr($b) } @alphabet, @{$transforms{$xform}};
-while(<>)
+
+if(@ARGV)
 {
-    s/([A-Za-z])/$xform{$1}/eg;
-    print;
+    my $str = join(' ', @ARGV);
+    $str =~ s/([A-Za-z])/$xform{$1}/eg;
+    print $str."\n";
+}
+else
+{
+    while(<>)
+    {
+        s/([A-Za-z])/$xform{$1}/eg;
+        print;
+    }
 }
 exit 0;
 
@@ -70,6 +80,8 @@ sub usage
     print STDERR <<EOT;
 Formats text in italic, optionally with other effects as well, using Unicode.
 Usage:
+    $0 [options] "whatever"
+or
     echo "whatever" | $0 [options]
 
 Options:
