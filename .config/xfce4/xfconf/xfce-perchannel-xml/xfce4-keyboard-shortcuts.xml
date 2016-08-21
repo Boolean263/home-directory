@@ -42,8 +42,6 @@
       <property name="&lt;Alt&gt;Print" type="string" value="xfce4-screenshooter -w"/>
       <property name="&lt;Primary&gt;&lt;Alt&gt;Delete" type="string" value="xflock4"/>
       <property name="XF86Explorer" type="string" value="exo-open --launch FileManager"/>
-      <property name="&lt;Super&gt;e" type="string" value="mousepad"/>
-      <property name="&lt;Super&gt;f" type="string" value="exo-open --launch FileManager"/>
       <property name="&lt;Alt&gt;F3" type="string" value="xfce4-appfinder">
         <property name="startup-notify" type="bool" value="true"/>
       </property>
@@ -68,6 +66,8 @@
       <property name="XF86HomePage" type="string" value="exo-open --launch WebBrowser"/>
       <property name="override" type="bool" value="true"/>
       <property name="&lt;Primary&gt;&lt;Alt&gt;b" type="string" value="exo-open --launch TerminalEmulator"/>
+      <property name="&lt;Primary&gt;&lt;Alt&gt;v" type="string" value="/usr/bin/gvim"/>
+      <property name="&lt;Super&gt;e" type="string" value="exo-open --launch FileManager"/>
     </property>
   </property>
   <property name="xfwm4" type="empty">
