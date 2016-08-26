@@ -32,6 +32,7 @@ export EDITOR="$VISUAL"
 export INPUTRC="$HOME/.inputrc"
 #export GREP_OPTIONS="--colour --exclude-dir=.svn"
 export LESS="-R"
+export LESSOPEN="|lesspipe.sh %s"
 
 export HISTCONTROL="ignorespace:ignoredups"
 
@@ -63,5 +64,7 @@ export CLUTTER_IM_MODULE=xim
 export QT_IM_MODULE=xim
 export QT4_IM_MODULE=xim
 export GTK_IM_MODULE=xim
+
+export GPGKEY="310835C6"
 
 [ -f "$HOME/.profile.local" ] && . "$HOME/.profile.local"
