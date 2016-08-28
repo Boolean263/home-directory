@@ -41,11 +41,11 @@ add_to_path()
     if [ "x$ADDPATHS" = "x" ] ; then
         : # do nothing
     elif [ "x$tmppath" = "x" ] ; then
-        eval export \$PATHVAR="$ADDPATHS"
+        eval export \$PATHVAR=\"$ADDPATHS\"
     elif [ "x$TO_END" = "x" ] ; then
-        eval export \$PATHVAR="$ADDPATHS:\$$PATHVAR"
+        eval export \$PATHVAR=\"$ADDPATHS:\$$PATHVAR\"
     else
-        eval export \$PATHVAR="\$$PATHVAR:$ADDPATHS"
+        eval export \$PATHVAR=\"\$$PATHVAR:$ADDPATHS\"
     fi
 }
 
@@ -54,7 +54,7 @@ add_to_path()
 del_from_path()
 {
     local PATHVAR="$1"
-    eval local tmppath="\$$PATHVAR"
+    eval local tmppath=\"\$$PATHVAR\"
     shift
     while [ "x$1" != "x" ] ; do
         local DELPATH="$1"
