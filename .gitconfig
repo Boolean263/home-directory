@@ -99,3 +99,4 @@
     st = status -uno
     s = status -uno --short
 
+    ff = merge --ff-only
