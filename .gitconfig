@@ -100,3 +100,4 @@
     s = status -uno --short
 
     ff = merge --ff-only
+    squash = merge --squash
