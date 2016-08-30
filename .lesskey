@@ -1,0 +1,7 @@
+#command
+
+\e[1;5C     next-file
+\eOc        next-file
+
+\e[1;5D     prev-file
+\eOd        prev-file
