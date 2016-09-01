@@ -26,7 +26,6 @@ my %transforms = (
     0x1D51E..0x1D537 ],
     bold_fraktur => [ 0x1D56C..0x1D59F ],
     monospace => [ 0x1D670..0x1D6A3 ],
-    region => [ 0x1F1E6..0x1F1FF, 0x1F1E6..0x1F1FF ],
 );
 
 my ($italic, $bold, $sans_serif, $script, $double, $fraktur, $mono, $region);
