@@ -43,6 +43,17 @@ include "%L"
 <Multi_key> <underscore> <parenleft>: "₍" U208D # Subscript (
 <Multi_key> <underscore> <parenright>: "₎" U208E # Subscript )
 
+# Ligatures
+<Multi_key> <i> <j>             : "ĳ"
+<Multi_key> <I> <J>             : "Ĳ"
+<Multi_key> <a> <e>             : "æ"
+<Multi_key> <A> <E>             : "Æ"
+<Multi_key> <o> <e>             : "œ"
+<Multi_key> <O> <E>             : "Œ"
+<Multi_key> <f> <f>             : "ﬀ"
+<Multi_key> <f> <i>             : "ﬁ"
+<Multi_key> <f> <l>             : "ﬂ"
+<Multi_key> <s> <t>             : "ﬆ"
 
 
 # Emoticons (Some of these are shorter versions of included emoticons)
