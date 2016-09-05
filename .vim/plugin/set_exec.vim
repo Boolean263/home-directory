@@ -5,16 +5,17 @@
 " See if the file is already executable, returns true if not
 function! MyFileTestExecutable (fname)
   execute "silent! !test -x" a:fname
-  return v:shell_error
+  return ! v:shell_error
 endfunction
 
 " Test the passed-in line to see if it's a valid shebang line
 function! MySetExecutableIfScript(line1, current_file)
-  if a:line1 =~ '^#![ \t]*\(/usr\(/local\)*\)*/bin/' && MyFileTestExecutable(a:current_file)
+  if a:line1 =~ '^#![ \t]*\(/usr\(/local\)*\)*/bin/' && ! MyFileTestExecutable(a:current_file)
     let chmod_command = "silent! !chmod a+x " . a:current_file
     execute chmod_command
     " reopen the file to suppress vim's "mode changed" warning
-    edit
+    silent! edit!
+    silent! syn on
   endif
 endfunction
 
