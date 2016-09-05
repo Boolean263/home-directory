@@ -68,6 +68,7 @@ alias gitka="gitk --all"
 alias gits='git s'
 
 alias ls="ls --color=auto"
+alias gpg="gpg2"
 
 #[ -f "$PERLBREW_ROOT/etc/bashrc" ] && . "$PERLBREW_ROOT/etc/bashrc"
 
