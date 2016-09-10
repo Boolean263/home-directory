@@ -1,0 +1,2 @@
+#!/bin/sh
+ps -ef | grep --color=always "$@" | grep -v grep
