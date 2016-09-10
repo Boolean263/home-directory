@@ -1,4 +1,4 @@
-! vim:setfiletype=xdefaults:
+! vim:set filetype=xdefaults:
 ! xterm ----------------------------------------------------------------------
 
 !general settings
@@ -16,8 +16,9 @@ XTerm*utf8Title:        true
 
 !font settings
 XTerm*renderFont:       true
-XTerm*faceName:         DejaVu Sans Mono:size=9
+!XTerm*faceName:         DejaVu Sans Mono:size=9
 !XTerm*faceName:         Ubuntu Mono:size=10
+XTerm*faceName:         Source Code Pro:size=9
 XTerm*allowBoldFonts:   true
 XTerm*colorBDMode:      false
 XTerm*colorBLMode:      false

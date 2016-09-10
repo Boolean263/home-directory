@@ -1,4 +1,4 @@
-! vim:setfiletype=xdefaults:
+! vim:set filetype=xdefaults:
 ! rxvt-unicode ---------------------------------------------------------------
 
 !general settings
@@ -10,7 +10,8 @@ Rxvt*scrollTtyKeypress: true
 
 
 !font settings
-Rxvt*font:              xft:Ubuntu Mono:size=10
+!Rxvt*font:              xft:Ubuntu Mono:size=10
+Rxvt*font:              xft:Source Code Pro:size=9
 
 !colour settings
 Rxvt*background:        #000000

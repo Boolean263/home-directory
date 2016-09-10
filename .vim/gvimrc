@@ -3,7 +3,8 @@ set guioptions=acegirLt
 "set background=light
 "set guifont=Noto\ Mono\ 9
 "set guifont=Ubuntu\ Mono\ 10
-set guifont=DejaVu\ Sans\ Mono\ 9
+"set guifont=DejaVu\ Sans\ Mono\ 9
+set guifont=Source\ Code\ Pro\ 9
 
 "--------------------------------
 " Font test: oO0Q il1IL| sS$
