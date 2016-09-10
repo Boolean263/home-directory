@@ -49,8 +49,8 @@ set background=dark
 "colorscheme apprentice
 colorscheme base16-eighties
 
-nnoremap <S-Insert> :set paste<CR><C-R>*:set nopaste<CR>
 inoremap <S-Insert> <C-O>:set paste<CR><C-R>*<C-O>:set nopaste<CR>
+cmap <S-Insert> <C-R>*
 
 " This lets us write plugins in perl, but really slows down vim's startup
 let home=expand('~')
