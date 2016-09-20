@@ -68,6 +68,7 @@
       <property name="&lt;Primary&gt;&lt;Alt&gt;b" type="string" value="exo-open --launch TerminalEmulator"/>
       <property name="&lt;Primary&gt;&lt;Alt&gt;v" type="string" value="/usr/bin/gvim"/>
       <property name="&lt;Super&gt;e" type="string" value="exo-open --launch FileManager"/>
+      <property name="Pause" type="string" value="/home/smiley/bin/fixkeys"/>
     </property>
   </property>
   <property name="xfwm4" type="empty">

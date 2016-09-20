@@ -3,8 +3,22 @@
 #killall gnome-screensaver 2>/dev/null
 #pgrep xscreensaver || xscreensaver -nosplash &
 #xset +fp $HOME/.fonts
-xrdb -I$HOME .Xresources
+xrdb -I$HOME $HOME/.Xresources
 #devilspie &
 #xset b 100 900 30
 ssh-add < /dev/null &
 #~/bin/random-nasa-wallpaper.pl >/dev/null 2>&1 &
+
+
+#######
+# APOD
+# DevilsPie
+# FixKeys
+# KDEConnect
+# mount-win-drives
+# mount-net-drives
+# parcellite
+# Redshift
+# This file
+# compiz?
+
