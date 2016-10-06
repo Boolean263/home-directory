@@ -6,3 +6,5 @@ $HOME/.Xsession-essentials &
 xbindkeys &
 xset -dpms s noblank
 xscreensaver -nosplash &
+#parcellite &
+clipit &
