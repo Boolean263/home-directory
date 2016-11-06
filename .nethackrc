@@ -1,0 +1,30 @@
+# My personal tty-based nethack
+
+OPTIONS=windowtype:tty,toptenwin,hilite_pet,hpmon
+OPTIONS=fixinv,safe_pet,sortpack,tombstone,color
+OPTIONS=verbose,news,fruit:slime mold
+OPTIONS=autopickup,pickup_types:$,pickup_thrown
+OPTIONS=nomail
+OPTIONS=lit_corridor
+OPTIONS=msg_window:c
+OPTIONS=number_pad:1,altmeta
+OPTIONS=symset:DECgraphics
+
+# Enable this if you want to see your inventory sorted in alphabetical
+# order by item instead of by index letter:
+# OPTIONS=sortloot:full
+# or if you just want containers sorted:
+# OPTIONS=sortloot:loot
+
+#
+# Some sane menucolor defaults
+#
+
+OPTIONS=menucolors
+MENUCOLOR=" blessed "=green
+MENUCOLOR=" holy "=green
+MENUCOLOR=" uncursed "=yellow
+MENUCOLOR=" cursed "=red
+MENUCOLOR=" unholy "=red
+MENUCOLOR=" cursed .* (being worn)"=orange&underline
+
