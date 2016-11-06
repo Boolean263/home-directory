@@ -1,0 +1,48 @@
+! vim:set filetype=xdefaults:
+! xterm ----------------------------------------------------------------------
+
+!general settings
+NHXTerm*termName:         nethack
+NHXTerm*geometry:         80x24
+NHXTerm*scrollBar:        false
+NHXTerm*scrollTtyOutput:  false
+NHXTerm*scrollKey:        true
+NHXTerm*eightBitInput:    true
+NHXTerm*eightBitOutput:   true
+NHXTerm*locale:           true
+NHXTerm*utf8:             2
+NHXTerm*utf8Fonts:        true
+NHXTerm*utf8Title:        true
+
+!font settings
+NHXTerm*renderFont:       true
+!NHXTerm*faceName:         DejaVu Sans Mono:size=9
+!NHXTerm*faceName:         Ubuntu Mono:size=10
+NHXTerm*faceName:         Source Code Pro:size=16
+NHXTerm*allowBoldFonts:   true
+NHXTerm*colorBDMode:      false
+NHXTerm*colorBLMode:      false
+NHXTerm*colorITMode:      false
+NHXTerm*colorRVMode:      false
+NHXTerm*colorULMode:      false
+NHXTerm*underLine:        true
+
+!colour settings
+NHXTerm*background:       #000000
+NHXTerm*foreground:       #CCCCCC
+NHXTerm*color0:           #000000
+NHXTerm*color1:           #AA0000
+NHXTerm*color2:           #44AA44
+NHXTerm*color3:           #AA5500
+NHXTerm*color4:           #0345C8
+NHXTerm*color5:           #AA22AA
+NHXTerm*color6:           #1A92AA
+NHXTerm*color7:           #AAAAAA
+NHXTerm*color8:           #777777
+NHXTerm*color9:           #FF8787
+NHXTerm*color10:          #4CE64C
+NHXTerm*color11:          #DED82C
+NHXTerm*color12:          #226BFC
+NHXTerm*color13:          #CC58CC
+NHXTerm*color14:          #4CCCE6
+NHXTerm*color15:          #FFFFFF
