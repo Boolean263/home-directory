@@ -3,7 +3,7 @@
 
 !general settings
 XTerm*termName:         xterm
-XTerm*geometry:         80x50
+XTerm*VT100.geometry:   80x50
 XTerm*scrollBar:        false
 XTerm*scrollTtyOutput:  false
 XTerm*scrollKey:        true

@@ -3,7 +3,7 @@
 
 !general settings
 NHXTerm*termName:         nethack
-NHXTerm*geometry:         80x24
+NHXTerm*VT100.geometry:   80x24
 NHXTerm*scrollBar:        false
 NHXTerm*scrollTtyOutput:  false
 NHXTerm*scrollKey:        true
