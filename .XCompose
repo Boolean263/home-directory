@@ -81,3 +81,42 @@ include "%L"
 <Multi_key> <Multi_key> <g> <r> <r> : "💢" # grr
 <Multi_key> <Multi_key> <z> <z> <z> : "💤" # zzz
 <Multi_key> <Multi_key> <l> <e> <a> <f> : "🍁" # maple leaf
+
+# Roman numerals
+<Multi_key> <I> <R>                 : "Ⅰ"
+<Multi_key> <I> <I> <R>             : "Ⅱ"
+<Multi_key> <I> <I> <I> <R>         : "Ⅲ"
+<Multi_key> <I> <V> <R>             : "Ⅳ"
+<Multi_key> <V> <R>                 : "Ⅴ"
+<Multi_key> <V> <I> <R>             : "Ⅵ"
+<Multi_key> <V> <I> <I> <R>         : "Ⅶ"
+<Multi_key> <V> <I> <I> <I> <R>     : "Ⅷ"
+<Multi_key> <I> <X> <R>             : "Ⅸ"
+<Multi_key> <X> <R>                 : "Ⅹ"
+<Multi_key> <X> <I> <R>             : "Ⅺ"
+<Multi_key> <X> <I> <I> <R>         : "Ⅻ"
+<Multi_key> <L> <R>                 : "Ⅼ"
+<Multi_key> <C> <R>                 : "Ⅽ"
+<Multi_key> <D> <R>                 : "Ⅾ"
+<Multi_key> <M> <R>                 : "Ⅿ"
+
+<Multi_key> <i> <R>                 : "ⅰ"
+<Multi_key> <i> <i> <R>             : "ⅱ"
+<Multi_key> <i> <i> <i> <R>         : "ⅲ"
+<Multi_key> <i> <v> <R>             : "ⅳ"
+<Multi_key> <v> <R>                 : "ⅴ"
+<Multi_key> <v> <i> <R>             : "ⅵ"
+<Multi_key> <v> <i> <i> <R>         : "ⅶ"
+<Multi_key> <v> <i> <i> <i> <R>     : "ⅷ"
+<Multi_key> <i> <x> <R>             : "ⅸ"
+<Multi_key> <x> <R>                 : "ⅹ"
+<Multi_key> <x> <i> <R>             : "ⅺ"
+<Multi_key> <x> <i> <i> <R>         : "ⅻ"
+<Multi_key> <l> <R>                 : "ⅼ"
+<Multi_key> <c> <R>                 : "ⅽ"
+<Multi_key> <d> <R>                 : "ⅾ"
+<Multi_key> <m> <R>                 : "ⅿ"
+
+# Checkboxes
+<Multi_key> <bracketleft> <space> <bracketright>: "☐"
+<Multi_key> <bracketleft> <X> <bracketright>: "☑"
