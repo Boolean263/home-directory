@@ -62,6 +62,12 @@ xkb_symbols "my_8level" {
     key <DOWN>  { [ Down,   Down,   downarrow,  U21D3 ] };
     key <LEFT>  { [ Left,   Left,   leftarrow,  U21D0 ] };
     key <RGHT>  { [ Right,  Right,  rightarrow, U21D2 ] };
+
+    key <KPMU> { type="FOUR_LEVEL", [ asterisk, asterisk, U00D7, U00D7 ] };
+    key <KPDV> { type="FOUR_LEVEL", [ slash, slash, U00F7, U00F7 ] };
+
+    key <SPCE> { type="FOUR_LEVEL", [ space, space, U00A0, U200B ] } ;
+
 };
 
 partial modifier_keys
