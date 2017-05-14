@@ -1,21 +1,31 @@
+" vim:set fileencoding=utf-8:
 set nocompatible
 " The next line fails in Windows
 silent! language en_US.UTF-8
 set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,latin1
 
+" vim-plug (https://github.com/junegunn/vim-plug) settings 
+" Automatically install vim-plug and run PlugInstall if vim-plug not found
+if empty(glob('~/.vim/autoload/plug.vim')) && &shell =~ 'sh$'
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
 
 " *** For vim-plug
-"call plug#begin('~/.vim/plugged')
-"Plug 'tpope/vim-fugitive'
-"Plug 'tpope/vim-repeat'
-"call plug#end()
+" use silent! to suppress warning messages about missing git in Windows
+silent! call plug#begin('~/.vim/bundle')
+Plug 'tpope/vim-characterize'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+call plug#end()
 
 " *** For vim-pathogen
 "let s:vimdir=strpart(&runtimepath, 0, stridx(&runtimepath,","))
 "execute "source ".s:vimdir."/bundle/vim-pathogen/autoload/pathogen.vim"
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-execute pathogen#infect()
+"runtime bundle/vim-pathogen/autoload/pathogen.vim
+"execute pathogen#infect()
 "call pathogen#runtime_append_all_bundles()
 
 syntax on
@@ -29,10 +39,15 @@ set expandtab
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
-set ruler
 set hlsearch
 
-set scrolloff=10
+set scrolloff=8
+
+" Highlight the current line and column, and column 80
+" The colours for these are set below
+set cursorline cursorcolumn colorcolumn=80
+autocmd WinLeave * set nocursorline nocursorcolumn
+autocmd WinEnter * set cursorline cursorcolumn
 
 set pastetoggle=<F9>
 
@@ -42,7 +57,20 @@ inoremap <C-W> <Nop>
 cnoremap <C-BS> <C-W>
 cnoremap <C-W> <Nop>
 
-set list listchars=tab:>·,trail:·,extends:>
+" Use Shift-Insert to paste the clipboard at the current location
+inoremap <S-Insert> <C-O>:set paste<CR><C-R>*<C-O>:set nopaste<CR>
+cnoremap <S-Insert> <C-R>*
+
+" Don't let 'x' wipe out the delete register
+nnoremap x "_x
+
+set relativenumber
+set number
+set numberwidth=2
+
+set list
+set listchars=tab:>-,trail:-,extends:>
+set listchars=tab:␉·,trail:·,extends:>
 
 if (&term == 'xterm' || &term =~? '^screen')
     set t_Co=256
@@ -56,8 +84,41 @@ endif
 "colorscheme base16-eighties
 colorscheme koehler
 
-inoremap <S-Insert> <C-O>:set paste<CR><C-R>*<C-O>:set nopaste<CR>
-cnoremap <S-Insert> <C-R>*
+" Set colour customizations *after* setting colorscheme
+highlight CursorLine   term=none cterm=none ctermbg=238 guibg=#222222
+highlight CursorColumn term=none cterm=none ctermbg=238 guibg=#222222
+highlight ColorColumn  term=none cterm=none ctermbg=235 guibg=#0F0F0F
+
+
+" Custom statusline
+" http://got-ravings.blogspot.com/2008/08/vim-pr0n-making-statuslines-that-own.html
+" Functions used in my statusline
+function! SLFenc()
+    if ! ( &fenc == "" || &fenc == "utf-8" ) || &bomb
+        return "[" . &fenc . (&bomb ? "-bom" : "" ) . "]"
+    else
+        return ""
+    endif
+endfunction
+set ruler               " Only really affects what Ctrl-G shows
+set laststatus=2        " Always show status line
+set statusline=         " Reset to blank
+set statusline+=%n:     " Buffer number
+"set statusline+=%m      " Modified flag
+"set statusline+=%r      " Read-only flag
+set statusline+=%t      " Tail of the filename
+set statusline+=%{&ro?'🔒':''} " U+1F512 Unicode lock for read-only flag
+set statusline+=%{&mod?'+':''} " Plus sign for modified flag
+set statusline+=%(%{exists('g:loaded_fugitive')?fugitive#statusline():''}\%)
+set statusline+=%{SLFenc()} " File encoding from above function
+set statusline+=%=      " Left/Right separator
+set statusline+=%{&ft}  " Another way of showing filetype
+"set statusline+=\ C%c     " Cursor column
+"set statusline+=L%l/%L   " Current and total lines
+"set statusline+=\ %B      " Hex of curreent character code under cursor
+set statusline+=\ %l:%c
+set statusline+=\ %P    " Percent through file
+set statusline+=/%L     " Number of lines in file
 
 " This lets us write plugins in perl, but really slows down vim's startup
 "let home=expand('~')

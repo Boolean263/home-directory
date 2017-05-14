@@ -2,7 +2,7 @@
 ! rxvt-unicode ---------------------------------------------------------------
 
 !general settings
-Rxvt*termName:          rxvt
+Rxvt*termName:          rxvt-unicode-256color
 Rxvt*geometry:          80x50
 Rxvt*scrollBar:         false
 Rxvt*scrollTtyOutput:   false

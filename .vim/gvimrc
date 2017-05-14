@@ -1,4 +1,4 @@
-set columns=80 lines=50
+set columns=84 lines=50
 set guioptions=acegirLt
 "set background=light
 "set guifont=Noto\ Mono\ 9

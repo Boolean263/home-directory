@@ -10,3 +10,9 @@
 !.vim
 !.Xresources.d
 !.config/devilspie2
+
+# Ignore vim plugin directories,
+# since they're managed through vim
+.vim/plugged
+.vim/bundle
+.vim/autoload/plug.vim
