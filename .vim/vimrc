@@ -4,8 +4,9 @@ set nocompatible
 silent! language en_US.UTF-8
 set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,latin1
+autocmd BufEnter * if &fileencoding == "" && &modifiable == 1 | set fileencoding=utf-8 nomodified | endif
 
-" vim-plug (https://github.com/junegunn/vim-plug) settings 
+" vim-plug (https://github.com/junegunn/vim-plug) settings
 " Automatically install vim-plug and run PlugInstall if vim-plug not found
 if empty(glob('~/.vim/autoload/plug.vim')) && &shell =~ 'sh$'
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -13,12 +14,18 @@ if empty(glob('~/.vim/autoload/plug.vim')) && &shell =~ 'sh$'
   autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 
+" Variables to configure plugins are usually only read when the plugins
+" are loaded, so they need to be defined first
+let skeletons#autoRegister = 1
+
 " *** For vim-plug
 " use silent! to suppress warning messages about missing git in Windows
 silent! call plug#begin('~/.vim/bundle')
 Plug 'tpope/vim-characterize'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
+Plug 'pgilad/vim-skeletons' | Plug 'SirVer/ultisnips'
+Plug 'craigemery/vim-autotag'
 call plug#end()
 
 " *** For vim-pathogen
@@ -28,8 +35,10 @@ call plug#end()
 "execute pathogen#infect()
 "call pathogen#runtime_append_all_bundles()
 
+
 syntax on
 
+"let mapleader="\\"
 let mapleader=" "
 nnoremap <Leader>h :noh<CR>
 
@@ -64,8 +73,8 @@ cnoremap <S-Insert> <C-R>*
 " Don't let 'x' wipe out the delete register
 nnoremap x "_x
 
+set nonumber
 set relativenumber
-set number
 set numberwidth=2
 
 set list
@@ -89,36 +98,17 @@ highlight CursorLine   term=none cterm=none ctermbg=238 guibg=#222222
 highlight CursorColumn term=none cterm=none ctermbg=238 guibg=#222222
 highlight ColorColumn  term=none cterm=none ctermbg=235 guibg=#0F0F0F
 
+" Buffer management
+set hidden " lets you switch away from unsaved buffers
+" List buffers and let you choose one
+nnoremap <leader>b :ls<cr>:b<space>
+nnoremap [b :bprev<cr>
+nnoremap ]b :bnext<cr>
 
-" Custom statusline
-" http://got-ravings.blogspot.com/2008/08/vim-pr0n-making-statuslines-that-own.html
-" Functions used in my statusline
-function! SLFenc()
-    if ! ( &fenc == "" || &fenc == "utf-8" ) || &bomb
-        return "[" . &fenc . (&bomb ? "-bom" : "" ) . "]"
-    else
-        return ""
-    endif
-endfunction
-set ruler               " Only really affects what Ctrl-G shows
-set laststatus=2        " Always show status line
-set statusline=         " Reset to blank
-set statusline+=%n:     " Buffer number
-"set statusline+=%m      " Modified flag
-"set statusline+=%r      " Read-only flag
-set statusline+=%t      " Tail of the filename
-set statusline+=%{&ro?'🔒':''} " U+1F512 Unicode lock for read-only flag
-set statusline+=%{&mod?'+':''} " Plus sign for modified flag
-set statusline+=%(%{exists('g:loaded_fugitive')?fugitive#statusline():''}\%)
-set statusline+=%{SLFenc()} " File encoding from above function
-set statusline+=%=      " Left/Right separator
-set statusline+=%{&ft}  " Another way of showing filetype
-"set statusline+=\ C%c     " Cursor column
-"set statusline+=L%l/%L   " Current and total lines
-"set statusline+=\ %B      " Hex of curreent character code under cursor
-set statusline+=\ %l:%c
-set statusline+=\ %P    " Percent through file
-set statusline+=/%L     " Number of lines in file
+" See also Plug 'craigemery/vim-autotag'
+nnoremap [t :tprev<cr>
+nnoremap ]t :tnext<cr>
+
 
 " This lets us write plugins in perl, but really slows down vim's startup
 "let home=expand('~')
