@@ -37,6 +37,7 @@ call plug#end()
 
 
 syntax on
+set synmaxcol=200
 
 "let mapleader="\\"
 let mapleader=" "
@@ -109,6 +110,12 @@ nnoremap ]b :bnext<cr>
 nnoremap [t :tprev<cr>
 nnoremap ]t :tnext<cr>
 
+" Seen this suggested a few places
+set wildmenu wildmode=full
+
+" Move through virtual lines if not moving with a count
+nnoremap <expr> j v:count ? 'j' : 'gj'
+nnoremap <expr> k v:count ? 'k' : 'gk'
 
 " This lets us write plugins in perl, but really slows down vim's startup
 "let home=expand('~')
