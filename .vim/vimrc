@@ -18,6 +18,8 @@ endif
 " are loaded, so they need to be defined first
 let skeletons#autoRegister = 1
 
+nnoremap <F8> :TagbarToggle<CR>
+
 " *** For vim-plug
 " use silent! to suppress warning messages about missing git in Windows
 silent! call plug#begin('~/.vim/bundle')
@@ -26,6 +28,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'pgilad/vim-skeletons' | Plug 'SirVer/ultisnips'
 Plug 'craigemery/vim-autotag'
+Plug 'wellle/targets.vim'
+Plug 'rhysd/clever-f.vim'
+Plug 'majutsushi/tagbar'
+let g:clever_f_across_no_line = 1
+let g:clever_f_timeout_ms = 3000
 call plug#end()
 
 " *** For vim-pathogen
