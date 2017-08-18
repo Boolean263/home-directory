@@ -35,6 +35,7 @@ export LESS="-R"
 export LESSOPEN="|lesspipe.sh %s"
 
 export HISTCONTROL="ignorespace:ignoredups"
+export FIGNORE="CVS:\~:.o:.svn:.git:.lo"
 
 export NYTPROF="addpid=1"
 export DBIC_TRACE_PROFILE=console
@@ -57,6 +58,8 @@ export PYTHONUSERBASE="$HOME"
 export PYTHONPATH="$HOME/lib/python2.7/site-packages"
 
 export ANDROID_HOME="$HOME/Android/Sdk"
+
+export MANPAGER="$HOME/bin/manpager"
 
 # Force apps to use the classic X input method, chiefly to support
 # the settings in my .XCompose file.

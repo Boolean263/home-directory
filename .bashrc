@@ -25,6 +25,8 @@ fi
 
 . "$HOME/env/git-prompt.sh"
 
+set match-hidden-files off
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -53,23 +55,6 @@ bind -f "$INPUTRC"
 # Terminal setup
 /bin/stty stop undef start undef erase ^? werase ^H
 
-alias g=gvim
-alias gro="gvim +'set ro' +'set noswapfile'"
-
-alias grep="/bin/grep --colour"
-
-alias nssh="ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null"
-alias nscp="scp -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null"
-
-alias rdesk="rdesktop -0 -a 16 -z -x m"
-
-alias ghist="history | grep"
-alias gitka="gitk --all"
-alias gits='git s'
-
-alias ls="ls --color=auto"
-alias lls="ls --color=never"
-alias gpg="gpg2"
 
 #[ -f "$PERLBREW_ROOT/etc/bashrc" ] && . "$PERLBREW_ROOT/etc/bashrc"
 

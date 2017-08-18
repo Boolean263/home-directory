@@ -2,13 +2,19 @@
 #$include /etc/inputrc
 
 # Now I set all my settings myself.
+set meta-flag on
 set input-meta on
+set convert-meta off
 set output-meta on
 set enable-keypad on
 set bell-style audible
 set echo-control-characters on
 set mark-directories on
 set mark-symlinked-directories on
+set enable-meta-key on
+set horizontal-scroll-mode off
+set show-all-if-ambiguous on
+set skip-completed-text on
 
 $if mode=emacs
 
