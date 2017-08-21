@@ -131,3 +131,16 @@ nnoremap <expr> k v:count ? 'k' : 'gk'
 "perl Vim::X::source_function_dir("~/.vim/perl");
 "
 "echo "Cygwin vimrc loaded"
+
+" http://vim.wikia.com/wiki/Setting_file_attributes_without_reloading_a_buffer
+function! SetExecutableBit()
+    if &shell =~ 'sh$'
+        let fname = expand("%:p")
+        checktime
+        execute "au FileChangedShell " . fname . " :echo"
+        silent !chmod a+x %
+        checktime
+        execute "au! FileChangedShell " . fname
+    endif
+endfunction
+command! Xbit call SetExecutableBit()
