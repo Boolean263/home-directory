@@ -145,3 +145,8 @@ function! SetExecutableBit()
     endif
 endfunction
 command! Xbit call SetExecutableBit()
+
+augroup quickfix
+    autocmd!
+    autocmd QuickFixCmdPost [^l]* cwindow
+augroup END
