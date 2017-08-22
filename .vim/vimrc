@@ -49,6 +49,7 @@ set synmaxcol=200
 "let mapleader="\\"
 let mapleader=" "
 nnoremap <Leader>h :noh<CR>
+nnoremap <Leader>c /^\(<<<<<<<\\|=======\\|>>>>>>>\)<CR>
 
 set backspace=indent,eol,start
 set autoindent
