@@ -6,6 +6,19 @@ set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,latin1
 autocmd BufEnter * if &fileencoding == "" && &modifiable == 1 | set fileencoding=utf-8 nomodified | endif
 
+" Some plugins need to be configured before they're actually loaded
+let g:tagbar_type_diff = {
+    \'ctagstype':'diff',
+    \'kinds': [ 'f:filename' ],
+    \'sort':0
+\}
+let g:tagbar_type_make = {
+    \'kinds':[
+        \ 'm:macros',
+        \ 't:targets'
+    \]
+\}
+
 " vim-plug (https://github.com/junegunn/vim-plug) settings
 " Automatically install vim-plug and run PlugInstall if vim-plug not found
 if empty(glob('~/.vim/autoload/plug.vim')) && &shell =~ 'sh$'
