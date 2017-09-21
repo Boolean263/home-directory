@@ -76,7 +76,7 @@ set scrolloff=8
 
 " Highlight the current line and column, and column 80
 " The colours for these are set below
-set cursorline cursorcolumn colorcolumn=80
+set nocursorline cursorcolumn colorcolumn=80
 autocmd WinLeave * set nocursorline nocursorcolumn
 autocmd WinEnter * set cursorline cursorcolumn
 
@@ -119,6 +119,7 @@ colorscheme koehler
 highlight CursorLine   term=none cterm=none ctermbg=238 guibg=#222222
 highlight CursorColumn term=none cterm=none ctermbg=238 guibg=#222222
 highlight ColorColumn  term=none cterm=none ctermbg=235 guibg=#0F0F0F
+highlight CursorLineNr term=inverse cterm=none ctermfg=0 ctermbg=11 guifg=#000000 guibg=#FFFF00
 
 " Buffer management
 set hidden " lets you switch away from unsaved buffers
