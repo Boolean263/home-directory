@@ -74,6 +74,16 @@ set hlsearch
 
 set scrolloff=8
 
+" Set the directory for saving swap files and undo history
+if has('win32') || has('win64')
+    set directory=e:/temp/vim//
+else
+    set directory=/var/tmp/daperry/vim//
+endif
+execute "set undodir=" . &directory
+set undofile
+call mkdir(&directory, "p", 0700)
+
 " Highlight the current line and column, and column 80
 " The colours for these are set below
 set nocursorline cursorcolumn colorcolumn=80
