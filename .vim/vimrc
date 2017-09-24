@@ -82,7 +82,7 @@ else
 endif
 execute "set undodir=" . &directory
 set undofile
-call mkdir(&directory, "p", 0700)
+silent! call mkdir(&directory, "p", 0700)
 
 " Highlight the current line and column, and column 80
 " The colours for these are set below
