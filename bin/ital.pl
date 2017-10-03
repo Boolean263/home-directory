@@ -30,7 +30,9 @@ my %transforms = (
     bold_fraktur => [ 0x1D56C..0x1D59F ],
     monospace => [ 0x1D670..0x1D6A3, 0x1D7F6..0x1D7FF ],
     region => [ 0x1F1E6..0x1F1FF, 0x1F1E6..0x1F1FF, ],
+    small_caps => [ 0x1D00, 0x0299, 0x1D04, 0x1D05, 0x1D07, 0xA730, 0x0262, 0x029C, 0x026A, 0x1D0A, 0x1D0B, 0x029F, 0x1D0D, 0x0274, 0x1D0F, 0x1D18, ord('Q'), 0x0280, 0xA731, 0x1D1B, 0x1D1C, 0x1D20, 0x1D21, ord('x'), 0x028F, 0x1D22 ],
 );
+$transforms{small_caps} = [ @{$transforms{small_caps}}, @{$transforms{small_caps}} ];
 
 my ($italic,
     $bold,
@@ -39,7 +41,9 @@ my ($italic,
     $double,
     $fraktur,
     $mono,
-    $region);
+    $region,
+    $small_cap,
+);
 
 GetOptions(
     'italic|i'      => \$italic,
@@ -50,6 +54,7 @@ GetOptions(
     'fraktur|f'     => \$fraktur,
     'monospace|m'   => \$mono,
     'region|r'      => \$region,
+    'capital|c'     => \$small_cap,
     'help|h|?'      => \&usage) or usage();
 
 my $xform =
@@ -57,6 +62,7 @@ my $xform =
     : $fraktur ? 'fraktur'
     : $double ? 'double'
     : $region ? 'region'
+    : $small_cap ? 'small_caps'
     : $mono ? 'monospace'
     : $bold && $script ? 'bold_script'
     : $script ? 'script'
@@ -73,14 +79,14 @@ my %xform = List::MoreUtils::pairwise { $a => defined($b) ? chr($b) : $a } @alph
 if(@ARGV)
 {
     my $str = join(' ', @ARGV);
-    $str =~ s/([A-Za-z0-9])/$xform{$1}/eg;
+    $str =~ s/([A-Za-z0-9])/$xform{$1} || $1/eg;
     print $str."\n";
 }
 else
 {
     while(<>)
     {
-        s/([A-Za-z0-9])/$xform{$1}/eg;
+        s/([A-Za-z0-9])/$xform{$1} || $1/eg;
         print;
     }
 }
@@ -106,6 +112,7 @@ Options:
     -d, --double        Double-strike text (no other formatting)
     -m, --monospace     Monospaced text (no other formatting)
     -r, --region        Regional indicator letters (no other formatting)
+    -c, --capital       Small-caps (no other formatting)
     -?, -h, --help      This help message
 
 EOT
