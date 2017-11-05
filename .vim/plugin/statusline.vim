@@ -53,7 +53,7 @@ function! SLLarr()
     return g:pl_l
 endfunction
 function! TagName()
-    if !exists('tagbar#currenttag')
+    if !exists(':Tagbar')
         return ''
     endif
     let l:tag_name = tagbar#currenttag("%s", "", "f")
