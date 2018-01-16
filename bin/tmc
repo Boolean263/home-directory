@@ -1,0 +1,17 @@
+#!/bin/bash
+
+cmd="$1"
+shift
+
+if [ -n "$TMUX" ] ; then
+    TMUX_VERSION=$(tmux -V | awk '{print $2}')
+    if vercmp.pl $TMUX_VERSION -gt 2.1 ; then
+        tmux new-window "$cmd" ${1+"$@"}
+    else
+        tmux new-window "$cmd $*"
+    fi
+elif [ -n "$STY" ] ; then
+    screen "$cmd" ${1+"$@"}
+else
+    "$cmd" ${1+"$@"}
+fi
