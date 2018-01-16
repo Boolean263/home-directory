@@ -1,0 +1,34 @@
+#!/bin/bash
+
+: ${TMUX_VERSION:?TMUX_VERSION not set}
+
+# Tmux configuration that may be version-dependent goes here
+# to keep my main .tmux.connf file from getting too messy.
+
+# If we have xclip and tmux supports copy-pipe, let "y" in copy mode
+# yank to the system clipboard
+if which xclip >/dev/null 2>&1 ; then
+    if vercmp.pl $TMUX_VERSION -ge 2.4 ; then
+        tmux bind-key -T copy-mode-vi y copy-pipe "xclip -in"
+    elif vercmp.pl $TMUX_VERSION -ge 1.8 ; then
+        tmux bind-key -t vi-copy y copy-pipe "xclip -in"
+    fi
+fi
+
+# Force new windows to start in the home directory by default
+if vercmp.pl $TMUX_VERSION -lt 1.9 ; then
+    tmux bind c set default-path "~" \\\; new-window \\\; set -u default-path
+else
+    tmux bind c new-window -c ~
+fi
+
+# tmux has lots of nice mouse options, but they break the ability to
+# select/copy text with the mouse in an X terminal.
+if vercmp.pl $TMUX_VERSION -lt 2.1 ; then
+    tmux set -wg mode-mouse off \; set -g mouse-resize-pane off \; set -g mouse-select-pane off \; set -g mouse-select-window off
+else
+    tmux set -g mouse off
+fi
+
+# str2colour stuff will go here eventually, not because it's version
+# dependent, but because it's cool

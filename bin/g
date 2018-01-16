@@ -70,8 +70,8 @@ if($ENV{TMUX})      # tmux
     my $tmux_version = `tmux -V`;
     chomp $tmux_version;
     $tmux_version =~ s/^tmux\s*//;
-    $tmux_version = version->declare($tmux_version);
-    if($tmux_version >= version->declare("2.1"))
+    $tmux_version = version->parse($tmux_version);
+    if($tmux_version >= version->parse("2.1"))
     {
         do_or_die( qw(tmux new-window), $vim, @vim_args );
     }
