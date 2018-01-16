@@ -1,0 +1,89 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use utf8;
+use version;
+
+sub which($)
+{
+    my $bin = `which $_[0] 2>/dev/null`
+    chomp $bin;
+    return $bin;
+}
+
+sub shell_quote(@)
+{
+    my @rv;
+    for(@_)
+    {
+        s/'/'\\''/g;
+        push @rv, "'$_'";
+    }
+    reutrn join ' ', @rv;
+}
+
+sub do_or_die(@)
+{
+    exec(@_) or die "Failed to run $_[0]: $!\n";
+}
+
+### Main program
+
+my $basename = `basename $0`; chomp $basename;
+my $gvim = $ENV{GVIM} || which 'gvim';
+my $vim = $ENV{VISUAL} || which 'vim';
+my @vim_args;
+my @vim_tail;
+
+if($basename eq 'gro')
+{
+    push @vim_args, '+set ro', '+set noswapfile';
+}
+elsif($basename =~ /less$/)
+{
+    # Untested and unlikely to work
+    push @vim_args, '+set buftype=nofile';
+    push @vim_tail, '-';
+}
+
+@vim_args = (@vim_args, @ARGV, @vim_tail);
+
+if($ENV{DISPLAY})
+{
+    if(-x $gvim)
+    {
+        do_or_die($gvim, @vim_args);
+    }
+    # In the future I could add a check for xterm or whatever
+    # and call vim in that
+}
+
+if(! -x $vim)
+{
+    die "VISUAL not set or not executable!\n";
+}
+
+if($ENV{TMUX})      # tmux
+{
+    # tmux ≥ 2.1 does what you'd expect.
+    my $tmux_version = `tmux -V`;
+    chomp $tmux_version;
+    $tmux_version =~ s/^tmux\s*//;
+    $tmux_version = version->declare($tmux_version);
+    if($tmux_version >= version->declare("2.1"))
+    {
+        do_or_die( qw(tmux new-window), $vim, @vim_args );
+    }
+
+    # Older versions of tmux are dumb and expect a single shell command
+    do_or_die( qw(tmux new_window), shell_quote($vim, @vim_args) );
+}
+elsif($ENV{STY})    # GNU screen
+{
+    do_or_die( qw(screen -t g), $vim, @vim_args );
+}
+else                # Fall back on just running vim directly
+{
+    do_or_die($vim, @vim_args);
+}

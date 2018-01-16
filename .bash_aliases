@@ -1,6 +1,3 @@
-alias g=gvim
-alias gro="gvim +'set ro' +'set noswapfile'"
-
 alias grep="/bin/grep --colour"
 
 alias nssh="ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null"
