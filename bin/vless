@@ -1,2 +1,135 @@
-#!/bin/bash
-gvim -R +'set noswapfile' - # "${1+$@}"
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use utf8;
+
+binmode $_ => ':raw' for qw(STDIN STDOUT STDERR);
+
+use Getopt::Long qw(:config
+    no_ignore_case no_auto_abbrev pass_through bundling);
+BEGIN { $Pod::Usage::Formatter = 'Pod::Text::Termcap' if -t STDOUT; }
+use Pod::Usage;
+
+###
+### Functions
+###
+
+sub vless
+{
+    my ($cmd_fh, @vim_args) = @_;
+
+    my $vim_fh;
+    open($vim_fh, '|-', qw(gvim -), '+set buftype=nofile', @vim_args);
+    binmode $vim_fh => ':raw';
+    print $vim_fh $_ for <$cmd_fh>;
+}
+
+###
+### Main Program
+###
+
+# Get the options we recognize, leaving others in @ARGV
+GetOptions(
+    "help|h|?"          => sub { pod2usage(-verbose => 1) },
+    "man"               => sub { pod2usage(-verbose => 2) },
+) or pod2usage("Use '--help' or '--man' for more information.");
+
+my @gvim_args;
+while(@ARGV)
+{
+    if($ARGV[0] eq '--')
+    {
+        shift(@ARGV);
+        last;
+    }
+    if($ARGV[0] =~ /^\+set\s/)
+    {
+        my ($cmd, $arg) = split(/=/, shift(@ARGV), 2);
+        $arg =~ s/(\s)/\\$1/g;
+        push @gvim_args, $cmd.'='.$arg;
+    }
+    elsif($ARGV[0] =~ /^[-+]/)
+    {
+        push @gvim_args, shift(@ARGV);
+    }
+    else
+    {
+        last;
+    }
+}
+
+exists($ENV{VLESS_DEBUG}) and warn "|".join("|", @gvim_args)."|\n";
+
+# Any remaining arguments are taken to be a command to run and view in gvim
+if(@ARGV)
+{
+    my $cmd_fh;
+    open($cmd_fh, '-|', @ARGV);
+    binmode $cmd_fh => ':raw';
+    vless($cmd_fh, @gvim_args);
+}
+elsif(-t STDIN)
+{
+    pod2usage("No command given");
+}
+else
+{
+    vless(*STDIN, @gvim_args);
+}
+
+__END__
+
+=encoding UTF-8
+
+=head1 NAME
+
+vless - use gvim as a pager
+
+=head1 SYNOPSIS
+
+COMMAND | B<vless>
+
+B<vless> COMMAND
+
+=back
+
+=head1 OPTIONS
+
+=over 20
+
+=item B<-h>, B<-?>, B<--help>
+
+Prints a brief help message.
+
+=item B<--man>
+
+Shows the complete man page for this script.
+
+=back
+
+=head1 DESCRIPTION
+
+Give a more detailed description of your script here.
+
+=head1 SEE ALSO
+
+L<perl>
+
+=head1 AUTHOR
+
+David Perry, <d.perry@utoronto.ca>
+
+=begin comment
+
+Editor modelines - http://www.wireshark.org/tools/modelines.html
+
+Local variables:
+c-basic-offset: 4
+tab-width: 4
+indent-tabs-mode: nil
+coding: utf-8
+End:
+
+vi:set shiftwidth=4 tabstop=4 expandtab fileencoding=utf-8:
+:indentSize=4:tabSize=4:noTabs=true:coding=utf-8:
