@@ -1,0 +1,124 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use utf8;
+
+use Getopt::Long qw(:config
+    no_ignore_case no_auto_abbrev pass_through bundling);
+BEGIN { $Pod::Usage::Formatter = 'Pod::Text::Termcap' if -t STDOUT; }
+use Pod::Usage;
+
+use File::Glob ':bsd_glob';
+
+binmode STDOUT => ":raw";
+
+###
+### Functions
+###
+
+###
+### Main Program
+###
+
+my $join = ' ';
+my %files;
+
+# Get the options we recognize, leaving others in @ARGV
+GetOptions(
+    "null|0"            => sub { $join = "\x00" },
+    "help|h|?"          => sub { pod2usage(-verbose => 1) },
+    "man"               => sub { pod2usage(-verbose => 2) },
+) or pod2usage("Use '--help' or '--man' for more information.");
+
+pod2usage("No globs given") unless @ARGV;
+
+ADD:
+while(@ARGV)
+{
+    last if $ARGV[0] eq 'but' && $ARGV[1] eq 'not';
+    my $pat = shift @ARGV;
+    $files{$_}++ for bsd_glob($pat, GLOB_BRACE|GLOB_TILDE);
+}
+
+shift @ARGV if $ARGV[0] eq 'but';
+shift @ARGV if $ARGV[0] eq 'not';
+
+REMOVE:
+while(@ARGV)
+{
+    my $pat = shift @ARGV;
+    delete $files{$_} for bsd_glob($pat, GLOB_BRACE|GLOB_TILDE);
+}
+
+print join $join, keys %files;
+
+__END__
+
+=encoding UTF-8
+
+=head1 NAME
+
+glob - selective globbing and exclusion of files
+
+=head1 SYNOPSIS
+
+=over 6
+
+=item B<glob>
+
+I<[options]>
+I<GLOB1 [GLOB2...]>
+B<but not>
+I<GLOB3 [GLOB4...]>
+| xargs COMMAND
+
+=back
+
+=head1 OPTIONS
+
+=over 20
+
+=item B<-0>, B<--null>
+
+Separate filenames with a null byte. The default is a space character.
+
+=item B<-h>, B<-?>, B<--help>
+
+Prints a brief help message.
+
+=item B<--man>
+
+Shows the complete man page for this script.
+
+=back
+
+=head1 DESCRIPTION
+
+Allows you to explicitly exclude files which would otherwise be included
+by shell globs in file manipulation commands.
+
+Globs should be escaped or quoted, but this is not strictly necessary.
+The words 'but not' must appear literally as two arguments.
+
+=head1 SEE ALSO
+
+L<perl>
+
+=head1 AUTHOR
+
+David Perry, <d.perry@utoronto.ca>
+
+=begin comment
+
+Editor modelines - http://www.wireshark.org/tools/modelines.html
+
+Local variables:
+c-basic-offset: 4
+tab-width: 4
+indent-tabs-mode: nil
+coding: utf-8
+End:
+
+vi:set shiftwidth=4 tabstop=4 expandtab fileencoding=utf-8:
+:indentSize=4:tabSize=4:noTabs=true:coding=utf-8:
