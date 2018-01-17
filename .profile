@@ -60,6 +60,7 @@ export PYTHONPATH="$HOME/lib/python2.7/site-packages"
 export ANDROID_HOME="$HOME/Android/Sdk"
 
 export MANPAGER="$HOME/bin/manpager"
+export PERLDOC_PAGER="$PAGER"
 
 # Force apps to use the classic X input method, chiefly to support
 # the settings in my .XCompose file.
