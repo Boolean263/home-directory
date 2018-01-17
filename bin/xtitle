@@ -1,0 +1,6 @@
+#!/bin/bash
+
+OSC="]"
+ST="\\"
+XTITLE="$@"
+/bin/echo -n "${OSC}0;${XTITLE}${ST}"
