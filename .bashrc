@@ -55,9 +55,4 @@ bind -f "$INPUTRC"
 # Terminal setup
 /bin/stty stop undef start undef erase ^? werase ^H
 
-
-#[ -f "$PERLBREW_ROOT/etc/bashrc" ] && . "$PERLBREW_ROOT/etc/bashrc"
-
-
-# plenv is incompatible with perlbrew
-#eval "$(plenv init -)"
+[ -f "$HOME/.bashrc.local" ] && . .bashrc.local
