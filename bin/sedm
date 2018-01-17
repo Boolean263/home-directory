@@ -1,0 +1,35 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+use Getopt::Long qw(:config permute pass_through no_ignore_case);
+
+my @exprs;
+
+GetOptions(
+    'expression|e=s' => \@exprs,
+    'help|h|?' => \&usage,
+) or usage();
+
+die "For now, you need to specify expressions with -e\n"
+    unless @exprs;
+
+my $expr = '1h;1!H;${;g;'.join(';', @exprs).';p;}';
+
+exec(qw(sed -n -e), $expr, @ARGV)
+    or die "FOrk error: $!";
+
+sub usage
+{
+    print STDERR <<EOT;
+This is a wrapper script for sed that allows it to operate on multiple
+lines at a time. It does this by reading all lines into the hold buffer
+and performing your operations there.
+
+Based on an answer to
+    http://stackoverflow.com/questions/3816216/
+
+EOT
+    exit 1;
+}
