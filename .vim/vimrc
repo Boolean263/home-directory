@@ -86,16 +86,22 @@ silent! call mkdir(&directory, "p", 0700)
 
 " Highlight the current line and column, and column 80
 " The colours for these are set below
-set nocursorline cursorcolumn colorcolumn=80
+set cursorline cursorcolumn colorcolumn=80
 autocmd WinLeave * set nocursorline nocursorcolumn
 autocmd WinEnter * set cursorline cursorcolumn
 
 set pastetoggle=<F9>
 
-" Set Ctrl-Backspace to delete word
+" Set Ctrl-Backspace to delete word (gui)
 inoremap <C-BS> <C-W>
-inoremap <C-W> <Nop>
 cnoremap <C-BS> <C-W>
+
+" Set Ctrl-Backspace to delete word (cygterm)
+inoremap <C-_> <C-W>
+cnoremap <C-_> <C-W>
+
+" Allow Ctrl-W to be something else
+inoremap <C-W> <Nop>
 cnoremap <C-W> <Nop>
 
 " Use Shift-Insert to paste the clipboard at the current location
@@ -105,9 +111,9 @@ cnoremap <S-Insert> <C-R>*
 " Don't let 'x' wipe out the delete register
 nnoremap x "_x
 
-set nonumber
-set relativenumber
-set numberwidth=2
+set number
+"set relativenumber
+"set numberwidth=2
 
 set list
 set listchars=tab:>-,trail:-,extends:>
@@ -126,10 +132,16 @@ endif
 colorscheme koehler
 
 " Set colour customizations *after* setting colorscheme
-highlight CursorLine   term=none cterm=none ctermbg=238 guibg=#222222
+"highlight CursorLine   term=none cterm=none ctermbg=238 guibg=#222222
+highlight CursorLine NONE
 highlight CursorColumn term=none cterm=none ctermbg=238 guibg=#222222
 highlight ColorColumn  term=none cterm=none ctermbg=235 guibg=#0F0F0F
+highlight LineNr       term=underline cterm=none ctermfg=3 ctermbg=0 guifg=Yellow guibg=Black
 highlight CursorLineNr term=inverse cterm=none ctermfg=0 ctermbg=11 guifg=#000000 guibg=#FFFF00
+" CursorLineNr applies to the current line number only if relativenumber
+" is set, or if number AND cursorline are both set. cursorline and
+" relativenumber both slow vim down. Hopefully, "highlight CursorLine NONE"
+" mitigates that somewhat.
 
 " Buffer management
 set hidden " lets you switch away from unsaved buffers
