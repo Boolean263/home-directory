@@ -44,7 +44,7 @@ else
     export PS1='\[\e[0;48;5;$((29+((\#%2)*3)))m\e[38;5;7m\e[K\e[30m\][?:$? \w] $(__git_ps1)\[\e[0m\]\n\[\e[0;32m\]\!\$\[\e[0m\] '
 fi
 
-if [ -f "$HOME/.lesskey" ] && ! [ -f '$HOME/.less' ] ; then
+if [ -f "$HOME/.lesskey" ] && [ "$HOME/.lesskey" -nt "$HOME/.less" ] ; then
     lesskey
 fi
 

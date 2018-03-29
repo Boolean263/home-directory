@@ -96,7 +96,8 @@ set pastetoggle=<F9>
 inoremap <C-BS> <C-W>
 cnoremap <C-BS> <C-W>
 
-" Set Ctrl-Backspace to delete word (cygterm)
+" Set Ctrl-Backspace to delete word (cygterm, terminals I can
+" explicitly map it to \x1f in like konsole)
 inoremap <C-_> <C-W>
 cnoremap <C-_> <C-W>
 
