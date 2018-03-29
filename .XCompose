@@ -1,15 +1,26 @@
 # Include the standard xcompose bindings
 include "%L"
 
-# Define my own
-<Multi_key> <less> <3> : U2665
-
-
+# Update my Windows .XCompose.txt when I update this file.
 #
-# Copied these from my Windows .XCompose.txt -- may need to update that.
+# WinCompose: https://github.com/SamHocevar/wincompose
 #
+# Note that WinCompose allows specifying multiple output keys,
+# but standard Linux doesn't. Example from WinCompose.txt:
+# <Multi_key> <t> <f>         : "(ï¾ಥ益ಥ）ﾉ﻿ ┻━┻"    # Flip table like a boss.
+#
+# WinCompose also supports more than 2-character inputs, which I
+# don't think Linux supports?
+#
+# Conversely, WinCompose requires a quoted string, whereas
+# Linux can have just the Unnnn notation.
 
-<Multi_key> <o> <underscore> <o>         : "ಠ_ಠ"" # Disapproval.
+<Multi_key> <less> <3> : "♥" U2665 # Heart
+
+<Multi_key> <o> <underscore> <o> : "ಠ_ಠ"" # Disapproval.
+
+<Multi_key> <n> <minus> : "–" # En-Dash
+<Multi_key> <m> <minus> : "—" # Em-dash
 
 # Superscripts and subscripts. Inspired by eg. ^0 - ^9 and _0 - _9,
 <Multi_key> <asciicircum> <i> : "ⁱ" U2071 # Superscript i
