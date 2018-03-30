@@ -19,6 +19,10 @@
 # the final line to "exec" your session manager, or some other process
 # that will last as long as you need your X session.
 
+# Don't abort if the first exec fails
+shopt -s execfail
+
+exec startxfce4
 
 ##########
 ## Simplest xsession: failsafe
