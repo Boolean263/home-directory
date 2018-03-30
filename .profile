@@ -43,6 +43,8 @@ export TEST_JOBS=9
 
 export UBUNTU_MENUPROXY=
 
+export COLORTERM="truecolor"
+
 export PERL_CPANM_OPT="-n"
 export MYPERLDIR="$HOME/perl5"
 add_to_path PATH "$MYPERLDIR/bin"
