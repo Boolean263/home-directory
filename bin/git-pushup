@@ -3,5 +3,6 @@
 git remote -v | while read rname rurl rtype ; do
     [ "$rtype" = "(push)" ]          || continue
     [ "$rurl" = "file:///dev/null" ] && continue
+    echo "# $rname"
     git push "$rname" ${1+"$@"}
 done
