@@ -34,14 +34,15 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-[ -f ~/.profile ] && . ~/.profile
+[ -f ~/.profile ] && . ~/.profile || :
 
 # User specific environment and startup programs
 if [ "$TERM" = "linux" ] ; then
     export PS1="\[\e[0;32m\][?:\$? \w] \$(parse_git_branch)\n\!\\$\[\e[0m\] "
 else
     #export PS1='\[e[0;48;5;$((233+((\#%2)*2)))m\e[38;5;7m\e[K\e[32m\][?:$? \w]\n\!\$\[\e[38;5;15m\] '
-    export PS1='\[\e[0;48;5;$((29+((\#%2)*3)))m\e[38;5;7m\e[K\e[30m\][?:$? \w] $(__git_ps1)\[\e[0m\]\n\[\e[0;32m\]\!\$\[\e[0m\] '
+    #export PS1='\[\e[0;48;5;$((29+((\#%2)*3)))m\e[38;5;7m\e[K\e[30m\][?:$? \w] $(__git_ps1)\[\e[0m\]\n\[\e[0;32m\]\!\$\[\e[0m\] '
+    export PS1='\[\017\e[0;48;5;$((29+((\#%2)*3)))m\e[38;5;7m\e[K\e[37m\][\[\e[38;5;$(($?>0 ? 9 : 7))m\]?:$? \[\e[38;5;231m\]${debian_chroot:+"$debian_chroot:"}\[\e[37m\]] \w$(__git_ps1)\[\e[0m\]\n\[\e[0;32m\]\h \!\$\[\e[0m\] '
 fi
 
 if [ -f "$HOME/.lesskey" ] && [ "$HOME/.lesskey" -nt "$HOME/.less" ] ; then

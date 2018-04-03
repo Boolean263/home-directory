@@ -73,4 +73,4 @@ export GTK_IM_MODULE=xim
 
 export GPGKEY="310835C6"
 
-[ -f "$HOME/.profile.local" ] && . "$HOME/.profile.local"
+[ -f "$HOME/.profile.local" ] && . "$HOME/.profile.local" || :
