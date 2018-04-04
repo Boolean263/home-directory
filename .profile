@@ -40,6 +40,7 @@ export FIGNORE="CVS:\~:.o:.svn:.git:.lo"
 export NYTPROF="addpid=1"
 export DBIC_TRACE_PROFILE=console
 export TEST_JOBS=9
+export TERMINFO="$HOME/.terminfo"
 
 export UBUNTU_MENUPROXY=
 
