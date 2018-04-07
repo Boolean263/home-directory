@@ -1,0 +1,27 @@
+--- config.def.h	2018-03-29 17:40:16.692149790 -0400
++++ config.h	2018-04-07 13:57:09.752083029 -0400
+@@ -5,7 +5,7 @@
+  *
+  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
+  */
+-static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
++static char *font = "Source Code Pro:size=10:antialias=true:autohint=true";
+ static int borderpx = 2;
+ 
+ /*
+@@ -175,6 +175,7 @@
+ 	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
+ 	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
+ 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
++	{ ShiftMask,            XK_Insert,      clippaste,      {.i =  0} }, /* Shift-Insert -> Paste */
+ 	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
+ 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
+ 	{ TERMMOD,              XK_I,           iso14755,       {.i =  0} },
+@@ -338,6 +339,7 @@
+ 	{ XK_Delete,        XK_ANY_MOD,     "\033[3~",      +1,    0},
+ 	{ XK_BackSpace,     XK_NO_MOD,      "\177",          0,    0},
+ 	{ XK_BackSpace,     Mod1Mask,       "\033\177",      0,    0},
++	{ XK_BackSpace,     ControlMask,    "\037",          0,    0}, /* Ctrl-Backspace -> ^_ */
+ 	{ XK_Home,          ShiftMask,      "\033[2J",       0,   -1},
+ 	{ XK_Home,          ShiftMask,      "\033[1;2H",     0,   +1},
+ 	{ XK_Home,          XK_ANY_MOD,     "\033[H",        0,   -1},
