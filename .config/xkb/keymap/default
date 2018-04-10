@@ -1,4 +1,4 @@
-// See also the files in /usr/share/X11/xlb
+// See also the files in /usr/share/X11/xkb
 default xkb_keymap "default" {
     xkb_keycodes {
         include "evdev"
