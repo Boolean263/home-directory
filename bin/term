@@ -1,0 +1,27 @@
+#!/bin/bash
+FONTFACE="Source Code Pro"
+FONTSIZE="10"
+GEOMETRY="80x60"
+
+# Preferred terminals, in order
+PREFERRED_TERMS="st konsole xterm"
+
+# Figure out which of my preferred terms is installed, in order
+TERMEMU="$(which $PREFERRED_TERMS 2>/dev/null | head -1)"
+case "$TERMEMU" in
+    */st)
+        exec "$TERMEMU" -g "$GEOMETRY" -f "$FONTFACE:size=$FONTSIZE" ${1+"$@"}
+    ;;
+    */konsole)
+        # konsole doesn't allow much/any command-line customizing
+        exec "$TERMEMU" ${1+"$@"}
+    ;;
+    */xterm)
+        exec "$TERMEMU" -geometry "$GEOMETRY" -fa "$FONTFACE:size=$FONTSIZE" ${1+"$@"}
+    ;;
+    *)
+        echo "No suitable terminal found!" 1>&2
+        exit 1
+    ;;
+esac
+
