@@ -20,6 +20,9 @@
     ui = auto
     pager = true
 
+[fetch]
+        prune = true
+
 [push]
     default = tracking
 
@@ -38,6 +41,8 @@
 [alias]
     # lots stolen from https://git.wiki.kernel.org/index.php/Aliases
     # and https://gist.github.com/992097
+
+    fa = fetch --all
 
     #diff
     cdiff = diff --cached
