@@ -39,6 +39,7 @@ silent! call plug#begin('~/.vim/bundle')
 Plug 'tpope/vim-characterize'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-unimpaired'
 Plug 'pgilad/vim-skeletons' | Plug 'SirVer/ultisnips'
 Plug 'craigemery/vim-autotag'
 Plug 'wellle/targets.vim'
