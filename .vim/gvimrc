@@ -1,5 +1,10 @@
 set columns=84 lines=50
 set guioptions=acegirLt
+
+set guiheadroom=64
+nnoremap <F12> :set lines=999 columns=9999 \| winpos 0 0<cr>
+
+
 "set background=light
 "set guifont=Noto\ Mono\ 9
 "set guifont=Ubuntu\ Mono\ 10

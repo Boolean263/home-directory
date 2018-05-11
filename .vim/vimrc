@@ -146,6 +146,11 @@ highlight CursorLineNr term=inverse cterm=none ctermfg=0 ctermbg=11 guifg=#00000
 " relativenumber both slow vim down. Hopefully, "highlight CursorLine NONE"
 " mitigates that somewhat.
 
+highlight DiffDelete   term=none cterm=none ctermfg=0 ctermbg=52 guifg=black guibg=#5F0000
+highlight DiffAdd      term=none cterm=none ctermbg=22 guibg=#005F00
+highlight DiffChange   term=none cterm=none ctermbg=17 guibg=#00005F
+highlight DiffText     term=underline cterm=underline ctermbg=20 guibg=#0000D7
+
 " Buffer management
 set hidden " lets you switch away from unsaved buffers
 " List buffers and let you choose one
