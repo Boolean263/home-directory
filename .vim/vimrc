@@ -19,6 +19,9 @@ let g:tagbar_type_make = {
     \]
 \}
 
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+
 " vim-plug (https://github.com/junegunn/vim-plug) settings
 " Automatically install vim-plug and run PlugInstall if vim-plug not found
 if empty(glob('~/.vim/autoload/plug.vim')) && &shell =~ 'sh$'
@@ -75,6 +78,8 @@ set softtabstop=4
 set hlsearch
 
 set scrolloff=8
+
+set autoread
 
 " Set the directory for saving swap files and undo history
 if has('win32') || has('win64')
@@ -174,18 +179,20 @@ nnoremap <expr> k v:count ? 'k' : 'gk'
 "let $PERL5LIB=home."/perl5/lib/perl5/x86_64-linux-gnu-thread-multi:".home."/perl5/lib/perl5"
 "perl use Vim::X;
 "perl Vim::X::source_function_dir("~/.vim/perl");
-"
-"echo "Cygwin vimrc loaded"
 
 " http://vim.wikia.com/wiki/Setting_file_attributes_without_reloading_a_buffer
 function! SetExecutableBit()
     if &shell =~ 'sh$'
         let fname = expand("%:p")
         checktime
-        execute "au FileChangedShell " . fname . " :echo"
+        if ! &autoread
+            execute "au FileChangedShell " . fname . " :echo"
+        endif
         silent !chmod a+x %
         checktime
-        execute "au! FileChangedShell " . fname
+        if ! &autoread
+            execute "au! FileChangedShell " . fname
+        endif
     endif
 endfunction
 command! Xbit call SetExecutableBit()
