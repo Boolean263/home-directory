@@ -49,6 +49,7 @@ Plug 'wellle/targets.vim'
 Plug 'rhysd/clever-f.vim'
 Plug 'majutsushi/tagbar'
 Plug 'VinyLimaZ/tmux.vim'
+Plug 'wincent/terminus'
 let g:clever_f_across_no_line = 1
 let g:clever_f_timeout_ms = 3000
 call plug#end()
