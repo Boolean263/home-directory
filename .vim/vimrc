@@ -50,6 +50,7 @@ Plug 'rhysd/clever-f.vim'
 Plug 'majutsushi/tagbar'
 Plug 'VinyLimaZ/tmux.vim'
 Plug 'wincent/terminus'
+Plug 'airblade/vim-gitgutter'
 let g:clever_f_across_no_line = 1
 let g:clever_f_timeout_ms = 3000
 call plug#end()
@@ -99,6 +100,10 @@ autocmd WinLeave * set nocursorline nocursorcolumn
 autocmd WinEnter * set cursorline cursorcolumn
 
 set pastetoggle=<F9>
+
+" Since most of us have Ctrl-S hardwired into our b rains
+nnoremap <C-S> :w<CR>
+inoremap <C-S> <C-O>:w<CR>
 
 " Set Ctrl-Backspace to delete word (gui)
 inoremap <C-BS> <C-W>
