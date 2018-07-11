@@ -51,15 +51,24 @@ elsif($basename =~ /less$/)
 
 if($ENV{DISPLAY})
 {
-    if(-x $gvim)
+    if($gvim && -x $gvim)
     {
         do_or_die($gvim, @vim_args);
     }
-    # In the future I could add a check for xterm or whatever
-    # and call vim in that
+    my $term = which('term');
+    if($term)
+    {
+        my $fh;
+        open($fh, "-|", $term, "--which");
+        my $dummy = $fh->getline();
+        if(close($fh))
+        {
+            do_or_die($term, '-e', $vim, @vim_args);
+        }
+    }
 }
 
-if(! -x $vim)
+unless($vim && -x $vim)
 {
     die "VISUAL not set or not executable!\n";
 }

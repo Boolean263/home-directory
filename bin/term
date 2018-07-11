@@ -29,6 +29,14 @@ GEOMETRY="80x60"
 
 # Figure out which of my preferred terms is installed, in order
 TERMEMU="$(which $PREFERRED_TERMS 2>/dev/null | head -1)"
+if [ "$1" = "--which" ]; then
+    if [ -n "$TERMEMU" ] ; then
+        echo "$TERMEMU"
+        exit 0
+    else
+        exit 1
+    fi
+fi
 
 # Launch it with the command-line options I like
 case "$TERMEMU" in
