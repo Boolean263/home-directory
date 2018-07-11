@@ -79,9 +79,12 @@ set shiftwidth=4
 set softtabstop=4
 set hlsearch
 
-set scrolloff=8
+set scrolloff=5
 
 set autoread
+
+" Default seems to be croql
+set formatoptions=tcroqj
 
 " Set the directory for saving swap files and undo history
 if has('win32') || has('win64')
@@ -166,19 +169,9 @@ highlight DiffText     term=underline cterm=underline ctermbg=20 guibg=#0000D7
 set hidden " lets you switch away from unsaved buffers
 " List buffers and let you choose one
 nnoremap <leader>b :ls<cr>:b<space>
-nnoremap [b :bprev<cr>
-nnoremap ]b :bnext<cr>
-
-" See also Plug 'craigemery/vim-autotag'
-nnoremap [t :tprev<cr>
-nnoremap ]t :tnext<cr>
 
 " Seen this suggested a few places
 set wildmenu wildmode=full
-
-" Move through virtual lines if not moving with a count
-nnoremap <expr> j v:count ? 'j' : 'gj'
-nnoremap <expr> k v:count ? 'k' : 'gk'
 
 " This lets us write plugins in perl, but really slows down vim's startup
 "let home=expand('~')
