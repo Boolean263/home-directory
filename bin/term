@@ -1,23 +1,102 @@
 #!/bin/bash
+#
+# This script exists for two reasons:
+# 1) so that I can launch one script to get a terminal emulator without
+#    having to worry about which ones are installed on a given system
+# 2) document what I do and don't like about particular terminal emulators
+#    for my future self
+
+# My preferred terminals, in order. With unneccessary `cat`
+# to let me reorder lines on a whim.
+PREFERRED_TERMS=$(cat <<EOT
+    st stterm
+    urxvt rxvt-unicode rxvt
+    konsole
+    xterm
+EOT
+)
+# Terminals I've taken out of the rotation can be pasted here for reference.
+cat >/dev/null <<EOT
+    xfce4-terminal
+    lxterminal
+    mate-terminal gnome-terminal
+EOT
+
+# My global settings
 FONTFACE="Source Code Pro"
 FONTSIZE="10"
 GEOMETRY="80x60"
 
-# Preferred terminals, in order
-PREFERRED_TERMS="st konsole xterm"
-
 # Figure out which of my preferred terms is installed, in order
 TERMEMU="$(which $PREFERRED_TERMS 2>/dev/null | head -1)"
+
+# Launch it with the command-line options I like
 case "$TERMEMU" in
-    */st)
+    */st|*/stterm)
+        # st.suckless.org - This is my current favourite.
+        # It supports Ctrl-Backspace (with a slight compile-time tweak),
+        # truecolor, and has good unicode support overall.
+        # (Though I've recently discovered it doesn't do combining
+        # characters very well.)
+        # Very lightweight, and not dependent on libvte like many of the
+        # others here.
+        # Only downside is I need to build it from source to get my tweaks,
+        # but it's small and light, so that's not a big deal.
         exec "$TERMEMU" -g "$GEOMETRY" -f "$FONTFACE:size=$FONTSIZE" ${1+"$@"}
     ;;
     */konsole)
-        # konsole doesn't allow much/any command-line customizing
-        exec "$TERMEMU" ${1+"$@"}
+        # The terminal that comes with KDE.
+        # truecolor support, decent unicode support, and supports
+        # Ctrl-Backspace. It's not my favourite though because it forgets
+        # my Ctrl-Backspace setting EVERY SINGLE TIME and I have to manually
+        # reconfigure it and this is 2018 why is this even a thing.
+        #
+        # Anyway.
+        #
+        # konsole doesn't allow much command-line customizing, including
+        # fonts.
+        exec "$TERMEMU" --hide-menubar --hide-tabbar ${1+"$@"}
+    ;;
+    */*rxvt*)
+        # rxvt was my favourite for a long time, because it supports
+        # Ctrl-Backspace and 256 colours, and is (at least in theory)
+        # customizable with perl. Fell out of my favour because you need to
+        # manually specify the fonts that carry the unicode glyphs you want.
+        # Still decent though.
+        # See also ~/.Xresources.d/rxvt
+        exec "$TERMEMU" -geometry "$GEOMETRY" -fn "xft:$FONTFACE:size=$FONTSIZE" ${1+"$@"}
     ;;
     */xterm)
-        exec "$TERMEMU" -geometry "$GEOMETRY" -fa "$FONTFACE:size=$FONTSIZE" ${1+"$@"}
+        # The good old classic xterm. Pretty much guaranteed to be on
+        # any system. Supports 256 colours, and Ctrl-Backspace.
+        # Piss-poor unicode support though, so it's fairly low on my list.
+        # See also ~/.Xresources.d/xterm
+        exec "$TERMEMU" -geometry "$GEOMETRY" -fa "$FONTFACE:size=$FONTSIZE" \
+            -lc ${1+"$@"}
+    ;;
+    */xfce4-terminal)
+        # The terminal provided by the xfce4 window system.
+        # Supports truecolour and unicode. Didn't support Ctrl-Backspace
+        # for the longest time, which is why it's at the bottom, but I see
+        # they've added support now. It produces ^H like many terminals do
+        # by default; I'll have to investigate later to see if this can be
+        # remapped. (I've set up all my terminals to send ^_ instead because
+        # of mintty.)
+        exec "$TERMEMU" --geometry="$GEOMETRY" --font="$FONTFACE" \
+            --hide-menubar --hide-toolbar --hide-scrollbar ${1+"$@"}
+    ;;
+    */gnome-terminal|*/mate-terminal)
+        # The terminal provided by GNOME, and its fork. Truecolor, unicode,
+        # Ctrl-Backspace (as ^H), etc. I don't recall why I moved away from
+        # it right now.
+        # Possibly because it doesn't allow much/any command-line
+        # configuration?
+        exec "$TERMEMU" --geometry="$GEOMETRY" ${1+"$@"}
+    ;;
+    */lxterminal)
+        # Another lightweight terminal, not very customizable.
+        # Truecolor, unicode, Ctrl-Backspace (as ^H), etc.
+        exec "$TERMEMU" --geometry="$GEOMETRY" ${1+"$@"}
     ;;
     *)
         echo "No suitable terminal found!" 1>&2
@@ -25,3 +104,4 @@ case "$TERMEMU" in
     ;;
 esac
 
+# Thank you for joining me on this journey.
