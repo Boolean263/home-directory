@@ -55,6 +55,15 @@ if($ENV{DISPLAY})
     {
         do_or_die($gvim, @vim_args);
     }
+}
+
+unless($vim && -x $vim)
+{
+    die "VISUAL not set or not executable!\n";
+}
+
+if($ENV{DISPLAY})   # X but no gvim
+{
     my $term = which('term');
     if($term)
     {
@@ -67,12 +76,6 @@ if($ENV{DISPLAY})
         }
     }
 }
-
-unless($vim && -x $vim)
-{
-    die "VISUAL not set or not executable!\n";
-}
-
 if($ENV{TMUX})      # tmux
 {
     # tmux ≥ 2.1 does what you'd expect.
