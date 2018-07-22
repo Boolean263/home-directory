@@ -112,10 +112,9 @@ inoremap <C-S> <C-O>:w<CR>
 inoremap <C-BS> <C-W>
 cnoremap <C-BS> <C-W>
 
-" Set Ctrl-Backspace to delete word (cygterm, terminals I can
-" explicitly map it to \x1f in like konsole)
-inoremap <C-_> <C-W>
-cnoremap <C-_> <C-W>
+" Set Ctrl-Backspace to delete word
+inoremap <C-H> <C-W>
+cnoremap <C-H> <C-W>
 
 " Allow Ctrl-W to be something else
 inoremap <C-W> <Nop>

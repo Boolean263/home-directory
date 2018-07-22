@@ -52,5 +52,7 @@ XTerm*color15:          #FFFFFF
 ! By default, xterm maps ctrl-backspace to ^H. This maps it to ^_
 ! which is what MinTTY maps ctrl-backspace to. See also my stty command
 ! in my .bashrc.
-XTerm*translations: \
-    #override Ctrl<Key>BackSpace: string(0x1f)
+! Commented out now because I've decided to work around MinTTY instead
+! of making everything else work like it.
+!XTerm*translations: \
+!    #override Ctrl<Key>BackSpace: string(0x1f)
