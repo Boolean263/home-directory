@@ -18,6 +18,11 @@
 
 . $HOME/etc/env/path_functions.bash
 
+# Need this in cygwin for some reason
+add_to_path PATH /usr/local/bin
+#add_to_path MANPATH /usr/local/man
+#add_to_path LD_LIBRARY_PATH /usr/local/lib
+
 # set PATH so it includes user's private bin if it exists
 #if [ -d "$HOME/.plenv/bin" ] ; then
 #    export PATH="$HOME/.plenv/bin:$PATH"

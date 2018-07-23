@@ -54,6 +54,6 @@ fi
 bind -f "$INPUTRC"
 
 # Terminal setup
-/bin/stty stop undef start undef erase ^? werase ^_
+/bin/stty stop undef start undef erase ^? werase ^H
 
 [ -f "$HOME/.bashrc.local" ] && . "$HOME/.bashrc.local" || true

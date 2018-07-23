@@ -1,5 +1,5 @@
---- config.def.h	2018-03-29 17:40:16.692149790 -0400
-+++ config.h	2018-04-07 13:57:09.752083029 -0400
+--- config.def.h	2018-03-31 22:15:55.499474600 -0400
++++ config.h	2018-07-22 12:21:04.786880100 -0400
 @@ -5,7 +5,7 @@
   *
   * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
@@ -21,7 +21,7 @@
  	{ XK_Delete,        XK_ANY_MOD,     "\033[3~",      +1,    0},
  	{ XK_BackSpace,     XK_NO_MOD,      "\177",          0,    0},
  	{ XK_BackSpace,     Mod1Mask,       "\033\177",      0,    0},
-+	{ XK_BackSpace,     ControlMask,    "\037",          0,    0}, /* Ctrl-Backspace -> ^_ */
++	{ XK_BackSpace,     ControlMask,    "\010",          0,    0}, /* Ctrl-Backspace -> ^H */
  	{ XK_Home,          ShiftMask,      "\033[2J",       0,   -1},
  	{ XK_Home,          ShiftMask,      "\033[1;2H",     0,   +1},
  	{ XK_Home,          XK_ANY_MOD,     "\033[H",        0,   -1},

@@ -8,3 +8,6 @@ CursorType=block
 ThemeFile=downloaded v1
 ColourScheme=BackgroundColour=13,25,38;ForegroundColour=217,230,242;CursorColour=217,230,242;Black=0,0,0;BoldBlack=62,62,62;Red=203,98,98;BoldRed=230,179,179;Green=98,203,98;BoldGreen=179,230,179;Yellow=203,203,98;BoldYellow=230,230,179;Blue=98,98,203;BoldBlue=179,179,230;Magenta=203,98,203;BoldMagenta=230,179,230;Cyan=98,203,203;BoldCyan=179,230,230;White=205,205,205;BoldWhite=255,255,255;
 Scrollbar=none
+BackspaceSendsBS=no
+DeleteSendsDEL=no
+Answerback=MinTTY
