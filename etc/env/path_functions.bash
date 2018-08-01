@@ -10,7 +10,8 @@ is_in_path()
 {
     local PATHVAR="$1"
     local TESTPATH="$2"
-    eval echo \$$PATHVAR | grep -q '\(^\|:\)'"$TESTPATH"'\(:\|$\)' 2>/dev/null
+    local SEP=":"
+    eval echo \$$PATHVAR | grep -q '\(^\|'"$SEP"'\)'"$TESTPATH"'\('"$SEP"'\|$\)' 2>/dev/null
     return $?
 }
 
@@ -18,22 +19,45 @@ is_in_path()
 # Add to the path variable named in $1 the paths listed after, in order.
 # Adds to the beginning by default, or to the end if -e is given before
 # the path variable name.
+# If -bDIR or -aDIR is given before the path variable name, adds the new
+# paths before or after DIR if it appears in the path.
+# Forces adding/moving the path to the requested location if -f is given
+# before the path variable name.
 add_to_path()
 {
     local TO_END=
-    if [ "x$1" = "x-e" ] ; then
-        TO_END=1
-        shift
-    fi
+    local FORCE=
+    local SEP=":"
+    local BEFORE=""
+    local AFTER=""
+    local SED_SEP=$'\x1F' # sed supports using UNIT SEPARATOR as a delimiter
+                          # which (probably) won't appear in path names
+    while true ; do
+        case "$1" in
+            -e) TO_END=1 ; shift ;;
+            -f) FORCE=1  ; shift ;;
+            -b*) BEFORE="${1#-b}" ; shift ;;
+            -a*) AFTER="${1#-a}" ; TO_END=1 ; shift ;;
+            *) break ;;
+        esac
+    done
     local PATHVAR="$1"
+    if [ -d "$PATHVAR" ] ; then
+        echo "add_to_path: $PATHVAR appears to be a directory, not a path variable" 1>&2
+    fi
     shift
     local ADDPATHS=""
+    if [ "x$BEFORE" != "x" ] && [ "x$AFTER" != "x" ] ; then
+        echo "add_to_path: -b and -a cannot both be specified" 1>&2
+        return 1
+    fi
     while [ "x$1" != "x" ] ; do
+        [ "$FORCE" = "1" ] && del_from_path "$PATHVAR" "$1"
         if ! [ -d "$1" ] ; then
             echo "add_to_path: $1 not added to $PATHVAR (not found)"
         elif ! is_in_path "$PATHVAR" "$1" && \
              ! is_in_path ADDPATHS "$1" ; then
-            ADDPATHS="$ADDPATHS${ADDPATHS:+:}$1"
+            ADDPATHS="$ADDPATHS${ADDPATHS:+$SEP}$1"
         fi
         shift
     done
@@ -42,10 +66,16 @@ add_to_path()
         : # do nothing
     elif [ "x$tmppath" = "x" ] ; then
         eval export \$PATHVAR=\"$ADDPATHS\"
+    elif ! [ "x$BEFORE" = "x" ] && is_in_path "$PATHVAR" "$BEFORE" ; then
+        local SEDPATH=$(eval echo "\$$PATHVAR" | sed -r "s$SED_SEP"'(^|'"$SEP"')('"$BEFORE"')('"$SEP"'|$)'"$SED_SEP"'\1'"$ADDPATHS$SEP"'\2\3'"$SED_SEP")
+        eval export \$PATHVAR="$SEDPATH"
+    elif ! [ "x$AFTER" = "x" ] && is_in_path "$PATHVAR" "$AFTER" ; then
+        local SEDPATH=$(eval echo "\$$PATHVAR" | sed -r "s$SED_SEP"'(^|'"$SEP"')('"$AFTER"')('"$SEP"'|$)'"$SED_SEP"'\1\2'"$SEP$ADDPATHS"'\3'"$SED_SEP")
+        eval export \$PATHVAR="$SEDPATH"
     elif [ "x$TO_END" = "x" ] ; then
-        eval export \$PATHVAR=\"$ADDPATHS:\$$PATHVAR\"
+        eval export \$PATHVAR=\"$ADDPATHS$SEP\$$PATHVAR\"
     else
-        eval export \$PATHVAR=\"\$$PATHVAR:$ADDPATHS\"
+        eval export \$PATHVAR=\"\$$PATHVAR$SEP$ADDPATHS\"
     fi
 }
 
@@ -54,8 +84,16 @@ add_to_path()
 del_from_path()
 {
     local PATHVAR="$1"
+    local SEP=":"
+    if [ -d "$PATHVAR" ] ; then
+        echo "del_from_path: $PATHVAR appears to be a directory, not a path variable" 1>&2
+    fi
     eval local tmppath=\"\$$PATHVAR\"
     shift
+    if [ "x$1" = "x" ] ; then
+        echo "del_from_path: no paths found: did you forget your PATHVAR?" 1>&2
+        return 1
+    fi
     while [ "x$1" != "x" ] ; do
         local DELPATH="$1"
         shift
@@ -65,13 +103,13 @@ del_from_path()
                 tmppath=""
             else
                 # in case it's at the start
-                tmppath="${tmppath#$DELPATH:}"
+                tmppath="${tmppath#$DELPATH$SEP}"
 
                 # in case it's at the end
-                tmppath="${tmppath%:$DELPATH}"
+                tmppath="${tmppath%$SEP$DELPATH}"
 
                 # in case it's in the middle somewhere
-                tmppath="${tmppath/:$DELPATH:/:}"
+                tmppath="${tmppath/$SEP$DELPATH$SEP/$SEP}"
             fi
         fi
     done
@@ -84,5 +122,10 @@ del_from_path()
 show_path()
 {
     local PATHVAR="$1"
-    eval echo '$'$PATHVAR | tr ':' '\n'
+    local SEP=":"
+    if [ "x$PATHVAR" = "x" ] ; then
+        echo "show_path: no PATHVAR specified" 1>&2
+        return 1
+    fi
+    eval echo '$'$PATHVAR | tr "$SEP" '\n'
 }
