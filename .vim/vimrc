@@ -104,7 +104,7 @@ autocmd WinEnter * set cursorline cursorcolumn
 
 set pastetoggle=<F9>
 
-" Since most of us have Ctrl-S hardwired into our b rains
+" Since most of us have Ctrl-S hardwired into our brains
 nnoremap <C-S> :w<CR>
 inoremap <C-S> <C-O>:w<CR>
 
@@ -126,6 +126,12 @@ cnoremap <S-Insert> <C-R>*
 
 " Don't let 'x' wipe out the delete register
 nnoremap x "_x
+
+" Move through visual lines rather than physical lines
+nnoremap j gj
+nnoremap k gk
+vnoremap j gj
+vnoremap k gk
 
 set number
 "set relativenumber
@@ -193,7 +199,7 @@ function! SetExecutableBit()
         endif
     endif
 endfunction
-command! Xbit call SetExecutableBit()
+"command! Xbit call SetExecutableBit()
 
 augroup quickfix
     autocmd!

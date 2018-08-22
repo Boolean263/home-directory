@@ -1,1 +1,2 @@
 setlocal linebreak
+setlocal nocursorcolumn
