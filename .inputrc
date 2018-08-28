@@ -16,7 +16,14 @@ set horizontal-scroll-mode off
 set show-all-if-ambiguous on
 set skip-completed-text on
 
-$if mode=emacs
+# Play around with vi input mode
+set show-mode-in-prompt on
+set emacs-mode-string ""
+set vi-cmd-mode-string "CMD│"
+set vi-ins-mode-string "INS│"
+set keyseq-timeout 20
+
+#if mode=emacs
 
 "\e[5~": history-search-backward        # pgup
 "\e[6~": history-search-forward         # pgdn
@@ -35,4 +42,8 @@ $endif # term=rxvt
 "\C-Rubout": backward-kill-word
 "\C-w": self-insert
 
-$endif # mode=emacs
+#endif # mode=emacs
+
+# Add to keybindings available in vi-command
+set keymap vi-command
+"'": vi-goto-mark
