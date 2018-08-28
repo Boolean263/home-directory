@@ -38,7 +38,16 @@ GetOptions(
     "man"               => sub { pod2usage(-verbose => 2) },
 ) or pod2usage("Use '--help' or '--man' for more information.");
 
-${0}
+${0:while (<>)
+{
+    chomp;
+    $_ = NFD($_);
+    #...
+}
+continue
+{
+    say NFC($_);
+}}
 
 __END__
 
