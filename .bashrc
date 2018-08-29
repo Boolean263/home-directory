@@ -61,6 +61,8 @@ if [ -f "$HOME/.lesskey" ] && [ "$HOME/.lesskey" -nt "$HOME/.less" ] ; then
     lesskey
 fi
 
+# Try out vi command mode for grins
+set -o vi
 
 # Don't know why I need this
 bind -f "$INPUTRC"
