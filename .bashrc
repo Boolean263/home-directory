@@ -14,6 +14,18 @@ case $- in
     *) return;
 esac
 
+# If this is a remote host being ssh'd into, launch tmux or screen if we can
+if [ -n "$SSH_CONNECTION" ] ; then
+    # Protect against nested sessions
+    if [ -z "$TMUX" ] && [ -z "$STY" ] ; then
+        if $(which tmux >/dev/null 2>&1) ; then
+            exec sh -c 'tmux attach-session -t ssh || exec tmux new-session -s ssh'
+        elif $(which screen >/dev/null 2>&1) ; then
+            exec screen -S ssh -x -RR
+        fi
+    fi
+fi
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
