@@ -16,6 +16,9 @@
 #    fi
 #fi
 
+# Try to prevent dash from choking, but it doesn't seem to work
+[ "${0#*-}" = "dash" ] && export PS1='[\u@\h \W]\$ ' || :
+
 . $HOME/etc/env/path_functions.bash
 
 # Need this in cygwin for some reason
