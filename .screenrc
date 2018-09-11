@@ -61,6 +61,9 @@ bind '}' history
 #bindkey -k kP prev
 #bindkey -k kN next
 
+# Put ssh agent in a predictable place
+# (see also ~/.ssh/rc)
+setenv SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
 
 ################
 #
