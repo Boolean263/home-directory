@@ -19,7 +19,7 @@ if [ -n "$SSH_CONNECTION" ] ; then
     # Protect against nested sessions
     if [ -z "$TMUX" ] && [ -z "$STY" ] ; then
         if $(which tmux >/dev/null 2>&1) ; then
-            exec sh -c 'tmux attach-session -t ssh || exec tmux new-session -s ssh'
+            exec sh -c 'tmux attach-session -t ssh || exec tmux -f $HOME/.tmux-ssh-setup.conf new-session -s ssh'
         elif $(which screen >/dev/null 2>&1) ; then
             exec screen -S ssh -x -RR
         fi
