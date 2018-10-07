@@ -105,8 +105,8 @@ autocmd WinEnter * set cursorline cursorcolumn
 set pastetoggle=<F9>
 
 " Since most of us have Ctrl-S hardwired into our brains
-nnoremap <C-S> :w<CR>
-inoremap <C-S> <C-O>:w<CR>
+nnoremap <C-S> :wa<CR>
+inoremap <C-S> <C-O>:wa<CR>
 
 " Set Ctrl-Backspace to delete word (gui)
 inoremap <C-BS> <C-W>
