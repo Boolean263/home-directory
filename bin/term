@@ -25,7 +25,7 @@ EOT
 # My global settings
 FONTFACE="Source Code Pro"
 FONTSIZE="10"
-GEOMETRY="80x60"
+GEOMETRY="80x56"
 
 # Figure out which of my preferred terms is installed, in order
 TERMEMU="$(which $PREFERRED_TERMS 2>/dev/null | head -1)"
