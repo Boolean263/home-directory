@@ -40,9 +40,10 @@ if($basename eq 'gro')
 {
     push @vim_args, '+set ro', '+set noswapfile';
 }
-elsif($basename =~ /less$/)
+if(! -t STDIN)
 {
-    # Untested and unlikely to work
+    # Currently only works for gvim or direct vim, not for
+    # xterm/tmux/screen
     push @vim_args, '+set buftype=nofile';
     push @vim_tail, '-';
 }
@@ -82,6 +83,7 @@ if($ENV{TMUX})      # tmux
     my $tmux_version = `tmux -V`;
     chomp $tmux_version;
     $tmux_version =~ s/^tmux\s*//;
+    $tmux_version =~ s/[^\d.]*$//;
     $tmux_version = version->parse($tmux_version);
     if($tmux_version >= version->parse("2.1"))
     {
