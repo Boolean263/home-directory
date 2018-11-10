@@ -44,7 +44,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-unimpaired'
 Plug 'pgilad/vim-skeletons' | Plug 'SirVer/ultisnips'
-Plug 'craigemery/vim-autotag'
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'wellle/targets.vim'
 Plug 'rhysd/clever-f.vim'
 Plug 'majutsushi/tagbar'
@@ -82,6 +82,8 @@ set hlsearch
 set scrolloff=5
 
 set autoread
+
+set display=lastline                " don't show partial lines as @'s
 
 " Default seems to be croql
 set formatoptions=tcroqj
