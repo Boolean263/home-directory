@@ -1,2 +1,1 @@
-setlocal linebreak
-setlocal nocursorcolumn
+runtime ftplugin/text.vim

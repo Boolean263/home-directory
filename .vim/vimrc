@@ -71,17 +71,17 @@ let mapleader=" "
 nnoremap <Leader>/ :noh<CR>
 nnoremap <Leader>c /^\(<<<<<<<\\|=======\\|>>>>>>>\)<CR>
 
-set backspace=indent,eol,start
-set autoindent
-set expandtab
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set hlsearch
+set backspace=indent,eol,start      " backspace across lines, etc.
+set autoindent                      " keep indent level of previous lines
+set expandtab                       " expand tabs to spaces
+set tabstop=4                       " tab characters stop every n columns
+set shiftwidth=4                    " indent/dedent by n columns
+set softtabstop=4                   " tab stops are every n columns
+set hlsearch                        " hilight search terms
 
-set scrolloff=5
+set scrolloff=4                     " number of lines to keep visible at top/bottom of screen
 
-set autoread
+set autoread                        " automatically reload the file if it's changed outside of vim and not inside
 
 set display=lastline                " don't show partial lines as @'s
 
@@ -101,10 +101,13 @@ silent! call mkdir(&directory, "p", 0700)
 " Highlight the current line and column, and column 80
 " The colours for these are set below
 set cursorline cursorcolumn colorcolumn=80
-autocmd WinLeave * set nocursorline nocursorcolumn
-autocmd WinEnter * set cursorline cursorcolumn
+augroup cursorcoords
+    autocmd!
+    autocmd WinLeave * set nocursorline nocursorcolumn
+    autocmd WinEnter * set cursorline cursorcolumn
+augroup END
 
-set pastetoggle=<F9>
+set pastetoggle=<F9>                " key that toggles paste mode
 
 " Since most of us have Ctrl-S hardwired into our brains
 nnoremap <C-S> :wa<CR>
@@ -114,7 +117,7 @@ inoremap <C-S> <C-O>:wa<CR>
 inoremap <C-BS> <C-W>
 cnoremap <C-BS> <C-W>
 
-" Set Ctrl-Backspace to delete word
+" Set Ctrl-Backspace to delete word (tui)
 inoremap <C-H> <C-W>
 cnoremap <C-H> <C-W>
 
@@ -139,9 +142,12 @@ set number
 "set relativenumber
 "set numberwidth=2
 
+" Show non-printable pseudocharacters
 set list
-set listchars=tab:>-,trail:-,extends:>
-set listchars=tab:␉·,trail:·,extends:>
+" Fallback symbols if vim has trouble with UTF-8
+set listchars=tab:>-,trail:-,extends:>,precedes:<
+" The real symbols I want
+silent! set listchars=tab:␉·,trail:·,extends:⏵,precedes:⏴,nbsp:␣
 
 if (&term == 'xterm' || &term =~? '^screen')
     set t_Co=256
@@ -186,42 +192,8 @@ set wildmenu wildmode=full
 "perl use Vim::X;
 "perl Vim::X::source_function_dir("~/.vim/perl");
 
-" http://vim.wikia.com/wiki/Setting_file_attributes_without_reloading_a_buffer
-function! SetExecutableBit()
-    if &shell =~ 'sh$'
-        let fname = expand("%:p")
-        checktime
-        if ! &autoread
-            execute "au FileChangedShell " . fname . " :echo"
-        endif
-        silent !chmod a+x %
-        checktime
-        if ! &autoread
-            execute "au! FileChangedShell " . fname
-        endif
-    endif
-endfunction
-"command! Xbit call SetExecutableBit()
-
 augroup quickfix
     autocmd!
     autocmd QuickFixCmdPost [^l]* cwindow
 augroup END
 
-function! UndoCPSave()
-    let b:undo_cp = undotree().seq_cur
-endfunction
-function! UndoCPRestore()
-    if exists('b:undo_cp')
-        let l:undo_cp = undotree().seq_cur
-        execute "".b:undo_cp."undo"
-        let b:undo_cp = l:undo_cp
-    else
-        echohl ErrorMsg
-        echo "No saved undo spot"
-        echohl None
-    endif
-endfunction
-nnoremap <leader>U :call UndoCPSave()<CR>
-nnoremap <leader>u :call UndoCPRestore()<CR>
-au! BufReadPost * if &modifiable | call UndoCPSave() | endif
