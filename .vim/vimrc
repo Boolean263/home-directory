@@ -197,3 +197,17 @@ augroup quickfix
     autocmd QuickFixCmdPost [^l]* cwindow
 augroup END
 
+" auto-complete options; see :help ins-completion
+" see also https://vimways.org/2018/you-should-be-using-tags-in-vim/
+" see also https://vim.wikia.com/wiki/Make_Vim_completion_popup_menu_work_just_like_in_an_IDE
+set complete=.,t,i
+set completeopt=menuone,preview
+" autocomplete from tag
+inoremap <C-]> <C-X><C-]>
+" autocomplete from keywords in the current and included files
+inoremap <C-N> <C-X><C-I>
+" autocomplete from definitions/macros
+inoremap <C-D> <C-X><C-D>
+" when the popup completion menu is showing, let Enter select the current
+" option
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
