@@ -63,7 +63,7 @@ bind '}' history
 
 # Put ssh agent in a predictable place
 # (see also ~/.ssh/rc)
-setenv SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
+#setenv SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
 
 ################
 #

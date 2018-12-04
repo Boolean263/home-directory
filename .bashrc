@@ -15,11 +15,17 @@ case $- in
 esac
 
 # If this is a remote host being ssh'd into, launch tmux or screen if we can
-if [ -n "$SSH_CONNECTION" ] ; then
+if [ -n "$SSH_CONNECTION" ] && ! [ -e "$HOME/.no-tmux" ] ; then
     # Protect against nested sessions
     if [ -z "$TMUX" ] && [ -z "$STY" ] ; then
+        SOCK="$HOME/.ssh/auth_sock/$(hostname)"
+        if [ -n "$SSH_AUTH_SOCK" ] && [ "$SSH_AUTH_SOCK" != "$SOCK" ] ; then
+            rm -f "$SOCK"
+            ln -sf "$SSH_AUTH_SOCK" "$SOCK"
+            export SSH_AUTH_SOCK="$SOCK"
+        fi
         if $(which tmux >/dev/null 2>&1) ; then
-            exec sh -c 'tmux attach-session -t ssh || exec tmux -f $HOME/.tmux-ssh-setup.conf new-session -s ssh'
+            exec sh -c 'tmux attach-session -t ssh || exec tmux new-session -s ssh'
         elif $(which screen >/dev/null 2>&1) ; then
             exec screen -S ssh -x -RR
         fi
