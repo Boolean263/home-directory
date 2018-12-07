@@ -1,0 +1,45 @@
+snippet '"""' "Docstring" r
+"""\
+${1}
+"""
+endsnippet
+
+snippet def "Function definition" b
+def ${1:funcname}(${2:args}):
+	${0:pass}
+endsnippet
+
+snippet class "Class definition" b
+class ${1:classname}(${2:object}):
+	"""\
+	${3:Documentation for this class.}
+	"""
+
+	def __init__(self):
+		pass
+endsnippet
+
+snippet "^modeline" "Editor modelines rb
+#
+# Editor modelines - http://www.wireshark.org/tools/modelines.html
+#
+# Local variables:
+# c-basic-offset: ${1:4}
+# tab-width: ${1:4}
+# indent-tabs-mode: t
+# End:
+#
+# vi:set shiftwidth=${1:4} tabstop=${1:4} noexpandtab:
+# indentSize=${1:4}:tabSize=${1:4}:noTabs=false:
+endsnippet
+
+
+
+
+
+
+
+
+
+# This is a bunch of padding so vim doesn't think the above is the
+# modeline I want for this file.
