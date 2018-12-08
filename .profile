@@ -40,7 +40,7 @@ export EDITOR="$VISUAL"
 export INPUTRC="$HOME/.inputrc"
 #export GREP_OPTIONS="--colour --exclude-dir=.svn"
 export LESS="-R"
-export LESSOPEN="|lesspipe.sh %s"
+#export LESSOPEN="|lesspipe.sh %s"
 
 export HISTCONTROL="ignorespace:ignoredups"
 export FIGNORE="CVS:\~:.o:.svn:.git:.lo"
