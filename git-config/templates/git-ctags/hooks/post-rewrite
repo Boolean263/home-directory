@@ -2,13 +2,11 @@
 #
 # see `man githooks`
 
-GIT_CMD="$1"
+GIT_CMD="$1" # may be 'rebase' or 'amend'
 
-case "$GIT_CMD" in
-    rebase)
-        exec $(git rev-parse --absolute-git-dir)/hooks/post-merge
-        ;;
-    amend)
-        :
-        ;;
-esac
+if [ -x "$HOME/bin/git-ctags" ] && ! [ -t /dev/stdin ] ; then
+    # this hook gets its rewritten SHAs on stdin
+    while read OLDSHA1 NEWSHA1 REST ; do
+        "$HOME/bin/git-ctags" "$OLDSHA1..$NEWSHA1"
+    done
+fi

@@ -6,6 +6,6 @@ OLDREF="$1"
 NEWREF="$2"
 ISBRANCH="$3"
 
-if [ -f "$HOME/bin/update-git-ctags" ] ; then
-    "$HOME/bin/update-git-ctags" "$OLDREF" "$NEWREF" &
+if [ -x "$HOME/bin/git-ctags" ] ; then
+    "$HOME/bin/git-ctags" "$OLDREF..$NEWREF" &
 fi

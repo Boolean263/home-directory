@@ -2,6 +2,6 @@
 #
 # see `man githooks`
 
-if [ -f "$HOME/bin/update-git-ctags" ] ; then
-    "$HOME/bin/update-git-ctags" HEAD~1 HEAD &
+if [ -x "$HOME/bin/git-ctags" ] ; then
+    "$HOME/bin/git-ctags" HEAD~1..HEAD &
 fi
