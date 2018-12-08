@@ -1,0 +1,181 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import sys
+import os
+import os.path
+import argparse
+import subprocess
+
+##
+## Functions
+##
+
+def debug(*args, **kwargs):
+    if 'DEBUG' in os.environ:
+        print(*args, **kwargs, file=sys.stderr)
+    else:
+        pass
+
+def shell_get_lines(args, **kwargs):
+    "Run a shell command and get single lines of the output."
+    with subprocess.Popen(args, universal_newlines=True,
+            stdout=subprocess.PIPE, **kwargs) as proc:
+        while True:
+            line = proc.stdout.readline()
+            if line == '':
+                break
+            yield line.strip()
+    return None
+
+def get_git_dirs():
+    "Get directories related to this git repo."
+    git_cmd = shell_get_lines(['git', 'rev-parse', '--absolute-git-dir', '--show-toplevel'])
+    git_dir = next(git_cmd)
+    top_dir = next(git_cmd)
+    return (git_dir, top_dir)
+
+def get_tags_file(search_paths):
+    "Find the location of the user's existing tags file."
+    for path in search_paths:
+        tags_file = os.path.join(path, 'tags')
+        if os.path.isfile(tags_file):
+            debug("Found user tags file in "+tags_file)
+            return tags_file
+    # There's no existing tags file
+    debug("No user tags file found")
+    return None
+
+def create_tags_file(top_dir, tags_file=None):
+    "Create a new tags file, assuming the user doesn't already have one."
+    if tags_file is None:
+        tags_file = os.path.join(tags_dir, "tags")
+    temp_tags_file = tags_file + "." + str(os.getpid())
+
+    args = ['ctags', '-f', temp_tags_file, '--extra=+q']
+    if os.path.isfile(os.path.join(top_dir, '.ctags')):
+        args += [ '-L', os.path.join(top_dir, '.ctags') ]
+    args += [ '--verbose=yes' if 'DEBUG' in os.environ else '--verbose=no' ]
+    args += [ '-R', '.' ]
+
+    debug("Creating new tags file in "+temp_tags_file)
+    if 0 == subprocess.call(args, universal_newlines=True, cwd=top_dir):
+        debug("Success, renaming to "+tags_file)
+        os.rename(temp_tags_file, tags_file)
+
+def auto_update_tags_file(top_dir, last_rev, this_rev, tags_file=None):
+    "Smartly update the tags file based on the most recent git commit."
+    if tags_file is None:
+        tags_file = os.path.join(tags_dir, "tags")
+    temp_tags_file = tags_file + "." + str(os.getpid())
+
+    removed = []
+    added = []
+    debug("Processing changes from {0}..{1}".format(last_rev, this_rev))
+
+    for line in shell_get_lines(['git', 'diff', '--name-status', last_rev+'..'+this_rev], cwd=top_dir):
+        (dstatus, filename) = line.split('\t', 1)
+        if dstatus[0] == 'R':
+            (oldfile, newfile) = filename.split('\t', 1)
+            debug("Removing {0}, adding {1} ({2})".format(oldfile, newfile, dstatus))
+            removed += [ oldfile ]
+            added += [ newfile ]
+        elif dstatus == 'X' or dstatus == 'D':
+            debug("Removing {0} ({1})".format(filename, dstatus))
+            removed += [ filename ]
+        elif dstatus == 'M':
+            debug("Re-adding {0} ({1})".format(filename, dstatus))
+            removed += [ filename ]
+            added += [ filename ]
+        elif dstatus == 'A' or dstatus == 'T':
+            debug("Adding {0} ({1})".format(filename, dstatus))
+            added += [ filename ]
+
+    filter_tags_file(tags_file, temp_tags_file, removed)
+    added = [ x for x in added if os.path.isfile(os.path.join(top_dir, x)) ]
+    add_to_tags_file(top_dir, temp_tags_file, added)
+    os.rename(temp_tags_file, tags_file)
+
+
+def filter_tags_file(old_file, new_file, removed):
+    "Filter removed files out of a tags file."
+    removed = set(removed)
+    with open(old_file, "rt") as infile:
+        with open(new_file, "wt") as outfile:
+            for line in infile:
+                try:
+                    if line.split('\t')[1] not in removed:
+                        outfile.write(line)
+                except ValueError:
+                    # Problem with the split; just pass it through
+                    outfile.write(line)
+
+def add_to_tags_file(top_dir, tags_file, added):
+    "Scan the given files for tags and append them to the tags file."
+    args = ['ctags', '-f', tags_file, '--extra=+q', '-L', '-', '-a']
+    args += [ '--verbose=yes' if 'DEBUG' in os.environ else '--verbose=no' ]
+
+    with subprocess.Popen(args, stdin=subprocess.PIPE,
+            universal_newlines=True, cwd=top_dir) as proc:
+        if os.path.isfile(os.path.join(top_dir, '.ctags')):
+            with open(os.path.join(top_dir, '.ctags'), 'rt') as infile:
+                for line in infile:
+                    proc.stdin.write(line)
+        for file in added:
+            proc.stdin.write(file+"\n")
+
+        proc.communicate()
+
+##
+## Main Program
+##
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="Git helper to (re)generate ctags")
+    parser.add_argument("-v", "--verbose",
+            action="count", default=0,
+            help="Increase verbosity")
+    parser.add_argument("old_head",
+            metavar="OLD_HEAD",
+            type=str,
+            nargs="?",
+            help="Old HEAD")
+    parser.add_argument("new_head",
+            metavar="NEW_HEAD",
+            type=str,
+            nargs="?",
+            help="New HEAD")
+
+    args = parser.parse_args()
+    if args.verbose > 0:
+        os.environ['DEBUG'] = str(args.verbose)
+
+    (git_dir, top_dir) = get_git_dirs()
+    tags_file = get_tags_file([top_dir, git_dir])
+    if tags_file is None:
+        create_tags_file(top_dir)
+    else:
+        if args.old_head and args.new_head:
+            auto_update_tags_file(top_dir, args.old_head, args.new_head, tags_file)
+        else:
+            try:
+                git_cmd = shell_get_lines(['git', 'rev-parse', 'HEAD~1', 'HEAD', '--'])
+                last_rev = next(git_cmd)
+                this_rev = next(git_cmd)
+                auto_update_tags_file(top_dir, last_rev, this_rev, tags_file)
+            except (StopIteration, subprocess.CalledProcessError):
+                # No such revision, either zero or one commits.
+                # Let's just play it safe and create a new tags file from scratch.
+                create_tags_file(top_dir, tags_file=tags_file)
+
+
+# Editor modelines - http://www.wireshark.org/tools/modelines.html
+#
+# Local variables:
+# c-basic-offset: 4
+# tab-width: 4
+# indent-tabs-mode: nil
+# coding: utf-8
+# End:
+#
+# vi:set shiftwidth=4 tabstop=4 expandtab fileencoding=utf-8:
+# :indentSize=4:tabSize=4:noTabs=true:coding=utf-8:

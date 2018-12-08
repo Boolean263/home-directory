@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# see `man githooks`
+
+GIT_CMD="$1"
+
+case "$GIT_CMD" in
+    rebase)
+        exec $(git rev-parse --absolute-git-dir)/hooks/post-merge
+        ;;
+    amend)
+        :
+        ;;
+esac

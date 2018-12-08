@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# see `man githooks`
+
+if [ -f "$HOME/bin/update-git-ctags" ] ; then
+    "$HOME/bin/update-git-ctags" HEAD~1 HEAD &
+fi

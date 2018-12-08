@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# see `man githooks`
+
+IS_SQUASH="$1"
+
+if [ -f "$HOME/bin/update-git-ctags" ] ; then
+    # FIXME: Is it correct that the refs will be HEAD~1 and HEAD?
+    "$HOME/bin/update-git-ctags" HEAD~1 HEAD &
+fi
