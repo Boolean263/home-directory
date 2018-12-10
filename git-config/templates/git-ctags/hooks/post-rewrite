@@ -4,7 +4,7 @@
 
 GIT_CMD="$1" # may be 'rebase' or 'amend'
 
-if [ -x "$HOME/bin/git-ctags" ] && ! [ -t /dev/stdin ] ; then
+if [ -x "$HOME/bin/git-ctags" ] && ! [ -t 0 ] ; then
     # this hook gets its rewritten SHAs on stdin
     while read OLDSHA1 NEWSHA1 REST ; do
         "$HOME/bin/git-ctags" "$OLDSHA1..$NEWSHA1"
