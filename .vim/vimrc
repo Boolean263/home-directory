@@ -1,5 +1,6 @@
 " vim:set fileencoding=utf-8:
 set nocompatible
+let $VIMHOME=expand('<sfile>:p:h')
 " The next line fails in Windows
 silent! language en_US.UTF-8
 set encoding=utf-8
@@ -24,7 +25,7 @@ let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 
 " vim-plug (https://github.com/junegunn/vim-plug) settings
 " Automatically install vim-plug and run PlugInstall if vim-plug not found
-if empty(glob('~/.vim/autoload/plug.vim')) && &shell =~ 'sh$'
+if empty(glob('$VIMHOME/autoload/plug.vim')) && &shell =~ 'sh$'
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall | source $MYVIMRC
@@ -38,7 +39,7 @@ nnoremap <F8> :TagbarToggle<CR>
 
 " *** For vim-plug
 " use silent! to suppress warning messages about missing git in Windows
-silent! call plug#begin('~/.vim/bundle')
+silent! call plug#begin('$VIMHOME/bundle')
 Plug 'tpope/vim-characterize'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
@@ -81,12 +82,41 @@ set hlsearch                        " hilight search terms
 
 set scrolloff=4                     " number of lines to keep visible at top/bottom of screen
 
+set updatetime=500                  " save swap and update CursorHold
 set autoread                        " automatically reload the file if it's changed outside of vim and not inside
 
 set display=lastline                " don't show partial lines as @'s
 
-" Default seems to be croql
-set formatoptions=tcroqj
+if version > 742
+    set signcolumn=yes              " always show sign column
+else
+    let g:gitgutter_sign_column_always=1
+endif
+
+" My default seems to be croql; 'help fo-table' says the default is tcq
+set formatoptions=                  " clear it out
+set formatoptions+=t                " auto-wrap text on textwidth
+set formatoptions+=c                " auto-wrap comments on textwidth
+set formatoptions+=r                " auto-insert comment leader for Enter
+set formatoptions+=o                " auto-insert comment leader for o/O
+set formatoptions+=j                " remove comment leader when joining
+set formatoptions+=q                " let 'gq' format comments
+
+" https://vimways.org/2018/formatting-lists-with-vim/
+set formatoptions+=n                " format 'numbered' lists based on formatlistpat
+set formatlistpat=^\\s*                 " Optional leading whitespace
+set formatlistpat+=[                    " Start character class
+set formatlistpat+=\\[({]\\?            " |  Optionally match opening punctuation
+set formatlistpat+=\\(                  " |  Start group
+set formatlistpat+=[0-9]\\+             " |  |  Numbers
+set formatlistpat+=\\\|                 " |  |  or
+set formatlistpat+=[a-zA-Z]\\+          " |  |  Letters
+set formatlistpat+=\\)                  " |  End group
+set formatlistpat+=[\\]:.)}             " |  Closing punctuation
+set formatlistpat+=]                    " End character class
+set formatlistpat+=\\s\\+               " One or more spaces
+set formatlistpat+=\\\|                 " or
+set formatlistpat+=^\\s*[-–+o*•]\\s\\+  " Bullet points
 
 " Set the directory for saving swap files and undo history
 if has('win32') || has('win64')
