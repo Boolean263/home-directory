@@ -1,0 +1,8 @@
+#!/bin/sh
+# Run on openbox startup
+
+if $(which tint2 /dev/null 2>&1) ; then
+    tint2 &
+else
+    term &
+fi
