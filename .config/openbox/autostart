@@ -1,7 +1,9 @@
 #!/bin/sh
-# Run on openbox startup
+# This script is run by openbox-session on startup.
+# openbox-session also runs the commands in ~/.config/autostart
+# (the directory where GNOME/KDE put their session startup files).
 
-if $(which tint2 /dev/null 2>&1) ; then
+if $(which tint2 > /dev/null 2>&1) ; then
     tint2 &
 else
     term &
