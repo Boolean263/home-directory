@@ -3,6 +3,10 @@
 # Gradients
 #-------------------------------------
 # Backgrounds
+# Backgrounds start from 1 and are selected for each element below
+# based on their foo_background_id option. (Specifying a 0 gives a fully
+# transparent background for that element.)
+
 # Background 1: Panel
 rounded = 7
 border_width = 1
@@ -156,7 +160,7 @@ launcher_icon_asb = 100 0 0
 launcher_icon_theme_override = 0
 startup_notifications = 1
 launcher_tooltip = 1
-launcher_item_app = firefox.desktop
+launcher_item_app = nightly.desktop
 
 #-------------------------------------
 # Clock
