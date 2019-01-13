@@ -1,0 +1,28 @@
+#!/usr/bin/exo-open
+[Desktop Entry]
+Version=1.0
+Type=Application
+NoDisplay=true
+Exec=/home/smiley/firefox/firefox %u
+Name=Firefox Nightly
+Comment=Nightly channel of the Firefox web browser
+GenericName=Web Browser
+Icon=/home/smiley/firefox/browser/chrome/icons/default/default128.png
+X-Desktop-File-Install-Version=0.23
+Keywords=Internet;WWW;Browser;Web;Explorer
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+Icon=firefox
+Categories=GNOME;GTK;Network;WebBrowser;
+MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp;x-scheme-handler/chrome;video/webm;application/x-xpinstall;
+StartupNotify=true
+Actions=new-window;new-private-window;
+
+[Desktop Action new-window]
+Name=Open a New Window
+Exec=firefox -new-window
+
+[Desktop Action new-private-window]
+Name=Open a New Private Window
+Exec=firefox -private-window

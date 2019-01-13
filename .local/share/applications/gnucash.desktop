@@ -1,0 +1,10 @@
+#!/usr/bin/exo-open
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=GnuCash (VC)
+Comment=Run GnuCash on my veracrypt mount
+Exec=vc-gnucash
+Terminal=false
+StartupNotify=false
+Icon=gnucash-icon-32x32

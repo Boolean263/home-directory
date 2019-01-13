@@ -1,0 +1,98 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import sys
+import os
+import argparse
+
+##
+## Main Program
+##
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
+            description="Generate a .desktop file for a command.",
+            epilog="""\
+Common locations for .desktop files:
+ • ~/.local/share/applications
+ • ~/.config/autostart
+
+Run desktop items with xdg-open or exo-open ;
+edit them with exo-desktop-item-edit
+""")
+    parser.add_argument("-n", "--name",
+            type=str, default=None,
+            help="Name to give command")
+    parser.add_argument("-g", "--generic-name",
+            type=str, default=None,
+            help="Generic name of command")
+    parser.add_argument("-c", "--comment",
+            type=str, default=None,
+            help="Comment (description) for command")
+    parser.add_argument("-i", "--icon",
+            type=str, default=None,
+            help="Icon to use")
+    parser.add_argument("-t", "--terminal",
+            action="store_true",
+            help="Launch command in a terminal")
+    parser.add_argument("-s", "--startup",
+            action="store_true",
+            help="Show startup notification")
+    parser.add_argument("-k", "--keywords",
+            type=str, default=None,
+            help="Specify keywords (separated with ‘;’)")
+    parser.add_argument("-C", "--categories",
+            type=str, default=None,
+            help="Specify categories (separated with ‘;’)")
+    parser.add_argument("-m", "--mime-types",
+            type=str, default=None,
+            help="Specify MIME types (separated with ‘;’)")
+    parser.add_argument("command",
+            metavar="COMMAND",
+            type=str,
+            help="Command to be run")
+    parser.add_argument("outfile",
+            metavar="FILENAME",
+            type=argparse.FileType("wt"),
+            nargs="?", default=sys.stdout,
+            help="File to write to")
+
+    args = parser.parse_args()
+
+    if args.name is None:
+        args.name = args.command.split(" ")[0]
+    if args.comment is None:
+        args.comment = "Run ‘{0}’".format(args.command)
+
+    if args.outfile is not sys.stdout:
+        os.fchmod(args.outfile.buffer.fileno(), 0o0755)
+        args.outfile.write("#!/usr/bin/exo-open\n")
+    args.outfile.write("[Desktop Entry]\n")
+    args.outfile.write("Version=1.0\n")
+    args.outfile.write("Type=Application\n")
+    args.outfile.write("Name={0}\n".format(args.name))
+    args.outfile.write("Comment={0}\n".format(args.comment))
+    if args.generic_name is not None:
+        args.outfile.write("GenericName={0}\n".format(args.generic_name))
+    args.outfile.write("Exec={0}\n".format(args.command))
+    args.outfile.write("Terminal={0}\n".format("true" if args.terminal else "false"))
+    args.outfile.write("StartupNotify={0}\n".format("true" if args.startup else "false"))
+    if args.icon is not None:
+        args.outfile.write("Icon={0}\n".format(args.icon))
+    if args.keywords is not None:
+        args.outfile.write("Keywords={0};\n".format(args.keywords))
+    if args.categories is not None:
+        args.outfile.write("Categories={0};\n".format(args.categories))
+    if args.mime_types is not None:
+        args.outfile.write("MimeType={0};\n".format(args.mime_types))
+
+# Editor modelines - http://www.wireshark.org/tools/modelines.html
+#
+# Local variables:
+# c-basic-offset: 4
+# tab-width: 4
+# indent-tabs-mode: nil
+# coding: utf-8
+# End:
+#
+# vi:set shiftwidth=4 tabstop=4 expandtab fileencoding=utf-8:
+# :indentSize=4:tabSize=4:noTabs=true:coding=utf-8:

@@ -1,0 +1,10 @@
+#!/usr/bin/exo-open
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=XScreenSaver
+Comment=Desktop screensaver and locker
+Exec=xscreensaver -no-splash
+Terminal=false
+StartupNotify=false
+Icon=xscreensaver
