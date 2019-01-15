@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [ $# -eq 0 ] ; then
+    # Fall back on creating a new session
+    tmux
+elif [ $# -eq 1 ] ; then
+    tmux attach-session -t "$1" || tmux new-session -s "$1"
+else
+    cat 1>&2 <<EOT
+Usage: $(basename $0) [session-name]
+For more complex usage, run tmux directly.
+EOT
+    exit 1
+fi
