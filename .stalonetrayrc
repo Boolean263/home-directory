@@ -1,0 +1,6 @@
+# If using as a dockapp
+dockapp_mode simple
+
+background "#000000"
+icon_size 16
+parent_bg true

@@ -6,7 +6,7 @@
     <screen_edge_strength>20</screen_edge_strength>
   </resistance>
   <focus>
-    <focusNew>yes</focusNew>
+    <focusNew>no</focusNew>
     <!-- always try to focus new windows when they appear. other rules do
        apply -->
     <followMouse>yes</followMouse>
@@ -29,7 +29,7 @@
     <center>yes</center>
     <!-- whether to place windows in the center of the free area found or
        the top left corner -->
-    <monitor>Primary</monitor>
+    <monitor>Mouse</monitor>
     <!-- with Smart placement on a multi-monitor system, try to place new windows
        on: 'Any' - any monitor, 'Mouse' - where the mouse is, 'Active' - where
        the active window is, 'Primary' - only on the primary monitor -->
@@ -42,7 +42,7 @@
   </placement>
   <theme>
     <name>Nightmare-03</name>
-    <titleLayout>NLIMC</titleLayout>
+    <titleLayout>NDLIMC</titleLayout>
     <!--
       available characters are NDSLIMC, each can occur at most once.
       N: window icon
@@ -133,7 +133,7 @@
   </desktops>
   <resize>
     <drawContents>yes</drawContents>
-    <popupShow>Nonpixel</popupShow>
+    <popupShow>Always</popupShow>
     <!-- 'Always', 'Never', or 'Nonpixel' (xterms and such) -->
     <popupPosition>Center</popupPosition>
     <!-- 'Center', 'Top', or 'Fixed' -->
@@ -158,7 +158,7 @@
     <right>0</right>
   </margins>
   <dock>
-    <position>TopLeft</position>
+    <position>TopRight</position>
     <!-- (Top|Bottom)(Left|Right|)|Top|Bottom|Left|Right|Floating -->
     <floatingX>0</floatingX>
     <floatingY>0</floatingY>
