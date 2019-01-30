@@ -1,5 +1,8 @@
 # This file gets sourced before ./autostart is run, to set up the environment
 # for openbox.
 
+# Start ssh-agent if it's not alreaddy running
+[ -n "$SSH_AUTH_SOCK" ] || ssh-agent
+
 # Prefer dark themes in GTK/GNOME apps
 export GTK_THEME=Adwaita:dark
