@@ -40,7 +40,9 @@ if($basename eq 'gro')
 {
     push @vim_args, '+set ro', '+set noswapfile';
 }
-if(! -t STDIN)
+# This breaks some stuff, stick to vless
+#if(! -t STDIN)
+elsif($basename eq 'vless')
 {
     # Currently only works for gvim or direct vim, not for
     # xterm/tmux/screen
