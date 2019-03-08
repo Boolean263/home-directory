@@ -41,9 +41,9 @@ function! SLGit()
         return ''
     endif
     let status = g:pl_git . fugitive#head(7)
-    if fugitive#buffer().commit() != ''
-        let status .= '(' . fugitive#buffer().commit() . ')'
-    endif
+    "if fugitive#buffer().commit() != ''
+    "    let status .= '(' . fugitive#buffer().commit() . ')'
+    "endif
     return status
 endfunction
 function! SLRarr()

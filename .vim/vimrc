@@ -52,9 +52,12 @@ Plug 'majutsushi/tagbar'
 Plug 'VinyLimaZ/tmux.vim'
 Plug 'wincent/terminus'
 Plug 'airblade/vim-gitgutter'
+Plug 'dracula/vim', { 'as': 'dracula' }
 let g:clever_f_across_no_line = 1
 let g:clever_f_timeout_ms = 3000
 call plug#end()
+
+let g:xml_syntax_folding=1
 
 " *** For vim-pathogen
 "let s:vimdir=strpart(&runtimepath, 0, stridx(&runtimepath,","))
@@ -92,6 +95,8 @@ if version > 742
 else
     let g:gitgutter_sign_column_always=1
 endif
+set foldcolumn=2                    " Show a fold column at the left
+set foldlevelstart=99               " But open all folds upon loading a file
 
 " My default seems to be croql; 'help fo-table' says the default is tcq
 set formatoptions=                  " clear it out
@@ -168,7 +173,7 @@ nnoremap k gk
 vnoremap j gj
 vnoremap k gk
 
-set number
+"set number
 "set relativenumber
 "set numberwidth=2
 
@@ -189,11 +194,13 @@ endif
 "colorscheme solarized
 "colorscheme apprentice
 "colorscheme base16-eighties
-colorscheme koehler
+"colorscheme koehler
+colorscheme dracula
 
 " Set colour customizations *after* setting colorscheme
 "highlight CursorLine   term=none cterm=none ctermbg=238 guibg=#222222
-highlight CursorLine NONE
+"highlight CursorLine NONE
+highlight CursorLine   term=underline cterm=underline ctermbg=NONE guibg=NONE gui=undercurl
 highlight CursorColumn term=none cterm=none ctermbg=238 guibg=#222222
 highlight ColorColumn  term=none cterm=none ctermbg=235 guibg=#0F0F0F
 highlight LineNr       term=underline cterm=none ctermfg=3 ctermbg=0 guifg=Yellow guibg=Black
@@ -203,10 +210,10 @@ highlight CursorLineNr term=inverse cterm=none ctermfg=0 ctermbg=11 guifg=#00000
 " relativenumber both slow vim down. Hopefully, "highlight CursorLine NONE"
 " mitigates that somewhat.
 
-highlight DiffDelete   term=none cterm=none ctermfg=0 ctermbg=52 guifg=black guibg=#5F0000
-highlight DiffAdd      term=none cterm=none ctermbg=22 guibg=#005F00
-highlight DiffChange   term=none cterm=none ctermbg=17 guibg=#00005F
-highlight DiffText     term=underline cterm=underline ctermbg=20 guibg=#0000D7
+"highlight DiffDelete   term=none cterm=none ctermfg=0 ctermbg=52 guifg=black guibg=#5F0000
+"highlight DiffAdd      term=none cterm=none ctermbg=22 guibg=#005F00
+"highlight DiffChange   term=none cterm=none ctermbg=17 guibg=#00005F
+"highlight DiffText     term=underline cterm=underline ctermbg=20 guibg=#0000D7
 
 " Buffer management
 set hidden " lets you switch away from unsaved buffers
