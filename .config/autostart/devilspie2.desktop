@@ -1,0 +1,10 @@
+#!/usr/bin/exo-open
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=DevilsPie2
+Comment=Act smartly on windows
+Exec=devilspie2
+Terminal=false
+StartupNotify=false
+Icon=devilspie2
