@@ -8,3 +8,6 @@ if $(which tint2 > /dev/null 2>&1) ; then
 else
     term &
 fi
+
+A="${XDG_CONFIG_HOME:-$HOME/.config}/openbox/autostart.local" 
+test -x $A && $A

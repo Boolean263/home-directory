@@ -1,0 +1,7 @@
+# Console configuration.
+# See also /etc/default/console-setup and console-setup(5)
+
+CHARMAP="UTF-8"
+CODESET="guess"
+FONTFACE="Terminus"
+FONTSIZE="8x14"

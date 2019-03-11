@@ -3,7 +3,7 @@
 #killall gnome-screensaver 2>/dev/null
 #pgrep xscreensaver || xscreensaver -nosplash &
 #xset +fp $HOME/.fonts
-xrdb -I$HOME $HOME/.Xresources
+#xrdb -merge -I$HOME $HOME/.Xresources
 #devilspie &
 #xset b 100 900 30
 ssh-add < /dev/null &

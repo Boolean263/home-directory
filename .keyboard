@@ -1,0 +1,9 @@
+# Console keyboard configuration.
+# See also /etc/default/keyboard and keyboard(5)
+
+XKBMODEL="pc105"
+XKBLAYOUT="us"
+XKBVARIANT=""
+XKBOPTIONS="compose:menu,ctrl:nocaps,shift:both_capslock"
+
+BACKSPACE="guess"

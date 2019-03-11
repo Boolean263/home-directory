@@ -1,8 +1,13 @@
 # This file gets sourced before ./autostart is run, to set up the environment
 # for openbox.
 
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+
 # Start ssh-agent if it's not alreaddy running
 [ -n "$SSH_AUTH_SOCK" ] || ssh-agent
 
 # Prefer dark themes in GTK/GNOME apps
 export GTK_THEME=Adwaita:dark
+
+A="$XDG_CONFIG_HOME/openbox/environment.local"
+test -r $A && . $A

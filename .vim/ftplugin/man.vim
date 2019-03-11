@@ -10,6 +10,10 @@ setlocal nomodifiable
 setlocal noswapfile
 setlocal buftype=nofile
 setlocal bufhidden=hide
+setlocal foldcolumn=0
+if version > 742
+    setlocal signcolumn=no
+endif
 
 nnoremap <buffer> q :qa!<CR>
 nnoremap <buffer> <end> G

@@ -1,0 +1,9 @@
+#!/usr/bin/exo-open
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=clipit
+Comment=Run ‘clipit’
+Exec=clipit
+Terminal=false
+StartupNotify=false
