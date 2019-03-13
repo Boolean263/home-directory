@@ -6,6 +6,11 @@
 # 2) document what I do and don't like about particular terminal emulators
 #    for my future self
 
+# My global settings, which can be overridden by command-line options.
+FONTFACE="Source Code Pro"
+FONTSIZE="10"
+GEOMETRY="80x56"
+
 # My preferred terminals, in order. With unneccessary `cat`
 # to let me reorder lines on a whim.
 PREFERRED_TERMS=$(cat <<EOT
@@ -22,23 +27,69 @@ cat >/dev/null <<EOT
     mate-terminal gnome-terminal
 EOT
 
-# My global settings
-FONTFACE="Source Code Pro"
-FONTSIZE="10"
-GEOMETRY="80x56"
+usage()
+{
+    [ -n "$*" ] && echo -e "Error: $*\n" 1>&2
+    cat 1>&2 <<EOT
+This is a wrapper to try and open my preferred terminal with my preferred
+settings. Not all terminals support all settings.
+
+Options:
+    --which     Show which terminal binary would run
+    -g GEOMETRY Use given geometry (default: $GEOMETRY)
+    -f FONT     Use given font face (default: $FONTFACE)
+    -s SIZE     Use given font size (default: $FONTSIZE)
+    -h, --help  This help message
+EOT
+    exit 1
+}
+
+# Process command line arguments.
+dowhich=
+while [ -n "$1" ] ; do
+    case "$1" in
+        -h|--help)  usage ;;
+        --which)    dowhich=1 ;;
+        -g)
+            shift
+            GEOMETRY="$1"
+            ;;
+        -f)
+            shift
+            FONTFACE="$1"
+            ;;
+        -s)
+            shift
+            FONTSIZE="$1"
+            ;;
+        --)
+            # Allow follow-on arguments to start with '-' and not be ours
+            shift
+            break
+            ;;
+        *)
+            # End processing for unrecognized or non-options
+            break
+            ;;
+    esac
+    shift
+done
 
 # Figure out which of my preferred terms is installed, in order
 TERMEMU="$(which $PREFERRED_TERMS 2>/dev/null | head -1)"
-if [ "$1" = "--which" ]; then
+if [ -n "$dowhich" ]; then
     if [ -n "$TERMEMU" ] ; then
         echo "$TERMEMU"
         exit 0
     else
+        echo "No suitable terminal found!" 1>&2
         exit 1
     fi
 fi
 
-# Launch it with the command-line options I like
+# Launch it with the command-line options I like.
+# Assume it's a truecolor terminal unless we know it isn't.
+export COLORTERM="truecolor"
 case "$TERMEMU" in
     */st|*/stterm)
         # st.suckless.org - This is my current favourite.
@@ -72,6 +123,7 @@ case "$TERMEMU" in
         # manually specify the fonts that carry the unicode glyphs you want.
         # Still decent though.
         # See also ~/.Xresources.d/rxvt
+        unset COLORTERM
         exec "$TERMEMU" -geometry "$GEOMETRY" -fn "xft:$FONTFACE:size=$FONTSIZE" ${1+"$@"}
     ;;
     */xterm)
@@ -79,6 +131,7 @@ case "$TERMEMU" in
         # any system. Supports 256 colours, and Ctrl-Backspace.
         # Piss-poor unicode support though, so it's fairly low on my list.
         # See also ~/.Xresources.d/xterm
+        unset COLORTERM
         exec "$TERMEMU" -geometry "$GEOMETRY" -fa "$FONTFACE:size=$FONTSIZE" \
             -lc ${1+"$@"}
     ;;
@@ -87,9 +140,7 @@ case "$TERMEMU" in
         # Supports truecolour and unicode. Didn't support Ctrl-Backspace
         # for the longest time, which is why it's at the bottom, but I see
         # they've added support now. It produces ^H like many terminals do
-        # by default; I'll have to investigate later to see if this can be
-        # remapped. (I've set up all my terminals to send ^_ instead because
-        # of mintty.)
+        # by default.
         exec "$TERMEMU" --geometry="$GEOMETRY" --font="$FONTFACE" \
             --hide-menubar --hide-toolbar --hide-scrollbar ${1+"$@"}
     ;;
