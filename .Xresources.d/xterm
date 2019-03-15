@@ -2,7 +2,7 @@
 ! xterm ----------------------------------------------------------------------
 
 !general settings
-XTerm*termName:         xterm
+XTerm*termName:         xterm-256color
 XTerm*VT100.geometry:   80x50
 XTerm*scrollBar:        false
 XTerm*scrollTtyOutput:  false
@@ -48,11 +48,3 @@ XTerm*color14:          #4CCCE6
 XTerm*color15:          #FFFFFF
 
 !key mappings
-
-! By default, xterm maps ctrl-backspace to ^H. This maps it to ^_
-! which is what MinTTY maps ctrl-backspace to. See also my stty command
-! in my .bashrc.
-! Commented out now because I've decided to work around MinTTY instead
-! of making everything else work like it.
-!XTerm*translations: \
-!    #override Ctrl<Key>BackSpace: string(0x1f)

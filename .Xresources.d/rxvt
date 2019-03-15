@@ -34,10 +34,3 @@ Rxvt*color14:           #4CCCE6
 Rxvt*color15:           #FFFFFF
 
 !key mappings
-
-! By default, rxvt maps ctrl-backspace to ^H. This maps it to ^_
-! which is what MinTTY maps ctrl-backspace to. See also my stty command
-! in my .bashrc.
-! Commented out now because I've decided to work around MinTTY instead
-! of making everything else work like it.
-!Rxvt*keysym.Control-BackSpace: \037
