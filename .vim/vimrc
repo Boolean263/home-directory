@@ -23,6 +23,21 @@ let g:tagbar_type_make = {
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_enable_signs = 1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_enable_perl_checker = 1
+let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_perl_checkers = ['perl']
+let g:syntastic_xml_checkers = ['xmllint']
+let g:syntastic_error_symbol = "\u2717"
+let g:syntastic_warning_symbol = "\u26A0"
+
 " vim-plug (https://github.com/junegunn/vim-plug) settings
 " Automatically install vim-plug and run PlugInstall if vim-plug not found
 if empty(glob('$VIMHOME/autoload/plug.vim')) && &shell =~ 'sh$'
@@ -50,6 +65,7 @@ Plug 'wellle/targets.vim'
 Plug 'majutsushi/tagbar'
 Plug 'VinyLimaZ/tmux.vim'
 Plug 'wincent/terminus'
+Plug 'vim-syntastic/syntastic'
 Plug 'airblade/vim-gitgutter'
 Plug 'morhetz/gruvbox'
 let g:clever_f_across_no_line = 1
