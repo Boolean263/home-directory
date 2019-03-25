@@ -32,9 +32,12 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_perl_checker = 1
-let g:syntastic_python_checkers = ['pylint']
-let g:syntastic_perl_checkers = ['perl']
+let g:syntastic_c_checkers = ['gcc']
+let g:syntastic_python_checkers = ['python', 'pylint']
+let g:syntastic_perl_checkers = ['perl', 'podchecker']
 let g:syntastic_xml_checkers = ['xmllint']
+let g:syntastic_sh_checkers = ['sh']
+let g:syntastic_lua_checkers = ["luac"]
 let g:syntastic_error_symbol = "\u2717"
 let g:syntastic_warning_symbol = "\u26A0"
 
