@@ -35,7 +35,7 @@ add_to_path PATH "$HOME/bin"
 export LC_COLLATE=POSIX
 export PAGER="$(which less) -R"
 export BC_ENV_ARGS="$HOME/.bcrc"
-export VISUAL=$(which vim)
+export VISUAL=$(which vim vi | head -n 1 2>/dev/null)
 export EDITOR="$VISUAL"
 export INPUTRC="$HOME/.inputrc"
 #export GREP_OPTIONS="--colour --exclude-dir=.svn"
