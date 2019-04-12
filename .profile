@@ -33,9 +33,9 @@ add_to_path PATH /usr/local/bin
 add_to_path PATH "$HOME/bin"
 
 export LC_COLLATE=POSIX
-export PAGER="`which less` -R"
+export PAGER="$(which less) -R"
 export BC_ENV_ARGS="$HOME/.bcrc"
-export VISUAL='/usr/bin/vim'
+export VISUAL=$(which vim)
 export EDITOR="$VISUAL"
 export INPUTRC="$HOME/.inputrc"
 #export GREP_OPTIONS="--colour --exclude-dir=.svn"
@@ -67,8 +67,6 @@ export PERL_MM_OPT="INSTALL_BASE=$MYPERLDIR"
 
 export PYTHONUSERBASE="$HOME"
 export PYTHONPATH="$HOME/lib/python2.7/site-packages"
-
-export ANDROID_HOME="$HOME/Android/Sdk"
 
 export MANPAGER="$HOME/bin/manpager"
 export PERLDOC_PAGER="$PAGER"

@@ -1,4 +1,12 @@
 " vim:set fileencoding=utf-8:
+
+" Get my simple prefs from .exrc.
+source $HOME/.exrc
+" But undo the mappings there so they don't interfere with the ones
+" I set below
+unmap 
+unmap! 
+
 set nocompatible
 let $VIMHOME=expand('<sfile>:p:h')
 " The next line fails in Windows
@@ -94,11 +102,8 @@ nnoremap <Leader>/ :noh<CR>
 nnoremap <Leader>c /^\(<<<<<<<\\|=======\\|>>>>>>>\)<CR>
 
 set backspace=indent,eol,start      " backspace across lines, etc.
-set autoindent                      " keep indent level of previous lines
 set expandtab                       " expand tabs to spaces
-set tabstop=4                       " tab characters stop every n columns
-set shiftwidth=4                    " indent/dedent by n columns
-set softtabstop=4                   " tab stops are every n columns
+set softtabstop=-1                  " soft tab stops match shiftwidth
 set hlsearch                        " hilight search terms
 
 set scrolloff=4                     " number of lines to keep visible at top/bottom of screen

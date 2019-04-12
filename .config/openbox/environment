@@ -4,7 +4,7 @@
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 
 # Start ssh-agent if it's not alreaddy running
-[ -n "$SSH_AUTH_SOCK" ] || ssh-agent
+[ -n "$SSH_AUTH_SOCK" ] || eval `ssh-agent`
 
 # Prefer dark themes in GTK/GNOME apps
 export GTK_THEME=Adwaita:dark

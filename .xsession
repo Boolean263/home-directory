@@ -1,9 +1,11 @@
-#!/bin/bash
+#!/bin/sh
 #
 # This file can be used to run your own custom X setup. It must be executable
-# and named ~/.xsession for this to work. In addition, you will need a file
-# in /usr/share/xsessions, possibly named xsession.desktop, with contents like
-# the following:
+# and named ~/.xsession for this to work.
+#
+# For OpenBSD, this file is REQUIRED for your custom X session to work.
+# For Linux, you will need a file in /usr/share/xsessions, possibly named
+# xsession.desktop, with contents like the following:
 #
 #  [Desktop Entry]
 #  Version=1.0
@@ -22,7 +24,8 @@
 # Don't abort if the first exec fails
 shopt -s execfail
 
-exec startxfce4
+#exec startxfce4
+exec openbox-session
 
 ##########
 ## Simplest xsession: failsafe
