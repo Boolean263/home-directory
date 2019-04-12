@@ -363,6 +363,11 @@
     <!-- Set this to TRUE to move the mouse pointer across the desktop when
        switching due to hitting the edge of the screen -->
     <context name="Frame">
+      <!--
+        This is the entirety of any window, including decorations and the
+        application itself.
+        Clicks captured here are NOT passed to the application.
+        -->
       <mousebind button="A-Left" action="Press">
         <action name="Focus"/>
         <action name="Raise"/>
@@ -510,6 +515,10 @@
       </mousebind>
     </context>
     <context name="Client">
+      <!--
+        This is just the application itself, not any of its window decoration.
+        Clicks captured here ARE passed to the application.
+        -->
       <mousebind button="Left" action="Press">
         <action name="Focus"/>
         <!--action name="Raise"/-->
@@ -521,6 +530,17 @@
       <mousebind button="Right" action="Press">
         <action name="Focus"/>
         <!--action name="Raise"/-->
+      </mousebind>
+      <!-- Copied and tweaked from "Root" context below -->
+      <mousebind button="W-Middle" action="Press">
+        <action name="ShowMenu">
+          <menu>client-list-combined-menu</menu>
+        </action>
+      </mousebind>
+      <mousebind button="W-Right" action="Press">
+        <action name="ShowMenu">
+          <menu>root-menu</menu>
+        </action>
       </mousebind>
     </context>
     <context name="Icon">
