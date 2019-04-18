@@ -1,12 +1,18 @@
-#!/bin/bash
+#!/bin/sh
 #
-# Shell (bash) functions for manipulating colon-separated paths.
+# Shell (bash/ksh) functions for manipulating colon-separated paths.
 # Mainly useful by other shell scripts.
+#
+# Some shells don't have a "local" keyword.
+# For ksh, run `alias local=typeset` BEFORE sourcing this file.
+# (Also note that the `function foo` syntax is required to make ksh
+# treat the variables as local. bash is fine with this syntax too,
+# though I was using `foo()` syntax before.)
 
 ### is_in_path
 # Returns true if the directory in TESTPATH is a member in the path
 # variable PATHVAR.
-is_in_path()
+function is_in_path
 {
     local PATHVAR="$1"
     local TESTPATH="$2"
@@ -23,7 +29,7 @@ is_in_path()
 # paths before or after DIR if it appears in the path.
 # Forces adding/moving the path to the requested location if -f is given
 # before the path variable name.
-add_to_path()
+function add_to_path
 {
     local TO_END=
     local FORCE=
@@ -81,7 +87,7 @@ add_to_path()
 
 ### del_from_path
 # Remove from the path variable named in $1 the paths listed after.
-del_from_path()
+function del_from_path
 {
     local PATHVAR="$1"
     local SEP=":"
@@ -119,7 +125,7 @@ del_from_path()
 ### show_path
 # Show the requested path variable with newlines instead of colons
 # to make it easier to read.
-show_path()
+function show_path
 {
     local PATHVAR="$1"
     local SEP=":"

@@ -19,6 +19,7 @@
 # Try to prevent dash from choking, but it doesn't seem to work
 [ "${0#*-}" = "dash" ] && export PS1='[\u@\h \W]\$ ' || :
 
+# Though it's named '.bash', I've tweaked it to work with ksh as well
 . $HOME/etc/env/path_functions.bash
 
 # Need this in cygwin for some reason
