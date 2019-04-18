@@ -54,13 +54,23 @@ fi
 
 [ -f ~/.profile ] && . ~/.profile || :
 
-# User specific environment and startup programs
+# User specific environment and startup programs.
+# For the custom prompt, use care with $(...) executions that are within
+# the quotes, since they're evaluated at prompt showing time -- and may
+# stomp on $? and the like. (This is why I don't call __git_ps1 until
+# after I've added $? to the prompt.)
 if [ "$TERM" = "linux" ] ; then
     export PS1="\[\e[0;32m\][?:\$? \w] \$(parse_git_branch)\n\!\\$\[\e[0m\] "
 else
     #export PS1='\[e[0;48;5;$((233+((\#%2)*2)))m\e[38;5;7m\e[K\e[32m\][?:$? \w]\n\!\$\[\e[38;5;15m\] '
     #export PS1='\[\e[0;48;5;$((29+((\#%2)*3)))m\e[38;5;7m\e[K\e[30m\][?:$? \w] $(__git_ps1)\[\e[0m\]\n\[\e[0;32m\]\!\$\[\e[0m\] '
-    export PS1='\[\017\e[0;48;5;$((29+((\#%2)*3)))m\e[38;5;7m\e[K\e[37m\][\[\e[38;5;$(($?>0 ? 9 : 7))m\]?:$? \[\e[38;5;231m\]${debian_chroot:+"$debian_chroot:"}\[\e[37m\]] \w$(__git_ps1)\[\e[0m\]\n\[\e[0;32m\]\h \!\$\[\e[0m\] '
+    #export PS1='\[\017\e[0;48;5;$((29+((\#%2)*3)))m\e[38;5;7m\e[K\e[37m\][\[\e[38;5;$(($?>0 ? 9 : 7))m\]?:$? \[\e[38;5;231m\]${debian_chroot:+"$debian_chroot:"}\[\e[37m\]] \w$(__git_ps1)\[\e[0m\]\n\[\e[0;32m\]\h \!\$\[\e[0m\] '
+    # Use tput instead of hard-coded escape sequences. Some with math
+    # I evaluate once here.... well, kinda. You'll see.
+    tBG=$(tput setab 99 | sed 's/99/$((HISTCMD % 2 ? 29 : 32))/')
+    tERR=$(tput setaf 99 | sed 's/99/$(( $? > 0 ? 9 : 7 ))/')
+    export PS1='\['$(tput rmacs)$tBG$(tput setaf 7)$(tput el)'\][\['$tERR'\]?:$?\['$(tput setaf 231)'\]${debian_chroot:+" $debian_chroot:"}\['$(tput setaf 7)'\]] \w$(__git_ps1)\['$(tput sgr0)'\]\n\['$(tput setaf 2)'\]\h \!\$\['$(tput sgr0)'\] '
+    unset tBG tERR
 fi
 
 if [ -f "$HOME/.lesskey" ] && [ "$HOME/.lesskey" -nt "$HOME/.less" ] ; then
