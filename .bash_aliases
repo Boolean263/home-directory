@@ -1,3 +1,5 @@
+# I call this from my .bashrc and .kshrc files.
+
 echo "it works" | grep -q --colour works 2>/dev/null && \
     alias grep="$(which grep) --colour"
 

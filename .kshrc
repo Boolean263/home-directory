@@ -5,6 +5,9 @@ is_interactive(){
     [ -n "$PS1" ]
 }
 
+# This is needed to allow bash function definitions to work in ksh.
+# Even then it only really works with `function foo`-style definitions,
+# not `foo()`-style.
 alias local=typeset
 
 # Anything after this case will not be done in non-interactive shells
@@ -34,14 +37,15 @@ fi
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.ksh_aliases, instead of adding them here directly.
-
-if [ -f ~/.ksh_aliases ]; then
-    . ~/.ksh_aliases
+# (Or .bash_aliases, the syntax of which seems to work fine for ksh too.)
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
 fi
 
 [ -f ~/.profile ] && . ~/.profile || :
 
 # User specific environment and startup programs.
+. "$HOME/env/git-prompt.sh"
 
 # The custom prompt is surprisingly similar to what I can do in bash.
 # The main difference is there are no backslash-escapes so you need to

@@ -7,7 +7,7 @@
 # For ksh, run `alias local=typeset` BEFORE sourcing this file.
 # (Also note that the `function foo` syntax is required to make ksh
 # treat the variables as local. bash is fine with this syntax too,
-# though I was using `foo()` syntax before.)
+# but dash requires the `foo()` syntax (which bash is also okay with).
 
 ### is_in_path
 # Returns true if the directory in TESTPATH is a member in the path
