@@ -3,6 +3,7 @@ if &term == 'builtin_gui'
     " Do nothing, it handles itself
 elseif $COLORTERM =~ 'truecolor' || $COLORTERM =~ '24bit'
     if has('termguicolors')
+        set termguicolors
         if &term =~ '^st'
             " slight bug?
             let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -19,6 +20,10 @@ let g:gruvbox_italic=1
 let g:gruvbox_contrast_dark="hard"
 let g:gruvbox_contrast_light="hard"
 
+"let g:monotone=[10, 25, 80]
+let g:monotone_color = [120, 100, 70] " Sets theme color to bright green
+let g:monotone_secondary_hue_offset = 200 " Offset secondary colors by 200 degrees
+
 set background=dark
 "colorscheme desert256
 "colorscheme asu1dark
@@ -27,7 +32,9 @@ set background=dark
 "colorscheme base16-eighties
 "colorscheme koehler
 "colorscheme dracula
-colorscheme gruvbox
+"colorscheme gruvbox
+"colorscheme monotone
+colorscheme plain
 
 " Set colour customizations *after* setting colorscheme.
 if ! exists('g:colors_name')

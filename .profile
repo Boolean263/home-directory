@@ -31,7 +31,7 @@ add_to_path PATH /usr/local/bin
 #if [ -d "$HOME/.plenv/bin" ] ; then
 #    export PATH="$HOME/.plenv/bin:$PATH"
 #fi
-add_to_path PATH "$HOME/bin"
+add_to_path PATH "$HOME/bin" "$HOME/.cargo/bin"
 
 export LC_COLLATE=POSIX
 export PAGER="$(which less) -R"
@@ -80,5 +80,7 @@ export QT4_IM_MODULE=xim
 export GTK_IM_MODULE=xim
 
 export GPGKEY="310835C6"
+
+export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 
 [ -f "$HOME/.profile.local" ] && . "$HOME/.profile.local" || :

@@ -52,6 +52,8 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+shopt -s histreedit
+
 [ -f ~/.profile ] && . ~/.profile || :
 
 # User specific environment and startup programs.

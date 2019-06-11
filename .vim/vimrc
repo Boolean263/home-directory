@@ -79,6 +79,9 @@ Plug 'wincent/terminus'
 Plug 'vim-syntastic/syntastic'
 Plug 'airblade/vim-gitgutter'
 Plug 'morhetz/gruvbox'
+Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'Lokaltog/vim-monotone'
+Plug 'andreypopp/vim-colors-plain'
 let g:clever_f_across_no_line = 1
 let g:clever_f_timeout_ms = 3000
 call plug#end()

@@ -1,0 +1,4 @@
+# This file is needed by ripgrep, because of the '*' rule I have in my
+# .gitignore file
+
+!*
