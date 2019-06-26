@@ -1,0 +1,17 @@
+#!/bin/sh
+# Wrapper script to run ripgrep in "pretty" mode like ack
+
+RG=$(which -a rg | grep -v $(readlink -f "$0") | head -n 1)
+
+if [ -n "$RG" ] ; then
+    if [ -t 1 ] ; then
+        # stdout is a terminal, make it pretty
+        "$RG" -p ${1+"$@"} | ${PAGER:-less -R} -X -F
+    else
+        # stdout isn't a terminal, treat like normal
+        "$RG" ${1+"$@"}
+    fi
+else
+    # Couldn't find rg, fall back on ack
+    ack ${1+"$@"}
+fi
