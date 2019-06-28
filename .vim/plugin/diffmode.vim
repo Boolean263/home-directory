@@ -20,6 +20,7 @@ set nowrapscan
 
 " Resize all panes whenever the window is resized
 augroup vimdiff
+    autocmd!
     autocmd VimResized * wincmd =
 augroup END
 

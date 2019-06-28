@@ -10,8 +10,8 @@ elseif $COLORTERM =~ 'truecolor' || $COLORTERM =~ '24bit'
             let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
         endif
     endif
-elseif &term =~ '-256color'
-    set t_Co=256
+"elseif &term =~ '-256color'
+    "set t_Co=256
 endif
 
 " Some themes like gruvbox need their customizations made before you

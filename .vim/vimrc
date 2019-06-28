@@ -7,7 +7,6 @@ source $HOME/.exrc
 unmap 
 unmap! 
 
-set nocompatible
 let $VIMHOME=expand('<sfile>:p:h')
 " The next line fails in Windows
 silent! language en_US.UTF-8
@@ -162,11 +161,11 @@ silent! call mkdir(&directory, "p", 0700)
 " Highlight the current line and column, and column 80
 " The colours for these are set below
 set cursorline cursorcolumn colorcolumn=80
-augroup cursorcoords
-    autocmd!
-    autocmd WinLeave * set nocursorline nocursorcolumn
-    autocmd WinEnter * set cursorline cursorcolumn
-augroup END
+"augroup cursorcoords
+"    autocmd!
+"    autocmd WinLeave * set nocursorline nocursorcolumn
+"    autocmd WinEnter * set cursorline cursorcolumn
+"augroup END
 
 set pastetoggle=<F9>                " key that toggles paste mode
 

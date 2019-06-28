@@ -20,22 +20,15 @@ if !(exists('g:pl_r'))
     endif
 endif
 
-" Custom statusline colours
-highlight User1 term=reverse ctermfg=0   ctermbg=208 guifg=#000000 guibg=#FF8700
-highlight User2 term=reverse ctermfg=208 ctermbg=172 guifg=#FF8700 guibg=#D78700
-highlight User3 term=reverse ctermfg=0   ctermbg=172 guifg=#000000 guibg=#D78700
-highlight User4 term=reverse ctermfg=172 ctermbg=130 guifg=#D78700 guibg=#AF5F00
-highlight User5 term=reverse ctermfg=0   ctermbg=130 guifg=#000000 guibg=#AF5F00
-
 " Functions used in my statusline
-function! SLFenc()
+function! SLFenc() abort
     if ! ( &fenc == "" || &fenc == "utf-8" ) || &bomb
         return "[" . &fenc . (&bomb ? "-bom" : "" ) . "]"
     else
         return ""
     endif
 endfunction
-function! SLGit()
+function! SLGit() abort
     " Some logic copied from fugitive.vim
     if !(exists('g:loaded_fugitive') && exists('b:git_dir'))
         return ''
@@ -46,13 +39,13 @@ function! SLGit()
     "endif
     return status
 endfunction
-function! SLRarr()
+function! SLRarr() abort
     return g:pl_r
 endfunction
-function! SLLarr()
+function! SLLarr() abort
     return g:pl_l
 endfunction
-function! TagName()
+function! TagName() abort
     if !exists(':Tagbar')
         return ''
     endif
@@ -64,32 +57,49 @@ function! TagName()
     endif
 endfunction
 
-" The statusline itself
-set ruler               " Only really affects what Ctrl-G shows
-set laststatus=2        " Always show status line
-set statusline=         " Reset to blank
-set statusline+=%1*     " colour to user1
-set statusline+=%t      " Tail of the filename
-set statusline+=%{&ro?'🔒':''} " U+1F512 Unicode lock for read-only flag
-set statusline+=%{&mod?'+':''} " Plus sign for modified flag
-set statusline+=%2*     " colour to user2
-set statusline+=%{SLRarr()}
-set statusline+=%3*     " colour to user3
-set statusline+=%{SLGit()}
-set statusline+=%4*     " colour to user4
-set statusline+=%{SLRarr()}
-set statusline+=%5*     " colour to user5
-set statusline+=%{TagName()}
-set statusline+=%=      " Left/Right separator
-set statusline+=%{&ft}  " Another way of showing filetype
-set statusline+=%{SLFenc()} " File encoding from above function
-set statusline+=%4*     " colour to user4
-set statusline+=%{SLLarr()}
-set statusline+=%3*     " colour to user3
-set statusline+=%5(%l:%c%)
-set statusline+=%2*     " colour to user2
-set statusline+=%{SLLarr()}
-set statusline+=%1*     " colour to user1
-set statusline+=%P      " Percent through file
-set statusline+=/%L     " Number of lines in file
+function! MyStatusLine() abort
+    " Custom statusline colours
+    highlight User1 term=reverse ctermfg=0   ctermbg=208 guifg=#000000 guibg=#FF8700
+    highlight User2 term=reverse ctermfg=208 ctermbg=172 guifg=#FF8700 guibg=#D78700
+    highlight User3 term=reverse ctermfg=0   ctermbg=172 guifg=#000000 guibg=#D78700
+    highlight User4 term=reverse ctermfg=172 ctermbg=130 guifg=#D78700 guibg=#AF5F00
+    highlight User5 term=reverse ctermfg=0   ctermbg=130 guifg=#000000 guibg=#AF5F00
 
+    " The statusline itself
+    set ruler               " Only really affects what Ctrl-G shows
+    set laststatus=2        " Always show status line
+    set statusline=         " Reset to blank
+    set statusline+=%1*     " colour to user1
+    set statusline+=%t      " Tail of the filename
+    set statusline+=%{&ro?'🔒':''} " U+1F512 Unicode lock for read-only flag
+    set statusline+=%{&mod?'+':''} " Plus sign for modified flag
+    set statusline+=%2*     " colour to user2
+    set statusline+=%{SLRarr()}
+    set statusline+=%3*     " colour to user3
+    set statusline+=%{SLGit()}
+    set statusline+=%4*     " colour to user4
+    set statusline+=%{SLRarr()}
+    set statusline+=%5*     " colour to user5
+    set statusline+=%{TagName()}
+    set statusline+=%=      " Left/Right separator
+    set statusline+=%{&ft}  " Another way of showing filetype
+    set statusline+=%{SLFenc()} " File encoding from above function
+    set statusline+=%4*     " colour to user4
+    set statusline+=%{SLLarr()}
+    set statusline+=%3*     " colour to user3
+    set statusline+=%5(%l:%c%)
+    set statusline+=%2*     " colour to user2
+    set statusline+=%{SLLarr()}
+    set statusline+=%1*     " colour to user1
+    set statusline+=%P      " Percent through file
+    set statusline+=/%L     " Number of lines in file
+endfunction
+
+" Set my statusline colours now
+call MyStatusLine()
+
+" Set it whenever the colorscheme changes
+augroup MyStatusLine
+    autocmd!
+    autocmd ColorScheme * call MyStatusLine()
+augroup END

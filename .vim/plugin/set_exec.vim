@@ -20,4 +20,7 @@ function! MySetExecutableIfScript(line1, current_file)
 endfunction
 
 " The autocmd that makes the magic happen
-autocmd BufWritePost * call MySetExecutableIfScript(getline(1), expand("%:p"))
+augroup xbit
+    autocmd!
+    autocmd BufWritePost * call MySetExecutableIfScript(getline(1), expand("%:p"))
+augroup END
