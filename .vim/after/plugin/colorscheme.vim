@@ -4,11 +4,11 @@ if &term == 'builtin_gui'
 elseif $COLORTERM =~ 'truecolor' || $COLORTERM =~ '24bit'
     if has('termguicolors')
         set termguicolors
-        if &term =~ '^st'
+        "if &term =~ '^st'
             " slight bug?
             let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
             let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-        endif
+        "endif
     endif
 "elseif &term =~ '-256color'
     "set t_Co=256
