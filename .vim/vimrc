@@ -160,7 +160,7 @@ silent! call mkdir(&directory, "p", 0700)
 
 " Highlight the current line and column, and column 80
 " The colours for these are set below
-set cursorline cursorcolumn colorcolumn=80
+set nocursorline nocursorcolumn colorcolumn=80
 "augroup cursorcoords
 "    autocmd!
 "    autocmd WinLeave * set nocursorline nocursorcolumn

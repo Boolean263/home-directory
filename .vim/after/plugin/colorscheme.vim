@@ -57,4 +57,15 @@ elseif g:colors_name == 'dracula'
     "highlight DiffAdd      term=none cterm=none ctermbg=22 guibg=#005F00
     "highlight DiffChange   term=none cterm=none ctermbg=17 guibg=#00005F
     "highlight DiffText     term=underline cterm=underline ctermbg=20 guibg=#0000D7
+elseif g:colors_name == 'plain'
+    highlight clear SignColumn
+    highlight SignColumn term=none cterm=none ctermbg=black guibg=black
+    highlight clear GitGutterAdd
+    highlight clear GitGutterDelete
+    highlight clear GitGutterChange
+    highlight clear GitGutterChangeDelete
+    highlight GitGutterAdd term=standout ctermfg=green guifg=green guibg=black
+    highlight GitGutterChange term=standout ctermfg=yellow guifg=yellow guibg=black
+    highlight GitGutterDelete term=standout ctermfg=red guifg=red guibg=black 
+    highlight link GitGutterChangeDelete GitGutterChange
 endif
