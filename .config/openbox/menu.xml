@@ -12,6 +12,9 @@
   <item label="Firefox">
     <action name="Execute"><execute>firefox</execute></action>
   </item>
+  <!--
+  <menu id="quicklaunch1" label="Quicklaunch" execute="dir2menu.py $HOME/.config/quickstart" />
+  -->
   <!-- This requires the presence of the 'openbox-menu' package to work -->
   <menu id="/Debian" />
   <separator />

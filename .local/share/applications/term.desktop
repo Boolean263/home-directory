@@ -1,0 +1,10 @@
+#!/usr/bin/exo-open
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Terminal
+Comment=Terminal emulator
+Exec=term
+Terminal=false
+StartupNotify=false
+Icon=terminal
