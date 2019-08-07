@@ -40,7 +40,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_perl_checker = 1
 let g:syntastic_c_checkers = ['gcc']
-let g:syntastic_python_checkers = ['python', 'pylint']
+let g:syntastic_python_checkers = ['python']
 let g:syntastic_perl_checkers = ['perl', 'podchecker']
 let g:syntastic_xml_checkers = ['xmllint']
 let g:syntastic_sh_checkers = ['sh']
@@ -147,6 +147,11 @@ set formatlistpat+=]                    " End character class
 set formatlistpat+=\\s\\+               " One or more spaces
 set formatlistpat+=\\\|                 " or
 set formatlistpat+=^\\s*[-–+o*•]\\s\\+  " Bullet points
+
+" Use histogram-based diffs where possible
+if has('nvim-0.3.2') || has("patch-8.1.0360")
+    set diffopt=filler,internal,algorithm:histogram,indent-heuristic
+endif
 
 " Set the directory for saving swap files and undo history
 if has('win32') || has('win64')
