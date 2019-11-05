@@ -1,0 +1,36 @@
+#!/bin/sh
+
+###
+### Functopns
+###
+
+usage()
+{
+    [ -n "$*" ] && echo "Error: $*" 1>&2 && echo 1>&2
+    cat 1>&2 <<EOT
+Wrapper around diff and possibly diff-so-fancy. Or, pager for
+outside calls to diff.
+
+Usage:
+    $0 [diff-options]
+
+EOT
+    exit 1
+}
+
+###
+### Main Program
+###
+
+[ "$1" = "-h" ] && usage
+
+DSF=$(which diff-so-fancy tee 2>/dev/null | head -n 1)
+
+# If we're being used as a pager, don't call diff
+(
+if [ -t 0 ] ; then
+    diff -u --color=always ${1+"$@"}
+else
+    tee
+fi
+) | $DSF | $PAGER -FX
