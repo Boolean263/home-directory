@@ -67,7 +67,6 @@ export PERL_MM_OPT="INSTALL_BASE=$MYPERLDIR"
 #export PERLBREW_ROOT="$HOME/perl5/perlbrew"
 
 export PYTHONUSERBASE="$HOME"
-export PYTHONPATH="$HOME/lib/python2.7/site-packages"
 
 export MANPAGER="$HOME/bin/manpager"
 export PERLDOC_PAGER="$PAGER"
