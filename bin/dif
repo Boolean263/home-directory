@@ -29,7 +29,7 @@ DSF=$(which diff-so-fancy tee 2>/dev/null | head -n 1)
 # If we're being used as a pager, don't call diff
 (
 if [ -t 0 ] ; then
-    diff -u --color=always ${1+"$@"}
+    diff -u ${1+"$@"}
 else
     tee
 fi
