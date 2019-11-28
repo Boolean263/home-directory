@@ -247,6 +247,3 @@ inoremap <C-]> <C-X><C-]>
 inoremap <C-N> <C-X><C-I>
 " autocomplete from definitions/macros
 inoremap <C-D> <C-X><C-D>
-" when the popup completion menu is showing, let Enter select the current
-" option
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
