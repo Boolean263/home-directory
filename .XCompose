@@ -88,6 +88,7 @@ include "%L"
 
 <Multi_key> <o> <k>             : "👌" # ok
 <Multi_key> <less> <slash> <3>  : "💔" # broken heart
+<Multi_key> <o> <slash>         : "👋" # waving hand
 
 <Multi_key> <Multi_key> <g> <r> <r> : "💢" # grr
 <Multi_key> <Multi_key> <z> <z> <z> : "💤" # zzz
