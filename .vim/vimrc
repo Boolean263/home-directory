@@ -84,8 +84,9 @@ Plug 'andreypopp/vim-colors-plain'
 Plug 'junegunn/goyo.vim'
 Plug 'reedes/vim-pencil'
 Plug 'junegunn/limelight.vim'
-let g:clever_f_across_no_line = 1
-let g:clever_f_timeout_ms = 3000
+Plug 'rhysd/clever-f.vim'
+let g:clever_f_across_no_line = 1       " disable multi-line search
+let g:clever_f_fix_key_direction = 1    " f/t always forwards, F/T always back
 call plug#end()
 
 let g:xml_syntax_folding=1
@@ -105,6 +106,12 @@ set synmaxcol=999
 let mapleader=" "
 nnoremap <Leader>/ :noh<CR>
 nnoremap <Leader>c /^\(<<<<<<<\\|=======\\|>>>>>>>\)<CR>
+
+" Why don't these first three work? Bug in clever-f perhaps
+"noremap <Leader>f <Plug>(clever-f-reset)
+"noremap <Space>f <Plug>(clever-f-reset)
+"noremap <Leader>f jk
+noremap <Space>f jk
 
 set backspace=indent,eol,start      " backspace across lines, etc.
 set expandtab                       " expand tabs to spaces
@@ -192,6 +199,10 @@ cnoremap <C-H> <C-W>
 " Allow Ctrl-W to be something else
 inoremap <C-W> <Nop>
 cnoremap <C-W> <Nop>
+
+" Make n/N searching always search forward/backward respectively
+noremap <expr>n 'Nn'[v:searchforward]
+noremap <expr>N 'nN'[v:searchforward]
 
 " Use Shift-Insert to paste the clipboard at the current location
 inoremap <S-Insert> <C-O>:set paste<CR><C-R>*<C-O>:set nopaste<CR>
