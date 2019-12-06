@@ -117,6 +117,7 @@ set backspace=indent,eol,start      " backspace across lines, etc.
 set expandtab                       " expand tabs to spaces
 set softtabstop=-1                  " soft tab stops match shiftwidth
 set hlsearch                        " hilight search terms
+set showcmd                         " show current pending command in last line
 
 set scrolloff=4                     " number of lines to keep visible at top/bottom of screen
 
