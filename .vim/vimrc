@@ -1,11 +1,19 @@
 " vim:set fileencoding=utf-8:
 
-" Get my simple prefs from .exrc.
-source $HOME/.exrc
-" But undo the mappings there so they don't interfere with the ones
-" I set below
-unmap 
-unmap! 
+if filereadable(expand("~/.exrc"))
+    " Get my simple prefs from .exrc.
+    source ~/.exrc
+    " But undo the mappings there so they don't interfere with the ones
+    " I set below
+    unmap 
+    unmap! 
+else
+    " Simple vi prefs
+    set autoindent
+    set shiftwidth=4
+    set ruler
+    set showmode
+endif
 
 let $VIMHOME=expand('<sfile>:p:h')
 " The next line fails in Windows
@@ -14,7 +22,9 @@ set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,latin1
 autocmd BufEnter * if &fileencoding == "" && &modifiable == 1 | set fileencoding=utf-8 nomodified | endif
 
-" Some plugins need to be configured before they're actually loaded
+" *****
+" Plugin pre-load configuration
+" *****
 let g:tagbar_type_diff = {
     \'ctagstype':'diff',
     \'kinds': [ 'f:filename' ],
@@ -48,6 +58,9 @@ let g:syntastic_lua_checkers = ["luac"]
 let g:syntastic_error_symbol = "\u2717"
 let g:syntastic_warning_symbol = "\u26A0"
 
+let g:clever_f_across_no_line = 1       " disable multi-line search
+let g:clever_f_fix_key_direction = 1    " f/t always forwards, F/T always back
+
 " vim-plug (https://github.com/junegunn/vim-plug) settings
 " Automatically install vim-plug and run PlugInstall if vim-plug not found
 if empty(glob('$VIMHOME/autoload/plug.vim')) && &shell =~ 'sh$'
@@ -56,8 +69,6 @@ if empty(glob('$VIMHOME/autoload/plug.vim')) && &shell =~ 'sh$'
   autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 
-" Variables to configure plugins are usually only read when the plugins
-" are loaded, so they need to be defined first
 let skeletons#autoRegister = 1
 
 nnoremap <F8> :TagbarToggle<CR>
@@ -65,39 +76,27 @@ nnoremap <F8> :TagbarToggle<CR>
 " *** For vim-plug
 " use silent! to suppress warning messages about missing git in Windows
 silent! call plug#begin('$VIMHOME/bundle')
-Plug 'tpope/vim-characterize'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-unimpaired'
-"Plug 'pgilad/vim-skeletons' | Plug 'SirVer/ultisnips'
-"Plug 'ludovicchabant/vim-gutentags'
-Plug 'wellle/targets.vim'
-Plug 'majutsushi/tagbar'
-Plug 'VinyLimaZ/tmux.vim'
-Plug 'wincent/terminus'
-Plug 'vim-syntastic/syntastic'
-Plug 'airblade/vim-gitgutter'
-Plug 'morhetz/gruvbox'
-Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'Lokaltog/vim-monotone'
-Plug 'andreypopp/vim-colors-plain'
-Plug 'junegunn/goyo.vim'
-Plug 'reedes/vim-pencil'
-Plug 'junegunn/limelight.vim'
-Plug 'rhysd/clever-f.vim'
-let g:clever_f_across_no_line = 1       " disable multi-line search
-let g:clever_f_fix_key_direction = 1    " f/t always forwards, F/T always back
+Plug 'tpope/vim-characterize'   " type `ga` to show the unicode codepoint
+Plug 'tpope/vim-fugitive'       " Git wrapper
+Plug 'tpope/vim-repeat'         " Repeat supported plugin actions with `.`
+Plug 'tpope/vim-unimpaired'     " Bracket mappings such as `[a` `]a` for args…
+Plug 'SirVer/ultisnips'         " Code snippets
+Plug 'pgilad/vim-skeletons'     " file skeletons using ultisnips
+Plug 'wellle/targets.vim'       " Text objects, eg. `di'` delete inside quote
+Plug 'majutsushi/tagbar'        " tags sidebar, lets me show tag in statusline
+Plug 'wincent/terminus'         " improve terminal vim (incl. bracketed paste)
+Plug 'vim-syntastic/syntastic'  " Syntax checking/linting on file save
+Plug 'airblade/vim-gitgutter'   " git changes in gutter, also `c` text object
+"Plug 'morhetz/gruvbox'          " Fancy theme
+"Plug 'Lokaltog/vim-monotone'    " Monotone colorscheme
+Plug 'andreypopp/vim-colors-plain' " Very plain colorscheme
+Plug 'junegunn/goyo.vim'        " Distraction-free, screen-centred writing
+Plug 'reedes/vim-pencil'        " Improve vim for prose/text writing
+Plug 'rhysd/clever-f.vim'       " Improve f/F/t/T
+Plug 'tpope/vim-commentary'     " Comment stuff out with `gc…`
 call plug#end()
 
-let g:xml_syntax_folding=1
-
-" *** For vim-pathogen
-"let s:vimdir=strpart(&runtimepath, 0, stridx(&runtimepath,","))
-"execute "source ".s:vimdir."/bundle/vim-pathogen/autoload/pathogen.vim"
-"runtime bundle/vim-pathogen/autoload/pathogen.vim
-"execute pathogen#infect()
-"call pathogen#runtime_append_all_bundles()
-
+let g:xml_syntax_folding=1      " see :help xml-folding
 
 syntax on
 set synmaxcol=999
@@ -121,7 +120,7 @@ set showcmd                         " show current pending command in last line
 
 set scrolloff=4                     " number of lines to keep visible at top/bottom of screen
 
-set updatetime=500                  " save swap and update CursorHold
+set updatetime=250                  " save swap and update CursorHold
 set autoread                        " automatically reload the file if it's changed outside of vim and not inside
 
 set display=lastline                " don't show partial lines as @'s
@@ -237,16 +236,12 @@ nnoremap <leader>b :ls<cr>:b<space>
 " Seen this suggested a few places
 set wildmenu wildmode=full
 
-" This lets us write plugins in perl, but really slows down vim's startup
-"let home=expand('~')
-"let $PERL5LIB=home."/perl5/lib/perl5/x86_64-linux-gnu-thread-multi:".home."/perl5/lib/perl5"
-"perl use Vim::X;
-"perl Vim::X::source_function_dir("~/.vim/perl");
-
-augroup quickfix
-    autocmd!
-    autocmd QuickFixCmdPost [^l]* cwindow
-augroup END
+" I forget what this does so I'm commenting it out.
+" Maybe re-add and comment in after/ftplugin/qf.vim
+" augroup quickfix
+"     autocmd!
+"     autocmd QuickFixCmdPost [^l]* cwindow
+" augroup END
 
 " auto-complete options; see :help ins-completion
 " see also https://vimways.org/2018/you-should-be-using-tags-in-vim/

@@ -6,3 +6,7 @@
 " See also autoload/quickfixed.vim
 nnoremap <silent> <buffer> <Left> :call quickfixed#older()<CR>
 nnoremap <silent> <buffer> <Right> :call quickfixed#newer()<CR>
+
+" Moving through the quickfix window, j/k should move normally
+nnoremap <buffer> j j
+nnoremap <buffer> k k
