@@ -14,6 +14,7 @@ GEOMETRY="80x56"
 # My preferred terminals, in order. With unneccessary `cat`
 # to let me reorder lines on a whim.
 PREFERRED_TERMS=$(cat <<EOT
+    kitty
     st stterm
     urxvt rxvt-unicode rxvt
     xterm
@@ -91,6 +92,15 @@ fi
 # Assume it's a truecolor terminal unless we know it isn't.
 export COLORTERM="truecolor"
 case "$TERMEMU" in
+    */kitty)
+        # Kitty terminal emulator: I'm trying this one out for a while.
+        exec "$TERMEMU" \
+            -o "font_family=$FONTFACE" \
+            -o "font_size=$FONTSIZE" \
+            -o "initial_window_width=${GEOMETRY%x*}" \
+            -o "initial_window_height=${GEOMETRY#*x}" \
+            ${1+"$@"}
+    ;;
     */st|*/stterm)
         # st.suckless.org - This is my current favourite.
         # It supports Ctrl-Backspace (with a slight compile-time tweak),

@@ -5,4 +5,6 @@ THISDIR="${THISDIR%/*}"
 
 export TERMINFO="$THISDIR"
 
-tic -x "$TERMINFO"/*.terminfo
+for ti in $THISDIR/*.terminfo ; do
+    tic -x $ti
+done
