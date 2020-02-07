@@ -1,0 +1,36 @@
+# vim:set noet sts=0 ts=25 list listchars=tab\:\ . fileencoding=utf-8:
+#
+
+Ⅰ	IR
+Ⅱ	IIR
+Ⅲ	IIIR
+Ⅳ	IVR
+Ⅴ	VR
+Ⅵ	VIR
+Ⅶ	VIIR
+Ⅷ	VIIIR
+Ⅸ	IXR
+Ⅹ	XR
+Ⅺ	XIR
+Ⅻ	XIIR
+Ⅼ	LR
+Ⅽ	CR
+Ⅾ	DR
+Ⅿ	MR
+
+ⅰ	iR
+ⅱ	iiR
+ⅲ	iiiR
+ⅳ	ivR
+ⅴ	vR
+ⅵ	viR
+ⅶ	viiR
+ⅷ	viiiR
+ⅸ	ixR
+ⅹ	xR
+ⅺ	xiR
+ⅻ	xiiR
+ⅼ	lR
+ⅽ	cR
+ⅾ	dR
+ⅿ	mR
