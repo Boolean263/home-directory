@@ -112,6 +112,7 @@ nnoremap <Leader>c /^\(<<<<<<<\\|=======\\|>>>>>>>\)<CR>
 "noremap <Leader>f jk
 noremap <Space>f jk
 
+set modeline                        " allow modelines to work
 set backspace=indent,eol,start      " backspace across lines, etc.
 set expandtab                       " expand tabs to spaces
 set softtabstop=-1                  " soft tab stops match shiftwidth

@@ -6,6 +6,9 @@ endsnippet
 
 snippet def "Function definition" b
 def ${1:funcname}(${2:args}):
+	"""\
+	${3:Documentation for this function.}
+	"""
 	${0:pass}
 endsnippet
 
@@ -16,7 +19,7 @@ class ${1:classname}(${2:object}):
 	"""
 
 	def __init__(self):
-		pass
+		${4:pass}
 endsnippet
 
 snippet "^modeline" "Editor modelines" rb
@@ -24,13 +27,13 @@ snippet "^modeline" "Editor modelines" rb
 # Editor modelines - http://www.wireshark.org/tools/modelines.html
 #
 # Local variables:
-# c-basic-offset: ${1:4}
-# tab-width: ${1:4}
-# indent-tabs-mode: t
+# c-basic-offset: 4
+# tab-width: 4
+# indent-tabs-mode: nil
 # End:
 #
-# vi:set shiftwidth=${1:4} tabstop=${1:4} noexpandtab:
-# indentSize=${1:4}:tabSize=${1:4}:noTabs=false:
+# vi:set shiftwidth=4 tabstop=4 expandtab:
+# indentSize=4:tabSize=4:noTabs=true:
 endsnippet
 
 
