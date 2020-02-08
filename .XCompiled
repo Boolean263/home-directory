@@ -1,19 +1,16 @@
-# vim:set noet sts=0 ts=25 list listchars=tab\:\ . fileencoding=utf-8:
-#
-# XCompile syntax: The desired output is first, then a tab character,
-# then the input sequence.
 
-#Hello World	yo
-
+###
+### /home/smiley/.XCompile.d/00_basics.txt
+###
 <Multi_key> <n> <minus> : "–"
 <Multi_key> <m> <minus> : "—"
-
-<Multi_key> <leftcaret> <3> : "♥"
-
+<Multi_key> <less> <3> : "♥"
 <Multi_key> <bracketleft> <space> <bracketright> : "☐"
 <Multi_key> <bracketleft> <X> <bracketright> : "☑"
-# vim:set noet sts=0 ts=25 list listchars=tab\:\ . fileencoding=utf-8:
-#
+
+###
+### /home/smiley/.XCompile.d/emoticons.txt
+###
 <Multi_key> <colon> <3> : "🐱"
 <Multi_key> <1> <colon> <0> <0> : "🕐"
 <Multi_key> <2> <colon> <0> <0> : "🕑"
@@ -45,23 +42,23 @@
 <Multi_key> <O> <colon> <parenright> : "😇"
 <Multi_key> <braceright> <colon> <parenright> : "😈"
 <Multi_key> <semicolon> <parenright> : "😉"
-<Multi_key> <asciicircum> <underbar> <asciicircum> : "😊"
+<Multi_key> <asciicircum> <underscore> <asciicircum> : "😊"
 <Multi_key> <B> <parenright> : "😎"
 <Multi_key> <s> <m> <i> <r> <k> : "😏"
 <Multi_key> <colon> <I> : "😐"
-<Multi_key> <minus> <underbar> <minus> : "😒"
+<Multi_key> <minus> <underscore> <minus> : "😒"
 <Multi_key> <colon> <asterisk> : "😗"
 <Multi_key> <semicolon> <asterisk> : "😘"
 <Multi_key> <colon> <P> : "😛"
 <Multi_key> <semicolon> <P> : "😜"
 <Multi_key> <X> <P> : "😝"
-<Multi_key> <rightcaret> <colon> <parenleft> : "😠"
+<Multi_key> <greater> <colon> <parenleft> : "😠"
 <Multi_key> <colon> <apostrophe> <parenleft> : "😢"
 <Multi_key> <colon> <o> : "😦"
 <Multi_key> <D> <colon> : "😧"
-<Multi_key> <T> <underbar> <T> : "😭"
+<Multi_key> <T> <underscore> <T> : "😭"
 <Multi_key> <colon> <O> : "😲"
-<Multi_key> <at> <underbar> <at> : "😵"
+<Multi_key> <at> <underscore> <at> : "😵"
 <Multi_key> <colon> <numbersign> : "😷"
 <Multi_key> <parenleft> <colon> : "🙃"
 <Multi_key> <r> <o> <l> <l> : "🙄"
@@ -70,16 +67,16 @@
 <Multi_key> <f> <a> <c> <e> <p> <a> <l> <m> : "🤦"
 <Multi_key> <s> <h> <r> <u> <g> : "🤷"
 <Multi_key> <o> <k> : "👌"
-<Multi_key> <leftcaret> <slash> <3> : "💔"
+<Multi_key> <less> <slash> <3> : "💔"
 <Multi_key> <w> <a> <v> <e> : "👋"
 <Multi_key> <g> <r> <r> : "💢"
 <Multi_key> <z> <z> <z> : "💤"
 <Multi_key> <l> <e> <a> <f> : "🍁"
+<Multi_key> <0> <underscore> <0> : "ಠ_ಠ"
 
-<Multi_key> <o> <underbar> <o> : "ಠ_ಠ"
-# vim:set noet sts=0 ts=25 list listchars=tab\:\ . fileencoding=utf-8:
-#
-
+###
+### /home/smiley/.XCompile.d/roman_numerals.txt
+###
 <Multi_key> <I> <R> : "Ⅰ"
 <Multi_key> <I> <I> <R> : "Ⅱ"
 <Multi_key> <I> <I> <I> <R> : "Ⅲ"
@@ -96,7 +93,6 @@
 <Multi_key> <C> <R> : "Ⅽ"
 <Multi_key> <D> <R> : "Ⅾ"
 <Multi_key> <M> <R> : "Ⅿ"
-
 <Multi_key> <i> <R> : "ⅰ"
 <Multi_key> <i> <i> <R> : "ⅱ"
 <Multi_key> <i> <i> <i> <R> : "ⅲ"
