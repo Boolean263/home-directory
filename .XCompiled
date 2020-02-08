@@ -49,6 +49,7 @@
 <Multi_key> <minus> <underscore> <minus> : "😒"
 <Multi_key> <colon> <asterisk> : "😗"
 <Multi_key> <semicolon> <asterisk> : "😘"
+<Multi_key> <colon> <9> : "😋"
 <Multi_key> <colon> <P> : "😛"
 <Multi_key> <semicolon> <P> : "😜"
 <Multi_key> <X> <P> : "😝"
