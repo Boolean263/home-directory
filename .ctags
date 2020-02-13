@@ -1,3 +1,4 @@
+
 --recurse=yes
 --tag-relative=yes
 --exclude=.git
@@ -7,7 +8,6 @@
 --langdef=Diff
 --langmap=Diff:.diff.patch
 --regex-diff=/^diff .* (b\/)?([^ ]+)$/\2/f,filename/
-
 --regex-make=/^([^# \t]*):/\1/t,target/
 
 --langdef=snippets

@@ -1,0 +1,5 @@
+# universal-ctags already supports this file format.
+
+--langdef=Diff
+--langmap=Diff:.diff.patch
+--regex-diff=/^diff .* (b\/)?([^ ]+)$/\2/f,filename/
