@@ -15,11 +15,13 @@ xkb_symbols "my_8level" {
     key <Num8>  { [ 8,  asterisk,   U2022,  U2B51 ] };
     //key <Num9>
     //key <Num0>
-    key <Pnc->  { type="EIGHT_LEVEL", [
-                    minus, underscore, endash, emdash,
-                    U2011, U2323, U203F, U263A
-                ] };
+    //key <Pnc->  { type="EIGHT_LEVEL", [
+    //                minus, underscore, endash, emdash,
+    //                U2011, U2323, U203F, U263A
+    //            ] };
     //key <Pnc=>
+    // U00AD=soft hyphen, U2011=non-breaking hyphen
+    key <Pnc-> { [ minus, underscore, U00AD, U2011 ] } ;
 
     //key <LatQ>
     //key <LatW>
@@ -55,7 +57,7 @@ xkb_symbols "my_8level" {
     //key <LatN>
     //key <LatM>
     //key <Pnc,>
-    //key <Pnc.>
+    key <Pnc.>  { [ period,  greater, U00B7,    U00B7 ] };
     key <Pnc/>  { [ slash,  question, UFFFD,    UFFFD ] };
 
     key <UP>    { [ Up,     Up,     uparrow,    U21D1 ] };
@@ -63,9 +65,14 @@ xkb_symbols "my_8level" {
     key <LEFT>  { [ Left,   Left,   leftarrow,  U21D0 ] };
     key <RGHT>  { [ Right,  Right,  rightarrow, U21D2 ] };
 
-    key <KPMU> { type="FOUR_LEVEL", [ asterisk, asterisk, U00D7, U00D7 ] };
-    key <KPDV> { type="FOUR_LEVEL", [ slash, slash, U00F7, U00F7 ] };
+    //key <KPMU> { type="FOUR_LEVEL", [ asterisk, asterisk, U00D7, U00D7 ] };
+    //key <KPDV> { type="FOUR_LEVEL", [ slash, slash, U00F7, U00F7 ] };
+    key <KPAD> { [ plus, plus ] };
+    key <KPSU> { [ U2212, U2212 ] }; // "proper" minus sign
+    key <KPMU> { [ multiply, multiply ] };
+    key <KPDV> { [ division, division ] };
 
+    // U00A0=non-break space, U200B=zero-width breaking space
     key <SPCE> { type="FOUR_LEVEL", [ space, space, U00A0, U200B ] } ;
 
 };

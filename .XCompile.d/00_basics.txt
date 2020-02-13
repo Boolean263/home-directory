@@ -1,4 +1,5 @@
-# vim:set noet sts=0 ts=25 list listchars=tab\:\ . fileencoding=utf-8:
+# vim:noet sts=0 ts=25 list fileencoding=utf-8:
+# vim:listchars=tab\:\ .,space\:·,trail\:·:
 #
 # XCompile syntax: The desired output is first, then a tab character,
 # then the input sequence.
@@ -6,7 +7,8 @@
 #Hello World	yo
 
 –	n-
-—	m-
+#—	m-
+ — 	m-
 
 ♥	<3
 

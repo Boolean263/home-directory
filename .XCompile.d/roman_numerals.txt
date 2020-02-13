@@ -1,5 +1,5 @@
-# vim:set noet sts=0 ts=25 list listchars=tab\:\ . fileencoding=utf-8:
-#
+# vim:noet sts=0 ts=25 list fileencoding=utf-8:
+# vim:listchars=tab\:\ .,space\:·,trail\:·:
 
 Ⅰ	IR
 Ⅱ	IIR

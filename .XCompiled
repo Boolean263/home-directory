@@ -3,7 +3,7 @@
 ### /home/smiley/.XCompile.d/00_basics.txt
 ###
 <Multi_key> <n> <minus> : "–"
-<Multi_key> <m> <minus> : "—"
+<Multi_key> <m> <minus> : " — "
 <Multi_key> <less> <3> : "♥"
 <Multi_key> <bracketleft> <space> <bracketright> : "☐"
 <Multi_key> <bracketleft> <X> <bracketright> : "☑"
@@ -47,6 +47,7 @@
 <Multi_key> <s> <m> <i> <r> <k> : "😏"
 <Multi_key> <colon> <I> : "😐"
 <Multi_key> <minus> <underscore> <minus> : "😒"
+<Multi_key> <colon> <S> : "🥴"
 <Multi_key> <colon> <asterisk> : "😗"
 <Multi_key> <semicolon> <asterisk> : "😘"
 <Multi_key> <colon> <9> : "😋"
@@ -73,6 +74,8 @@
 <Multi_key> <g> <r> <r> : "💢"
 <Multi_key> <z> <z> <z> : "💤"
 <Multi_key> <l> <e> <a> <f> : "🍁"
+<Multi_key> <p> <o> <o> : "💩"
+<Multi_key> <b> <a> <n> <a> <n> <a> : "🍌"
 <Multi_key> <0> <underscore> <0> : "ಠ_ಠ"
 
 ###

@@ -1,5 +1,6 @@
-# vim:set noet sts=0 ts=25 list listchars=tab\:\ . fileencoding=utf-8:
-#
+# vim:noet sts=0 ts=25 list fileencoding=utf-8:
+# vim:listchars=tab\:\ .,space\:·,trail\:·:
+
 🐱	:3
 🕐	1:00
 🕑	2:00
@@ -36,6 +37,7 @@
 😏	smirk
 😐	:I
 😒	-_-
+🥴	:S
 😗	:*
 😘	;*
 😋	:9
@@ -62,5 +64,7 @@
 💢	grr
 💤	zzz
 🍁	leaf
+💩	poo
+🍌	banana
 
 ಠ_ಠ	0_0
