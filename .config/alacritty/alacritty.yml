@@ -1,0 +1,22 @@
+# Configuration for Alacritty, the GPU enhanced terminal emulator.
+# vim:sw=2:
+
+env:
+  # Override the terminal to one that supports truecolor
+  # (default is xterm-256color, but for whatever reason
+  # that causes tmux to not realize it has truecolour mode.
+  # this TERM does)
+  #TERM: alacritty
+  TERM: st-256color
+
+font:
+  size: 10.0
+  normal:
+    family: Source Code Pro
+
+key_bindings:
+  # I go with the "standard" of Backspace=^?, Ctrl-Backspace=^H
+  # This enforces the latter in alacritty (it's the default in linux
+  # but needed manual specification in cygwin)
+  - { key: Back, mods: Control, chars: "\x08" }
+
