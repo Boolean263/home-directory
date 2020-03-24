@@ -96,7 +96,9 @@ case "$TERMEMU" in
     */alacritty)
         # GPU-accelerated terminal.
         # Seems to work quite well so far, supports Ctrl-Backspace and
-        # true colours and overstrike fonts.
+        # true colours and overstrike fonts and SendEvents.
+        # The colours are a bit washed out by default, but I
+        # fixed those in its config file.
         # Most of its options are only configurable in
         # ~/.config/alacritty/alacritty.yml
         exec "$TERMEMU" \

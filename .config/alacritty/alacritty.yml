@@ -14,6 +14,33 @@ font:
   normal:
     family: Source Code Pro
 
+colors:
+  # I'm setting these based on the xterm names that I used in
+  # st. Conversion from xterm names to RGB from this site:
+  #   https://jonasjacek.github.io/colors/
+
+  # Normal colors
+  normal:
+    black:   '0x000000'   # black
+    red:     '0xaf0000'   # red3
+    green:   '0x00af00'   # green3
+    yellow:  '0xafd700'   # yellow3
+    blue:    '0x0000d7'   # blue2 (I overrode this in st)
+    magenta: '0xaf00af'   # magenta3
+    cyan:    '0x00d7af'   # cyan3
+    white:   '0xe0e0e0'   # gray90 (?)
+
+  # Bright colors
+  bright:
+    black:   '0x777777'   # gray50
+    red:     '0xff0000'   # red
+    green:   '0x00ff00'   # green
+    yellow:  '0xffff00'   # yellow
+    blue:    '0x5c5cff'   # I overrode this in st
+    magenta: '0xff00ff'   # magenta
+    cyan:    '0x00ffff'   # cyan
+    white:   '0xffffff'   # white
+
 key_bindings:
   # I go with the "standard" of Backspace=^?, Ctrl-Backspace=^H
   # This enforces the latter in alacritty (it's the default in linux
