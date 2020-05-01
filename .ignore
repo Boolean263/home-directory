@@ -2,3 +2,8 @@
 # .gitignore file
 
 !*
+
+# But I can still put other files to ignore here too.
+tags
+.*
+gems
