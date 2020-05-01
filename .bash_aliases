@@ -16,3 +16,5 @@ ls --color=auto > /dev/null 2>&1 && \
     alias ls="ls --color=auto" && \
     alias lls="ls --color=never"
 alias gpg="gpg2"
+
+alias ll="ls -la"
