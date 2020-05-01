@@ -1,3 +1,6 @@
 # This file is configuration for ripgrep, but it does not get read by default.
 # You need this in your environment:
 #     export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+
+# ripgrep is also affected by ~/.gitignore and ~/.ignore
+
