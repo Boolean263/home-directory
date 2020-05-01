@@ -19,6 +19,7 @@ PREFERRED_TERMS=$(cat <<EOT
     st stterm
     urxvt rxvt-unicode rxvt
     xterm
+    gnome-terminal
 EOT
 )
 # Terminals I've taken out of the rotation can be pasted here for reference.
@@ -26,7 +27,7 @@ cat >/dev/null <<EOT
     xfce4-terminal
     konsole
     lxterminal
-    mate-terminal gnome-terminal
+    mate-terminal
 EOT
 
 usage()
