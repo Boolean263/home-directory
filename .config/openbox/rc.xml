@@ -226,26 +226,14 @@
         <wrap>no</wrap>
       </action>
     </keybind>
-    <keybind key="W-1">
-      <action name="GoToDesktop">
-        <to>1</to>
-      </action>
-    </keybind>
-    <keybind key="W-2">
-      <action name="GoToDesktop">
-        <to>2</to>
-      </action>
-    </keybind>
-    <keybind key="W-3">
-      <action name="GoToDesktop">
-        <to>3</to>
-      </action>
-    </keybind>
-    <keybind key="W-4">
-      <action name="GoToDesktop">
-        <to>4</to>
-      </action>
-    </keybind>
+    <keybind key="W-1"><action name="GoToDesktop"><to>1</to></action></keybind>
+    <keybind key="W-2"><action name="GoToDesktop"><to>2</to></action></keybind>
+    <keybind key="W-3"><action name="GoToDesktop"><to>3</to></action></keybind>
+    <keybind key="W-4"><action name="GoToDesktop"><to>4</to></action></keybind>
+    <keybind key="W-C-1"><action name="SendToDesktop"><to>1</to><follow>yes</follow></action></keybind>
+    <keybind key="W-C-2"><action name="SendToDesktop"><to>2</to><follow>yes</follow></action></keybind>
+    <keybind key="W-C-3"><action name="SendToDesktop"><to>3</to><follow>yes</follow></action></keybind>
+    <keybind key="W-C-4"><action name="SendToDesktop"><to>4</to><follow>yes</follow></action></keybind>
     <keybind key="W-d">
       <action name="ToggleShowDesktop"/>
     </keybind>
@@ -261,10 +249,18 @@
       <action name="Raise"/>
       <action name="Focus"/>
     </keybind>
+    <keybind key="W-t">
+      <action name="ToggleDecorations"/>
+    </keybind>
     <keybind key="A-space">
       <action name="ShowMenu">
         <menu>client-menu</menu>
       </action>
+    </keybind>
+    <keybind key="C-A-Escape">
+        <action name="Execute">
+            <command>xkill</command>
+        </action>
     </keybind>
     <!-- Take a screenshot of the current window with scrot when Alt+Print are pressed -->
     <keybind key="A-Print">
@@ -328,9 +324,9 @@
       <action name="Execute">
         <startupnotify>
           <enabled>true</enabled>
-          <name>Konqueror</name>
+          <name>File Explorer</name>
         </startupnotify>
-        <command>kfmclient openProfile filemanagement</command>
+        <command>exo-open --launch FileManager</command>
       </action>
     </keybind>
     <!-- Launch scrot when Print is pressed -->
@@ -355,7 +351,7 @@
     <!-- number of pixels the mouse must move before a drag begins -->
     <doubleClickTime>500</doubleClickTime>
     <!-- in milliseconds (1000 = 1 second) -->
-    <screenEdgeWarpTime>400</screenEdgeWarpTime>
+    <screenEdgeWarpTime>0</screenEdgeWarpTime>
     <!-- Time before changing desktops when the pointer touches the edge of the
        screen while moving a window, in milliseconds (1000 = 1 second).
        Set this to 0 to disable warping -->
@@ -376,7 +372,25 @@
         <action name="Unshade"/>
       </mousebind>
       <mousebind button="W-Left" action="Drag">
-        <action name="Move"/>
+        <!--action name="Move"/-->
+        <!-- Unsnap if snapped-->
+        <action name="if">
+          <maximizedvertical>yes</maximizedvertical>
+          <then>
+            <action name="Unmaximize"/>
+            <direction>vertical</direction>
+            <action name="MoveResizeTo">
+              <x>center</x>
+              <!-- we center windows in order to mitigate discrepancies 
+          between window placement and mouse cursor -->
+              <y>current</y>
+            </action>
+            <action name="Move"/>
+          </then>
+          <else>
+            <action name="Move"/>
+          </else>
+        </action>
       </mousebind>
       <mousebind button="A-Right" action="Press">
         <action name="Focus"/>
@@ -424,7 +438,25 @@
     </context>
     <context name="Titlebar">
       <mousebind button="Left" action="Drag">
-        <action name="Move"/>
+        <!--action name="Move"/-->
+        <!-- Unsnap if snapped-->
+        <action name="if">
+          <maximizedvertical>yes</maximizedvertical>
+          <then>
+            <action name="Unmaximize"/>
+            <direction>vertical</direction>
+            <action name="MoveResizeTo">
+              <x>center</x>
+              <!-- we center windows in order to mitigate discrepancies 
+          between window placement and mouse cursor -->
+              <y>current</y>
+            </action>
+            <action name="Move"/>
+          </then>
+          <else>
+            <action name="Move"/>
+          </else>
+        </action>
       </mousebind>
       <mousebind button="Left" action="DoubleClick">
         <action name="ToggleMaximize"/>
