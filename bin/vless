@@ -20,7 +20,7 @@ sub vless
     my ($cmd_fh, @vim_args) = @_;
 
     my $vim_fh;
-    open($vim_fh, '|-', qw(gvim -), '+set buftype=nofile', @vim_args);
+    open($vim_fh, '|-', qw(gvim - --not-a-term), '+set buftype=nofile', @vim_args);
     binmode $vim_fh => ':raw';
     print $vim_fh $_ for <$cmd_fh>;
 }
@@ -91,8 +91,6 @@ vless - use gvim as a pager
 COMMAND | B<vless>
 
 B<vless> COMMAND
-
-=back
 
 =head1 OPTIONS
 

@@ -2,9 +2,9 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=Terminal
-Comment=Terminal emulator
-Exec=term
+Name=Term
+Comment=My preferred terminal emulator
+Exec=/home/smiley/bin/term
 Terminal=false
 StartupNotify=false
 Icon=terminal
