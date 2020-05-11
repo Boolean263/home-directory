@@ -1,10 +1,10 @@
 #!/usr/bin/env perl
 
-use 5.016;
+use 5.020;
 use strict;
 use warnings;
-use warnings qw(FATAL utf8);  # unicode-based boilerplate comes from
-use open IO => ':locale'; # https://stackoverflow.com/questions/6162484
+use warnings qw(FATAL utf8);    # unicode-based boilerplate comes from
+use open IO => ':locale';       # https://stackoverflow.com/questions/6162484
 use charnames qw(:full :short);
 use feature 'unicode_strings';
 use feature 'fc'; # fold case
@@ -17,7 +17,7 @@ BEGIN { $Pod::Usage::Formatter = 'Pod::Text::Termcap' if -t STDOUT; }
 use Pod::Usage;
 use Encode qw(encode decode);
 use Encode::Locale;
-use Unicode::Normalize qw(NFD NFC);
+use Unicode::Normalize qw(NFD NFC NFKD NFKC);
 
 use Safe;
 
@@ -34,8 +34,13 @@ END { close STDOUT }
 # Decode @ARGV if needed (again from the SO question above)
 @ARGV = map { decode(locale => $_, Encode::FB_CROAK) } @ARGV;
 
+my $verbose;
+my $dryrun;
+
 # Get the options we recognize, leaving others in @ARGV
 GetOptions(
+    "verbose|v"         => \$verbose,
+    "dry-run|d"         => \$dryrun,
     "help|h|?"          => sub { pod2usage(-verbose => 1) },
     "man"               => sub { pod2usage(-verbose => 2) },
 ) or pod2usage("Use '--help' or '--man' for more information.");
@@ -49,11 +54,29 @@ $safe->permit_only(qw(
     :filesys_read
     :filesys_write
 ));
+$safe->share_from('Unicode::Normalize', [qw(NFC NFD NFKC NFKD)]);
+
 for (@ARGV) {
     my $was = $_;
     my $rv = $safe->reval($op);
     die $@ if $@;
-    rename($was, $_) if($_ && $_ ne $was);
+    if ($verbose) {
+        print("‘$was’ → ‘$_’");
+        if (! $_) {
+            print(" [skipping]\n");
+        }
+        elsif ($_ eq $was) {
+            print(" [no change]\n");
+        }
+        elsif ($dryrun) {
+            print(" [dry run]\n");
+        }
+        else {
+            rename($was, $_);
+        }
+    } else {
+        rename($was, $_) if($_ && $_ ne $was && !$dryrun);
+    }
 }
 
 __END__
@@ -70,6 +93,7 @@ prename - Rename files according to a perl expression
 
 =item B<prename.pl>
 
+C<[-v]> C<[-d]> C<[-h]>
 I<C<expr>>
 I<file [file ...]>
 
@@ -86,6 +110,14 @@ Perl expression to evaluate. C<$_> will be used as the new file name.
 =item I<file [file ...]>
 
 Files to rename.
+
+=item B<-v>, B<--verbose>
+
+Prints the old and new names of files as they are being renamed.
+
+=item B<-d>, B<--dry-run>
+
+Don't actually rename files. Useful with C<-v>.
 
 =item B<-h>, B<-?>, B<--help>
 
