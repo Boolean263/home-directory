@@ -39,7 +39,7 @@ xkb_symbols "my_8level" {
 
     //key <LatA>
     //key <LatS>
-    //key <LatD>
+    key <LatD>   { [ d, D, U25C6, U25C6 ] };
     //key <LatF>
     //key <LatG>
     //key <LatH>
@@ -60,10 +60,10 @@ xkb_symbols "my_8level" {
     key <Pnc.>  { [ period,  greater, U00B7,    U00B7 ] };
     key <Pnc/>  { [ slash,  question, UFFFD,    UFFFD ] };
 
-    key <UP>    { [ Up,     Up,     uparrow,    U21D1 ] };
-    key <DOWN>  { [ Down,   Down,   downarrow,  U21D3 ] };
-    key <LEFT>  { [ Left,   Left,   leftarrow,  U21D0 ] };
-    key <RGHT>  { [ Right,  Right,  rightarrow, U21D2 ] };
+    key <UP>    { type="FOUR_LEVEL", [ Up,     Up,     uparrow,    U21D1 ] };
+    key <DOWN>  { type="FOUR_LEVEL", [ Down,   Down,   downarrow,  U21D3 ] };
+    key <LEFT>  { type="FOUR_LEVEL", [ Left,   Left,   leftarrow,  U21D0 ] };
+    key <RGHT>  { type="FOUR_LEVEL", [ Right,  Right,  rightarrow, U21D2 ] };
 
     //key <KPMU> { type="FOUR_LEVEL", [ asterisk, asterisk, U00D7, U00D7 ] };
     //key <KPDV> { type="FOUR_LEVEL", [ slash, slash, U00F7, U00F7 ] };
