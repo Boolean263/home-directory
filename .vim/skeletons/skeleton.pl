@@ -1,10 +1,10 @@
 #!/usr/bin/env perl
 
-use 5.016;
+use 5.020;
 use strict;
 use warnings;
 use warnings qw(FATAL utf8);  # unicode-based boilerplate comes from
-use open IO => ':raw:locale'; # https://stackoverflow.com/questions/6162484
+use open IO => ':locale'; # https://stackoverflow.com/questions/6162484
 use charnames qw(:full :short);
 use feature 'unicode_strings';
 use feature 'fc'; # fold case
@@ -15,7 +15,7 @@ use Getopt::Long qw(:config
     no_ignore_case no_auto_abbrev pass_through bundling);
 BEGIN { $Pod::Usage::Formatter = 'Pod::Text::Termcap' if -t STDOUT; }
 use Pod::Usage;
-use Encode qw(encode decode locale);
+use Encode qw(encode decode);
 use Encode::Locale;
 use Unicode::Normalize qw(NFD NFC);
 
