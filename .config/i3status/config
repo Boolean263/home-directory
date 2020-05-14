@@ -1,0 +1,20 @@
+# i3status configuration file
+# vim:set ft=conf fileencoding=utf-8:
+
+order += "cpu_temperature 0"
+order += "load"
+order += "tztime local"
+
+tztime local {
+    format = "%Y-%m-%d %H:%M"
+}
+
+load {
+    format = "💻 %5min"
+}
+
+cpu_temperature 0 {
+    format = "🌡 %degrees℃ "
+    path = "/sys/devices/platform/coretemp.0/hwmon/hwmon0/temp1_input"
+}
+
