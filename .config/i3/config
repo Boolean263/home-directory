@@ -112,7 +112,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -f 'pango:DejaVu Sans 10' -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b '⚠ Yes, exit i3' 'i3-msg exit' -b '💤 No, just suspend' 'systemctl suspend'"
+bindsym $mod+Shift+e exec "i3-nagbar -f 'pango:DejaVu Sans 10' -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b '🛑 Yes, exit i3' 'i3-msg exit' -b '💤 No, just suspend' 'systemctl suspend'"
 
 # Vim-style window marking
 
@@ -179,10 +179,11 @@ assign [class="Steam"] → 4
 # run when restarting i3, if you need a command to run also when restarting i3
 # you should use the exec_always keyword. These commands will be run in order.
 
+exec compton --config /home/smiley/.config/i3/compton.conf
+
 exec xdg-autostart i3
-#exec compton --config /home/smiley/.i3/compton.conf
 
 exec --no-startup-id "i3-msg 'workspace 1; append_layout /home/smiley/.config/i3/workspace-1.json'"
-exec 'term -e tn misc'
-exec 'thunderbird'
-exec '/home/smiley/opt/firefox/firefox'
+#exec 'term -e tn misc'
+#exec 'thunderbird'
+#exec '/home/smiley/opt/firefox/firefox'
