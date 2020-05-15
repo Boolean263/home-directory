@@ -323,4 +323,10 @@
 #    summary = *twitter.com*
 #    urgency = normal
 #
+
+[radiotray]
+    appname = "Radio Tray"
+    summary = "Radio Tray Playing"
+    format=""
+
 # vim: ft=cfg
