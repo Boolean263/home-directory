@@ -10,4 +10,6 @@ if [ -z "$DEVICEID" ] ; then
     exit 1
 fi
 
-"$XRESTRICT" -d $DEVICEID --fit -Y top
+CRTCID=0
+
+"$XRESTRICT" -d $DEVICEID -c $CRTCID --fit -Y top

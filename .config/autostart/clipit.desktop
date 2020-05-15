@@ -7,3 +7,4 @@ Comment=Run ‘clipit’
 Exec=clipit
 Terminal=false
 StartupNotify=false
+NotShowIn=LXDE;

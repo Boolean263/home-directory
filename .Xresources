@@ -4,3 +4,10 @@
 #include ".Xresources.d/rxvt"
 #include ".Xresources.d/xterm"
 #include ".Xresources.d/nethack"
+
+! For my TV; I had to set this manually, perhaps because my AV system
+! got in the way
+!Xft.dpi: 88
+
+! For my ultrawide; this gets set automatically
+!Xft.dpi: 109
