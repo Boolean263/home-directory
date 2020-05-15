@@ -347,7 +347,7 @@
         <command>scrot</command>
       </action>
     </keybind>
-    <keybind key="C-A-b">
+    <keybind key="W-Return">
       <action name="Execute">
         <command>term</command>
       </action>
@@ -384,33 +384,14 @@
         <action name="Unshade"/>
       </mousebind>
       <mousebind button="W-Left" action="Drag">
-        <!--action name="Move"/-->
-        <!-- Unsnap if snapped-->
-        <action name="if">
-          <maximizedvertical>yes</maximizedvertical>
-          <then>
-            <action name="Unmaximize"/>
-            <direction>vertical</direction>
-            <action name="MoveResizeTo">
-              <x>center</x>
-              <!-- we center windows in order to mitigate discrepancies 
-          between window placement and mouse cursor -->
-              <y>current</y>
-            </action>
-            <action name="Move"/>
-          </then>
-          <else>
-            <action name="Move"/>
-          </else>
-        </action>
+        <!-- This will move if you click near the middle of the window,
+             or resize if you click nearer an edge or corner -->
+        <action name="Resize"/>
       </mousebind>
       <mousebind button="W-Middle" action="Press">
         <action name="Focus"/>
         <action name="Raise"/>
         <action name="Unshade"/>
-      </mousebind>
-      <mousebind button="W-Middle" action="Drag">
-        <action name="Resize"/>
       </mousebind>
     </context>
     <context name="Titlebar">

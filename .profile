@@ -27,6 +27,9 @@ add_to_path PATH /usr/local/bin
 #add_to_path MANPATH /usr/local/man
 #add_to_path LD_LIBRARY_PATH /usr/local/lib
 
+# i3-sensible-desktop uses this to find the user's preferred terminal emulator
+export TERMINAL="$HOME/bin/term"
+
 # set PATH so it includes user's private bin if it exists
 #if [ -d "$HOME/.plenv/bin" ] ; then
 #    export PATH="$HOME/.plenv/bin:$PATH"

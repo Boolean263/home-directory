@@ -7,10 +7,18 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:DejaVu Sans 9
+font pango:DejaVu Sans 10
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
+
+# When attempting to switch to the workspace you're already in, go back to
+# the last workspace you were on
+workspace_auto_back_and_forth yes
+
+# When a new window is activated, don't give it focus by default,
+# just mark it as urgent
+focus_on_window_activation urgent
 
 # start a terminal
 bindsym $mod+Return exec /home/smiley/bin/term
@@ -104,7 +112,16 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b '⚠ Yes, exit i3' 'i3-msg exit' -b '💤 No, just suspend' 'systemctl suspend'"
+
+# Vim-style window marking
+
+# Mark the current window with a character (or unmark it if you give the
+# same character again)
+bindsym $mod+m exec i3-input -F 'mark --toggle %s' -l 1 -P 'Mark: '
+
+# Go to the window marked with a character
+bindsym $mod+grave exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -135,5 +152,37 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+    status_command i3status
+    separator_symbol "⁞"
+    colors {
+        background #0066aa
+        statusline #FFFFFF
+        separator  #aaaa00
+    }
 }
+
+# Arbitrary commands for specific windows: for_window
+# See: https://i3wm.org/docs/userguide.html#command_criteria
+for_window [instance="xeyes"] floating enable
+for_window [title="^Event Tester$"] floating enable
+
+# Put windows on specific workspaces: assign
+# The difference between assign and for_window <criteria> move to workspace is
+# that the former will only be executed when the application maps the window
+# (mapping means actually displaying it on the screen) but the latter will be
+# executed whenever a window changes its properties to something that matches
+# the specified criteria.
+assign [class="Steam"] → 4
+
+# By using the exec keyword outside a keybinding, you can configure which
+# commands will be performed by i3 on initial startup. exec commands will not
+# run when restarting i3, if you need a command to run also when restarting i3
+# you should use the exec_always keyword. These commands will be run in order.
+
+exec xdg-autostart i3
+#exec compton --config /home/smiley/.i3/compton.conf
+
+exec --no-startup-id "i3-msg 'workspace 1; append_layout /home/smiley/.config/i3/workspace-1.json'"
+exec 'term -e tn misc'
+exec 'thunderbird'
+exec '/home/smiley/opt/firefox/firefox'

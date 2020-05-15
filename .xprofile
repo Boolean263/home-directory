@@ -6,6 +6,9 @@
 # It should be explicitly sourced by other ways of starting X (eg, .xinitrc).
 # Info from: https://wiki.archlinux.org/index.php/Xprofile
 
-"$HOME/bin/fixrandr.sh"
-"$HOME/bin/scale-tablet.sh"
+xssproxy &
+"$HOME/bin/fixkeys"
+"$HOME/bin/mount-drives" || :
+"$HOME/bin/fixrandr.sh" || :
+"$HOME/bin/scale-tablet.sh" || :
 
