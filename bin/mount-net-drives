@@ -1,4 +1,0 @@
-#!/bin/sh
-
-# I use fstab for this now, lousy veracrypt
-#gvfs-mount 'smb://diskstation.local/smiley/'

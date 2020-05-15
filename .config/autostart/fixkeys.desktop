@@ -1,9 +1,0 @@
-#!/usr/bin/exo-open
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=FixKeys
-Comment=Apply my custom key bindings
-Exec=/home/smiley/bin/fixkeys
-Terminal=false
-StartupNotify=false
