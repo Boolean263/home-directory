@@ -1,6 +1,9 @@
 " The functions in this file are used to test if the user is editing
 " a script with a shebang line, and if they are, makes it executable
 " when they save it.
+if has('win32')
+    finish
+endif
 
 " See if the file is already executable, returns true if not
 function! MyFileTestExecutable (fname)
