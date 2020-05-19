@@ -9,7 +9,7 @@ nnoremap <F12> :set lines=999 columns=9999 \| winpos 0 0<cr>
 "set guifont=Noto\ Mono\ 9
 "set guifont=Ubuntu\ Mono\ 10
 "set guifont=DejaVu\ Sans\ Mono\ 9
-set guifont=Source\ Code\ Pro\ 9,Source_Code_Pro:h9:cANSI:qDRAFT
+set guifont=Source\ Code\ Pro\ 10,Source_Code_Pro:h10:cANSI:qDRAFT
 
 "--------------------------------
 " Font test: oO0Q il1IL| sS$
