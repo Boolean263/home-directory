@@ -18,3 +18,6 @@ ls --color=auto > /dev/null 2>&1 && \
 alias gpg="gpg2"
 
 alias ll="ls -la"
+
+alias ..="cd .."
+alias ~="cd ~"
