@@ -12,9 +12,11 @@ alias ghist="history | grep"
 alias gitka="gitk --all"
 alias gits='git s'
 
-ls --color=auto > /dev/null 2>&1 && \
-    alias ls="ls --color=auto" && \
+if ls --color=auto > /dev/null 2>&1 ; then
+    alias ls="ls --color=auto"
     alias lls="ls --color=never"
+    alias ll="ls --color=auto -la"
+fi
 alias gpg="gpg2"
 
 alias ll="ls -la"

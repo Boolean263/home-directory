@@ -1,4 +1,7 @@
 " http://vim.wikia.com/wiki/Setting_file_attributes_without_reloading_a_buffer
+if has('win32')
+    finish
+endif
 function s:SetExecutableBit()
     if &shell =~ 'sh$'
         let fname = expand("%:p")

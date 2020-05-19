@@ -93,8 +93,9 @@ Plug 'airblade/vim-gitgutter'   " git changes in gutter, also `c` text object
 Plug 'andreypopp/vim-colors-plain' " Very plain colorscheme
 Plug 'junegunn/goyo.vim'        " Distraction-free, screen-centred writing
 Plug 'reedes/vim-pencil'        " Improve vim for prose/text writing
-Plug 'rhysd/clever-f.vim'       " Improve f/F/t/T
+"Plug 'rhysd/clever-f.vim'       " Improve f/F/t/T
 Plug 'tpope/vim-commentary'     " Comment stuff out with `gc…`
+Plug 'editorconfig/editorconfig-vim'
 call plug#end()
 
 let g:xml_syntax_folding=1      " see :help xml-folding
@@ -111,7 +112,7 @@ nnoremap <Leader>c /^\(<<<<<<<\\|=======\\|>>>>>>>\)<CR>
 "noremap <Leader>f <Plug>(clever-f-reset)
 "noremap <Space>f <Plug>(clever-f-reset)
 "noremap <Leader>f jk
-noremap <Space>f jk
+"oremap <Space>f jk
 
 set modeline                        " allow modelines to work
 set backspace=indent,eol,start      " backspace across lines, etc.
@@ -159,6 +160,22 @@ set formatlistpat+=]                    " End character class
 set formatlistpat+=\\s\\+               " One or more spaces
 set formatlistpat+=\\\|                 " or
 set formatlistpat+=^\\s*[-–+o*•]\\s\\+  " Bullet points
+
+" Better fold messages, from
+" https://www.reddit.com/r/vim/comments/fwjpi4/here_is_how_to_retain_indent_level_on_folds/
+function! NeatFoldText()
+    let indent_level = indent(v:foldstart)
+    let indent = repeat(' ',indent_level)
+    let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+    let lines_count = v:foldend - v:foldstart + 1
+    let lines_count_text = '-' . printf("%10s", lines_count . ' lines') . ' '
+    let foldchar = matchstr(&fillchars, 'fold:\zs.')
+    let foldtextstart = strpart('+' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
+    let foldtextend = lines_count_text . repeat(foldchar, 8)
+    let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+    return indent . foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
+endfunction
+set foldtext=NeatFoldText()
 
 " Use histogram-based diffs where possible
 if has('nvim-0.3.2') || has("patch-8.1.0360")
