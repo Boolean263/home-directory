@@ -264,6 +264,9 @@
     <keybind key="W-t">
       <action name="ToggleDecorations"/>
     </keybind>
+    <keybind key="W-f">
+        <action name="ToggleMaximize"/>
+    </keybind>
     <keybind key="A-space">
       <action name="ShowMenu">
         <menu>client-menu</menu>
