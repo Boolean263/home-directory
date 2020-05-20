@@ -4,6 +4,7 @@
 
 # Use Win key as my default modifier key
 set $mod Mod4
+set $alt Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -30,7 +31,9 @@ hide_edge_borders none
 bindsym $mod+Return exec $HOME/bin/term
 
 # kill focused window
-bindsym $mod+Shift+q kill
+#bindsym $mod+Shift+q kill
+# Use the behaviour from MS Windows
+bindsym $alt+F4 kill
 
 # start dmenu (a program launcher)
 bindsym $mod+shift+d exec $HOME/.config/i3/dmenu-wrap.sh
@@ -40,24 +43,12 @@ bindsym $mod+shift+d exec $HOME/.config/i3/dmenu-wrap.sh
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
-
-# alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
-
-# alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
@@ -90,6 +81,8 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # switch to workspace
+bindsym $mod+Ctrl+Left workspace prev
+bindsym $mod+Ctrl+Right workspace next
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
 bindsym $mod+3 workspace 3
@@ -137,12 +130,6 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
-
-        # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
         bindsym Down resize grow height 10 px or 10 ppt
         bindsym Up resize shrink height 10 px or 10 ppt
@@ -169,7 +156,7 @@ bar {
 
 # Arbitrary commands for specific windows: for_window
 # See: https://i3wm.org/docs/userguide.html#command_criteria
-for_window [instance="xeyes"] floating enable
+for_window [instance="xeyes"] floating enable, border none
 for_window [title="^Event Tester$"] floating enable
 
 # Put windows on specific workspaces: assign
@@ -185,8 +172,11 @@ assign [class="Steam"] → 4
 # run when restarting i3, if you need a command to run also when restarting i3
 # you should use the exec_always keyword. These commands will be run in order.
 
+# Compositor, mainly so dragging emails in Thunderbird over folders
+# lets me actually see where I'm dragging
 exec compton --config $HOME/.config/i3/compton.conf
 
+# Start the usual X "autostart" things (see my ~/.config/autostart)
 exec xdg-autostart i3
 
 exec --no-startup-id "i3-msg 'workspace 1; append_layout $HOME/.config/i3/workspace-1.json'"
