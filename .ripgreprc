@@ -4,3 +4,7 @@
 
 # ripgrep is also affected by ~/.gitignore and ~/.ignore
 
+--type-add
+cmake:CMake*.txt
+--type-add
+cmake:CPack*.txt
