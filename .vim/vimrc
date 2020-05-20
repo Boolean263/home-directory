@@ -95,7 +95,8 @@ Plug 'junegunn/goyo.vim'        " Distraction-free, screen-centred writing
 Plug 'reedes/vim-pencil'        " Improve vim for prose/text writing
 "Plug 'rhysd/clever-f.vim'       " Improve f/F/t/T
 Plug 'tpope/vim-commentary'     " Comment stuff out with `gc…`
-Plug 'editorconfig/editorconfig-vim'
+Plug 'editorconfig/editorconfig-vim' " support editorconfig files
+Plug 'wsdjeg/vim-fetch'         " Handle filename.cpp:132:5 to go to line 132
 call plug#end()
 
 let g:xml_syntax_folding=1      " see :help xml-folding
