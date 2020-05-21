@@ -25,6 +25,7 @@
     oldHighlight = red bold 52
     newNormal = green bold
     newHighlight = green bold 22
+
 [color "diff"]
     meta = yellow
     frag = magenta bold
@@ -32,11 +33,15 @@
     old = red bold
     new = green bold
     whitespace = red reverse
+
 [diff-so-fancy]
     first-run = false
 
+[clone]
+    recurse-submodules = true
+
 [fetch]
-        prune = true
+    prune = true
 
 [push]
     default = tracking
