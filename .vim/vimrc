@@ -50,7 +50,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_perl_checker = 1
 let g:syntastic_c_checkers = ['gcc']
-let g:syntastic_python_checkers = ['python']
+let g:syntastic_python_checkers = ['python', 'pycodestyle']
 let g:syntastic_perl_checkers = ['perl', 'podchecker']
 let g:syntastic_xml_checkers = ['xmllint']
 let g:syntastic_sh_checkers = ['sh']
@@ -97,6 +97,9 @@ Plug 'reedes/vim-pencil'        " Improve vim for prose/text writing
 Plug 'tpope/vim-commentary'     " Comment stuff out with `gc…`
 Plug 'editorconfig/editorconfig-vim' " support editorconfig files
 Plug 'wsdjeg/vim-fetch'         " Handle filename.cpp:132:5 to go to line 132
+Plug 'Vimjas/vim-python-pep8-indent' " Just what it sounds like
+Plug 'lilydjwg/colorizer'       " colourize #RRGGBB strings (:ColorHighlight)
+Plug 'rhysd/vim-clang-format'   " clang-format C/C++ code (:ClangFormat)
 call plug#end()
 
 let g:xml_syntax_folding=1      " see :help xml-folding
