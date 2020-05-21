@@ -178,50 +178,26 @@
   <keyboard>
     <chainQuitKey>C-g</chainQuitKey>
     <!-- Keybindings for desktop switching -->
-    <keybind key="W-Left">
-      <action name="GoToDesktop">
-        <to>left</to>
-        <wrap>no</wrap>
-      </action>
-    </keybind>
-    <keybind key="W-Right">
-      <action name="GoToDesktop">
-        <to>right</to>
-        <wrap>no</wrap>
-      </action>
-    </keybind>
-    <keybind key="W-Up">
-      <action name="GoToDesktop">
-        <to>up</to>
-        <wrap>no</wrap>
-      </action>
-    </keybind>
-    <keybind key="W-Down">
-      <action name="GoToDesktop">
-        <to>down</to>
-        <wrap>no</wrap>
-      </action>
-    </keybind>
     <keybind key="W-C-Left">
-      <action name="SendToDesktop">
+      <action name="GoToDesktop">
         <to>left</to>
         <wrap>no</wrap>
       </action>
     </keybind>
     <keybind key="W-C-Right">
-      <action name="SendToDesktop">
+      <action name="GoToDesktop">
         <to>right</to>
         <wrap>no</wrap>
       </action>
     </keybind>
     <keybind key="W-C-Up">
-      <action name="SendToDesktop">
+      <action name="GoToDesktop">
         <to>up</to>
         <wrap>no</wrap>
       </action>
     </keybind>
     <keybind key="W-C-Down">
-      <action name="SendToDesktop">
+      <action name="GoToDesktop">
         <to>down</to>
         <wrap>no</wrap>
       </action>
@@ -265,7 +241,7 @@
       <action name="ToggleDecorations"/>
     </keybind>
     <keybind key="W-f">
-        <action name="ToggleMaximize"/>
+        <action name="ToggleFullscreen"/>
     </keybind>
     <keybind key="A-space">
       <action name="ShowMenu">

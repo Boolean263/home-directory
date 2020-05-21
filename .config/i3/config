@@ -27,6 +27,9 @@ focus_on_window_activation urgent
 default_border normal 4
 hide_edge_borders none
 
+# lock the terminal
+bindsym $mod+L exec --no-startup-id xscreensaver-command -lock
+
 # start a terminal
 bindsym $mod+Return exec $HOME/bin/term
 
@@ -153,6 +156,8 @@ bar {
         separator  #aaaa00
     }
 }
+
+bindsym $mod+i exec i3-input -F '%s' -P 'i3-cmd:'
 
 # Arbitrary commands for specific windows: for_window
 # See: https://i3wm.org/docs/userguide.html#command_criteria

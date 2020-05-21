@@ -21,6 +21,9 @@
 # the final line to "exec" your session manager, or some other process
 # that will last as long as you need your X session.
 
+# Source .xprofile (which see for information)
+. "$HOME/.xprofile"
+
 # Don't abort if the first exec fails
 shopt -s execfail
 
