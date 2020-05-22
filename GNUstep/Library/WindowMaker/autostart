@@ -1,10 +1,5 @@
 #!/bin/sh
-#xset m 20/10 4
+. $HOME/.xprofile
+xdg-autostart WindowMaker
+xset m 20/10 4
 
-$HOME/bin/autostart-apps &
-$HOME/.Xsession-essentials &
-xbindkeys &
-xset -dpms s noblank
-xscreensaver -nosplash &
-#parcellite &
-clipit &
