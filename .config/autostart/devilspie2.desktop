@@ -8,4 +8,4 @@ Exec=devilspie2
 Terminal=false
 StartupNotify=false
 Icon=devilspie2
-NotShowIn=i3wm;
+NotShowIn=i3;
