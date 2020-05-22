@@ -1,0 +1,77 @@
+// vim:ts=4:sw=4:et
+{
+    // splith split container with 3 children
+    "border": "normal",
+    "floating": "auto_off",
+    "layout": "splith",
+    "percent": null,
+    "type": "con",
+    "nodes": [
+        {
+            // tabbed split container with 2 children
+            "border": "normal",
+            "floating": "auto_off",
+            "layout": "tabbed",
+            "percent": 0.230318179520749,
+            "type": "con",
+            "nodes": [
+                {
+                    "percent": 0.5,
+                    "swallows": [
+                       {
+                       "class": "^Microsoft\\ Teams\\ \\-\\ Preview$"
+                       }
+                    ],
+                    "type": "con"
+                },
+                {
+                    "percent": 0.5,
+                    "swallows": [
+                       {
+                       "class": "^discord$"
+                       }
+                    ],
+                    "type": "con"
+                }
+            ]
+        },
+        {
+            // tabbed split container with 2 children
+            "border": "normal",
+            "floating": "auto_off",
+            "layout": "tabbed",
+            "percent": 0.538934944571085,
+            "type": "con",
+            "nodes": [
+                {
+                    "percent": 0.5,
+                    "swallows": [
+                       {
+                       "class": "^Thunderbird$"
+                       }
+                    ],
+                    "type": "con"
+                },
+                {
+                    "percent": 0.5,
+                    "swallows": [
+                       {
+                       "class": "^Firefox$"
+                       }
+                    ],
+                    "type": "con"
+                }
+            ]
+        },
+        {
+            "percent": 0.230746875908166,
+            "swallows": [
+               {
+               "class": "^Alacritty$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+
