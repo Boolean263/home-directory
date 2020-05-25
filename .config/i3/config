@@ -162,7 +162,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -f 'pango:DejaVu Sans 10' -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b '🛑 Yes, exit i3' 'i3-msg exit' -b '💤 No, just suspend' 'systemctl suspend'"
+bindsym $mod+Shift+e exec $HOME/.config/i3/shutdownbar.sh
 
 # }}}
 
@@ -206,7 +206,7 @@ assign [class="Steam"] → 4
 exec --no-startup-id compton --config $HOME/.config/i3/compton.conf
 
 # Layouts, to capture any programs that may be run by the following
-exec --no-startup-id "i3-msg 'workspace 1; append_layout $HOME/.config/i3/workspace-1.json'"
+exec --no-startup-id "i3-msg 'workspace 1; append_layout $HOME/.config/i3/workspace-1.json'; sleep 1"
 
 # Start the usual X "autostart" things (see my ~/.config/autostart)
 exec --no-startup-id xdg-autostart i3
