@@ -143,6 +143,9 @@ bindsym $mod+i exec i3-input -F '%s' -P 'i3-cmd:'
 # lock the screen
 bindsym $mod+L exec --no-startup-id xscreensaver-command -lock
 
+# Fix my keybinds
+bindsym $mod+K exec --no-startup-id fixkeys
+
 # start a terminal
 bindsym $mod+Return exec $HOME/bin/term
 
