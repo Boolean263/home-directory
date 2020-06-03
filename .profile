@@ -74,12 +74,16 @@ export PYTHONUSERBASE="$HOME"
 export MANPAGER="$HOME/bin/manpager"
 export PERLDOC_PAGER="$PAGER"
 
+# Use fcitx if we can; otherwise,
 # Force apps to use the classic X input method, chiefly to support
 # the settings in my .XCompose file.
-export CLUTTER_IM_MODULE=xim
-export QT_IM_MODULE=xim
-export QT4_IM_MODULE=xim
-export GTK_IM_MODULE=xim
+export XMODIFIERS="@im=none"
+which fcitx >/dev/null 2>&1 && myim=fcitx || myim=xim
+export CLUTTER_IM_MODULE=$myim
+export QT_IM_MODULE=$myim
+export QT4_IM_MODULE=$myim
+export GTK_IM_MODULE=$myim
+unset myim
 
 export GPGKEY="310835C6"
 
