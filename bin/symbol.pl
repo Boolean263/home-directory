@@ -11,14 +11,14 @@ binmode( STDIN, ':raw:utf8' );
 binmode( STDOUT, ':raw:utf8' );
 binmode( STDERR, ':raw:utf8' );
 
-my @alphabet = ('A'..'Z', 'a'..'z');
+my @alphabet = ('A'..'Z', 'a'..'z', '0'..'9');
 my %transforms = (
     region => [ 0x1F1E6..0x1F1FF, 0x1F1E6..0x1F1FF ],
-    circled => [ 0x24B6..0x24E9 ],
-    neg_circled => [ 0x1F150..0x1F169, 0x1F150..0x1F169 ],
+    circled => [ 0x24B6..0x24E9, 0x1f10b, 0x2780..0x2788 ],
+    neg_circled => [ 0x1F150..0x1F169, 0x1F150..0x1F169, 0x1f10c, 0x278a..0x2792 ],
     squared => [ 0x1F130..0x1F149, 0x1F130..0x1F149 ],
     neg_squared => [ 0x1F170..0x1F189, 0x1F170..0x1F189 ],
-    paren => [ 0x1F110..0x1F129, 0x249C..0x24B5 ],
+    paren => [ 0x1F110..0x1F129, 0x249C..0x24B5, '0', 0x2474..0x247c ],
 );
 
 my ($region, $circled, $squared, $paren, $negative);
@@ -45,14 +45,14 @@ my %xform = List::MoreUtils::pairwise { $a => chr($b) } @alphabet, @{$transforms
 if(@ARGV)
 {
     my $str = join(' ', @ARGV);
-    $str =~ s/([A-Za-z])/$xform{$1}/eg;
+    $str =~ s/([A-Za-z0-9])/$xform{$1} or $1/eg;
     print $str."\n";
 }
 else
 {
     while(<>)
     {
-        s/([A-Za-z])/$xform{$1}/eg;
+        s/([A-Za-z0-9])/$xform{$1} or $1/eg;
         print;
     }
 }
