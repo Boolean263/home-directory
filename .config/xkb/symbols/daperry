@@ -39,7 +39,7 @@ xkb_symbols "my_8level" {
 
     //key <LatA>
     //key <LatS>
-    key <LatD>   { [ d, D, U25C6, U25C6 ] };
+    key <LatD>   { [ d, D, U25C6, U00B0 ] };
     //key <LatF>
     //key <LatG>
     //key <LatH>
@@ -76,6 +76,13 @@ xkb_symbols "my_8level" {
     key <SPCE> { type="FOUR_LEVEL", [ space, space, U00A0, U200B ] } ;
 
     key <PAUS> { [ XF86AudioPlay, Break ] };
+
+    key <FnPS> { [ XF86AudioPrev ] };
+    key <FnNS> { [ XF86AudioNext ] };
+    key <FnPP> { [ XF86AudioPlay ] };
+    key <FnVx> { [ XF86AudioMute ] };
+    key <FnV-> { [ XF86AudioLowerVolume ] };
+    key <FnV+> { [ XF86AudioRaiseVolume ] };
 
 };
 

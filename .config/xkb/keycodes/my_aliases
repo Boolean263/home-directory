@@ -22,4 +22,12 @@ xkb_keycodes "num_punc" {
     alias <Pnc,> = <AB08>;
     alias <Pnc.> = <AB09>;
     alias <Pnc/> = <AB10>;
+
+    // Media keys on my HyperX keyboard
+    <FnPS> = 173;
+    <FnPP> = 172;
+    <FnNS> = 171;
+    <FnVx> = 121;
+    <FnV-> = 122;
+    <FnV+> = 123;
 };
