@@ -61,6 +61,8 @@ let g:syntastic_warning_symbol = "\u26A0"
 let g:clever_f_across_no_line = 1       " disable multi-line search
 let g:clever_f_fix_key_direction = 1    " f/t always forwards, F/T always back
 
+let g:TerminusCursorShape = 0 " Don't change cursor shape (plays funny w/tmux)
+
 " vim-plug (https://github.com/junegunn/vim-plug) settings
 " Automatically install vim-plug and run PlugInstall if vim-plug not found
 if empty(glob('$VIMHOME/autoload/plug.vim')) && &shell =~ 'sh$'
@@ -100,6 +102,8 @@ Plug 'wsdjeg/vim-fetch'         " Handle filename.cpp:132:5 to go to line 132
 Plug 'Vimjas/vim-python-pep8-indent' " Just what it sounds like
 Plug 'lilydjwg/colorizer'       " colourize #RRGGBB strings (:ColorHighlight)
 Plug 'rhysd/vim-clang-format'   " clang-format C/C++ code (:ClangFormat)
+"Plug 'alx741/vinfo'             " Read infodocs in vim
+Plug 'Boolean263/sectional-couch.vim'
 call plug#end()
 
 let g:xml_syntax_folding=1      " see :help xml-folding
@@ -139,6 +143,7 @@ else
 endif
 set foldcolumn=2                    " Show a fold column at the left
 set foldlevelstart=99               " But open all folds upon loading a file
+set foldmethod=marker               " Default folding method
 
 " My default seems to be croql; 'help fo-table' says the default is tcq
 set formatoptions=                  " clear it out
