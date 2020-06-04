@@ -5,10 +5,17 @@
 # is that script.
 
 # Test for vim in $VISUAL, use it if it is
-if [ -n "$VISUAL" ] && [ "$VISUAL" != "${VISUAL%/vim}" ] ; then
+if [ -n "$VISUAL" ] ; then # && [ "$VISUAL" != "${VISUAL%/vim}" ] ; then
     # This is the most compatible, but prints "Vim: Reading from stdin..."
     #exec col -b -x | $VISUAL -M +MANPAGER -Rn -c 'set ft=man' -
-    exec col -b -x | $VISUAL -M -Rn -c 'set ft=man' --not-a-term -
+
+    NOTERM=""
+
+    if [ "$VISUAL" != "${VISUAL%/vim}" ] ; then
+        # Vim-specific
+        NOTERM="--not-a-term"
+    fi
+    exec col -b -x | $VISUAL -M -Rn -c 'set ft=man' $NOTERM -
 
     # This avoids that message, but is less compatible, and also breaks Ctrl-O/T navigation
     #exec bash -c "$VISUAL -Rn -c 'set ft=man' </dev/tty <(col -b -x)"
