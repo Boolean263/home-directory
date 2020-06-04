@@ -32,15 +32,6 @@ if [ -n "$SSH_CONNECTION" ] && ! [ -e "$HOME/.no-tmux" ] ; then
     fi
 fi
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
 . "$HOME/env/git-prompt.sh"
 
 set match-hidden-files off
@@ -55,6 +46,7 @@ fi
 shopt -s histreedit
 
 [ -f ~/.profile ] && . ~/.profile || :
+[ -f ~/.bash_aliases ] && . ~/.bash_aliases || :
 
 # User specific environment and startup programs.
 # For the custom prompt, use care with $(...) executions that are within

@@ -283,3 +283,9 @@ inoremap <C-]> <C-X><C-]>
 inoremap <C-N> <C-X><C-I>
 " autocomplete from definitions/macros
 inoremap <C-D> <C-X><C-D>
+
+" nvim doesn't (yet) support clipboard=autoselect
+" https://github.com/neovim/neovim/wiki/FAQ#copying-to-x11-primary-selection-with-the-mouse-doesnt-work
+if has('nvim') && &clipboard !~ '\<autoselect'
+    vnoremap <LeftRelease> "*ygv
+endif

@@ -47,7 +47,8 @@ elsif($basename eq 'vless')
     # Currently only works for gvim or direct vim, not for
     # xterm/tmux/screen
     push @vim_args, '+set buftype=nofile';
-    push @vim_tail, '--not-a-term', '-';
+    push @vim_tail, '--not-a-term' if $vim =~ m(/vim$);
+    push @vim_tail, '-';
 }
 
 @vim_args = (@vim_args, @ARGV, @vim_tail);

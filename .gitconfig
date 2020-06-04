@@ -6,7 +6,8 @@
     user = Boolean263
 
 [core]
-    editor = vim -f
+    # Use $GIT_EDITOR instead
+    #editor = vim -f
     pager = ~/bin/dif
     excludesFile = ~/git-config/gitignore
     #attributesFile = ~/git-config/gitattributes

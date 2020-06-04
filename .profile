@@ -41,6 +41,7 @@ export PAGER="$(which less) -R"
 export BC_ENV_ARGS="$HOME/.bcrc"
 export VISUAL=$(which nvim vim vi | head -n 1 2>/dev/null)
 export EDITOR="$VISUAL"
+export GIT_EDITOR="$VISUAL -f"
 export INPUTRC="$HOME/.inputrc"
 #export GREP_OPTIONS="--colour --exclude-dir=.svn"
 export LESS="-R"
