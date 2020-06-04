@@ -75,6 +75,14 @@ mode "Resize" {
     bindsym Up resize shrink height 10 px or 10 ppt
     bindsym Right resize grow width 10 px or 10 ppt
 
+    bindsym Shift+Left resize shrink width 10 px
+    bindsym Shift+Down resize grow height 10 px
+    bindsym Shift+Up resize shrink height 10 px
+    bindsym Shift+Right resize grow width 10 px
+
+    # My preferred terminal window width
+    bindsym space resize set width 750 px
+
     # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
