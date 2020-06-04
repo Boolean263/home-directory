@@ -8,3 +8,5 @@ tags
 .*
 gems
 *.egg-info
+*.min.js
+node_modules
