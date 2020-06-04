@@ -16,14 +16,29 @@ font pango:DejaVu Sans 10
 default_border normal 4
 hide_edge_borders none
 
+# Colour scheme
+# Managed by i3-style: https://github.com/altdesktop/i3-style
+# class                 border  backgr. text    indicator child_border
+client.focused          #dd4814 #dd4814 #ffffff #efb73e
+client.focused_inactive #5e2750 #5e2750 #aea79f #5e2750
+client.unfocused        #5e2750 #5e2750 #aea79f #5e2750
+client.urgent           #ff8814 #ff8814 #ffffff #efb73e
+
 # Status bar output
 bar {
     status_command i3status
     separator_symbol "⁞"
+    # Colours are also managed by i3-style
     colors {
-        background #0066aa
-        statusline #FFFFFF
-        separator  #aaaa00
+        background          #2c001e
+        statusline          #aea79f
+        separator           #333333
+        # class             border  backgr. text
+        focused_workspace   #dd4814 #dd4814 #ffffff #cccccc
+        active_workspace    #902a07 #902a07 #aea79f #181715
+        inactive_workspace  #902a07 #902a07 #aea79f #AAAAAA
+        urgent_workspace    #ff8814 #ff8814 #ffffff #FFFFFF
+        binding_mode        #77216f #77216f #ffffff #cccccc
     }
 }
 
@@ -188,6 +203,7 @@ bindsym $mod+grave exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto: '
 for_window [instance="xeyes"] floating enable, border none
 for_window [title="^Event Tester$"] floating enable
 for_window [class="^Steam$" title="^Steam - News"] floating enable
+for_window [title="^Microsoft Teams Notification$"] floating enable
 
 # assign:
 #   • puts windows on specific workspaces
