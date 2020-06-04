@@ -9,7 +9,7 @@
     editor = vim -f
     pager = ~/bin/dif
     excludesFile = ~/git-config/gitignore
-    attributesFile = ~/git-config/gitattributes
+    #attributesFile = ~/git-config/gitattributes
     fileMode = false
 
 [color]
