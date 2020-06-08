@@ -1,7 +1,9 @@
 set columns=84 lines=50
 set guioptions=acegirLt
 
-set guiheadroom=64
+if !has('nvim')
+    set guiheadroom=64
+endif
 nnoremap <F12> :set lines=999 columns=9999 \| winpos 0 0<cr>
 
 

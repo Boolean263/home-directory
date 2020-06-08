@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# Wrapper around nvim-qt / replacement for gvim
+
+if ! which nvim-qt >/dev/null 2>&1 ; then
+    exec gvim ${1+"$@"}
+fi
+
+QT_ARGS=
+
+for arg in ${1+"$@"} ; do
+    case "$arg" in
+        -f|--nofork)
+            QT_ARGS="$QT_ARGS --nofork"
+            ;;
+    esac
+done
+
+exec nvim-qt $QT_ARGS -- --cmd "source $HOME/.vim/gvimrc" ${1+"$@"}
