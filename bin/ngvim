@@ -16,4 +16,6 @@ for arg in ${1+"$@"} ; do
     esac
 done
 
-exec nvim-qt $QT_ARGS -- --cmd "source $HOME/.vim/gvimrc" ${1+"$@"}
+# nvim-qt has a blank buffer in #1, your first file follows
+# (for whatever reason)
+exec nvim-qt $QT_ARGS -- --cmd 'bdel 1' ${1+"$@"}
