@@ -1,3 +1,6 @@
+syntax on
+set synmaxcol=999
+
 " Handle the proper colour depth if possible
 if &term == 'builtin_gui'
     " Do nothing, it handles itself
@@ -6,8 +9,8 @@ elseif $COLORTERM =~ 'truecolor' || $COLORTERM =~ '24bit'
         set termguicolors
         "if &term =~ '^st'
             " slight bug?
-            let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-            let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+            "let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+            "let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
         "endif
     endif
 "elseif &term =~ '-256color'
