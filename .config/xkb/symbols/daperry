@@ -75,7 +75,7 @@ xkb_symbols "my_8level" {
     // U00A0=non-break space, U200B=zero-width breaking space
     key <SPCE> { type="FOUR_LEVEL", [ space, space, U00A0, U200B ] } ;
 
-    key <PAUS> { [ XF86AudioPlay, Break ] };
+    //key <PAUS> { [ XF86AudioPlay, Break ] };
 
     key <FnPS> { [ XF86AudioPrev ] };
     key <FnNS> { [ XF86AudioNext ] };
