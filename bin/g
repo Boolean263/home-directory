@@ -28,6 +28,18 @@ sub do_or_die(@)
     exec(@_) or die "Failed to run $_[0]: $!\n";
 }
 
+sub separate_process(@)
+{
+    # `perldoc perlipc` warns that fork()ing inherits all the file
+    # descriptors of the parent. Normally that can be troublesome
+    # but that's actually what we want in this case for supporting
+    # things like `vless`.
+    # (Though I can't get that to work with xterm)
+    defined(my $pid = fork()) or die "Failed to fork: $!\n";
+    exit if $pid; # if it's non-zero then we're the parent
+    do_or_die(@_);
+}
+
 ### Main program
 
 my $basename = `basename $0`; chomp $basename;
@@ -35,6 +47,8 @@ my $gvim = $ENV{GVIM} || which('gvim');
 my $vim = $ENV{VISUAL} || which('vim');
 my @vim_args;
 my @vim_tail;
+
+undef $gvim; # for now, force xterm (nvim-qt is being dumb)
 
 if($basename eq 'gro')
 {
@@ -76,7 +90,7 @@ if($ENV{DISPLAY})   # X but no gvim
         my $dummy = $fh->getline();
         if(close($fh))
         {
-            do_or_die($term, '-e', $vim, @vim_args);
+            separate_process($term, '-e', $vim, @vim_args);
         }
     }
 }
