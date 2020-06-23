@@ -61,6 +61,9 @@ let g:clever_f_fix_key_direction = 1    " f/t always forwards, F/T always back
 
 let g:TerminusCursorShape = 0 " Don't change cursor shape (plays funny w/tmux)
 
+let g:SimpylFold_fold_import = 0
+let g:SimpylFold_fold_docstring = 0
+
 let skeletons#autoRegister = 1
 
 nnoremap <F8> :TagbarToggle<CR>
@@ -102,8 +105,9 @@ Plug 'wsdjeg/vim-fetch'         " Handle filename.cpp:132:5 to go to line 132
 Plug 'Vimjas/vim-python-pep8-indent' " Just what it sounds like
 Plug 'lilydjwg/colorizer'       " colourize #RRGGBB strings (:ColorHighlight)
 Plug 'rhysd/vim-clang-format'   " clang-format C/C++ code (:ClangFormat)
-"Plug 'alx741/vinfo'             " Read infodocs in vim
+Plug 'alx741/vinfo'             " Read infodocs in vim
 Plug 'Boolean263/sectional-couch.vim'
+Plug 'tmhedberg/SimpylFold'     " Folding in Python
 call plug#end() " }}}2
 " }}}1
 
