@@ -290,22 +290,22 @@
       </action>
     </keybind>
     <!-- Keybindings for window switching with the arrow keys -->
-    <keybind key="W-S-Right">
+    <keybind key="W-Right">
       <action name="DirectionalCycleWindows">
         <direction>right</direction>
       </action>
     </keybind>
-    <keybind key="W-S-Left">
+    <keybind key="W-Left">
       <action name="DirectionalCycleWindows">
         <direction>left</direction>
       </action>
     </keybind>
-    <keybind key="W-S-Up">
+    <keybind key="W-Up">
       <action name="DirectionalCycleWindows">
         <direction>up</direction>
       </action>
     </keybind>
-    <keybind key="W-S-Down">
+    <keybind key="W-Down">
       <action name="DirectionalCycleWindows">
         <direction>down</direction>
       </action>
@@ -336,6 +336,20 @@
         <command>gmrun</command>
       </action>
     </keybind>
+    <keybind key="W-S-r">
+      <action name="Resize"/>
+    </keybind>
+    <keybind key="W-S-c">
+      <action name="Reconfigure"/>
+    </keybind>
+    <keybind key="W-S-C-c">
+      <action name="Restart"/>
+    </keybind>
+    <keybind key="W-S-e">
+      <action name="Execute">
+        <command>obsession-logout</command>
+      </action>
+    </keybind>
   </keyboard>
   <mouse>
     <dragThreshold>1</dragThreshold>
@@ -363,7 +377,10 @@
         <action name="Unshade"/>
       </mousebind>
       <mousebind button="W-Left" action="Drag">
-        <!-- This will move if you click near the middle of the window,
+        <action name="Move"/>
+      </mousebind>
+      <mousebind button="W-S-Left" action="Drag">
+        <!-- This will actually move if you click near the middle of the window,
              or resize if you click nearer an edge or corner -->
         <action name="Resize"/>
       </mousebind>
@@ -787,5 +804,13 @@
 
   # end of the example
 -->
+    <application name="xeyes">
+      <decor>no</decor>
+    </application>
+    <application name="Steam">
+      <desktop>4</desktop>
+      <maximized>Vertical</maximized>
+    </application>
   </applications>
 </openbox_config>
+<!-- vim:set shiftwidth=2: -->
