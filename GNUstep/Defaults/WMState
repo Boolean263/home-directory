@@ -1,36 +1,5 @@
 {
   Dock = {
-    Applications1390 = (
-      {
-        Forced = No;
-        Name = Logo.WMDock;
-        BuggyApplication = No;
-        AutoLaunch = No;
-        Position = "0,0";
-        Lock = Yes;
-        Command = "/usr/bin/WPrefs";
-      },
-      {
-        Forced = No;
-        Name = "x-terminal-emulator.XTerm";
-        BuggyApplication = No;
-        AutoLaunch = No;
-        Position = "0,1";
-        Lock = No;
-        Command = "x-terminal-emulator";
-      },
-      {
-        Forced = No;
-        Name = docker.Docker;
-        DropCommand = "wmdocker %d -iconsize 16";
-        BuggyApplication = No;
-        AutoLaunch = Yes;
-        Position = "0,2";
-        Lock = Yes;
-        PasteCommand = "wmdocker %s -iconsize 16";
-        Command = "wmdocker -iconsize 16";
-      }
-    );
     AutoRaiseLower = No;
     Applications = (
       {
@@ -48,23 +17,54 @@
         BuggyApplication = No;
         AutoLaunch = No;
         Position = "0,1";
-        Lock = No;
-        Command = "x-terminal-emulator";
+        Lock = Yes;
+        Command = term;
       },
       {
         Forced = No;
         Name = docker.Docker;
-        DropCommand = "wmdocker %d -iconsize 16";
+        DropCommand = "wmdocker %d -iconsize 16 -wmaker";
         BuggyApplication = No;
         AutoLaunch = Yes;
         Position = "0,2";
         Lock = Yes;
-        PasteCommand = "wmdocker %s -iconsize 16";
-        Command = "wmdocker -iconsize 16";
+        PasteCommand = "wmdocker %s -iconsize 16 -wmaker";
+        Command = "wmdocker -iconsize 16 -wmaker";
       }
     );
     Lowered = No;
     Position = "-64,0";
+    Applications1440 = (
+      {
+        Forced = No;
+        Name = Logo.WMDock;
+        BuggyApplication = No;
+        AutoLaunch = No;
+        Position = "0,0";
+        Lock = Yes;
+        Command = "/usr/bin/WPrefs";
+      },
+      {
+        Forced = No;
+        Name = "x-terminal-emulator.XTerm";
+        BuggyApplication = No;
+        AutoLaunch = No;
+        Position = "0,1";
+        Lock = Yes;
+        Command = term;
+      },
+      {
+        Forced = No;
+        Name = docker.Docker;
+        DropCommand = "wmdocker %d -iconsize 16 -wmaker";
+        BuggyApplication = No;
+        AutoLaunch = Yes;
+        Position = "0,2";
+        Lock = Yes;
+        PasteCommand = "wmdocker %s -iconsize 16 -wmaker";
+        Command = "wmdocker -iconsize 16 -wmaker";
+      }
+    );
   };
   Clip = {
     Forced = No;
@@ -99,6 +99,28 @@
         Lowered = Yes;
       };
       Name = "Workspace 2";
+    },
+    {
+      Clip = {
+        AutoRaiseLower = No;
+        AutoCollapse = No;
+        Applications = ();
+        Collapsed = No;
+        AutoAttractIcons = No;
+        Lowered = Yes;
+      };
+      Name = "Workspace 3";
+    },
+    {
+      Clip = {
+        AutoRaiseLower = No;
+        AutoCollapse = No;
+        Applications = ();
+        Collapsed = No;
+        AutoAttractIcons = No;
+        Lowered = Yes;
+      };
+      Name = "Workspace 4";
     }
   );
 }
