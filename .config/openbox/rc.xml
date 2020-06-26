@@ -811,6 +811,14 @@
       <desktop>4</desktop>
       <maximized>Vertical</maximized>
     </application>
+    <application name="discord">
+      <desktop>1</desktop>
+      <position force="no">
+        <x>0</x>
+        <y>0</y>
+      </position>
+      <maximized>Vertical</maximized>
+    </application>
   </applications>
 </openbox_config>
 <!-- vim:set shiftwidth=2: -->

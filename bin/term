@@ -9,7 +9,7 @@
 # My global settings, which can be overridden by command-line options.
 FONTFACE="Source Code Pro"
 FONTSIZE="10"
-GEOMETRY="80x56"
+GEOMETRY="85x56"
 
 # My preferred terminals, in order. With unneccessary `cat`
 # to let me reorder lines on a whim.
