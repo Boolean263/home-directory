@@ -119,11 +119,11 @@
     branches = branch -v
     refs = for-each-ref
 
-    vi = !gvim -f "${1+$@}" && git add "${1+$@}"
-    vim = !gvim -f "${1+$@}" && git add "${1+$@}"
-
     st = status -uno
     s = status -uno --short
 
     ff = merge --ff-only
     squash = merge --squash
+
+    # Use 'main' instead of 'master' for new projects
+    new = !git init && git symbolic-ref HEAD refs/heads/main
