@@ -38,6 +38,10 @@
 [diff-so-fancy]
     first-run = false
 
+[init]
+    #templateDir = ~/git-config/templates/default
+    templateDir = ~/git-config/templates/git-ctags
+
 [clone]
     recurse-submodules = true
 
@@ -124,6 +128,3 @@
 
     ff = merge --ff-only
     squash = merge --squash
-
-    # Use 'main' instead of 'master' for new projects
-    new = !git init && git symbolic-ref HEAD refs/heads/main
