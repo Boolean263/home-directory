@@ -34,7 +34,7 @@ export TERMINAL="$HOME/bin/term"
 #if [ -d "$HOME/.plenv/bin" ] ; then
 #    export PATH="$HOME/.plenv/bin:$PATH"
 #fi
-add_to_path PATH "$HOME/bin" "$HOME/.cargo/bin"
+add_to_path PATH "$HOME/bin" "$HOME/.cargo/bin" "$HOME/.local/bin"
 
 export LC_COLLATE=POSIX
 export PAGER="$(which less) -R"
