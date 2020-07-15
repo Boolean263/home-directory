@@ -66,6 +66,8 @@ let g:SimpylFold_fold_docstring = 0
 
 let skeletons#autoRegister = 1
 
+let g:EditorConfig_max_line_indicator = 'line'
+
 nnoremap <F8> :TagbarToggle<CR>
 
 " }}}2
@@ -292,8 +294,10 @@ function! GoToOpenFold(direction)
     endif
     call cursor(start, 0)
 endfunction
-noremap <silent> ]z :call GoToOpenFold("next")<CR>
-noremap <silent> [z :call GoToOpenFold("prev")<CR>
+"noremap <silent> ]z :call GoToOpenFold("next")<CR>
+"noremap <silent> [z :call GoToOpenFold("prev")<CR>
+noremap ]z zj
+noremap [z zk
 " }}}1
 
 " Buffer management {{{1
