@@ -128,3 +128,6 @@
 
     ff = merge --ff-only
     squash = merge --squash
+
+    rb = rebase
+    rbc = rebase --continue
