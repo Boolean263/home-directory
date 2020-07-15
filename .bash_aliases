@@ -8,7 +8,7 @@ alias nscp="scp -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null"
 
 alias rdesk="rdesktop -0 -a 16 -z -x m"
 
-alias ghist="history | grep"
+alias ghist="history | grep -v ghist | grep"
 alias gitka="gitk --all"
 alias gits='git s'
 
@@ -24,3 +24,5 @@ alias ll="ls -la"
 alias ..="cd .."
 alias ~="cd ~"
 alias -- -="cd -"
+
+alias cp="/bin/cp --preserve=all"
