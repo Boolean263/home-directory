@@ -336,6 +336,11 @@
         <command>gmrun</command>
       </action>
     </keybind>
+    <keybind key="W-l">
+      <action name="Execute">
+        <command>xscreensaver-command -lock</command>
+      </action>
+    </keybind>
     <keybind key="W-S-r">
       <action name="Resize"/>
     </keybind>
@@ -804,6 +809,9 @@
 
   # end of the example
 -->
+    <application type="dialog">
+      <layer>above</layer>
+    </application>
     <application name="xeyes">
       <decor>no</decor>
     </application>
