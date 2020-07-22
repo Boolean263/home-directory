@@ -1,27 +1,22 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-# If you're using python2
-from __future__ import nested_scopes, generators, division, absolute_import, \
-    with_statement, print_function, unicode_literals
 
 import sys
 import argparse
 
-##
-## Functions
-##
+#
+# Functions
+#
 
 ${0:# (functions go here)}
 
-##
-## Main Program
-##
-if __name__ == '__main__':
+#
+# Main Program
+#
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="${1:summarize your script}")
-    parser.add_argument("-v", "--verbose",
-            action="count", default=0,
-            help="Increase verbosity")
+    parser.add_argument(
+        "-v", "--verbose", action="count", default=0, help="Increase verbosity"
+    )
 
     args = parser.parse_args()
 

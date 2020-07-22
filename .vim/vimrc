@@ -48,7 +48,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_perl_checker = 1
 let g:syntastic_c_checkers = ['gcc']
-let g:syntastic_python_checkers = ['python', 'pycodestyle']
+let g:syntastic_python_checkers = ['python3', 'pycodestyle']
 let g:syntastic_perl_checkers = ['perl', 'podchecker']
 let g:syntastic_xml_checkers = ['xmllint']
 let g:syntastic_sh_checkers = ['sh']
@@ -178,9 +178,9 @@ execute "set undodir=" . &directory
 set undofile
 silent! call mkdir(&directory, "p", 0700)
 
-" Highlight the current line and column, and column 80
+" Highlight the current line and column, and column 81
 " The colours for these are set below
-set nocursorline nocursorcolumn colorcolumn=80
+set nocursorline nocursorcolumn colorcolumn=81
 "augroup cursorcoords
 "    autocmd!
 "    autocmd WinLeave * set nocursorline nocursorcolumn
