@@ -13,6 +13,7 @@ XTerm*locale:           true
 XTerm*utf8:             2
 XTerm*utf8Fonts:        true
 XTerm*utf8Title:        true
+XTerm*decTerminalID:    vt340
 
 !font settings
 XTerm*renderFont:       true
