@@ -1,18 +1,17 @@
 #!/bin/sh
 #
-# Shell (bash/ksh) functions for manipulating colon-separated paths.
-# Mainly useful by other shell scripts.
+# Shell (bash) functions for manipulating colon-separated paths.
+# Mainly useful by other shell scripts, but sometimes handy manually too.
 #
-# Some shells don't have a "local" keyword.
-# For ksh, run `alias local=typeset` BEFORE sourcing this file.
-# (Also note that the `function foo` syntax is required to make ksh
-# treat the variables as local. bash is fine with this syntax too,
-# but dash requires the `foo()` syntax (which bash is also okay with).
+# bash 5.0 doesn't seem to like the older `function foo` syntax.
+# To make this file work for ksh, run `alias local=typeset`
+# and then source this file with something like
+#    source /dev/stdin < <(sed 's/^\(.*\)()$/function \1/' etc/env/path_functions.bash)
 
 ### is_in_path
 # Returns true if the directory in TESTPATH is a member in the path
 # variable PATHVAR.
-function is_in_path
+is_in_path()
 {
     local PATHVAR="$1"
     local TESTPATH="$2"
@@ -29,7 +28,7 @@ function is_in_path
 # paths before or after DIR if it appears in the path.
 # Forces adding/moving the path to the requested location if -f is given
 # before the path variable name.
-function add_to_path
+add_to_path()
 {
     local TO_END=
     local FORCE=
@@ -87,7 +86,7 @@ function add_to_path
 
 ### del_from_path
 # Remove from the path variable named in $1 the paths listed after.
-function del_from_path
+del_from_path()
 {
     local PATHVAR="$1"
     local SEP=":"
@@ -125,7 +124,7 @@ function del_from_path
 ### show_path
 # Show the requested path variable with newlines instead of colons
 # to make it easier to read.
-function show_path
+show_path()
 {
     local PATHVAR="$1"
     local SEP=":"
