@@ -57,6 +57,11 @@
 [diff]
     #tool = kdiff3
 
+[status]
+    # Hide the list of untracked files in `git status` and `git commit`.
+    # To see untracked files use `git status -uall`
+    showUntrackedFiles = no
+
 [http]
     cookiefile = ~/git-config/gitcookies
 
@@ -123,8 +128,7 @@
     branches = branch -v
     refs = for-each-ref
 
-    st = status -uno
-    s = status -uno --short
+    s = status --short
 
     ff = merge --ff-only
     squash = merge --squash
