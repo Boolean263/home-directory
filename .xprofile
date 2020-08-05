@@ -6,9 +6,10 @@
 # It should be explicitly sourced by other ways of starting X (eg, .xinitrc).
 # Info from: https://wiki.archlinux.org/index.php/Xprofile
 
-xssproxy &
+if which xssproxy >/dev/null 2>&1 ; then
+    xssproxy &
+fi
 "$HOME/bin/fixkeys"
-"$HOME/bin/mount-drives" || :
 "$HOME/bin/fixrandr.sh" || :
-"$HOME/bin/scale-tablet.sh" || :
 
+[ -f "$HOME/.xprofile.local" ] && . "$HOME/.xprofile.local" || :

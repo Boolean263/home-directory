@@ -1,4 +1,14 @@
 #!/bin/sh
 [ -n "$DISPLAY" ] || exit 1
 XKBHOME="$HOME/.config/xkb"
-xkbcomp -w 1 -I$XKBHOME $XKBHOME/keymap/default $DISPLAY
+
+if [ -n "$XRDP_SESSION" ] ; then
+    # My standard settings seem to mess up XRDP sessions.
+    # For now, keep it minimal until I can figure things out.
+    setxkbmap \
+        -option ctrl:nocaps \
+        -option compose:menu
+else
+    # For a local X session, go hog wild
+    xkbcomp -w 1 -I$XKBHOME $XKBHOME/keymap/default $DISPLAY
+fi
