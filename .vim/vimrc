@@ -55,6 +55,7 @@ let g:syntastic_sh_checkers = ['sh']
 let g:syntastic_lua_checkers = ["luac"]
 let g:syntastic_error_symbol = "\u2717"
 let g:syntastic_warning_symbol = "\u26A0"
+let g:syntastic_c_config_file = "c.syntastic"
 
 let g:clever_f_across_no_line = 1       " disable multi-line search
 let g:clever_f_fix_key_direction = 1    " f/t always forwards, F/T always back
@@ -88,8 +89,10 @@ Plug 'tpope/vim-fugitive'       " Git wrapper
 Plug 'tpope/vim-repeat'         " Repeat supported plugin actions with `.`
 Plug 'tpope/vim-unimpaired'     " Bracket mappings such as `[a` `]a` for args…
 Plug 'tpope/vim-surround'       " cs([ - change () to []
-Plug 'SirVer/ultisnips'         " Code snippets
+if has('python3')
+Plug 'SirVer/ultisnips'         " Code snippets (fails horribly if no python3)
 Plug 'pgilad/vim-skeletons'     " file skeletons using ultisnips
+endif
 Plug 'wellle/targets.vim'       " Text objects, eg. `di'` delete inside quote
 Plug 'majutsushi/tagbar'        " tags sidebar, lets me show tag in statusline
 Plug 'wincent/terminus'         " improve terminal vim (incl. bracketed paste)
