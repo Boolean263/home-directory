@@ -40,7 +40,7 @@ add_to_path PATH "$HOME/bin" "$HOME/.cargo/bin" "$HOME/.local/bin"
 export LC_COLLATE=POSIX
 export PAGER="$(which less) -R"
 export BC_ENV_ARGS="$HOME/.bcrc"
-export VISUAL=$(which nvim vim vi | head -n 1 2>/dev/null)
+export VISUAL=$(which nvim vim vi 2>/dev/null | head -n 1)
 export EDITOR="$VISUAL"
 export GIT_EDITOR="$VISUAL -f"
 export GVIM="$HOME/bin/ngvim"
