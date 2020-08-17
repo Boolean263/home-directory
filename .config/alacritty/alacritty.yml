@@ -6,13 +6,23 @@ env:
   # (default is xterm-256color, but for whatever reason
   # that causes tmux to not realize it has truecolour mode.
   # this TERM does)
-  #TERM: alacritty
-  TERM: st-256color
+  #TERM: st-256color
+  # The above seems to be fixed (at least on linux)
+
+  COLORTERM: truecolor
 
 font:
   size: 10.0
   normal:
     family: Source Code Pro
+  # These next sections seem silly or self-evident, but if they're missing,
+  # Alacritty defaults to the same font face and style as for 'normal'.
+  bold:
+    style: bold
+  italic:
+    style: italic
+  bold_italic:
+    style: bold italic
 
 colors:
   # I'm setting these based on the xterm names that I used in
@@ -40,6 +50,9 @@ colors:
     magenta: '0xff00ff'   # magenta
     cyan:    '0x00ffff'   # cyan
     white:   '0xffffff'   # white
+
+bell:
+  duration: 100
 
 key_bindings:
   # I go with the "standard" of Backspace=^?, Ctrl-Backspace=^H
