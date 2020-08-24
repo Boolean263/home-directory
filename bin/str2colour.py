@@ -2,14 +2,15 @@
 
 import binascii
 import argparse
-import sys, re
+import sys
+import re
 from colour import Color
 
 #######################################################################
 # This part comes from https://gist.github.com/MicahElliott/719710
 #######################################################################
 CLUT = [  # color look-up table
-#    8-bit, RGB hex
+    # 8-bit, RGB hex
 
     # Primary 3-bit (8 colors). Unique representation!
     ('00',  '000000'),
@@ -276,8 +277,10 @@ CLUT = [  # color look-up table
     ('255', 'eeeeee'),
 ]
 
+
 def _str2hex(hexstr):
     return int(hexstr, 16)
+
 
 def _strip_hash(rgb):
     # Strip leading `#` if exists.
@@ -285,17 +288,20 @@ def _strip_hash(rgb):
         rgb = rgb.lstrip('#')
     return rgb
 
+
 def _create_dicts():
     short2rgb_dict = dict(CLUT)
     rgb2short_dict = {}
     for k, v in short2rgb_dict.items():
-        if 0 < int(k) < 15: continue # 00-15 are user-configurable
-                                     # (but those two are usually black and white)
+        if 0 < int(k) < 15:  # 00-15 are user-configurable
+            continue  # (but those two are usually black and white)
         rgb2short_dict[v] = k
     return rgb2short_dict, short2rgb_dict
 
+
 def short2rgb(short):
     return '#'+SHORT2RGB_DICT[short]
+
 
 def rgb2short(rgb):
     """ Find the closest xterm-256 approximation to the given RGB value.
@@ -311,7 +317,7 @@ def rgb2short(rgb):
     rgb = _strip_hash(rgb)
     incs = (0x00, 0x5f, 0x87, 0xaf, 0xd7, 0xff)
     # Break 6-char RGB code into 3 integer vals.
-    parts = [ int(h, 16) for h in re.split(r'(..)(..)(..)', rgb)[1:4] ]
+    parts = [int(h, 16) for h in re.split(r'(..)(..)(..)', rgb)[1:4]]
     res = []
     for part in parts:
         i = 0
@@ -320,34 +326,39 @@ def rgb2short(rgb):
             if s <= part <= b:
                 s1 = abs(s - part)
                 b1 = abs(b - part)
-                if s1 < b1: closest = s
-                else: closest = b
+                if s1 < b1:
+                    closest = s
+                else:
+                    closest = b
                 res.append(closest)
                 break
             i += 1
-    #print '***', res
-    res = ''.join([ ('%02.x' % i) for i in res ])
-    equiv = RGB2SHORT_DICT[ res ]
-    #print '***', res, equiv
+    res = ''.join([('%02.x' % i) for i in res])
+    equiv = RGB2SHORT_DICT[res]
     return equiv, '#'+res
+
 
 RGB2SHORT_DICT, SHORT2RGB_DICT = _create_dicts()
 #######################################################################
 # The above came from https://gist.github.com/MicahElliott/719710
 #######################################################################
 
+
 def byte_split(u32):
     ret_val = []
-    for i in range(0,4):
+    for i in range(0, 4):
         val = (u32 >> (8*i)) & 0xFF
         ret_val.append(val)
     return ret_val
 
+
 def from_crc32(in_str, parts=None):
     if parts is None:
-        parts = (3,1,0)
+        parts = (3, 1, 0)
     crc = byte_split(binascii.crc32(bytes(str(in_str), 'utf-8')))
-    return "#{:02X}{:02X}{:02X}".format(crc[parts[0]], crc[parts[1]], crc[parts[2]])
+    return "#{:02X}{:02X}{:02X}".format(crc[parts[0]], crc[parts[1]],
+                                        crc[parts[2]])
+
 
 class XTColour(Color):
 
@@ -361,7 +372,8 @@ class XTColour(Color):
             pass
         except TypeError:
             pass
-        return super().__init__(color=color, picker=from_crc32, pick_key=None, **kwargs)
+        return super().__init__(color=color, picker=from_crc32, pick_key=None,
+                                **kwargs)
 
     def set_xcolour(self, color):
         if not 0 <= int(color) <= 255:
@@ -387,12 +399,15 @@ class XTColour(Color):
 
 #######################################################################
 
+
 if __name__ == '__main__':
     XTColour.ansi = sys.stdout.isatty()
     xt_reset = "\x1B[0m" if XTColour.ansi else ""
 
-    parser = argparse.ArgumentParser(description="Generates a hexadecimal colour code for a given string in the xterm-256color space")
-    parser.add_argument('instring', type=str, help="string from which to generate a colour")
+    parser = argparse.ArgumentParser(
+        description="Generates a hexadecimal colour code for a given string in the xterm-256color space")
+    parser.add_argument('instring', type=str,
+                        help="string from which to generate a colour")
 
     args = parser.parse_args()
     bg = XTColour(pick_for=args.instring)
