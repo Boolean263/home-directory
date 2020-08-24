@@ -33,6 +33,8 @@ $ops{">"}              = $ops{"-gt"};
 
 usage() if @ARGV != 3;
 my ($a, $op, $b) = @ARGV;
+$a =~ s/[^\d.]//g;
+$b =~ s/[^\d.]//g;
 $a = version->parse($a);
 $b = version->parse($b);
 
