@@ -412,10 +412,22 @@ if __name__ == '__main__':
     args = parser.parse_args()
     bg = XTColour(pick_for=args.instring)
     fg = XTColour("#000000" if bg.luminance > 0.4 else "#FFFFFF")
-    print("BG: {}, H={}, S={}, L={}".format(bg, bg.hue, bg.saturation, bg.luminance))
+    #print("BG: {}, H={}, S={}, L={}".format(bg, bg.hue, bg.saturation, bg.luminance))
+    comp = XTColour(bg)
+    comp.hue += 0.5
+    t1 = XTColour(bg)
+    t1.hue += (1/3)
+    t2 = XTColour(bg)
+    t2.hue -= (1/3)
 
     fgs, fgh = fg.xcolour
     bgs, bgh = bg.xcolour
+    cs, ch = comp.xcolour
+    t1s, t1h = t1.xcolour
+    t2s, t2h = t2.xcolour
 
     print("{0}{1}foreground\t{2}\t{3}{4}".format(fg.fg_str, bg.bg_str, fgs, fgh, xt_reset))
     print("{0}{1}background\t{2}\t{3}{4}".format(fg.fg_str, bg.bg_str, bgs, bgh, xt_reset))
+    print("{0}{1}complement\t{2}\t{3}{4}".format(comp.fg_str, bg.bg_str, cs, ch, xt_reset))
+    print("{0}{1}t1\t{2}\t{3}{4}".format(t1.fg_str, bg.bg_str, t1s, t1h, xt_reset))
+    print("{0}{1}t2\t{2}\t{3}{4}".format(t2.fg_str, bg.bg_str, t2s, t2h, xt_reset))
