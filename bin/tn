@@ -1,14 +1,43 @@
 #!/bin/sh
 
+# Protect against nested sessions
+if [ -n "$TMUX" ] || [ -n "$STY" ] ; then
+    echo "You're already in a session ($TMUX$STY)" 1>&2
+    exit 1
+fi
+
+fail()
+{
+    echo "Neither tmux nor screen are installed" 1>&2
+    exit 1
+}
+
 if [ $# -eq 0 ] ; then
     # Fall back on creating a new session
-    tmux
+    if $(which tmux >/dev/null 2>&1) ; then
+        tmux
+    elif $(which screen >/dev/null 2>&1) ; then
+        screen
+    else
+        fail
+    fi
 elif [ $# -eq 1 ] ; then
-    tmux attach-session -t "$1" || tmux new-session -s "$1"
+    if $(which tmux >/dev/null 2>&1) ; then
+        tmux attach-session -t "$1" 2>/dev/null || tmux new-session -s "$1"
+    elif $(which screen >/dev/null 2>&1) ; then
+        screen -S "$1" -x -RR
+    else
+        fail
+    fi
 else
-    cat 1>&2 <<EOT
+    muxer=$(which tmux screen 2>/dev/null | head -n 1)
+    if [ -n "$muxer" ] ; then
+        cat 1>&2 <<EOT
 Usage: $(basename $0) [session-name]
-For more complex usage, run tmux directly.
+For more complex usage, run $muxer directly.
 EOT
-    exit 1
+        exit 1
+    else
+        fail
+    fi
 fi

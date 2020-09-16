@@ -24,11 +24,7 @@ if [ -n "$SSH_CONNECTION" ] && ! [ -e "$HOME/.no-tmux" ] ; then
             ln -sf "$SSH_AUTH_SOCK" "$SOCK"
             export SSH_AUTH_SOCK="$SOCK"
         fi
-        if $(which tmux >/dev/null 2>&1) ; then
-            exec sh -c 'tmux attach-session -t ssh || exec tmux new-session -s ssh'
-        elif $(which screen >/dev/null 2>&1) ; then
-            exec screen -S ssh -x -RR
-        fi
+        ~/bin/tn ssh && exit 0
     fi
 fi
 
