@@ -6,9 +6,9 @@ shift
 if [ -n "$TMUX" ] ; then
     TMUX_VERSION=$(tmux -V | awk '{print $2}')
     if vercmp.pl $TMUX_VERSION -gt 2.1 ; then
-        tmux new-window "$cmd" ${1+"$@"}
+        tmux new-window -c "$PWD" "$cmd" ${1+"$@"}
     else
-        tmux new-window "$cmd $*"
+        tmux new-window "cd '$PWD' ; $cmd $*"
     fi
 elif [ -n "$STY" ] ; then
     screen "$cmd" ${1+"$@"}
