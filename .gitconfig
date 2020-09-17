@@ -1,6 +1,6 @@
 [user]
     name = David Perry
-    email = d.perry@utoronto.ca
+    email = boolean263@protonmail.com
 
 [github]
     user = Boolean263
@@ -44,6 +44,9 @@
 
 [clone]
     recurse-submodules = true
+
+[pull]
+    rebase = true
 
 [fetch]
     prune = true
