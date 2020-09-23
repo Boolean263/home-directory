@@ -14,17 +14,17 @@ fail()
 
 if [ $# -eq 0 ] ; then
     # Fall back on creating a new session
-    if $(which tmux >/dev/null 2>&1) ; then
+    if which tmux >/dev/null 2>&1 ; then
         tmux
-    elif $(which screen >/dev/null 2>&1) ; then
+    elif which screen >/dev/null 2>&1 ; then
         screen
     else
         fail
     fi
 elif [ $# -eq 1 ] ; then
-    if $(which tmux >/dev/null 2>&1) ; then
+    if which tmux >/dev/null 2>&1 ; then
         tmux attach-session -t "$1" 2>/dev/null || tmux new-session -s "$1"
-    elif $(which screen >/dev/null 2>&1) ; then
+    elif which screen >/dev/null 2>&1 ; then
         screen -S "$1" -x -RR
     else
         fail
