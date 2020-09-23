@@ -69,6 +69,8 @@ let skeletons#autoRegister = 1
 
 let g:EditorConfig_max_line_indicator = 'line'
 
+let g:rustfmt_autosave = 1
+
 nnoremap <F8> :TagbarToggle<CR>
 
 " }}}2
@@ -113,6 +115,7 @@ Plug 'rhysd/vim-clang-format'   " clang-format C/C++ code (:ClangFormat)
 Plug 'alx741/vinfo'             " Read infodocs in vim
 Plug 'Boolean263/sectional-couch.vim'
 Plug 'tmhedberg/SimpylFold'     " Folding in Python
+Plug 'rust-lang/rust.vim'       " Rust programming language support
 call plug#end() " }}}2
 " }}}1
 
