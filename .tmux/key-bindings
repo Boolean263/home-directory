@@ -21,7 +21,7 @@ sed -n '/^__DATA__$/,$p' "$0" | while read table key rest ; do
         # https://github.com/tmux/tmux/issues/754
         table=$(echo $table | sed -e 's/\([^-]\+\)-\(.*\)/\2-mode-\1/')
         if [ "$rest" = "NONE" ] ; then
-            tmux unbind-key -T $table %key
+            tmux unbind-key -T $table $key
         else
             tmux bind-key -T $table $key send-keys -X $rest
         fi
@@ -40,4 +40,3 @@ vi-edit C-Right next-word
 # For terminals where BSpace sends ^?, Ctrl-BSpace sends ^H
 vi-edit C-w NONE
 vi-edit C-h delete-word
-
