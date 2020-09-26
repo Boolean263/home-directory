@@ -175,11 +175,7 @@ if has('nvim-0.3.2') || has("patch-8.1.0360")
 endif
 
 " Set the directory for saving swap files and undo history
-if has('win32') || has('win64')
-    set directory=e:/temp/vim//
-else
-    set directory=/var/tmp/daperry/vim//
-endif
+set directory=$TEMP/daperry/vim//
 execute "set undodir=" . &directory
 set undofile
 silent! call mkdir(&directory, "p", 0700)

@@ -21,7 +21,7 @@
 
 # This file was re-written so it needs massaging for older shells like ksh.
 # See the file for details
-. $HOME/etc/env/path_functions.bash
+. "$HOME/etc/env/path_functions.bash"
 
 # Need this in cygwin for some reason
 add_to_path PATH /usr/local/bin
@@ -38,7 +38,7 @@ export TERMINAL="$HOME/bin/term"
 add_to_path PATH "$HOME/bin" "$HOME/.cargo/bin" "$HOME/.local/bin"
 
 export LC_COLLATE=POSIX
-export PAGER="$(which less) -R"
+export PAGER=$(which less)
 export BC_ENV_ARGS="$HOME/.bcrc"
 export VISUAL=$(which nvim vim vi 2>/dev/null | head -n 1)
 export EDITOR="$VISUAL"

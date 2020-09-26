@@ -5,3 +5,6 @@
 
 \e[1;5D     prev-file
 \eOd        prev-file
+
+#env
+LESS=-R

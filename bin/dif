@@ -33,4 +33,4 @@ if [ -t 0 ] ; then
 else
     tee
 fi
-) | $DSF | $PAGER -FX
+) | "$DSF" | "$PAGER" -FX
