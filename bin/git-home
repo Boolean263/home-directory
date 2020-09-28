@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# Figure out the current branch
+base_branch="home"
+repodir="${1:-$HOME}"
+cd "$repodir"
+cur_branch=$(git symbolic-ref --short HEAD)
+
+# Fetch upstream and update to it
+git stash push
+if [ "$cur_branch" != "$base_branch" ] ; then
+    git checkout home
+fi
+git fetch --all
+git merge --ff-only || exit 1
+
+# If we weren't in the base branch, go back to it
+# and pull its changes into our current branch
+if [ "$cur_branch" != "$base_branch" ] ; then
+    git checkout "$cur_branch"
+    git merge -s ours "$base_branch"
+fi
+git stash pop
+
+# Update things that may have been affected by the merge
+lesskey
+(cd "$repodir/.terminfo" && ./regen.sh)
