@@ -18,10 +18,12 @@ git merge --ff-only || exit 1
 # and pull its changes into our current branch
 if [ "$cur_branch" != "$base_branch" ] ; then
     git checkout "$cur_branch"
-    git merge -s ours "$base_branch"
+    git merge -s recursive -X ours "$base_branch"
 fi
 git stash pop
 
 # Update things that may have been affected by the merge
 lesskey
-(cd "$repodir/.terminfo" && ./regen.sh)
+(cd "$repodir/.terminfo" && ./regen.sh) >/dev/null 2>&1
+[ -z "$DISPLAY" ] || xrdb "$HOME/.Xresources"
+v -c 'PlugUpdate | qa'
