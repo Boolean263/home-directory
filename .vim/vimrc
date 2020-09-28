@@ -96,7 +96,7 @@ Plug 'SirVer/ultisnips'         " Code snippets (fails horribly if no python3)
 Plug 'pgilad/vim-skeletons'     " file skeletons using ultisnips
 endif
 Plug 'wellle/targets.vim'       " Text objects, eg. `di'` delete inside quote
-Plug 'majutsushi/tagbar'        " tags sidebar, lets me show tag in statusline
+Plug 'preservim/tagbar'         " tags sidebar, lets me show tag in statusline
 Plug 'wincent/terminus'         " improve terminal vim (incl. bracketed paste)
 Plug 'vim-syntastic/syntastic'  " Syntax checking/linting on file save
 Plug 'airblade/vim-gitgutter'   " git changes in gutter, also `c` text object
@@ -113,8 +113,8 @@ Plug 'Vimjas/vim-python-pep8-indent' " Just what it sounds like
 Plug 'lilydjwg/colorizer'       " colourize #RRGGBB strings (:ColorHighlight)
 Plug 'rhysd/vim-clang-format'   " clang-format C/C++ code (:ClangFormat)
 Plug 'alx741/vinfo'             " Read infodocs in vim
-Plug 'Boolean263/sectional-couch.vim'
-Plug 'tmhedberg/SimpylFold'     " Folding in Python
+Plug 'Boolean263/sectional-couch.vim' " My section navigation plugin
+"Plug 'tmhedberg/SimpylFold'     " Folding in Python
 Plug 'rust-lang/rust.vim'       " Rust programming language support
 call plug#end() " }}}2
 " }}}1
