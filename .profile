@@ -19,8 +19,6 @@
 # Try to prevent dash from choking, but it doesn't seem to work
 [ "${0#*-}" = "dash" ] && export PS1='[\u@\h \W]\$ ' || :
 
-# This file was re-written so it needs massaging for older shells like ksh.
-# See the file for details
 . "$HOME/etc/env/path_functions.bash"
 
 # Need this in cygwin for some reason
@@ -92,5 +90,7 @@ unset myim
 export GPGKEY="310835C6"
 
 export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+
+[ -d "/tmp" ] && export TEMP="/tmp" || :
 
 [ -f "$HOME/.profile.local" ] && . "$HOME/.profile.local" || :
