@@ -113,7 +113,7 @@ Plug 'Vimjas/vim-python-pep8-indent' " Just what it sounds like
 Plug 'lilydjwg/colorizer'       " colourize #RRGGBB strings (:ColorHighlight)
 Plug 'rhysd/vim-clang-format'   " clang-format C/C++ code (:ClangFormat)
 Plug 'alx741/vinfo'             " Read infodocs in vim
-Plug 'Boolean263/sectional-couch.vim' " My section navigation plugin
+Plug 'Boolean263/sectional-couch.vim', {'branch':'main'} " My section navigation plugin
 "Plug 'tmhedberg/SimpylFold'     " Folding in Python
 Plug 'rust-lang/rust.vim'       " Rust programming language support
 call plug#end() " }}}2
