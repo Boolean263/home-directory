@@ -11,11 +11,14 @@ use Getopt::Long qw(:config
 BEGIN { $Pod::Usage::Formatter = 'Pod::Text::Termcap' if -t STDOUT; }
 use Pod::Usage;
 
+use File::Temp qw();
+
 ###
 ### Functions
 ###
 
-sub vless
+# My original approach: pipe things directly to gvim
+sub vless_orig
 {
     my ($cmd_fh, @vim_args) = @_;
 
@@ -23,6 +26,24 @@ sub vless
     open($vim_fh, '|-', qw(gvim - --not-a-term), '+set buftype=nofile', @vim_args);
     binmode $vim_fh => ':raw';
     print $vim_fh $_ for <$cmd_fh>;
+}
+
+# Revised approach: write to a temporary file, so plugins like tagbar
+# can read the file structure. The file will last until the temporary
+# directory gets cleaned; perhaps a vim autocmd can take care of it.
+sub vless
+{
+    my ($cmd_fh, @vim_args) = @_;
+    my $tmp_fh = File::Temp->new(
+        TEMPLATE => "vlessXXXXXXXX",
+        TMPDIR => 1,
+        UNLINK => 0,
+    );
+    binmode $tmp_fh => ':raw';
+    print $tmp_fh $_ for <$cmd_fh>;
+    $tmp_fh->close();
+
+    system('g', '+set buftype=nofile', @vim_args, $tmp_fh->filename);
 }
 
 ###
