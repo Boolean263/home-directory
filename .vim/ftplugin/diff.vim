@@ -39,3 +39,7 @@ function! DiffFoldLevel()
         return '='
     endif
 endfunction
+
+" For use with sectional-couch.vim
+setlocal paragraphs=/^@@/
+setlocal sections=/^diff/
