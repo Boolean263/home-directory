@@ -18,7 +18,7 @@ git merge --ff-only || exit 1
 # and pull its changes into our current branch
 if [ "$cur_branch" != "$base_branch" ] ; then
     git checkout "$cur_branch"
-    git merge -s recursive -X ours "$base_branch"
+    git merge -s recursive -X ours -m "Merge latest from $base_branch" "$base_branch"
 fi
 git stash pop
 
