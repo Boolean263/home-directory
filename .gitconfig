@@ -41,6 +41,7 @@
 [init]
     #templateDir = ~/git-config/templates/default
     templateDir = ~/git-config/templates/git-ctags
+    defaultBranch = main
 
 [clone]
     recurse-submodules = true
