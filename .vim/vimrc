@@ -234,8 +234,9 @@ inoremap <C-W> <Nop>
 cnoremap <C-W> <Nop>
 
 " Make n/N searching always search forward/backward respectively
-noremap <expr>n 'Nn'[v:searchforward]
-noremap <expr>N 'nN'[v:searchforward]
+" and center the search result
+noremap <expr>n 'Nn'[v:searchforward] . 'zzzv'
+noremap <expr>N 'nN'[v:searchforward] . 'zzzv'
 
 " Use Shift-Insert to paste the clipboard at the current location
 inoremap <S-Insert> <C-O>:set paste<CR><C-R>*<C-O>:set nopaste<CR>
@@ -254,6 +255,11 @@ noremap $ g$
 " this is more consistent with 'C'/'D'
 noremap Y y$
 
+" Some nice tweaks to working with visual mode
+" `gv` re-selects the last selection
+vmap < <gv
+vmap > >gv
+
 " }}}1
 
 " Folding management {{{1
@@ -271,7 +277,7 @@ function! NeatFoldText()
     let lines_count = v:foldend - v:foldstart + 1
     let lines_count_text = '-' . printf("%10s", lines_count . ' lines') . ' '
     let foldchar = matchstr(&fillchars, 'fold:\zs.')
-    let foldtextstart = strpart('+' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
+    let foldtextstart = strpart(repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
     let foldtextend = lines_count_text . repeat(foldchar, 8)
     let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
     return indent . foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
