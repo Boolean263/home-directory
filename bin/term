@@ -7,7 +7,7 @@
 #    for my future self
 
 # My global settings, which can be overridden by command-line options.
-FONTFACE="Source Code Pro"
+FONTFACE="Iosevka Term"
 FONTSIZE="10"
 GEOMETRY="85x56"
 
@@ -15,8 +15,8 @@ GEOMETRY="85x56"
 # to let me reorder lines on a whim.
 PREFERRED_TERMS=$(cat <<EOT
     alacritty
-    kitty
     st stterm
+    xfce4-terminal
     urxvt rxvt-unicode rxvt
     xterm
     gnome-terminal
@@ -24,10 +24,10 @@ EOT
 )
 # Terminals I've taken out of the rotation can be pasted here for reference.
 cat >/dev/null <<EOT
-    xfce4-terminal
     konsole
     lxterminal
     mate-terminal
+    kitty
 EOT
 
 usage()
@@ -170,7 +170,7 @@ case "$TERMEMU" in
         # for the longest time, which is why it's at the bottom, but I see
         # they've added support now. It produces ^H like many terminals do
         # by default.
-        exec "$TERMEMU" --geometry="$GEOMETRY" --font="$FONTFACE" \
+        exec "$TERMEMU" --geometry="$GEOMETRY" --font="$FONTFACE $FONTSIZE" \
             --hide-menubar --hide-toolbar --hide-scrollbar ${1+"$@"}
     ;;
     */gnome-terminal|*/mate-terminal)
