@@ -72,6 +72,13 @@
 [include]
     file = ~/git-config/git-filters
 
+[mergetool "ours"]
+    cmd = /bin/cp -v --no-preserve=timestamps "$LOCAL" "$MERGED"
+
+[mergetool "theirs"]
+    cmd = /bin/cp -v --no-preserve=timestamps "$REMOTE" "$MERGED"
+
+
 [alias]
     # lots stolen from https://git.wiki.kernel.org/index.php/Aliases
     # and https://gist.github.com/992097
