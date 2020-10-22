@@ -1,2 +1,2 @@
 #!/bin/sh
-play -c 2 -n synth pinknoise vol 0.5 band -n 2500 4000 tremolo 0.03 5 reverb 20
+play -c 2 -n synth pinknoise vol 0.3 band -n 2500 4000 tremolo 0.03 5 reverb 20
