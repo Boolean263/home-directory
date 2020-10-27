@@ -1,0 +1,7 @@
+# This file uses the syntax documented in pam_env.conf(5)
+# See /etc/security/pam_env.conf for more examples.
+
+# For Sway (and maybe other Wayland environments?), my ~/bin/fixkeys script
+# can't directly be used, but some of the simpler overrides can be set in this
+# environment variable. This is the most basic one I need/want.
+XKB_DEFAULT_OPTIONS     DEFAULT=caps:ctrl_modifier

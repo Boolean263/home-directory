@@ -1,0 +1,281 @@
+# Sway configuration file.
+# Copied from /etc/sway/config and edited to my liking.
+# Based on my ~/.config/i3/config file, but not using the same file because
+# it seems sway's config reader isn't quite 100% in agreement with i3 on syntax.
+#
+# Read `man 5 sway` for a complete reference.
+
+### {{{ Variables
+#
+# Logo key. Use Mod1 for Alt.
+set $mod Mod4
+set $alt Mod1
+# Home row direction keys, like vim
+#set $left h
+#set $down j
+#set $up k
+#set $right l
+# Your preferred application launcher
+# Note: pass the final command to swaymsg so that the resulting window can be opened
+# on the original workspace that the command was run on.
+set $menu dmenu_path | dmenu | xargs swaymsg exec --
+# }}}
+
+### {{{ Output configuration
+#
+# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
+output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+#
+# Example configuration:
+#
+#   output HDMI-A-1 resolution 1920x1080 position 1920,0
+#
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+# }}}
+
+### {{{ Idle configuration
+#
+# Example configuration:
+#
+# exec swayidle -w \
+#          timeout 300 'swaylock -f -c 000000' \
+#          timeout 600 'swaymsg "output * dpms off"' \
+#               resume 'swaymsg "output * dpms on"' \
+#          before-sleep 'swaylock -f -c 000000'
+#
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+# }}}
+
+### {{{ Input configuration
+#
+# Example configuration:
+#
+#   input "2:14:SynPS/2_Synaptics_TouchPad" {
+#       dwt enabled
+#       tap enabled
+#       natural_scroll enabled
+#       middle_emulation enabled
+#   }
+#
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# Read `man 5 sway-input` for more information about this section.
+
+# Wayland doesn't really do XKB stuff directly, but Sway supports it here,
+# and that's awesome.
+input "type:keyboard" {
+    xkb_file ~/.config/xkb/keymap/default
+}
+# }}}
+
+### {{{ Look and Feel
+
+# Make the indicator for the next panel easier to see
+# https://www.reddit.com/r/i3wm/comments/gk821e/newbie_to_i3_question_how_to_combine_stacktab/fqqo52k/
+default_border normal 4
+hide_edge_borders none
+
+# Read `man 5 sway-bar` for more information about this section.
+bar {
+    position top
+
+    # When the status_command prints a new line to stdout, swaybar updates.
+    # The default just shows the current date and time.
+    status_command while date +'%Y-%m-%d %H:%M'; do sleep 1; done
+
+    colors {
+        background          #2c001e 
+        statusline          #aea79f 
+        separator           #333333 
+        # class             border  backgr. text
+        focused_workspace   #dd4814 #dd4814 #ffffff 
+        active_workspace    #902a07 #902a07 #aea79f 
+        inactive_workspace  #902a07 #902a07 #aea79f 
+        urgent_workspace    #ff8814 #ff8814 #ffffff 
+        binding_mode        #77216f #77216f #ffffff 
+    }
+}
+
+# Colour scheme
+# Managed by i3-style: https://github.com/altdesktop/i3-style
+# class                 border  backgr. text    indicator child_border
+client.focused          #dd4814 #dd4814 #ffffff #efb73e 
+client.focused_inactive #5e2750 #5e2750 #aea79f #5e2750 
+client.unfocused        #5e2750 #5e2750 #aea79f #5e2750 
+client.urgent           #ff8814 #ff8814 #ffffff #efb73e 
+
+# }}}
+
+### {{{ Window Management
+
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+# Despite the name, also works for non-floating windows.
+# Change normal to inverse to use left mouse button for resizing and right
+# mouse button for dragging.
+floating_modifier $mod normal
+
+# Kill focused window
+bindsym $alt+F4 kill
+
+# Layout stuff:
+#
+# You can "split" the current object of your focus with
+# $mod+b or $mod+v, for horizontal and vertical splits
+# respectively.
+bindsym $mod+b splith
+bindsym $mod+v splitv
+
+# Switch the current container between different layout styles
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Make the current focus fullscreen
+bindsym $mod+f fullscreen
+
+# Toggle the current focus between tiling and floating mode
+bindsym $mod+Shift+space floating toggle
+
+# Swap focus between the tiling area and the floating area
+bindsym $mod+space focus mode_toggle
+
+# Move focus to the parent container
+bindsym $mod+a focus parent
+
+# Pin (stick) current floating window to all workspaces
+bindsym $mod+p sticky toggle
+
+# Resizing containers:
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym Left resize shrink width 10px or 10ppt
+    bindsym Down resize grow height 10px or 10ppt
+    bindsym Up resize shrink height 10px or 10ppt
+    bindsym Right resize grow width 10px or 10ppt
+
+    bindsym Shift+Left resize shrink width 10px
+    bindsym Shift+Down resize grow height 10px
+    bindsym Shift+Up resize shrink height 10px
+    bindsym Shift+Right resize grow width 10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+shift+r mode "resize"
+
+# Sway has a "scratchpad", which is a bag of holding for windows.
+# You can send windows there and get them back later.
+
+# Move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
+# }}}
+
+### {{{ Window Navigation
+
+# Move focus between windows
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move the focused window with the same, but add Shift
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+# Move focused container to workspace
+bindsym $mod+Ctrl+1 move container to workspace 1
+bindsym $mod+Ctrl+2 move container to workspace 2
+bindsym $mod+Ctrl+3 move container to workspace 3
+bindsym $mod+Ctrl+4 move container to workspace 4
+bindsym $mod+Ctrl+5 move container to workspace 5
+bindsym $mod+Ctrl+6 move container to workspace 6
+bindsym $mod+Ctrl+7 move container to workspace 7
+bindsym $mod+Ctrl+8 move container to workspace 8
+bindsym $mod+Ctrl+9 move container to workspace 9
+bindsym $mod+Ctrl+0 move container to workspace 10
+# Note: workspaces can have any name you want, not just numbers.
+# We just use 1-10 as the default.
+# }}}
+
+### {{{ Window Rules
+# See: https://i3wm.org/docs/userguide.html#command_criteria
+#
+# for_window:
+#   • alters many window properties (including "move to workspace")
+#   • executed whenever a window changes its properties
+
+for_window [instance="xeyes"] floating enable, border none
+for_window [title="^Event Tester$"] floating enable
+for_window [class="^Steam$" title="^Steam - News"] floating enable
+for_window [title="^Microsoft Teams Notification$"] floating enable
+
+# assign:
+#   • puts windows on specific workspaces
+#   • executed only when the window is created
+assign [class="Steam"] → 4
+
+# }}}
+
+
+### {{{ Other Keybinds and Program Shortcuts
+
+# Reload the configuration file
+bindsym $mod+Shift+c reload
+
+# Start a terminal
+bindsym $mod+Return exec $HOME/bin/term
+
+# Start your launcher
+bindsym $mod+r exec $menu
+
+bindsym $alt+Ctrl+Delete exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+
+# }}}
+
+### {{{ Startup
+# By using the exec keyword outside a keybinding, you can configure which
+# commands will be performed by sway on initial startup. exec commands will not
+# run when restarting sway, if you need a command to run also when restarting
+# you should use the exec_always keyword. These commands will be run in order.
+#
+# NOTE: Since this is not a X11 window manager, I don't blindly run my
+# autostart stuff. (I made that mistake once already.)
+
+# notification daemon
+exec dunst
+
+# Redshift for Wayland. Sources:
+# • https://www.reddit.com/r/swaywm/comments/bfa43r/i_cant_get_redshift_to_work/
+# • https://www.reddit.com/r/wayland/comments/4ys6ft/wayland_and_redshift/
+exec ~/.config/sway/redshift -m wayland
+
+exec /usr/lib/protonmail/bridge/protonmail-bridge --no-window
+
+# }}}
+
+#include /etc/sway/config.d/*
+
+# vim:foldmethod=marker:
