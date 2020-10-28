@@ -19,32 +19,25 @@
 # Try to prevent dash from choking, but it doesn't seem to work
 [ "${0#*-}" = "dash" ] && export PS1='[\u@\h \W]\$ ' || :
 
+# Get environment from ~/.config/environment.d/ files.
+# See ~/.config/environment.d/README.md for more information.
+ENVIRONMENTD="$HOME/.config/environment.d"
+set -a
+if [ -d "$ENVIRONMENTD" ]; then
+    for conf in $(ls "$ENVIRONMENTD"/*.conf); do
+        . "$conf"
+    done
+fi
+set +a
+
 . "$HOME/etc/env/path_functions.bash"
 
-# Need this in cygwin for some reason
-add_to_path PATH /usr/local/bin
-#add_to_path MANPATH /usr/local/man
-#add_to_path LD_LIBRARY_PATH /usr/local/lib
-
-# i3-sensible-desktop uses this to find the user's preferred terminal emulator
-export TERMINAL="$HOME/bin/term"
-
-# set PATH so it includes user's private bin if it exists
-#if [ -d "$HOME/.plenv/bin" ] ; then
-#    export PATH="$HOME/.plenv/bin:$PATH"
-#fi
-add_to_path PATH "$HOME/bin" "$HOME/.cargo/bin" "$HOME/.local/bin"
-
-export LC_COLLATE=POSIX
 export PAGER=$(which less)
-export BC_ENV_ARGS="$HOME/.bcrc"
 export VISUAL=$(which nvim vim vi 2>/dev/null | head -n 1)
 export EDITOR="$VISUAL"
 export GIT_EDITOR="$VISUAL -f"
 export GVIM="$HOME/bin/ngvim"
 
-export INPUTRC="$HOME/.inputrc"
-#export GREP_OPTIONS="--colour --exclude-dir=.svn"
 export LESS="-R"
 #export LESSOPEN="|lesspipe.sh %s"
 
@@ -54,7 +47,6 @@ export FIGNORE="CVS:\~:.o:.svn:.git:.lo"
 export NYTPROF="addpid=1"
 export DBIC_TRACE_PROFILE=console
 export TEST_JOBS=9
-export TERMINFO="$HOME/.terminfo"
 
 export UBUNTU_MENUPROXY=
 
@@ -67,11 +59,6 @@ add_to_path PERL5LIB "$MYPERLDIR/lib/perl5"
 export PERL_LOCAL_LIB_ROOT="$MYPERLDIR${PERL_LOCAL_LIB_ROOT+:}$PERL_LOCAL_LIB_ROOT"
 export PERL_MB_OPT="--install_base \"$MYPERLDIR\""
 export PERL_MM_OPT="INSTALL_BASE=$MYPERLDIR"
-
-
-#export PERLBREW_ROOT="$HOME/perl5/perlbrew"
-
-export PYTHONUSERBASE="$HOME"
 
 export MANPAGER="$HOME/bin/manpager"
 export PERLDOC_PAGER="$PAGER"
@@ -87,9 +74,14 @@ export GTK_IM_MODULE=$myim
 export XMODIFIERS="@im=$myim"
 unset myim
 
-export GPGKEY="310835C6"
+# Go all in on Wayland if it's in use
+if [ -n "$WAYLAND_DISPLAY" ] ; then
+    export MOZ_ENABLE_WAYLAND=1
+    export GDK_BACKEND=wayland
+    export MOZ_DBUS_REMOTE=1
+fi
 
-export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
+export GPGKEY="310835C6"
 
 [ -d "/tmp" ] && export TEMP="/tmp" || :
 
