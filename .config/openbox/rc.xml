@@ -111,13 +111,15 @@
     </font>
   </theme>
   <desktops>
-    <number>4</number>
+    <number>6</number>
     <firstdesk>1</firstdesk>
     <names>
       <name>Desktop 1</name>
       <name>Desktop 2</name>
       <name>Desktop 3</name>
       <name>Desktop 4</name>
+      <name>Desktop 5</name>
+      <name>Desktop 6</name>
     </names>
     <popupTime>875</popupTime>
     <!-- The number of milliseconds to show the popup for when switching
@@ -233,7 +235,7 @@
       <action name="ToggleDecorations"/>
     </keybind>
     <keybind key="W-f">
-        <action name="ToggleFullscreen"/>
+      <action name="ToggleFullscreen"/>
     </keybind>
     <keybind key="A-space">
       <action name="ShowMenu">
@@ -241,9 +243,9 @@
       </action>
     </keybind>
     <keybind key="C-A-Escape">
-        <action name="Execute">
-            <command>xkill</command>
-        </action>
+      <action name="Execute">
+        <command>xkill</command>
+      </action>
     </keybind>
     <!-- Take a screenshot of the current window with scrot when Alt+Print are pressed -->
     <keybind key="A-Print">
