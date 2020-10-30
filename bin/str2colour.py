@@ -354,8 +354,12 @@ def byte_split(u32):
 
 def from_crc32(in_str, parts=None):
     if parts is None:
-        parts = (3, 1, 0)
+        parts = (0, 1, 2)
     crc = byte_split(binascii.crc32(bytes(str(in_str), 'utf-8')))
+    crc[0] ^= crc[3] & 0x0F
+    crc[1] ^= (crc[3] >> 4) & 0x0F
+    crc[2] ^= crc[3]
+
     return "#{:02X}{:02X}{:02X}".format(crc[parts[0]], crc[parts[1]],
                                         crc[parts[2]])
 
