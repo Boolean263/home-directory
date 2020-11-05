@@ -8,9 +8,9 @@
 
 xrdb "$HOME/.Xresources"
 
-if which xssproxy >/dev/null 2>&1 ; then
-    xssproxy &
-fi
+#if which xssproxy >/dev/null 2>&1 ; then
+#    xssproxy &
+#fi
 "$HOME/bin/fixkeys"
 "$HOME/bin/fixrandr.sh" || :
 
