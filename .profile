@@ -21,9 +21,11 @@
 
 # Get environment from ~/.config/environment.d/ files.
 # See ~/.config/environment.d/README.md for more information.
+# Test for ENV_TEST_ENVD (which I set in ~/.config/environment.d/)
+# to avoid needless re-setting.
 ENVIRONMENTD="$HOME/.config/environment.d"
 set -a
-if [ -d "$ENVIRONMENTD" ]; then
+if [ -d "$ENVIRONMENTD" ] && [ -z "$ENV_TEST_ENVD" ] ; then
     for conf in $(ls "$ENVIRONMENTD"/*.conf); do
         . "$conf"
     done
@@ -51,14 +53,6 @@ export TEST_JOBS=9
 export UBUNTU_MENUPROXY=
 
 export COLORTERM="truecolor"
-
-export PERL_CPANM_OPT="-n"
-export MYPERLDIR="$HOME/perl5"
-add_to_path PATH "$MYPERLDIR/bin"
-add_to_path PERL5LIB "$MYPERLDIR/lib/perl5"
-export PERL_LOCAL_LIB_ROOT="$MYPERLDIR${PERL_LOCAL_LIB_ROOT+:}$PERL_LOCAL_LIB_ROOT"
-export PERL_MB_OPT="--install_base \"$MYPERLDIR\""
-export PERL_MM_OPT="INSTALL_BASE=$MYPERLDIR"
 
 export MANPAGER="$HOME/bin/manpager"
 export PERLDOC_PAGER="$PAGER"
