@@ -25,7 +25,7 @@
 # to avoid needless re-setting.
 ENVIRONMENTD="$HOME/.config/environment.d"
 set -a
-if [ -d "$ENVIRONMENTD" ] && [ -z "$ENV_TEST_ENVD" ] ; then
+if [ -d "$ENVIRONMENTD" ] ; then
     for conf in $(ls "$ENVIRONMENTD"/*.conf); do
         . "$conf"
     done

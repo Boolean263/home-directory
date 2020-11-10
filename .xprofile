@@ -6,6 +6,8 @@
 # It should be explicitly sourced by other ways of starting X (eg, .xinitrc).
 # Info from: https://wiki.archlinux.org/index.php/Xprofile
 
+. "$HOME/.profile"
+
 xrdb "$HOME/.Xresources"
 
 #if which xssproxy >/dev/null 2>&1 ; then
