@@ -14,7 +14,8 @@ env:
 font:
   size: 10.0
   normal:
-    family: Source Code Pro
+    family: Iosevka Term
+    style: regular
   # These next sections seem silly or self-evident, but if they're missing,
   # Alacritty defaults to the same font face and style as for 'normal'.
   bold:
@@ -35,7 +36,7 @@ colors:
     red:     '0xaf0000'   # red3
     green:   '0x00af00'   # green3
     yellow:  '0xafd700'   # yellow3
-    blue:    '0x0000d7'   # blue2 (I overrode this in st)
+    blue:    '0x4444d7'   # blue2 (I overrode this in st)
     magenta: '0xaf00af'   # magenta3
     cyan:    '0x00d7af'   # cyan3
     white:   '0xe0e0e0'   # gray90 (?)
@@ -46,7 +47,7 @@ colors:
     red:     '0xff0000'   # red
     green:   '0x00ff00'   # green
     yellow:  '0xffff00'   # yellow
-    blue:    '0x5c5cff'   # I overrode this in st
+    blue:    '0x6666ff'   # I overrode this in st
     magenta: '0xff00ff'   # magenta
     cyan:    '0x00ffff'   # cyan
     white:   '0xffffff'   # white
