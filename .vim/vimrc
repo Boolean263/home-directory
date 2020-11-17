@@ -204,6 +204,10 @@ set listchars=tab:>-,trail:-,extends:>,precedes:<
 " The real symbols I want
 silent! set listchars=tab:␉·,trail:·,extends:⏵,precedes:⏴,nbsp:␣
 
+" Show an indicator on soft-wrapped lines
+set showbreak=▷
+set breakindent         " indent wrapped lines to the same level as the base line
+
 " }}}1
 
 " KEY MAPPINGS {{{1
