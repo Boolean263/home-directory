@@ -141,6 +141,7 @@ set updatetime=250                  " save swap and update CursorHold
 set autoread                        " automatically reload the file if it's changed outside of vim and not inside
 
 set display=lastline                " don't show partial lines as @'s
+set lazyredraw                      " don't redraw screen during macro execution
 
 if version > 742
     set signcolumn=yes              " always show sign column
@@ -208,6 +209,10 @@ silent! set listchars=tab:␉·,trail:·,extends:⏵,precedes:⏴,nbsp:␣
 set showbreak=▷
 set breakindent         " indent wrapped lines to the same level as the base line
 
+" for :grep
+set grepprg=rg\ --vimgrep
+cabbrev rg silent grep!
+
 " }}}1
 
 " KEY MAPPINGS {{{1
@@ -216,6 +221,11 @@ set breakindent         " indent wrapped lines to the same level as the base lin
 let mapleader=" "
 nnoremap <Leader>/ :noh<CR>
 nnoremap <Leader>c /^\(<<<<<<<\\|=======\\|>>>>>>>\)<CR>
+
+" Set current working directory to the directory holding the current file
+nnoremap <Leader>d :cd %:p:h<CR>:pwd<CR>
+" Show current working directory
+nnoremap <Leader>p :pwd<CR>
 
 " Why don't these first three work? Bug in clever-f perhaps
 "noremap <Leader>f <Plug>(clever-f-reset)
@@ -268,6 +278,11 @@ noremap Y y$
 vmap < <gv
 vmap > >gv
 
+" (open and) focus the quickfix window
+nnoremap <Leader>q :copen<CR>
+
+" (open and) focus the location window
+nnoremap <Leader>l :lopen<CR>
 " }}}1
 
 " Folding management {{{1
