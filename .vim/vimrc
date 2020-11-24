@@ -213,6 +213,10 @@ set breakindent         " indent wrapped lines to the same level as the base lin
 set grepprg=rg\ --vimgrep
 cabbrev rg silent grep!
 
+" Command-line tab-completion enhancements
+set wildmenu                " Show an auto-completion menu ←/→ changes choice
+set wildmode=longest:full   " When tab is pressed, fill longest, then show menu
+
 " }}}1
 
 " KEY MAPPINGS {{{1
@@ -283,6 +287,7 @@ nnoremap <Leader>q :copen<CR>
 
 " (open and) focus the location window
 nnoremap <Leader>l :lopen<CR>
+
 " }}}1
 
 " Folding management {{{1
@@ -335,9 +340,6 @@ noremap [z zk
 set hidden " lets you switch away from unsaved buffers
 " List buffers and let you choose one
 nnoremap <leader>b :ls<cr>:b<space>
-
-" Seen this suggested a few places
-set wildmenu wildmode=full
 
 " }}}1
 
