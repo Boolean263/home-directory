@@ -27,3 +27,6 @@ lesskey
 (cd "$repodir/.terminfo" && ./regen.sh) >/dev/null 2>&1
 [ -z "$DISPLAY" ] || xrdb "$HOME/.Xresources"
 v -c 'PlugUpdate | qa'
+if which npm >/dev/null 2>&1 ; then
+    (cd "~/.config/coc/extensions/" && npm install)
+fi
