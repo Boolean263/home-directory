@@ -7,12 +7,12 @@ cd "$repodir"
 cur_branch=$(git symbolic-ref --short HEAD)
 
 # Fetch upstream and update to it
-git stash push
+git stash
 if [ "$cur_branch" != "$base_branch" ] ; then
     git checkout home
 fi
 git fetch --all
-git merge --ff-only || exit 1
+git merge --ff-only "$base_branch" || exit 1
 
 # If we weren't in the base branch, go back to it
 # and pull its changes into our current branch
