@@ -185,9 +185,9 @@ execute "set undodir=" . &directory
 set undofile
 silent! call mkdir(&directory, "p", 0700)
 
-" Highlight the current line and column, and column 81
+" Highlight the current line and column, and column after textwidth
 " The colours for these are set below
-set nocursorline nocursorcolumn colorcolumn=81
+set nocursorline nocursorcolumn colorcolumn=+1
 "augroup cursorcoords
 "    autocmd!
 "    autocmd WinLeave * set nocursorline nocursorcolumn
