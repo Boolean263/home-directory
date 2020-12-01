@@ -43,7 +43,7 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_enable_signs = 1
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_perl_checker = 1
@@ -96,14 +96,9 @@ Plug 'tpope/vim-commentary'     " Comment stuff out with `gc…`
 Plug 'tpope/vim-apathy'         " make `gf` etc. less C-specific
 Plug 'tpope/vim-endwise'        " auto-add `endif` etc. when appropriate
 Plug 'tpope/vim-eunuch'         " UNIX shell commands, make '#!' files +x
-if has('python3')
-Plug 'SirVer/ultisnips'         " Code snippets (fails horribly if no python3)
-Plug 'pgilad/vim-skeletons'     " file skeletons using ultisnips
-endif
 Plug 'wellle/targets.vim'       " Text objects, eg. `di'` delete inside quote
 Plug 'preservim/tagbar'         " tags sidebar, lets me show tag in statusline
 Plug 'wincent/terminus'         " improve terminal vim (incl. bracketed paste)
-Plug 'vim-syntastic/syntastic'  " Syntax checking/linting on file save
 Plug 'airblade/vim-gitgutter'   " git changes in gutter, also `c` text object
 "Plug 'morhetz/gruvbox'          " Fancy theme
 "Plug 'Lokaltog/vim-monotone'    " Monotone colorscheme
@@ -120,6 +115,15 @@ Plug 'alx741/vinfo'             " Read infodocs in vim
 Plug 'Boolean263/sectional-couch.vim' " My section navigation plugin
 "Plug 'tmhedberg/SimpylFold'     " Folding in Python
 Plug 'rust-lang/rust.vim'       " Rust programming language support
+if executable('node')
+    Plug 'neoclide/coc.nvim'    " Big completion engine
+else
+    "Plug 'vim-syntastic/syntastic'  " Syntax checking/linting on file save
+    if has('python3')
+        Plug 'SirVer/ultisnips'     " Code snippets (fails horribly if no python3)
+        Plug 'pgilad/vim-skeletons' " file skeletons using ultisnips
+    endif
+endif
 call plug#end() " }}}2
 " }}}1
 
@@ -361,6 +365,11 @@ inoremap <C-]> <C-X><C-]>
 inoremap <C-N> <C-X><C-I>
 " autocomplete from definitions/macros
 inoremap <C-D> <C-X><C-D>
+
+" For COC and the like {{{2
+set shortmess+=c
+
+" }}}2
 " }}}1
 
 " nvim doesn't (yet) support clipboard=autoselect

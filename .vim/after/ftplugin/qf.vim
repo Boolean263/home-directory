@@ -12,6 +12,6 @@ nnoremap <buffer> j j
 nnoremap <buffer> k k
 
 " Close the window from within it
-nnoremap <buffer> <Leader>q :cclose
-nnoremap <buffer> <Leader>l :lclose
+nnoremap <buffer> <Leader>q :cclose<CR>
+nnoremap <buffer> <Leader>l :lclose<CR>
 
