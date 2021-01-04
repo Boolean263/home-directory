@@ -11,6 +11,11 @@ env:
 
   COLORTERM: truecolor
 
+window:
+  dimensions:
+    columns: 85
+    rows: 50
+
 font:
   size: 10.0
   normal:
