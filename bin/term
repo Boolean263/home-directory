@@ -77,6 +77,8 @@ while [ -n "$1" ] ; do
     esac
     shift
 done
+GX="${GEOMETRY%x*}"
+GY="${GEOMETRY#*x}"
 
 # Figure out which of my preferred terms is installed, in order
 TERMEMU="$(which $PREFERRED_TERMS 2>/dev/null | head -1)"
@@ -102,8 +104,10 @@ case "$TERMEMU" in
         # fixed those in its config file.
         # Most of its options are only configurable in
         # ~/.config/alacritty/alacritty.yml
+            #--dimensions $GX $GY \
         exec "$TERMEMU" \
-            --dimensions ${GEOMETRY%x*} ${GEOMETRY#*x} \
+            -o window.dimensions.columns=$GX \
+            -o window.dimensions.lines=$GY \
             -qq \
             ${1+"$@"}
     ;;
@@ -115,8 +119,8 @@ case "$TERMEMU" in
         exec "$TERMEMU" \
             -o "font_family=$FONTFACE" \
             -o "font_size=$FONTSIZE" \
-            -o "initial_window_width=${GEOMETRY%x*}" \
-            -o "initial_window_height=${GEOMETRY#*x}" \
+            -o "initial_window_width=$GX" \
+            -o "initial_window_height=$GY" \
             ${1+"$@"}
     ;;
     */st|*/stterm)
