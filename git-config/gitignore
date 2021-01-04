@@ -1,5 +1,11 @@
-# Global gitignore file
+### Global gitignore file
 
 .*.sw*
 .DS_Store
 *.pyc
+
+# vim-related helper files
+.clangd
+.ccls
+c.syntastic
+
