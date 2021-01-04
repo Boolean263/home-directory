@@ -260,9 +260,8 @@ inoremap <C-W> <Nop>
 cnoremap <C-W> <Nop>
 
 " Make n/N searching always search forward/backward respectively
-" and center the search result
-noremap <expr>n 'Nn'[v:searchforward] . 'zzzv'
-noremap <expr>N 'nN'[v:searchforward] . 'zzzv'
+noremap <expr>n 'Nn'[v:searchforward]
+noremap <expr>N 'nN'[v:searchforward]
 
 " Use Shift-Insert to paste the clipboard at the current location
 inoremap <S-Insert> <C-O>:set paste<CR><C-R>*<C-O>:set nopaste<CR>
