@@ -71,4 +71,7 @@ elseif g:colors_name == 'plain'
     highlight GitGutterChange term=standout ctermfg=yellow guifg=yellow guibg=black
     highlight GitGutterDelete term=standout ctermfg=red guifg=red guibg=black 
     highlight link GitGutterChangeDelete GitGutterChange
+
+    highlight clear CursorColumn
+    highlight link CursorColumn CursorLine
 endif
