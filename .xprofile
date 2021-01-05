@@ -5,15 +5,17 @@
 # *before* starting the window manager.
 # It should be explicitly sourced by other ways of starting X (eg, .xinitrc).
 # Info from: https://wiki.archlinux.org/index.php/Xprofile
+#
+# If anything is written to stderr, GDM (and maybe other display managers)
+# will show an error message and warn you that something is broken.
+# If anything is written to stdout, GDM will show a useless dialogue asking
+# "Are you sure you want to proceed?" with no option but to proceed.
 
 . "$HOME/.profile"
 
-xrdb "$HOME/.Xresources"
+xrdb "$HOME/.Xresources" >/dev/null 2>&1
 
-#if which xssproxy >/dev/null 2>&1 ; then
-#    xssproxy &
-#fi
-"$HOME/bin/fixkeys"
-"$HOME/bin/fixrandr.sh" || :
+"$HOME/bin/fixkeys" >/dev/null 2>&1
+"$HOME/bin/fixrandr.sh" >/dev/null 2>&1 || :
 
 [ -f "$HOME/.xprofile.local" ] && . "$HOME/.xprofile.local" || :
