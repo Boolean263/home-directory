@@ -9,16 +9,19 @@ cur_branch=$(git symbolic-ref --short HEAD)
 # Fetch upstream and update to it
 git stash
 if [ "$cur_branch" != "$base_branch" ] ; then
-    git checkout home
+    git checkout "$base_branch"
 fi
 git fetch --all
-git merge --ff-only "$base_branch" || exit 1
+git pull || exit 1
 
 # If we weren't in the base branch, go back to it
 # and pull its changes into our current branch
 if [ "$cur_branch" != "$base_branch" ] ; then
     git checkout "$cur_branch"
-    git merge -s recursive -X ours -m "Merge latest from $base_branch" "$base_branch"
+    if ! git rebase "$base_branch" ; then
+        echo "Launching subshell for resolving rebase issues"
+        bash
+    fi
 fi
 git stash pop
 
@@ -28,5 +31,5 @@ lesskey
 [ -z "$DISPLAY" ] || xrdb "$HOME/.Xresources"
 v -c 'PlugUpdate | qa'
 if which npm >/dev/null 2>&1 ; then
-    (cd "~/.config/coc/extensions/" && npm install)
+    (cd "$HOME/.config/coc/extensions/" && npm install)
 fi
