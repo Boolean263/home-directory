@@ -116,7 +116,7 @@ Plug 'Boolean263/sectional-couch.vim' " My section navigation plugin
 "Plug 'tmhedberg/SimpylFold'     " Folding in Python
 Plug 'rust-lang/rust.vim'       " Rust programming language support
 if executable('node')
-    Plug 'neoclide/coc.nvim'    " Big completion engine
+    "Plug 'neoclide/coc.nvim'    " Big completion engine
 else
     "Plug 'vim-syntastic/syntastic'  " Syntax checking/linting on file save
     if has('python3')
@@ -135,6 +135,7 @@ set modeline                        " allow modelines to work
 set backspace=indent,eol,start      " backspace across lines, etc.
 set expandtab                       " expand tabs to spaces
 set softtabstop=-1                  " soft tab stops match shiftwidth
+set shiftround                      " force <</>> to always align to shiftwidth
 set noincsearch                     " disable incremental search
 set hlsearch                        " hilight search terms
 set showcmd                         " show current pending command in last line
@@ -163,20 +164,22 @@ set formatoptions+=j                " remove comment leader when joining
 set formatoptions+=q                " let 'gq' format comments
 
 " https://vimways.org/2018/formatting-lists-with-vim/
-set formatoptions+=n                " format 'numbered' lists based on formatlistpat
-set formatlistpat=^\\s*                 " Optional leading whitespace
-set formatlistpat+=[                    " Start character class
-set formatlistpat+=\\[({]\\?            " |  Optionally match opening punctuation
-set formatlistpat+=\\(                  " |  Start group
-set formatlistpat+=[0-9]\\+             " |  |  Numbers
-set formatlistpat+=\\\|                 " |  |  or
-set formatlistpat+=[a-zA-Z]\\+          " |  |  Letters
-set formatlistpat+=\\)                  " |  End group
-set formatlistpat+=[\\]:.)}             " |  Closing punctuation
-set formatlistpat+=]                    " End character class
-set formatlistpat+=\\s\\+               " One or more spaces
-set formatlistpat+=\\\|                 " or
-set formatlistpat+=^\\s*[-–+o*•]\\s\\+  " Bullet points
+if 0 " disabled because I never really use it, if it even works
+    set formatoptions+=n                " format 'numbered' lists based on formatlistpat
+    set formatlistpat=^\\s*                 " Optional leading whitespace
+    set formatlistpat+=[                    " Start character class
+    set formatlistpat+=\\[({]\\?            " |  Optionally match opening punctuation
+    set formatlistpat+=\\(                  " |  Start group
+    set formatlistpat+=[0-9]\\+             " |  |  Numbers
+    set formatlistpat+=\\\|                 " |  |  or
+    set formatlistpat+=[a-zA-Z]\\+          " |  |  Letters
+    set formatlistpat+=\\)                  " |  End group
+    set formatlistpat+=[\\]:.)}             " |  Closing punctuation
+    set formatlistpat+=]                    " End character class
+    set formatlistpat+=\\s\\+               " One or more spaces
+    set formatlistpat+=\\\|                 " or
+    set formatlistpat+=^\\s*[-–+o*•]\\s\\+  " Bullet points
+endif
 
 " Use histogram-based diffs where possible
 if has('nvim-0.3.2') || has("patch-8.1.0360")
