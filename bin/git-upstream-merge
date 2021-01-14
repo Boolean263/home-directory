@@ -1,10 +1,9 @@
 #!/bin/bash
 set -e
 git rev-parse --git-dir >/dev/null
-set +e
-
 UPSTREAM="${UPSTREAM:-upstream}"
-MAINBRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+MAINBRANCH=$(git remote show "$UPSTREAM" | awk '/HEAD branch:/{print $NF}')
+set +e
 
 if ! git remote | grep -q '^'"$UPSTREAM"'$' ; then
     echo "No upstream remote found" 1>&2
