@@ -113,6 +113,7 @@ Plug 'lilydjwg/colorizer'       " colourize #RRGGBB strings (:ColorHighlight)
 Plug 'rhysd/vim-clang-format'   " clang-format C/C++ code (:ClangFormat)
 Plug 'alx741/vinfo'             " Read infodocs in vim
 Plug 'Boolean263/sectional-couch.vim' " My section navigation plugin
+Plug 'godlygeek/tabular'        " Line up text based on a regexp
 "Plug 'tmhedberg/SimpylFold'     " Folding in Python
 Plug 'rust-lang/rust.vim'       " Rust programming language support
 if executable('node')
