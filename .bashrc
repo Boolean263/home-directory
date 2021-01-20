@@ -30,7 +30,7 @@ if [ -n "$SSH_CONNECTION" ] && ! [ -e "$HOME/.no-tmux" ] ; then
         # We're inside the tmux/screen session.
         # Use a bash hack to get DISPLAY and other important variables
         preexec() {
-            . <(tmux show-env | grep -v '^-')
+            . <(tmux show-env | sed -e '/^-/d' -e "s/=\(.*\)$/='\1'/")
         }
         trap preexec DEBUG
     fi
