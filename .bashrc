@@ -18,13 +18,23 @@ esac
 if [ -n "$SSH_CONNECTION" ] && ! [ -e "$HOME/.no-tmux" ] ; then
     # Protect against nested sessions
     if [ -z "$TMUX" ] && [ -z "$STY" ] ; then
+        # Move ssh auth sock to a consistent location
         SOCK="$HOME/.ssh/auth_sock/$(hostname)"
         if [ -n "$SSH_AUTH_SOCK" ] && [ "$SSH_AUTH_SOCK" != "$SOCK" ] ; then
             rm -f "$SOCK"
             ln -sf "$SSH_AUTH_SOCK" "$SOCK"
             export SSH_AUTH_SOCK="$SOCK"
         fi
+        # Attempt to pass through DISPLAY to the child sessions
+        echo "export DISPLAY=$DISPLAY" > ~/.tmux/fixenv
         ~/bin/tn ssh && exit 0
+    else
+        # We're inside the tmux/screen session.
+        # Use a bash hack to get DISPLAY
+        preexec() {
+            [ -f ~/.tmux/fixenv ] && . ~/.tmux/fixenv
+        }
+        trap preexec DEBUG
     fi
 fi
 
