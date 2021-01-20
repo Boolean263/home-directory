@@ -25,14 +25,12 @@ if [ -n "$SSH_CONNECTION" ] && ! [ -e "$HOME/.no-tmux" ] ; then
             ln -sf "$SSH_AUTH_SOCK" "$SOCK"
             export SSH_AUTH_SOCK="$SOCK"
         fi
-        # Attempt to pass through DISPLAY to the child sessions
-        echo "export DISPLAY=$DISPLAY" > ~/.tmux/fixenv
         ~/bin/tn ssh && exit 0
     else
         # We're inside the tmux/screen session.
-        # Use a bash hack to get DISPLAY
+        # Use a bash hack to get DISPLAY and other important variables
         preexec() {
-            [ -f ~/.tmux/fixenv ] && . ~/.tmux/fixenv
+            . <(tmux show-env | grep -v '^-')
         }
         trap preexec DEBUG
     fi
