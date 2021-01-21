@@ -5,3 +5,6 @@
 --exclude=.git
 --exclude=.svn
 --extras=+q
+
+# Some tools/frameworks download source code that we don't need to scan.
+--exclude=node_modules

@@ -5,6 +5,8 @@
 --exclude=.svn
 --extra=+q
 
+--exclude=node_modules
+
 --langdef=Diff
 --langmap=Diff:.diff.patch
 --regex-diff=/^diff .* (b\/)?([^ ]+)$/\2/f,filename/
