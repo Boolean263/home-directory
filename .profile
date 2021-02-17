@@ -25,12 +25,13 @@
 # to avoid needless re-setting.
 ENVIRONMENTD="$HOME/.config/environment.d"
 set -a
-if [ -d "$ENVIRONMENTD" ] ; then
+if shopt -q login_shell && [ -d "$ENVIRONMENTD" ] ; then
     for conf in $(ls "$ENVIRONMENTD"/*.conf); do
         . "$conf"
     done
 fi
 set +a
+unset conf
 
 . "$HOME/etc/env/path_functions.bash"
 

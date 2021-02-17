@@ -72,10 +72,10 @@ add_to_path()
     elif [ "x$tmppath" = "x" ] ; then
         eval export \$PATHVAR=\"$ADDPATHS\"
     elif ! [ "x$BEFORE" = "x" ] && is_in_path "$PATHVAR" "$BEFORE" ; then
-        local SEDPATH=$(eval echo "\$$PATHVAR" | sed -r "s$SED_SEP"'(^|'"$SEP"')('"$BEFORE"')('"$SEP"'|$)'"$SED_SEP"'\1'"$ADDPATHS$SEP"'\2\3'"$SED_SEP")
+        local SEDPATH=$(eval echo "\$$PATHVAR" | /bin/sed -r "s$SED_SEP"'(^|'"$SEP"')('"$BEFORE"')('"$SEP"'|$)'"$SED_SEP"'\1'"$ADDPATHS$SEP"'\2\3'"$SED_SEP")
         eval export \$PATHVAR="$SEDPATH"
     elif ! [ "x$AFTER" = "x" ] && is_in_path "$PATHVAR" "$AFTER" ; then
-        local SEDPATH=$(eval echo "\$$PATHVAR" | sed -r "s$SED_SEP"'(^|'"$SEP"')('"$AFTER"')('"$SEP"'|$)'"$SED_SEP"'\1\2'"$SEP$ADDPATHS"'\3'"$SED_SEP")
+        local SEDPATH=$(eval echo "\$$PATHVAR" | /bin/sed -r "s$SED_SEP"'(^|'"$SEP"')('"$AFTER"')('"$SEP"'|$)'"$SED_SEP"'\1\2'"$SEP$ADDPATHS"'\3'"$SED_SEP")
         eval export \$PATHVAR="$SEDPATH"
     elif [ "x$TO_END" = "x" ] ; then
         eval export \$PATHVAR=\"$ADDPATHS$SEP\$$PATHVAR\"
@@ -93,7 +93,7 @@ del_from_path()
     if [ -d "$PATHVAR" ] ; then
         echo "del_from_path: $PATHVAR appears to be a directory, not a path variable" 1>&2
     fi
-    eval local tmppath=\"\$$PATHVAR\"
+    eval local tmppath=\"\$$PATHVAR\" # """
     shift
     if [ "x$1" = "x" ] ; then
         echo "del_from_path: no paths found: did you forget your PATHVAR?" 1>&2
@@ -103,7 +103,7 @@ del_from_path()
         local DELPATH="$1"
         shift
         if is_in_path "$PATHVAR" "$DELPATH" ; then
-            if [ "x$tmppath" = "$DELPATH" ] ; then
+            if [ "x$tmppath" = "x$DELPATH" ] ; then
                 # in case it's the entirety of the path
                 tmppath=""
             else
@@ -132,5 +132,13 @@ show_path()
         echo "show_path: no PATHVAR specified" 1>&2
         return 1
     fi
-    eval echo '$'$PATHVAR | tr "$SEP" '\n'
+    eval echo '$'$PATHVAR | /usr/bin/tr "$SEP" '\n'
+}
+
+### clean_path
+# Tidy the path string by removing duplicates.
+clean_path()
+{
+    local PATHVAR="$1"
+    add_to_path -f "$PATHVAR" $(show_path "$PATHVAR")
 }
