@@ -25,7 +25,7 @@
 # to avoid needless re-setting.
 ENVIRONMENTD="$HOME/.config/environment.d"
 set -a
-if shopt -q login_shell && [ -d "$ENVIRONMENTD" ] ; then
+if [ -d "$ENVIRONMENTD" ] ; then
     for conf in $(ls "$ENVIRONMENTD"/*.conf); do
         . "$conf"
     done
@@ -34,6 +34,7 @@ set +a
 unset conf
 
 . "$HOME/etc/env/path_functions.bash"
+clean_path PATH
 
 export PAGER=$(which less)
 export VISUAL=$(which nvim vim vi 2>/dev/null | head -n 1)
