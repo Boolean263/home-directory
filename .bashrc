@@ -26,14 +26,17 @@ if [ -n "$SSH_CONNECTION" ] && ! [ -e "$HOME/.no-tmux" ] ; then
             export SSH_AUTH_SOCK="$SOCK"
         fi
         ~/bin/tn ssh && exit 0
-    else
-        # We're inside the tmux/screen session.
-        # Use a bash hack to get DISPLAY and other important variables
-        tfix() {
-            . <(tmux show-env | sed -e '/^-/d' -e "s/=\(.*\)$/='\1'/")
-        }
-        #trap tfix DEBUG
     fi
+fi
+if [ -n "$TMUX" ] ; then
+    # We're inside a tmux session.
+    # Define a bash function to fix DISPLAY and other important variables
+    tfix() {
+        . <(tmux show-env | sed -e '/^-/d' -e "s/=\(.*\)$/='\1'/")
+    }
+    # The below `trap` would run on every bash command, but it's
+    # commented out because it breaks shell pipelines.
+    #trap tfix DEBUG
 fi
 
 . "$HOME/env/git-prompt.sh"
