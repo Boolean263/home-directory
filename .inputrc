@@ -15,6 +15,8 @@ set enable-meta-key on
 set horizontal-scroll-mode off
 set show-all-if-ambiguous on
 set skip-completed-text on
+set colored-completion-prefix on
+set enable-bracketed-paste on
 
 # Play around with vi input mode
 set show-mode-in-prompt on
