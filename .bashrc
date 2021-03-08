@@ -36,9 +36,9 @@ if [ -n "$TMUX" ] ; then
     tfix() {
         . <(tmux show-env | sed -e '/^-/d' -e "s/=\(.*\)$/='\1'/")
     }
-    # The below `trap` would run on every bash command, but it's
-    # commented out because it breaks shell pipelines.
-    #trap tfix DEBUG
+    # PROMPT_COMMAND runs before the prompt is shown, and its error code
+    # doesn't interfere with the $? that gets passed to PS1.
+    export PROMPT_COMMAND="tfix${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
 fi
 
 . "$HOME/env/git-prompt.sh"
@@ -64,9 +64,8 @@ shopt -s histreedit
 # Use tput instead of hard-coded escape sequences. Some with math
 # I evaluate once here.... well, kinda. You'll see.
 tBG=$(tput setab 99 | sed 's/99/$((HISTCMD % 2 ? 29 : 32))/')
-tERR=$(tput setaf 99 | sed 's/99/$(( $? > 0 ? 9 : 7 ))/')
-export PS1='\['$(tput rmacs)$tBG$(tput setaf 7)$(tput el)'\][\['$tERR'\]?:$?\['$(tput setaf 231)'\]${debian_chroot:+" $debian_chroot:"}\['$(tput setaf 7)'\]] \w`__git_ps1`\['$(tput sgr0)'\]\n\['$(tput setaf 2)'\]\h \!\$\['$(tput sgr0)'\] '
-unset tBG tERR
+export PS1='\['$(tput rmacs)$tBG$(tput setaf 7)$(tput el)'\]$(code=${?##0}; echo "${code:+\['$(tput setaf 9)'\]E$code }")\['$(tput setaf 231)'\]${debian_chroot:+" $debian_chroot:"}\['$(tput setaf 7)'\]\w`__git_ps1`\['$(tput sgr0)'\]\n\['$(tput setaf 2)'\]\h \!\$\['$(tput sgr0)'\] '
+unset tBG
 
 if [ -f "$HOME/.lesskey" ] && [ "$HOME/.lesskey" -nt "$HOME/.less" ] ; then
     lesskey
