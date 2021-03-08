@@ -4,6 +4,8 @@
 # environment settings are in .profile, and .bash_profile is just a
 # call to .bashrc.
 
+[ -f ~/.profile ] && . ~/.profile || :
+
 is_interactive(){
     [ -n "$PS1" ]
 }
@@ -52,7 +54,6 @@ fi
 
 shopt -s histreedit
 
-[ -f ~/.profile ] && . ~/.profile || :
 [ -f ~/.bash_aliases ] && . ~/.bash_aliases || :
 
 # User specific environment and startup programs.
