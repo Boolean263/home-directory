@@ -1,0 +1,2 @@
+#/bin/sh
+v -c "Info $1 $2" -c 'silent only'

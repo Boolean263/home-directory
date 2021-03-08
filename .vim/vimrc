@@ -111,7 +111,8 @@ Plug 'wsdjeg/vim-fetch'         " Handle filename.cpp:132:5 to go to line 132
 Plug 'Vimjas/vim-python-pep8-indent' " Just what it sounds like
 Plug 'lilydjwg/colorizer'       " colourize #RRGGBB strings (:ColorHighlight)
 Plug 'rhysd/vim-clang-format'   " clang-format C/C++ code (:ClangFormat)
-Plug 'alx741/vinfo'             " Read infodocs in vim
+"Plug 'alx741/vinfo'             " Read infodocs in vim
+Plug 'https://gitlab.com/HiPhish/info.vim.git' " Read infodocs in vim
 Plug 'Boolean263/sectional-couch.vim' " My section navigation plugin
 Plug 'godlygeek/tabular'        " Line up text based on a regexp
 "Plug 'tmhedberg/SimpylFold'     " Folding in Python
