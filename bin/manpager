@@ -6,19 +6,18 @@
 
 # Test for vim in $VISUAL, use it if it is
 if [ -n "$VISUAL" ] ; then # && [ "$VISUAL" != "${VISUAL%/vim}" ] ; then
-    # This is the most compatible, but prints "Vim: Reading from stdin..."
-    #exec col -b -x | $VISUAL -M +MANPAGER -Rn -c 'set ft=man' -
+    if [ "$VISUAL" != "${VISUAL%/nvim}" ] ; then
+        # nvim's built-in man browser is awesome
+        "$VISUAL" +Man! -
+    else
+        NOTERM=""
 
-    NOTERM=""
-
-    if [ "$VISUAL" != "${VISUAL%/vim}" ] ; then
-        # Vim-specific
-        NOTERM="--not-a-term"
+        if [ "$VISUAL" != "${VISUAL%/vim}" ] ; then
+            # Vim-specific
+            NOTERM="--not-a-term"
+        fi
+        exec col -b -x | $VISUAL -M -Rn -c 'set ft=man' $NOTERM -
     fi
-    exec col -b -x | $VISUAL -M -Rn -c 'set ft=man' $NOTERM -
-
-    # This avoids that message, but is less compatible, and also breaks Ctrl-O/T navigation
-    #exec bash -c "$VISUAL -Rn -c 'set ft=man' </dev/tty <(col -b -x)"
 else
     exec $PAGER ${1+"$@"}
 fi
