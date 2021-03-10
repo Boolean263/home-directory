@@ -43,3 +43,10 @@ endfunction
 " For use with sectional-couch.vim
 setlocal paragraphs=/^@@/
 setlocal sections=/^diff/
+
+let b:undo_ftplugin .= " | setlocal modeline< foldmethod< foldexpr<"
+    \ . " paragraphs< sections<"
+    \ . " |silent! nunmap <buffer> <leader>n"
+    \ . " |silent! nunmap <buffer> <leader>N"
+    \ . " |silent! nunmap <buffer> <leader>-"
+    \ . " |silent! nunmap <buffer> <leader>+"

@@ -20,3 +20,15 @@ nnoremap <buffer> <end> G
 nnoremap <buffer> <home> gg
 nnoremap <buffer> <space> <PageDown>
 
+let b:undo_ftplugin .= "setlocal mod< readonly< list< spell<"
+    \ . " number< relativenumber< modifiable< swapfile< buftype< bufhidden<"
+    \ . " foldcolumn< "
+if version > 742
+    let b:undo_ftplugin .=" signcolumn<"
+endif
+
+let b:undo_ftplugin .= ""
+    \ . " |silent! nunmap <buffer> q"
+    \ . " |silent! nunmap <buffer> <end>"
+    \ . " |silent! nunmap <buffer> <home>"
+    \ . " |silent! nunmap <buffer> <space>"

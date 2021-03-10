@@ -6,3 +6,4 @@
 " 8–72: Code
 " 73–80: "basically free for the programmer's use"
 setlocal colorcolumn=7,73,74,75,76,77,78,79,80
+let b:undo_ftplugin .= " | setlocal colorcolumn<"

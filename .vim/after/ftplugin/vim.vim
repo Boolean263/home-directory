@@ -5,3 +5,6 @@ setlocal keywordprg=:help
 
 " Source the current file
 nnoremap <buffer> <leader>s :exec 'source '.expand('%:p')<CR>
+
+let b:undo_ftplugin .= " | setlocal keywordprg<"
+    \ . " |silent! nunmap <buffer> <leader>s"
