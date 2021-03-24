@@ -73,8 +73,8 @@ let g:rustfmt_autosave = 1
 
 nnoremap <F8> :TagbarToggle<CR>
 
-nnoremap ]h <Plug>(GitGutterNextHunk)
-nnoremap [h <Plug>(GitGutterPrevHunk)
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
 
 " }}}2
 
