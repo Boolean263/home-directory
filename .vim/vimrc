@@ -73,6 +73,9 @@ let g:rustfmt_autosave = 1
 
 nnoremap <F8> :TagbarToggle<CR>
 
+nnoremap ]h <Plug>(GitGutterNextHunk)
+nnoremap [h <Plug>(GitGutterPrevHunk)
+
 " }}}2
 
 let $VIMHOME=expand('<sfile>:p:h')
@@ -295,6 +298,10 @@ nnoremap <Leader>q :copen<CR>
 
 " (open and) focus the location window
 nnoremap <Leader>l :lopen<CR>
+
+" :help changelist
+nnoremap ]c g,
+nnoremap [c g;
 
 " }}}1
 
