@@ -71,6 +71,10 @@ let g:EditorConfig_max_line_indicator = 'line'
 
 let g:rustfmt_autosave = 1
 
+let g:bufExplorerDisableDefaultKeyMapping = 1
+let g:bufExplorerShowUnlisted = 1
+let g:bufExplorerSortBy = 'fullpath'
+
 nnoremap <F8> :TagbarToggle<CR>
 
 nmap ]h <Plug>(GitGutterNextHunk)
@@ -119,9 +123,10 @@ Plug 'https://gitlab.com/HiPhish/info.vim.git' " Read infodocs in vim
 Plug 'Boolean263/sectional-couch.vim' " My section navigation plugin
 Plug 'godlygeek/tabular'        " Line up text based on a regexp
 "Plug 'tmhedberg/SimpylFold'     " Folding in Python
+Plug 'jlanzarotta/bufexplorer'  " Improved buffer explorer
 Plug 'rust-lang/rust.vim'       " Rust programming language support
-if executable('node')
-    "Plug 'neoclide/coc.nvim'    " Big completion engine
+if executable('nope-node')
+    Plug 'neoclide/coc.nvim'    " Big completion engine
 else
     "Plug 'vim-syntastic/syntastic'  " Syntax checking/linting on file save
     if has('python3')
@@ -353,8 +358,13 @@ noremap [z zk
 
 " Buffer management {{{1
 set hidden " lets you switch away from unsaved buffers
+
 " List buffers and let you choose one
-nnoremap <leader>b :ls<cr>:b<space>
+" Vanilla method:
+"nnoremap <leader>b :ls<cr>:b<space>
+
+" Plugin method:
+nnoremap <leader>b :BufExplorer<CR>
 
 " }}}1
 
