@@ -26,7 +26,7 @@
 ENVIRONMENTD="$HOME/.config/environment.d"
 set -a
 if [ -d "$ENVIRONMENTD" ] ; then
-    for conf in $(ls "$ENVIRONMENTD"/*.conf); do
+    for conf in $(ls "$ENVIRONMENTD"/*.conf | sed 's/ /?/g'); do
         . "$conf"
     done
 fi
