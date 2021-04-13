@@ -1,0 +1,9 @@
+#!/bin/sh
+
+KEY_DIR="$HOME/.ssh"
+
+for k in "$KEY_DIR"/id_rsa* ; do
+    if [ "$k" = "${k%.pub}" ] ; then
+        ssh-add "$k"
+    fi
+done
