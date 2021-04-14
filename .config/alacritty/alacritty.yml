@@ -19,7 +19,7 @@ window:
 font:
   size: 10.0
   normal:
-    family: Iosevka Term
+    family: Iosevka Fixed
     style: regular
   # These next sections seem silly or self-evident, but if they're missing,
   # Alacritty defaults to the same font face and style as for 'normal'.

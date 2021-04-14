@@ -7,7 +7,7 @@
 #    for my future self
 
 # My global settings, which can be overridden by command-line options.
-FONTFACE="Iosevka Term"
+FONTFACE="Iosevka Fixed"
 FONTSIZE="10"
 GEOMETRY="85x56"
 
@@ -28,6 +28,7 @@ cat >/dev/null <<EOT
     lxterminal
     mate-terminal
     kitty
+    wezterm
 EOT
 
 usage()
@@ -111,11 +112,25 @@ case "$TERMEMU" in
             -qq \
             ${1+"$@"}
     ;;
+    */wezterm)
+        # Another terminal written in Rust.
+        # Supports sixel and iTerm2 imaging protocols.
+        # Has the same xdotool/SendKeys bug as kitty does.
+        # Config is in ~/.config/wezterm/wezterm.lua
+        exec "$TERMEMU" \
+            --config "initial_cols=$GX" \
+            --config "initial_rows=$GY" \
+            ${1+"$@"}
+            #--config "font=wezterm.font(\"$FONTFACE\")" \
+            #--config "font_size=$FONTSIZE" \
+    ;;
     */kitty)
         # Kitty terminal emulator: I'm trying this one out for a while.
         # Supports everything st does, and more.
         # Has problems with xdotool, but that's more of a problem
         # at work than at home.
+        # Still pretty buggy last I looked.
+        # Config is in ~/.config/kitty/kitty.conf
         exec "$TERMEMU" \
             -o "font_family=$FONTFACE" \
             -o "font_size=$FONTSIZE" \
