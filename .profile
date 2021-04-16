@@ -1,20 +1,13 @@
 # ~/.profile: executed by the command interpreter for login shells.
 # This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
 # exists.
+# So I call it from my ~/.bashrc instead.
 # see /usr/share/doc/bash/examples/startup-files for examples.
 # the files are located in the bash-doc package.
 
 # the default umask is set in /etc/profile; for setting the umask
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
-
-# if running bash
-#if [ -n "$BASH_VERSION" ]; then
-#    # include .bashrc if it exists
-#    if [ -f "$HOME/.bashrc" ]; then
-#	. "$HOME/.bashrc"
-#    fi
-#fi
 
 # Try to prevent dash from choking, but it doesn't seem to work
 [ "${0#*-}" = "dash" ] && export PS1='[\u@\h \W]\$ ' || :
@@ -43,7 +36,7 @@ export GIT_EDITOR="$VISUAL -f"
 export GVIM="$HOME/bin/ngvim"
 
 export LESS="-R"
-#export LESSOPEN="|lesspipe.sh %s"
+which lesspipe >/dev/null 2>&1 && eval "$(lesspipe)" || :
 
 export HISTCONTROL="ignorespace:ignoredups"
 export FIGNORE="CVS:\~:.o:.svn:.git:.lo"
