@@ -16,6 +16,9 @@ case $- in
     *) return;
 esac
 
+. "$HOME/env/git-prompt.sh"
+. "$HOME/env/bash-preexec.sh"
+
 # If this is a remote host being ssh'd into, launch tmux or screen if we can
 if [ -n "$SSH_CONNECTION" ] && ! [ -e "$HOME/.no-tmux" ] ; then
     # Protect against nested sessions
@@ -33,15 +36,19 @@ fi
 if [ -n "$TMUX" ] ; then
     # We're inside a tmux session.
     # Define a bash function to fix DISPLAY and other important variables
-    tfix() {
+    tfixenv() {
         . <(tmux show-env | sed -e '/^-/d' -e "s/=\(.*\)$/='\1'/")
     }
-    # PROMPT_COMMAND runs before the prompt is shown, and its error code
-    # doesn't interfere with the $? that gets passed to PS1.
-    export PROMPT_COMMAND="tfix${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
+    # And have it called before/after each command
+    if [ -n "$__bp_imported" ] ; then
+        # prefer bash-preexec.sh if installed
+        preexec_functions+=(tfixenv)
+    else
+        # PROMPT_COMMAND runs before the prompt is shown, and its error code
+        # doesn't interfere with the $? that gets passed to PS1.
+        export PROMPT_COMMAND="tfixenv${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
+    fi
 fi
-
-. "$HOME/env/git-prompt.sh"
 
 set match-hidden-files off
 
