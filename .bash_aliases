@@ -26,3 +26,5 @@ alias ~="cd ~"
 alias -- -="cd -"
 
 alias cp="/bin/cp --preserve=all"
+
+[ -f "~/.bash_aliases.local" ] && . "~/.bash_aliases.local" || :
