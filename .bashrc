@@ -18,6 +18,7 @@ esac
 
 . "$HOME/env/git-prompt.sh"
 . "$HOME/env/bash-preexec.sh"
+# bash-preexec.sh seems cool. See also PROMPT_COMMAND (built in to bash)
 
 # If this is a remote host being ssh'd into, launch tmux or screen if we can
 if [ -n "$SSH_CONNECTION" ] && ! [ -e "$HOME/.no-tmux" ] ; then
@@ -39,15 +40,8 @@ if [ -n "$TMUX" ] ; then
     tfixenv() {
         . <(tmux show-env | sed -e '/^-/d' -e "s/=\(.*\)$/='\1'/")
     }
-    # And have it called before/after each command
-    if [ -n "$__bp_imported" ] ; then
-        # prefer bash-preexec.sh if installed
-        preexec_functions+=(tfixenv)
-    else
-        # PROMPT_COMMAND runs before the prompt is shown, and its error code
-        # doesn't interfere with the $? that gets passed to PS1.
-        export PROMPT_COMMAND="tfixenv${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
-    fi
+    # And have it called before each command
+    preexec_functions+=(tfixenv)
 fi
 
 set match-hidden-files off
