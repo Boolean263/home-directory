@@ -21,6 +21,8 @@ set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,latin1
 autocmd BufEnter * if &fileencoding == "" && &modifiable == 1 | set fileencoding=utf-8 nomodified | endif
 
+let mapleader=" "
+
 " PLUGINS {{{1
 " Configuration {{{2
 let g:tagbar_type_diff = {
@@ -80,6 +82,17 @@ nnoremap <F8> :TagbarToggle<CR>
 nmap ]h <Plug>(GitGutterNextHunk)
 nmap [h <Plug>(GitGutterPrevHunk)
 
+" for inkarkat/vim-mark
+let g:mwDefaultHighlightingPalette = 'extended'
+
+nmap <Leader>m <Plug>MarkSet
+nmap <Leader>r <Plug>MarkRegex
+nmap <Leader>M <Plug>MarkConfirmAllClear
+nmap ]m <Plug>MarkSearchAnyNext
+nmap [m <Plug>MarkSearchAnyPrev
+nmap <Plug>IgnoreMarkSearchNext <Plug>MarkSearchNext
+nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
+
 " }}}2
 
 let $VIMHOME=expand('<sfile>:p:h')
@@ -107,6 +120,8 @@ Plug 'wellle/targets.vim'       " Text objects, eg. `di'` delete inside quote
 Plug 'preservim/tagbar'         " tags sidebar, lets me show tag in statusline
 Plug 'wincent/terminus'         " improve terminal vim (incl. bracketed paste)
 Plug 'airblade/vim-gitgutter'   " git changes in gutter, also `c` text object
+Plug 'inkarkat/vim-ingo-library' " Prereq for next plugin
+Plug 'inkarkat/vim-mark'        " Mark words with <leader>m
 "Plug 'morhetz/gruvbox'          " Fancy theme
 "Plug 'Lokaltog/vim-monotone'    " Monotone colorscheme
 Plug 'andreypopp/vim-colors-plain' " Very plain colorscheme
@@ -238,8 +253,6 @@ set wildmode=longest:full   " When tab is pressed, fill longest, then show menu
 
 " KEY MAPPINGS {{{1
 
-"let mapleader="\\"
-let mapleader=" "
 nnoremap <Leader>/ :noh<CR>
 nnoremap <Leader>c /^\(<<<<<<<\\|=======\\|>>>>>>>\)<CR>
 
