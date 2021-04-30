@@ -131,7 +131,7 @@ Plug 'reedes/vim-pencil'        " Improve vim for prose/text writing
 Plug 'editorconfig/editorconfig-vim' " support editorconfig files
 Plug 'wsdjeg/vim-fetch'         " Handle filename.cpp:132:5 to go to line 132
 Plug 'Vimjas/vim-python-pep8-indent' " Just what it sounds like
-Plug 'lilydjwg/colorizer'       " colourize #RRGGBB strings (:ColorHighlight)
+"Plug 'lilydjwg/colorizer'       " colourize #RRGGBB strings (:ColorHighlight)
 Plug 'rhysd/vim-clang-format'   " clang-format C/C++ code (:ClangFormat)
 "Plug 'alx741/vinfo'             " Read infodocs in vim
 Plug 'https://gitlab.com/HiPhish/info.vim.git' " Read infodocs in vim
