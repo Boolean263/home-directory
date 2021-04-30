@@ -147,6 +147,7 @@ else
     if has('python3')
         Plug 'SirVer/ultisnips'     " Code snippets (fails horribly if no python3)
         Plug 'pgilad/vim-skeletons' " file skeletons using ultisnips
+        Plug 'psf/black', { 'branch': 'stable' } " Python code formatting
     endif
 endif
 call plug#end() " }}}2
