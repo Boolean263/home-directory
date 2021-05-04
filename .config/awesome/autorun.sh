@@ -9,4 +9,4 @@ echo 'awesome.started: true' | xrdb -merge -
 xdg-autostart awesomewm
 
 # Compositing manager
-compton --config $HOME/.config/awesome/compton.conf &
+compton &

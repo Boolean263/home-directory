@@ -230,7 +230,7 @@ assign [class="Steam"] → 4
 
 # Compositor, mainly so dragging emails in Thunderbird over folders
 # lets me actually see where I'm dragging
-exec --no-startup-id compton --config $HOME/.config/i3/compton.conf
+exec --no-startup-id compton
 
 # Layouts, to capture any programs that may be run by the following
 exec --no-startup-id "i3-msg 'workspace 1; append_layout $HOME/.config/i3/workspace-1.json'; sleep 1"
