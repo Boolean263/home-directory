@@ -17,6 +17,9 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 -- when client with a matching name is opened:
 --require("awful.hotkeys_popup.keys")
 
+-- https://github.com/xinhaoyuan/layout-machi -- clone it into the directory containing this lua file
+local machi = require("layout-machi")
+
 -- Load Debian menu entries
 local debian = require("debian.menu")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
@@ -49,6 +52,7 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+if machi then beautiful.layout_machi = machi.get_icon() end
 
 -- This is used later as the default terminal and editor to run.
 terminal = "term"
@@ -65,9 +69,10 @@ altkey = "Mod1"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.tile,
+    machi.default_layout,
+    awful.layout.suit.tile.left,
+    -- awful.layout.suit.tile,
     awful.layout.suit.floating,
-    -- awful.layout.suit.tile.left,
     -- awful.layout.suit.tile.bottom,
     -- awful.layout.suit.tile.top,
     -- awful.layout.suit.fair,
@@ -134,7 +139,7 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
-menubar.menu_gen.all_menu_dirs = { "/usr/share/applications/", "~/.local/share/applications/" }
+-- menubar.menu_gen.all_menu_dirs = { "/usr/share/applications/", "~/.local/share/applications/" }
 
 -- }}}
 
@@ -143,7 +148,12 @@ menubar.menu_gen.all_menu_dirs = { "/usr/share/applications/", "~/.local/share/a
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+mytextclock = wibox.widget.textclock('%Y-%m-%d %H:%M')
+
+-- Fancy widgets -- from https://github.com/streetturtle/awesome-wm-widgets
+-- (which should also be cloned into this directory)
+local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
+local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -243,6 +253,8 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             --mykeyboardlayout,
             wibox.widget.systray(),
+            volume_widget { widget_type = 'arc' },
+            cpu_widget { width = 32, timeout = 4, enable_kill_button = true },
             mytextclock,
             s.mylayoutbox,
         },
@@ -258,7 +270,9 @@ root.buttons(gears.table.join(
 ))
 -- }}}
 
--- {{{ Key bindings
+-- {{{1 Key bindings
+
+-- {{{2 Global key bindings
 globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
@@ -330,6 +344,7 @@ globalkeys = gears.table.join(
     --]]
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto,
               {description = "jump to urgent client", group = "client"}),
+    --[[ This just switches between the last two clients
     awful.key({ modkey,           }, "Tab",
         function ()
             awful.client.focus.history.previous()
@@ -338,14 +353,21 @@ globalkeys = gears.table.join(
             end
         end,
         {description = "go back", group = "client"}),
+    --]]
+
+    -- Machi
+    awful.key({ modkey,           }, "/",    function () machi.default_editor.start_interactive() end,
+              {description = "edit the current layout if it is a machi layout", group = "layout"}),
 
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, "Shift"   }, "c", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
+    --[[
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
+    --]]
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
@@ -359,10 +381,12 @@ globalkeys = gears.table.join(
               {description = "increase the number of columns", group = "layout"}),
     awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1, nil, true)    end,
               {description = "decrease the number of columns", group = "layout"}),
+    --[[ How often do people change layouts?
     awful.key({ modkey,           }, "space", function () awful.layout.inc( 1)                end,
               {description = "select next", group = "layout"}),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
               {description = "select previous", group = "layout"}),
+    --]]
 
     awful.key({ modkey, "Control" }, "n",
               function ()
@@ -393,7 +417,9 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"})
 )
+-- }}}2
 
+-- {{{2 Window key bindings
 clientkeys = gears.table.join(
     awful.key({ modkey,           }, "f",
         function (c)
@@ -411,6 +437,10 @@ clientkeys = gears.table.join(
               {description = "move to screen", group = "client"}),
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
               {description = "toggle keep on top", group = "client"}),
+    awful.key({ modkey,           }, "a",      function (c) c:raise()                         end,
+              {description = "raise", group = "client"}),
+    awful.key({ modkey,           }, "z",      function (c) c:lower()                         end,
+              {description = "lower", group = "client"}),
     awful.key({ modkey,           }, "n",
         function (c)
             -- The client currently has the input focus, so it cannot be
@@ -437,7 +467,9 @@ clientkeys = gears.table.join(
         end ,
         {description = "(un)maximize horizontally", group = "client"})
 )
+-- }}}2
 
+-- {{{2 Per-Tag key bindings
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
@@ -487,7 +519,9 @@ for i = 1, 9 do
                   {description = "toggle focused client on tag #" .. i, group = "tag"})
     )
 end
+-- }}}2
 
+-- Mouse buttons
 clientbuttons = gears.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
     awful.button({ modkey }, 1, awful.mouse.client.move),
@@ -495,7 +529,7 @@ clientbuttons = gears.table.join(
 
 -- Set keys
 root.keys(globalkeys)
--- }}}
+-- }}}1
 
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
@@ -540,13 +574,17 @@ awful.rules.rules = {
       }, properties = { floating = true }},
 
     -- Add titlebars to normal clients and dialogs
+    --[[ Commented out because I kind of like the no-titlebar look
     { rule_any = {type = { "normal", "dialog" }
       }, properties = { titlebars_enabled = true }
     },
+    --]]
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { screen = 1, tag = "2" } },
+    { rule = { class = "Steam" },
+      properties = { tag = "4" } },
 }
 -- }}}
 
