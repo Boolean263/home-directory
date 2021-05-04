@@ -244,4 +244,4 @@ exec --no-startup-id xdg-autostart i3
 
 # }}}
 
-# vim:foldmethod=marker:
+# vim:foldmethod=marker filetype=i3config

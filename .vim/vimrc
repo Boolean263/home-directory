@@ -150,6 +150,9 @@ else
         Plug 'psf/black', { 'branch': 'stable' } " Python code formatting
     endif
 endif
+if executable('i3')
+    Plug 'mboughaba/i3config.vim'
+endif
 call plug#end() " }}}2
 " }}}1
 
