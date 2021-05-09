@@ -8,6 +8,10 @@
 # and then source this file with something like
 #    source /dev/stdin < <(sed 's/^\(.*\)()$/function \1/' etc/env/path_functions.bash)
 
+if type exists >/dev/null 2>&1 ; then
+    return
+fi
+
 # Tell if a runnable program exists by the given name.
 exists()
 {

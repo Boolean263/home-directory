@@ -1,16 +1,15 @@
 # .bash_profile is called by bash when a LOGIN shell is started.
 # .bashrc is called by bash when a NON-LOGIN shell is started.
-# I want my .profile and such called always, so even my bash-specific
-# environment settings are in .profile, and .bash_profile is just a
-# call to .bashrc.
-# (Technically that's not how it should be done; see
-# https://superuser.com/a/183980 and come back to this decision.)
+#
+# .profile and .bash_profile (which see) are intended for things that
+# apply to the whole session, such as environment variables and some
+# shell startup programs.
+#
+# .bashrc is for stuff that only applies to the shell itself.
+#
+# See https://superuser.com/a/183980
 
-[ -f ~/.profile ] && . ~/.profile || :
-
-is_interactive(){
-    [ -n "$PS1" ]
-}
+. "$HOME/env/path_functions.bash"
 
 # Anything after this case will not be done in non-interactive shells
 case $- in

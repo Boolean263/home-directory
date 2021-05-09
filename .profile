@@ -1,9 +1,8 @@
 # ~/.profile: executed by the command interpreter for login shells.
 # This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
 # exists.
-# So I call it from my ~/.bashrc instead.
-# (Technically that's not how it should be done; see
-# https://superuser.com/a/183980 and come back to this decision.)
+# I call it from my ~/.bash_profile (which see, and which also runs
+# my .bashrc for login shells).
 
 # the default umask is set in /etc/profile; for setting the umask
 # for ssh logins, install and configure the libpam-umask package.
@@ -26,7 +25,7 @@ fi
 set +a
 unset conf
 
-. "$HOME/etc/env/path_functions.bash"
+. "$HOME/env/path_functions.bash"
 clean_path PATH
 
 export PAGER=$(type -p less)
@@ -46,8 +45,6 @@ export DBIC_TRACE_PROFILE=console
 export TEST_JOBS=9
 
 export UBUNTU_MENUPROXY=
-
-export COLORTERM="truecolor"
 
 export MANPAGER="$HOME/bin/manpager"
 export PERLDOC_PAGER="$PAGER"
