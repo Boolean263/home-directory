@@ -12,10 +12,16 @@ from collections.abc import Mapping
 #
 
 global separator
+global verbose
+verbose = 0
 
 #
 # Functions
 #
+
+def verbecho(level, msg):
+    if verbose >= level:
+        print(msg, file=sys.stderr)
 
 
 def to_OD(aIn):
@@ -30,6 +36,7 @@ def to_OD(aIn):
     for item in aIn:
         rv[item] = 1
 
+    verbecho(2, "to_OD: {} => {}".format(aIn, rv))
     return rv
 
 
@@ -40,7 +47,10 @@ def outpath(pathvar, paths):
     """
     if isinstance(paths, Mapping):
         paths = paths.keys()
-    print("export {0}={1}".format(pathvar, separator.join(paths).replace(" ", "\\ ")))
+    outcmd = "eval export {0}={1}".format(pathvar, separator.join(paths)
+                                     .replace(" ", "\\ "))
+    verbecho(1, outcmd)
+    print(outcmd)
 
 
 #
@@ -89,6 +99,7 @@ if __name__ == "__main__":
     p_del.add_argument("paths", nargs="+", type=str, help="Paths to delete")
 
     args = parser.parse_args()
+    verbose = args.verbose
     separator = args.separator
     if os.getenv(args.pathvar) is None:
         parser.error(

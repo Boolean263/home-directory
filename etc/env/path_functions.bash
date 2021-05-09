@@ -9,7 +9,7 @@
 #    source /dev/stdin < <(sed 's/^\(.*\)()$/function \1/' etc/env/path_functions.bash)
 
 # Pure bash was getting slow, so I've got a helper script.
-if type pathify.py >/dev/null 2>&1 ; then
+if type python3 >/dev/null 2>&1 && type pathify.py >/dev/null 2>&1 ; then
 
     add_to_path()
     {
@@ -22,7 +22,7 @@ if type pathify.py >/dev/null 2>&1 ; then
         done
         local PATHVAR="$1"
         shift
-        $(pathify.py "$PATHVAR" add $args $*)
+        $(pathify.py "$PATHVAR" add $args "$@")
     }
 
     del_from_path()
@@ -177,6 +177,14 @@ else
     clean_path()
     {
         local PATHVAR="$1"
-        add_to_path -f "$PATHVAR" $(show_path "$PATHVAR")
+        local SEP=":"
+        local MYARRAY
+        local i
+        local CONTENTS
+
+        eval CONTENTS="\$$PATHVAR"
+        unset $PATHVAR
+        IFS="$SEP" read -ra MYARRAY <<< "$CONTENTS"
+        add_to_path -f "$PATHVAR" "${MYARRAY[@]}"
     }
 fi
