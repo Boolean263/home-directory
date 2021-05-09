@@ -3,6 +3,8 @@
 # I want my .profile and such called always, so even my bash-specific
 # environment settings are in .profile, and .bash_profile is just a
 # call to .bashrc.
+# (Technically that's not how it should be done; see
+# https://superuser.com/a/183980 and come back to this decision.)
 
 [ -f ~/.profile ] && . ~/.profile || :
 

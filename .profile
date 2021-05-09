@@ -2,8 +2,8 @@
 # This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
 # exists.
 # So I call it from my ~/.bashrc instead.
-# see /usr/share/doc/bash/examples/startup-files for examples.
-# the files are located in the bash-doc package.
+# (Technically that's not how it should be done; see
+# https://superuser.com/a/183980 and come back to this decision.)
 
 # the default umask is set in /etc/profile; for setting the umask
 # for ssh logins, install and configure the libpam-umask package.
@@ -29,14 +29,14 @@ unset conf
 . "$HOME/etc/env/path_functions.bash"
 clean_path PATH
 
-export PAGER=$(which less)
-export VISUAL=$(which nvim vim vi 2>/dev/null | head -n 1)
+export PAGER=$(type -p less)
+export VISUAL=$(type -p nvim vim vi | head -n 1)
 export EDITOR="$VISUAL"
 export GIT_EDITOR="$VISUAL -f"
 export GVIM="$HOME/bin/ngvim"
 
 export LESS="-R"
-which lesspipe >/dev/null 2>&1 && eval "$(lesspipe)" || :
+exists lesspipe && eval "$(lesspipe)" || :
 
 export HISTCONTROL="ignorespace:ignoredups"
 export FIGNORE="CVS:\~:.o:.svn:.git:.lo"
@@ -55,7 +55,7 @@ export PERLDOC_PAGER="$PAGER"
 # Use fcitx if we can; otherwise,
 # Force apps to use the classic X input method, chiefly to support
 # the settings in my .XCompose file.
-which fcitx >/dev/null 2>&1 && myim=fcitx || myim=xim
+exists fcitx && myim=fcitx || myim=xim
 export CLUTTER_IM_MODULE=$myim
 export QT_IM_MODULE=$myim
 export QT4_IM_MODULE=$myim

@@ -8,8 +8,14 @@
 # and then source this file with something like
 #    source /dev/stdin < <(sed 's/^\(.*\)()$/function \1/' etc/env/path_functions.bash)
 
+# Tell if a runnable program exists by the given name.
+exists()
+{
+    type -p "$1" >/dev/null
+}
+
 # Pure bash was getting slow, so I've got a helper script.
-if type python3 >/dev/null 2>&1 && type pathify.py >/dev/null 2>&1 ; then
+if exists python3 && exists pathify.py ; then
 
     add_to_path()
     {
