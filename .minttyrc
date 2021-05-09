@@ -1,5 +1,5 @@
 BoldAsFont=-1
-Font=Source Code Pro
+Font=Iosevka Fixed Medium
 BoldAsColour=no
 AllowBlinking=yes
 Rows=67
@@ -11,3 +11,5 @@ Scrollbar=none
 BackspaceSendsBS=no
 DeleteSendsDEL=no
 Answerback=MinTTY
+FontHeight=12
+FontWeight=500
