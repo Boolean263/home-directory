@@ -47,7 +47,7 @@ xkb_symbols "my_8level" {
     //key <LatK>
     //key <LatL>
     //key <Pnc;>
-    //key <Pnc'>
+    key <Pnc'>  { [ apostrophe,  quotedbl, minutes,    seconds ] };
 
     //key <LatZ>
     //key <LatX>
