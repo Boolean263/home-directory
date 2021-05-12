@@ -253,7 +253,7 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             --mykeyboardlayout,
             wibox.widget.systray(),
-            volume_widget { widget_type = 'arc' },
+            volume_widget { widget_type = 'arc', mute_color = "#ff0000" },
             cpu_widget { width = 32, timeout = 4, enable_kill_button = true },
             mytextclock,
             s.mylayoutbox,
@@ -429,7 +429,7 @@ clientkeys = gears.table.join(
         {description = "toggle fullscreen", group = "client"}),
     awful.key({ altkey,           }, "F4",      function (c) c:kill()                         end,
               {description = "close", group = "client"}),
-    awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
+    awful.key({ modkey,           }, "space",   function (c) c.floating = not c.floating      end,
               {description = "toggle floating", group = "client"}),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
               {description = "move to master", group = "client"}),
@@ -562,7 +562,9 @@ awful.rules.rules = {
           "Wpa_gui",
           "pinentry",
           "veromix",
-          "xtightvncviewer"},
+          "xtightvncviewer",
+          "plasma.emojier",
+      },
 
         name = {
           "Event Tester",  -- xev.
@@ -572,6 +574,10 @@ awful.rules.rules = {
           "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
         }
       }, properties = { floating = true }},
+
+    { rule = { floating = true },
+      properties = { titlebars_enabled = true }
+    },
 
     -- Add titlebars to normal clients and dialogs
     --[[ Commented out because I kind of like the no-titlebar look
