@@ -1,0 +1,12 @@
+#!/usr/bin/env -S youtube-dl --config-location
+
+--no-playlist
+--restrict-filenames
+--write-thumbnail
+--extract-audio
+--audio-format mp3
+--audio-quality 192K
+--embed-thumbnail
+--add-metadata
+
+
