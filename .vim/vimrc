@@ -151,10 +151,12 @@ endif
 if executable('i3')
     Plug 'mboughaba/i3config.vim'
 endif
+Plug 'Boolean263/vim-syntax-libconfig'
 call plug#end() " }}}2
 " }}}1
 
 let g:xml_syntax_folding=1      " see :help xml-folding
+let g:c_no_comment_fold=1
 
 " GENERAL SETTINGS {{{1
 
