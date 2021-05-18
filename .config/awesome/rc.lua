@@ -13,6 +13,7 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
+local logout_popup = require("awesome-wm-widgets.logout-popup-widget.logout-popup")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 --require("awful.hotkeys_popup.keys")
@@ -49,10 +50,46 @@ do
 end
 -- }}}
 
+-- {{{ My own functions
+-- for use from Win+x or elsewhere in this config file
+
+-- Show a notification
+alert = function(s)
+    naughty.notify({
+        preset = naughty.config.presets.normal,
+        title="Alert",
+        text = tostring(s),
+    })
+end
+
+set_wallpaper = function(fname, style)
+    local s
+    local fns = {
+        ["c"] = gears.wallpaper.centered,
+        ["t"] = gears.wallpaper.tiled,
+        ["m"] = gears.wallpaper.maximized,
+        ["f"] = gears.wallpaper.fit,
+    }
+    local fn = fns.m
+    if style then
+        fn = fns[style:sub(1,1):lower()] or fn
+    end
+
+    gears.wallpaper.prepare_context(s)
+    fn(fname, s)
+end
+
+-- }}}
+
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.init(gears.filesystem.get_configuration_dir() .. "theme.lua")
 if machi then beautiful.layout_machi = machi.get_icon() end
+
+-- Override wallpaper
+set_wallpaper(
+    "/home/smiley/Diskstation/MyPhotos/2015 Algonquin Camping/P8230018.JPG",
+    "m")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "term"
@@ -282,6 +319,8 @@ globalkeys = gears.table.join(
               {description = "view next", group = "tag"}),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
+
+    awful.key({ "Control", altkey }, "Delete", function() logout_popup.launch() end, {description = "Show logout screen", group = "custom"}),
 
     -- Changing focus
     awful.key({ modkey,           }, "Left",
@@ -568,6 +607,7 @@ awful.rules.rules = {
 
         name = {
           "Event Tester",  -- xev.
+          "Helltaker",
         },
         role = {
           "AlarmWindow",  -- Thunderbird's calendar.
