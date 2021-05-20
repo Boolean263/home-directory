@@ -65,9 +65,30 @@ shopt -s histreedit
 # after I've added $? to the prompt.)
 # Use tput instead of hard-coded escape sequences. Some with math
 # I evaluate once here.... well, kinda. You'll see.
-tBG=$(tput setab 99 | sed 's/99/$((HISTCMD % 2 ? 29 : 32))/')
-export PS1='\['$(tput rmacs)$tBG$(tput setaf 252)$(tput el)'\]`code=${?##0}; echo "${code:+\['$(tput setaf 9)'\]E$code }"`\['$(tput setaf 231)'\]${debian_chroot:+" $debian_chroot:"}\['$(tput setaf 252)'\]\w`__git_ps1`\['$(tput sgr0)'\]\n\['$(tput setaf 2)'\]\h \!\$\['$(tput sgr0)'\] '
-unset tBG
+my_prompt()
+{
+    local tBG=$(tput setab 99 | sed 's/99/$((HISTCMD % 2 ? 29 : 32))/')
+    local -a PS
+
+    # Reset any character sets or whatever, and clear the first line
+    PS+=('\['$(tput rmacs)$tBG$(tput setaf 252)$(tput el)'\]')
+
+    # Add error if any
+    PS+=('`code=${?##0}; echo "${code:+\['$(tput setaf 9)'\]E$code }"`')
+
+    # Add chroot if any
+    PS+=('\['$(tput setaf 231)'\]${debian_chroot:+" $debian_chroot:"}')
+
+    # Add git prompt and end line
+    PS+=('\['$(tput setaf 252)'\]\w`__git_ps1`\['$(tput sgr0)'\]\n')
+
+    # Give the hostname, command number, and actual prompt
+    PS+=('\['$(tput setaf 2)'\]\h \!\$\['$(tput sgr0)'\] ')
+
+    printf '%s' "${PS[@]}"
+}
+export PS1="$(my_prompt)"
+unset -f my_prompt
 
 if [ -f "$HOME/.lesskey" ] && [ "$HOME/.lesskey" -nt "$HOME/.less" ] ; then
     lesskey
