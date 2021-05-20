@@ -10,6 +10,7 @@
 !.vim
 !.Xresources.d
 !.config/devilspie2
+!.zsh
 
 # Ignore vim plugin directories,
 # since they're managed through vim
