@@ -66,7 +66,7 @@ shopt -s histreedit
 # Use tput instead of hard-coded escape sequences. Some with math
 # I evaluate once here.... well, kinda. You'll see.
 tBG=$(tput setab 99 | sed 's/99/$((HISTCMD % 2 ? 29 : 32))/')
-export PS1='\['$(tput rmacs)$tBG$(tput setaf 7)$(tput el)'\]`code=${?##0}; echo "${code:+\['$(tput setaf 9)'\]E$code }"`\['$(tput setaf 231)'\]${debian_chroot:+" $debian_chroot:"}\['$(tput setaf 7)'\]\w`__git_ps1`\['$(tput sgr0)'\]\n\['$(tput setaf 2)'\]\h \!\$\['$(tput sgr0)'\] '
+export PS1='\['$(tput rmacs)$tBG$(tput setaf 252)$(tput el)'\]`code=${?##0}; echo "${code:+\['$(tput setaf 9)'\]E$code }"`\['$(tput setaf 231)'\]${debian_chroot:+" $debian_chroot:"}\['$(tput setaf 252)'\]\w`__git_ps1`\['$(tput sgr0)'\]\n\['$(tput setaf 2)'\]\h \!\$\['$(tput sgr0)'\] '
 unset tBG
 
 if [ -f "$HOME/.lesskey" ] && [ "$HOME/.lesskey" -nt "$HOME/.less" ] ; then
