@@ -11,6 +11,9 @@
 # If anything is written to stdout, GDM will show a useless dialogue asking
 # "Are you sure you want to proceed?" with no option but to proceed.
 
+# Start ssh-agent if it's not alreaddy running
+[ -n "$SSH_AUTH_SOCK" ] || eval `ssh-agent`
+
 . "$HOME/.profile"
 
 xrdb "$HOME/.Xresources" >/dev/null 2>&1
