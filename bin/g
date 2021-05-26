@@ -43,12 +43,10 @@ sub separate_process(@)
 ### Main program
 
 my $basename = `basename $0`; chomp $basename;
-my $gvim = $ENV{GVIM} || which('gvim');
+my $gvim = $ENV{GVIM};
 my $vim = $ENV{VISUAL} || which('vim');
 my @vim_args;
 my @vim_tail;
-
-undef $gvim; # for now, force xterm (nvim-qt is being dumb)
 
 if($basename eq 'gro')
 {
