@@ -32,7 +32,7 @@ export PAGER=$(type -p less)
 export VISUAL=$(type -p nvim vim vi | head -n 1)
 export EDITOR="$VISUAL"
 export GIT_EDITOR="$VISUAL -f"
-export GVIM="$HOME/bin/ngvim"
+#export GVIM="$HOME/bin/ngvim"
 
 export LESS="-R"
 exists lesspipe && eval "$(lesspipe)" || :
@@ -52,6 +52,8 @@ export PERLDOC_PAGER="$PAGER"
 # Use fcitx if we can; otherwise,
 # Force apps to use the classic X input method, chiefly to support
 # the settings in my .XCompose file.
+myim=$(type -p fcitx5 fcitx | head -n 1)
+myim=${myim:-xim}
 exists fcitx && myim=fcitx || myim=xim
 export CLUTTER_IM_MODULE=$myim
 export QT_IM_MODULE=$myim
