@@ -7,11 +7,12 @@ endif
 nnoremap <F12> :set lines=999 columns=9999 \| winpos 0 0<cr>
 
 
-"set background=light
+" Note: Most GUIs will let you `set guifont=*` to get a font chooser.
 "set guifont=Noto\ Mono\ 9
 "set guifont=Ubuntu\ Mono\ 10
 "set guifont=DejaVu\ Sans\ Mono\ 9
-set guifont=Source\ Code\ Pro\ 10,Source_Code_Pro:h10:cANSI:qDRAFT
+"set guifont=Source\ Code\ Pro\ 10,Source_Code_Pro:h10:cANSI:qDRAFT
+set guifont=Iosevka\ Fixed\ Medium:h11
 
 "--------------------------------
 " Font test: oO0Q il1IL| sS$
