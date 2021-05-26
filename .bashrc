@@ -58,26 +58,43 @@ shopt -s histreedit
 
 [ -f ~/.bash_aliases ] && . ~/.bash_aliases || :
 
-# User specific environment and startup programs.
-# For the custom prompt, use care with $(...) executions that are within
-# the quotes, since they're evaluated at prompt showing time -- and may
-# stomp on $? and the like. (This is why I don't call __git_ps1 until
-# after I've added $? to the prompt.)
-# Use tput instead of hard-coded escape sequences. Some with math
-# I evaluate once here.... well, kinda. You'll see.
+# Custom Prompt {{{1
+
+save_errcode() {
+    code=${?##0}
+}
+timer_start() {
+    timer=$SECONDS
+}
+timer_stop() {
+    [ -n "$timer" ] && timer_show=$(($SECONDS - $timer)) || timer_show=0
+    unset timer
+    if [ $timer_show -gt 0 ] ; then
+        timer_show="⏳${timer_show}s "
+    else
+        timer_show=""
+    fi
+}
+preexec_functions+=(timer_start)
+precmd_functions+=(save_errcode timer_stop)
+
 my_prompt()
 {
-    local tBG=$(tput setab 99 | sed 's/99/$((HISTCMD % 2 ? 29 : 32))/')
     local -a PS
 
     # Reset any character sets or whatever, and clear the first line
-    PS+=('\['$(tput rmacs)$tBG$(tput setaf 252)$(tput el)'\]')
+    PS+=('\['$(tput rmacs))
+    PS+=('$(tput setab $(($HISTCMD % 2 ? 29 : 32)))')
+    PS+=($(tput setaf 252)$(tput el)'\]')
+
+    # Add time
+    PS+=('$timer_show')
 
     # Add error if any
-    PS+=('`code=${?##0}; echo "${code:+\['$(tput setaf 9)'\]E$code }"`')
+    PS+=('`echo "${code:+\['$(tput setaf 9)'\]⚠ $code }"`')
 
     # Add chroot if any
-    PS+=('\['$(tput setaf 231)'\]${debian_chroot:+" $debian_chroot:"}')
+    PS+=('${debian_chroot:+"\['$(tput setaf 231)'\]$debian_chroot:"}')
 
     # Add git prompt and end line
     PS+=('\['$(tput setaf 252)'\]\w`__git_ps1`\['$(tput sgr0)'\]\n')
@@ -89,6 +106,7 @@ my_prompt()
 }
 export PS1="$(my_prompt)"
 unset -f my_prompt
+# }}}1
 
 if [ -f "$HOME/.lesskey" ] && [ "$HOME/.lesskey" -nt "$HOME/.less" ] ; then
     lesskey
