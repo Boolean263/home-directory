@@ -60,6 +60,7 @@ shopt -s histreedit
 
 # Custom Prompt {{{1
 
+# Time the length a command took
 save_errcode() {
     code=${?##0}
 }
@@ -75,15 +76,31 @@ timer_stop() {
         timer_show=""
     fi
 }
-preexec_functions+=(timer_start)
-precmd_functions+=(save_errcode timer_stop)
+
+# Semantic prompt areas (stolen from wezterm; see
+# https://gitlab.freedesktop.org/Per_Bothner/specifications/blob/master/proposals/semantic-prompts.md
+semantic_prompt() {
+    printf '\e]133;%s;%s\a' "$1" "$2"
+}
+SEM_PS1=`semantic_prompt P k=i`
+SEM_PS2=`semantic_prompt P k=c`
+SEM_INPUT=`semantic_prompt B`
+SEM_OUTPUT=`semantic_prompt C`
+semantic_output() { echo "$SEM_OUTPUT" ; }
+semantic_errcode() { semantic_prompt D $code ; }
+
+preexec_functions+=(semantic_output timer_start)
+precmd_functions+=(save_errcode timer_stop semantic_errcode)
 
 my_prompt()
 {
     local -a PS
 
+    # Tell terminal that this is the start of the prompt
+    PS+=('\[$SEM_PS1')
+
     # Reset any character sets or whatever, and clear the first line
-    PS+=('\['$(tput rmacs))
+    PS+=($(tput rmacs))
     PS+=('$(tput setab $(($HISTCMD % 2 ? 29 : 32)))')
     PS+=($(tput setaf 252)$(tput el)'\]')
 
@@ -96,16 +113,23 @@ my_prompt()
     # Add chroot if any
     PS+=('${debian_chroot:+"\['$(tput setaf 231)'\]$debian_chroot:"}')
 
+    # Add working direvtory
+    PS+=('\['$(tput setaf 252)'\]📂\w')
+
     # Add git prompt and end line
-    PS+=('\['$(tput setaf 252)'\]\w`__git_ps1`\['$(tput sgr0)'\]\n')
+    PS+=('`__git_ps1`\['$(tput sgr0)'\]\n')
 
     # Give the hostname, command number, and actual prompt
     PS+=('\['$(tput setaf 2)'\]\h \!\$\['$(tput sgr0)'\] ')
+
+    # Tell terminal that this is the start of the user input
+    PS+=('\[$SEM_INPUT\]')
 
     printf '%s' "${PS[@]}"
 }
 export PS1="$(my_prompt)"
 unset -f my_prompt
+export PS2="$SEM_PS2$PS2$SEM_INPUT"
 # }}}1
 
 if [ -f "$HOME/.lesskey" ] && [ "$HOME/.lesskey" -nt "$HOME/.less" ] ; then
