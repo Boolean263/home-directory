@@ -86,7 +86,7 @@ SEM_PS1=`semantic_prompt P k=i`
 SEM_PS2=`semantic_prompt P k=c`
 SEM_INPUT=`semantic_prompt B`
 SEM_OUTPUT=`semantic_prompt C`
-semantic_output() { echo "$SEM_OUTPUT" ; }
+semantic_output() { echo -n "$SEM_OUTPUT" ; }
 semantic_errcode() { semantic_prompt D $code ; }
 
 preexec_functions+=(semantic_output timer_start)
