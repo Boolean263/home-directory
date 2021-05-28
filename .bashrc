@@ -82,11 +82,11 @@ timer_stop() {
 semantic_prompt() {
     printf '\e]133;%s;%s\a' "$1" "$2"
 }
-SEM_PS1=`semantic_prompt P k=i`
-SEM_PS2=`semantic_prompt P k=c`
-SEM_INPUT=`semantic_prompt B`
-SEM_OUTPUT=`semantic_prompt C`
-semantic_output() { echo -n "$SEM_OUTPUT" ; }
+_SEM_PS1=`semantic_prompt P k=i`
+_SEM_PS2=`semantic_prompt P k=c`
+_SEM_INPUT=`semantic_prompt B`
+_SEM_OUTPUT=`semantic_prompt C`
+semantic_output() { echo -n "$_SEM_OUTPUT" ; }
 semantic_errcode() { semantic_prompt D $code ; }
 
 preexec_functions+=(semantic_output timer_start)
@@ -97,7 +97,7 @@ my_prompt()
     local -a PS
 
     # Tell terminal that this is the start of the prompt
-    PS+=('\[$SEM_PS1')
+    PS+=('\[$_SEM_PS1')
 
     # Reset any character sets or whatever, and clear the first line
     PS+=($(tput rmacs))
@@ -123,13 +123,13 @@ my_prompt()
     PS+=('\['$(tput setaf 2)'\]\h \!\$\['$(tput sgr0)'\] ')
 
     # Tell terminal that this is the start of the user input
-    PS+=('\[$SEM_INPUT\]')
+    PS+=('\[$_SEM_INPUT\]')
 
     printf '%s' "${PS[@]}"
 }
 export PS1="$(my_prompt)"
 unset -f my_prompt
-export PS2="$SEM_PS2$PS2$SEM_INPUT"
+export PS2="$_SEM_PS2$PS2$_SEM_INPUT"
 # }}}1
 
 if [ -f "$HOME/.lesskey" ] && [ "$HOME/.lesskey" -nt "$HOME/.less" ] ; then
