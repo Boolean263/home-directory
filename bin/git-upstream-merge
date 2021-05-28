@@ -3,7 +3,7 @@ set -e
 git rev-parse --git-dir >/dev/null
 UPSTREAM="${UPSTREAM:-upstream}"
 MAINBRANCH=$(git remote show "$UPSTREAM" | awk '/HEAD branch:/{print $NF}')
-CURBRANCH=$(git rev-parse --abbrev-ref HEAD)
+CURBRANCH=$(git symbolic-ref --short HEAD)
 set +e
 
 if ! git remote | grep -q '^'"$UPSTREAM"'$' ; then
