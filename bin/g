@@ -5,6 +5,12 @@ use warnings;
 use utf8;
 use version;
 
+sub debug
+{
+    print STDERR join(" ", @_)
+        if $ENV{G_DEBUG};
+}
+
 sub which($)
 {
     my $bin = `which $_[0] 2>/dev/null`;
@@ -47,6 +53,7 @@ my $gvim = $ENV{GVIM};
 my $vim = $ENV{VISUAL} || which('vim');
 my @vim_args;
 my @vim_tail;
+my $remote;
 
 if($basename eq 'gro')
 {
@@ -62,6 +69,10 @@ elsif($basename eq 'vless')
     push @vim_tail, '--not-a-term' if $vim =~ m(/vim$);
     push @vim_tail, '-';
 }
+elsif($basename eq 'g')
+{
+    $remote++;
+}
 
 @vim_args = (@vim_args, @ARGV, @vim_tail);
 
@@ -69,6 +80,11 @@ if($ENV{DISPLAY})
 {
     if($gvim && -x $gvim)
     {
+        if($remote)
+        {
+            unshift @vim_args, '--remote-silent' if $gvim =~ m(/gvim$);
+        }
+        debug("running gvim: ", $gvim, @vim_args);
         do_or_die($gvim, @vim_args);
     }
 }
