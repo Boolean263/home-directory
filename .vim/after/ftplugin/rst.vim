@@ -1,3 +1,5 @@
+runtime! ftplugin/text.vim
+
 " ReStructuredText usually uses three-space tabstops to account for
 " its directives.
 

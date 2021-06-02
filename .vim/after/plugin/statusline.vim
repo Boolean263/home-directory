@@ -83,6 +83,7 @@ function! MyStatusLine() abort
     set statusline+=%{TagName()}
     set statusline+=%=      " Left/Right separator
     set statusline+=%{&ft}  " Another way of showing filetype
+    set statusline+=%{PencilMode()} " Show soft/hard wrap for Pencil
     set statusline+=%{SLFenc()} " File encoding from above function
     set statusline+=%4*     " colour to user4
     set statusline+=%{SLLarr()}

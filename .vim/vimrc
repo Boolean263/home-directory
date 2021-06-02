@@ -92,6 +92,10 @@ nmap [m <Plug>MarkSearchAnyPrev
 nmap <Plug>IgnoreMarkSearchNext <Plug>MarkSearchNext
 nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
 
+" for vim-pencil
+let g:pencil#conceallevel = 0
+
+
 " }}}2
 
 let $VIMHOME=expand('<sfile>:p:h')
@@ -125,7 +129,7 @@ Plug 'inkarkat/vim-mark'        " Mark words with <leader>m
 "Plug 'Lokaltog/vim-monotone'    " Monotone colorscheme
 Plug 'andreypopp/vim-colors-plain' " Very plain colorscheme
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' } " Distraction-free, screen-centred writing
-Plug 'preservim/vim-pencil', { 'on': ['Pencil', 'NoPencil', 'TogglePencil', 'SoftPencil', 'HardPencil'] }      " Improve vim for prose/text writing
+Plug 'preservim/vim-pencil'      " Improve vim for prose/text writing
 Plug 'editorconfig/editorconfig-vim' " support editorconfig files
 Plug 'wsdjeg/vim-fetch'         " Handle filename.cpp:132:5 to go to line 132
 Plug 'Vimjas/vim-python-pep8-indent' " Just what it sounds like
@@ -136,6 +140,8 @@ Plug 'Boolean263/vim-filetype-debsymbols' " Debian symbols files
 Plug 'godlygeek/tabular', { 'on': ['Tabularize', 'Tab'] } " Line up text based on a regexp
 Plug 'jlanzarotta/bufexplorer'  " Improved buffer explorer
 Plug 'rust-lang/rust.vim'       " Rust programming language support
+Plug 'kana/vim-textobj-user'    " User-defined text objects, prereq for next plugin
+Plug 'preservim/vim-textobj-sentence' " Enhance vim's idea of what a sentence is
 if executable('nope-node')
     Plug 'neoclide/coc.nvim'    " Big completion engine
 else
