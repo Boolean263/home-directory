@@ -12,10 +12,15 @@ fail()
     exit 1
 }
 
+PREFIX=""
+if [ -z "$SSH_AUTH_SOCK" ] ; then
+    PREFIX="$PREFIX ssh-agent"
+fi
+
 if [ $# -eq 0 ] ; then
     # Fall back on creating a new session
     if which tmux >/dev/null 2>&1 ; then
-        tmux
+        $PREFIX tmux
     elif which screen >/dev/null 2>&1 ; then
         screen
     else
@@ -23,7 +28,7 @@ if [ $# -eq 0 ] ; then
     fi
 elif [ $# -eq 1 ] ; then
     if which tmux >/dev/null 2>&1 ; then
-        tmux attach-session -t "$1" 2>/dev/null || tmux new-session -s "$1"
+        tmux attach-session -t "$1" 2>/dev/null || $PREFIX tmux new-session -s "$1"
     elif which screen >/dev/null 2>&1 ; then
         screen -S "$1" -x -RR
     else
