@@ -113,7 +113,7 @@ my_prompt()
     PS+=('$timer_show')
 
     # Add error if any
-    PS+=('`echo "${code:+\['$(tput setaf 9)'\]⚠ $code }"`')
+    PS+=('`echo "${code:+\['$(tput setaf 9)'\]⚠ $code }"`')
 
     # Add chroot if any
     PS+=('${debian_chroot:+"\['$(tput setaf 231)'\]$debian_chroot:"}')
