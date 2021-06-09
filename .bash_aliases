@@ -27,4 +27,7 @@ alias -- -="cd -"
 
 alias cp="/bin/cp --preserve=all"
 
+# Runs the previous command as root
+alias please='sudo $(fc -ln -1)'
+
 [ -f "~/.bash_aliases.local" ] && . "~/.bash_aliases.local" || :

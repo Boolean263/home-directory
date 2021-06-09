@@ -54,7 +54,12 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+# Shell history
+export HISTCONTROL="ignorespace:ignoredups:erasedups"
+export HISTSIZE=100000
+export HISTFILESIZE=100000
 shopt -s histreedit
+shopt -s histappend
 
 [ -f ~/.bash_aliases ] && . ~/.bash_aliases || :
 

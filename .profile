@@ -37,7 +37,6 @@ export GIT_EDITOR="$VISUAL -f"
 export LESS="-R"
 exists lesspipe && eval "$(lesspipe)" || :
 
-export HISTCONTROL="ignorespace:ignoredups"
 export FIGNORE="CVS:\~:.o:.svn:.git:.lo"
 
 export NYTPROF="addpid=1"
