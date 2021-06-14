@@ -76,6 +76,8 @@ let g:bufExplorerDisableDefaultKeyMapping = 1
 let g:bufExplorerShowUnlisted = 1
 let g:bufExplorerSortBy = 'fullpath'
 
+let g:netrw_sort_sequence='[\/]$,*'
+
 nnoremap <F8> :TagbarToggle<CR>
 
 nmap ]h <Plug>(GitGutterNextHunk)
