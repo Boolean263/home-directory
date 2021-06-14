@@ -8,7 +8,10 @@ IFS=$(printf '\n')
 
 usage()
 {
-    [ -n "$*" ] && echo "Error: $*" 1>&2 && echo 1>&2
+    if [ -n "$*" ] ; then
+        echo "Error: $*" 1>&2
+        echo 1>&2
+    fi
     cat 1>&2 <<EOT
 Wrapper around diff and possibly diff-so-fancy. Or, pager for
 outside calls to diff.
