@@ -16,7 +16,7 @@ local config_dir = gfs.get_configuration_dir()
 
 local theme = {}
 
-theme.font          = "sans 9"
+theme.font          = "sans 10"
 
 theme.bg_normal     = "#0a3a12"
 theme.bg_focus      = "#007414"
@@ -42,11 +42,12 @@ theme.border_marked = "#91231c"
 -- tasklist_[bg|fg]_[focus|urgent]
 -- titlebar_[bg|fg]_[normal|focus]
 -- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
--- mouse_finder_[color|timeout|animate_timeout|radius|factor]
 -- prompt_[fg|bg|fg_cursor|bg_cursor|font]
 -- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
 -- Example:
 --theme.taglist_bg_focus = "#ff0000"
+theme.prompt_bg = theme.bg_focus
+theme.prompt_fg = theme.fg_focus
 
 -- Generate taglist squares:
 local taglist_square_size = dpi(4)

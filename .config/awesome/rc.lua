@@ -468,8 +468,12 @@ clientkeys = gears.table.join(
         {description = "toggle fullscreen", group = "client"}),
     awful.key({ altkey,           }, "F4",      function (c) c:kill()                         end,
               {description = "close", group = "client"}),
-    awful.key({ modkey,           }, "space",   function (c) c.floating = not c.floating      end,
-              {description = "toggle floating", group = "client"}),
+    awful.key({ modkey,           }, "space",
+        function (c)
+            c.floating = not c.floating
+            --awful.titlebar:toggle(c)
+        end,
+        {description = "toggle floating", group = "client"}),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
               {description = "move to master", group = "client"}),
     awful.key({ modkey,           }, "o",      function (c) c:move_to_screen()               end,
@@ -541,6 +545,7 @@ for i = 1, 9 do
                           local tag = client.focus.screen.tags[i]
                           if tag then
                               client.focus:move_to_tag(tag)
+                              tag:view_only()
                           end
                      end
                   end,
@@ -603,7 +608,7 @@ awful.rules.rules = {
           "veromix",
           "xtightvncviewer",
           "plasma.emojier",
-      },
+        },
 
         name = {
           "Event Tester",  -- xev.
