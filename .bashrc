@@ -118,11 +118,11 @@ my_prompt()
     # Add chroot if any
     PS+=('${debian_chroot:+"\['$(tput setaf 231)'\]$debian_chroot:"}')
 
-    # Add working direvtory
+    # Add working directory
     PS+=('\['$(tput setaf 252)'\]📂\w')
 
     # Add git prompt and end line
-    PS+=('`__git_ps1`\['$(tput sgr0)'\]\n')
+    PS+=('`__git_ps1 " %s"`\['$(tput sgr0)'\]\n')
 
     # Give the hostname, command number, and actual prompt
     PS+=('\['$(tput setaf 2)'\]\h \!\$\['$(tput sgr0)'\] ')
