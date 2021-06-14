@@ -1,7 +1,11 @@
 #!/bin/sh
 # Wrapper script to run ripgrep in "pretty" mode like ack
+# Attempts to fall back gracefully if possible and ripgrep is missing
+
+set -eu
 
 RG=$(which -a rg | grep -v $(readlink -f "$0") | head -n 1)
+ACK=$(which -a ack | grep -v $(readlink -f "$0") | head -n 1)
 IAM=$(basename "$0")
 MYARGS=""
 
@@ -16,11 +20,32 @@ if [ -n "$RG" ] ; then
         # stdout isn't a terminal, treat like normal
         "$RG" $MYARGS ${1+"$@"}
     fi
-else
-    # Couldn't find rg, fall back on ack
+elif [ -n "$ACK" ] ; then
+    # Couldn't find rg, can fall back on ack
     echo "rg: using ack" 1>&2
     if [ "$IAM" = "rgfind" ] ; then
         MYARGS="$MYARGS -f"
     fi
-    ack ${1+"$@"}
+    "$ACK" $MYARGS ${1+"$@"}
+else
+    # Couldn't find rg or ack, use grep
+    if [ "$IAM" = "rgfind" ] ; then
+        echo "rg: using grep; rgfind mode not supported" 1>&2
+        exit 1
+    fi
+    echo "rg: using grep, this is non-ideal" 1>&2
+    MYARGS="-r"
+
+    set +e
+    COLOURTEST=$(echo hi | grep --color=always hi 2>/dev/null)
+    if [ $? -eq 0 ] ; then
+        MYARGS="$MYARGS --color=always"
+    fi
+    set -e
+
+    if [ -n "${2:-}" ] ; then
+        grep $MYARGS ${1+"$@"} | "${PAGER:-less}"
+    else
+        grep $MYARGS ${1+"$@"} . | "${PAGER:-less}"
+    fi
 fi
