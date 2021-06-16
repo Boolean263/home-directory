@@ -70,6 +70,12 @@ fi
 
 export GPGKEY="310835C6"
 
+# Build in parallel when possible
+if [ -r /proc/cpuinfo ] ; then
+    export CMAKE_BUILD_PARALLEL_LEVEL=$(grep -c ^processor /proc/cpuinfo)
+    export MAKEFLAGS=-j$CMAKE_BUILD_PARALLEL_LEVEL
+fi
+
 [ -d "/tmp" ] && export TEMP="/tmp" || :
 
 [ -f "$HOME/.profile.local" ] && . "$HOME/.profile.local" || :
