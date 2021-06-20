@@ -100,6 +100,7 @@ precmd_functions+=(save_errcode timer_stop semantic_errcode)
 my_prompt()
 {
     local -a PS
+    local SGR0=$(tput sgr0)
 
     # Tell terminal that this is the start of the prompt
     PS+=('\[$_SEM_PS1')
@@ -122,7 +123,9 @@ my_prompt()
     PS+=('\['$(tput setaf 252)'\]📂\w')
 
     # Add git prompt and end line
-    PS+=('`__git_ps1 " %s"`\['$(tput sgr0)'\]\n')
+    PS+=('`__git_ps1 " %s"`')
+    PS+=("\[$SGR0\]")
+    PS+=($'\n')
 
     # Give the hostname, command number, and actual prompt
     PS+=('\['$(tput setaf 2)'\]\h \!\$\['$(tput sgr0)'\] ')
