@@ -1,9 +1,23 @@
 --[[
 This file was copied from /etc/xdg/awesome/rc.lua and then customized
 --]]
+
+local function prefer(mod_name)
+    local results = { pcall(require, mod_name) }
+    if results[1] then
+        return results[2]
+    else
+        return nil
+    end
+end
+
 -- Standard awesome library
-local gears = require("gears")
 local awful = require("awful")
+
+-- Autorun script
+awful.spawn.with_shell("~/.config/awesome/autorun.sh")
+
+local gears = require("gears")
 require("awful.autofocus")
 -- Widget and layout library
 local wibox = require("wibox")
@@ -13,17 +27,17 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
-local logout_popup = require("awesome-wm-widgets.logout-popup-widget.logout-popup")
+local logout_popup = prefer("awesome-wm-widgets.logout-popup-widget.logout-popup")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 --require("awful.hotkeys_popup.keys")
 
 -- https://github.com/xinhaoyuan/layout-machi -- clone it into the directory containing this lua file
-local machi = require("layout-machi")
+local machi = prefer("layout-machi")
 
 -- Load Debian menu entries
 local debian = require("debian.menu")
-local has_fdo, freedesktop = pcall(require, "freedesktop")
+local freedesktop = prefer("freedesktop")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -106,7 +120,6 @@ altkey = "Mod1"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    machi.default_layout,
     awful.layout.suit.tile.left,
     -- awful.layout.suit.tile,
     awful.layout.suit.floating,
@@ -124,6 +137,9 @@ awful.layout.layouts = {
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
 }
+if machi then
+    table.insert(awful.layout.layouts, 1, machi.default_layout)
+end
 
 -- }}}
 
@@ -155,7 +171,7 @@ myawesomemenu = {
 local menu_awesome = { "awesome", myawesomemenu, beautiful.awesome_icon }
 local menu_terminal = { "open terminal", terminal }
 
-if has_fdo then
+if freedesktop then
     mymainmenu = freedesktop.menu.build({
         before = { menu_awesome },
         after =  { menu_terminal }
@@ -320,7 +336,16 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
 
-    awful.key({ "Control", altkey }, "Delete", function() logout_popup.launch() end, {description = "Show logout screen", group = "custom"}),
+    awful.key({ "Control", altkey }, "Delete", function()
+                    if logout_popup then
+                        logout_popup.launch()
+                    else
+                        naughty.notify({ preset = naughty.config.presets.critical,
+                                        title = "Oops!",
+                                        text = "awesome-wm-widgets isn't installed here." })
+                    end
+                end,
+              {description = "Show logout screen", group = "custom"}),
 
     -- Changing focus
     awful.key({ modkey,           }, "Left",
@@ -395,7 +420,15 @@ globalkeys = gears.table.join(
     --]]
 
     -- Machi
-    awful.key({ modkey,           }, "/",    function () machi.default_editor.start_interactive() end,
+    awful.key({ modkey,           }, "/",    function ()
+                    if machi then
+                        machi.default_editor.start_interactive()
+                    else
+                        naughty.notify({ preset = naughty.config.presets.critical,
+                                        title = "Oops!",
+                                        text = "Machi isn't installed here." })
+                    end
+                end,
               {description = "edit the current layout if it is a machi layout", group = "layout"}),
 
     -- Standard program
@@ -707,6 +740,3 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
-
--- Autorun script
-awful.spawn.with_shell("~/.config/awesome/autorun.sh")
