@@ -1,8 +1,11 @@
+#!/bin/sh
 # ~/.profile: executed by the command interpreter for login shells.
 # This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
 # exists.
 # I call it from my ~/.bash_profile (which see, and which also runs
 # my .bashrc for login shells).
+# I also call it from my ~/.xprofile (which in turn can be called by
+# my ~/.xsession) -- this means I can't have bash-isms in here.
 
 # the default umask is set in /etc/profile; for setting the umask
 # for ssh logins, install and configure the libpam-umask package.
