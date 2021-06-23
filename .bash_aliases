@@ -15,11 +15,11 @@ alias gits='git s'
 if ls --color=auto > /dev/null 2>&1 ; then
     alias ls="ls --color=auto"
     alias lls="ls --color=never"
-    alias ll="ls --color=auto -la"
+    alias ll="ls --color=auto -la --time-style=long-iso"
+else
+    alias ll="ls -la"
 fi
 alias gpg="gpg2"
-
-alias ll="ls -la"
 
 alias ..="cd .."
 alias ~="cd ~"
