@@ -122,6 +122,7 @@ Plug 'tpope/vim-apathy'         " make `gf` etc. less C-specific
 Plug 'tpope/vim-endwise'        " auto-add `endif` etc. when appropriate
 Plug 'tpope/vim-eunuch'         " UNIX shell commands, make '#!' files +x
 Plug 'wellle/targets.vim'       " Text objects, eg. `di'` delete inside quote
+Plug 'chaoren/vim-wordmotion'   " Let `w`/`e` motion recognize underscores, camelcase, etc.
 Plug 'preservim/tagbar'         " tags sidebar, lets me show tag in statusline
 Plug 'wincent/terminus'         " improve terminal vim (incl. bracketed paste)
 Plug 'airblade/vim-gitgutter'   " git changes in gutter, also `c` text object
