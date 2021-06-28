@@ -250,8 +250,8 @@ set listchars=tab:>-,trail:-,extends:>,precedes:<
 " The real symbols I want
 silent! set listchars=tab:␉·,trail:·,extends:⏵,precedes:⏴,nbsp:␣
 
-" Show an indicator on soft-wrapped lines
-set showbreak=▷
+set linebreak           " When wrapping lines, break them at 'showbreak' instead of anywhere
+set showbreak=▷         " Show an indicator on soft-wrapped lines
 set breakindent         " indent wrapped lines to the same level as the base line
 
 " for :grep
