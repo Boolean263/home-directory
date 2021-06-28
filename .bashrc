@@ -27,6 +27,7 @@ if [ -n "$SSH_CONNECTION" ] && ! [ -e "$HOME/.no-tmux" ] ; then
     if [ -z "$TMUX" ] && [ -z "$STY" ] ; then
         # Move ssh auth sock to a consistent location
         SOCK="$HOME/.ssh/auth_sock/$(hostname)"
+        mkdir -p "$HOME/.ssh/auth_sock"
         if [ -n "$SSH_AUTH_SOCK" ] && [ "$SSH_AUTH_SOCK" != "$SOCK" ] ; then
             rm -f "$SOCK"
             ln -sf "$SSH_AUTH_SOCK" "$SOCK"
