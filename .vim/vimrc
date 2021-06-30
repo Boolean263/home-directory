@@ -119,7 +119,7 @@ Plug 'tpope/vim-unimpaired'     " Bracket mappings such as `[a` `]a` for args…
 Plug 'Boolean263/vim-surround', { 'branch':'289-use-matchpairs' }  " cs([ - change () to [] (my fork)
 Plug 'tpope/vim-commentary'     " Comment stuff out with `gc…`
 Plug 'tpope/vim-apathy'         " make `gf` etc. less C-specific
-Plug 'tpope/vim-endwise'        " auto-add `endif` etc. when appropriate
+"Plug 'tpope/vim-endwise'        " auto-add `endif` etc. when appropriate
 Plug 'tpope/vim-eunuch'         " UNIX shell commands, make '#!' files +x
 Plug 'wellle/targets.vim'       " Text objects, eg. `di'` delete inside quote
 Plug 'chaoren/vim-wordmotion'   " Let `w`/`e` motion recognize underscores, camelcase, etc.
@@ -145,7 +145,7 @@ Plug 'jlanzarotta/bufexplorer'  " Improved buffer explorer
 Plug 'rust-lang/rust.vim'       " Rust programming language support
 Plug 'kana/vim-textobj-user'    " User-defined text objects, prereq for next plugin
 Plug 'preservim/vim-textobj-sentence' " Enhance vim's idea of what a sentence is
-if executable('nope-node')
+if executable('node')
     Plug 'neoclide/coc.nvim'    " Big completion engine
 else
     Plug 'vim-syntastic/syntastic'  " Syntax checking/linting on file save
