@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# This gets sourced by /usr/share/bash-completion/bash_completion
+# (which in turn is sourced by /etc/profile.d/bash_completion.sh)
+completions_dir="${XDG_CONFIG_HOME:-$HOME/.config}/bash_completion.d"
+
+for i in "$completions_dir"/* ; do
+    [[ ${i##*/} != @($_backup_glob|Makefile*|README*) && -f \
+        $i && -r $i ]] && . "$i"
+done
+unset completions_dir
