@@ -28,15 +28,15 @@ function! SLFenc() abort
         return ""
     endif
 endfunction
-function! SLGit() abort
+function! SLGit(alen) abort
     " Some logic copied from fugitive.vim
     if !(exists('g:loaded_fugitive') && exists('b:git_dir'))
         return ''
     endif
     let status = g:pl_git . fugitive#head(7)
-    "if fugitive#buffer().commit() != ''
-    "    let status .= '(' . fugitive#buffer().commit() . ')'
-    "endif
+    if strchars(status) > a:alen
+        let status = status[0:(a:alen-1)] . '…'
+    endif
     return status
 endfunction
 function! SLRarr() abort
@@ -76,7 +76,7 @@ function! MyStatusLine() abort
     set statusline+=%2*     " colour to user2
     set statusline+=%{SLRarr()}
     set statusline+=%3*     " colour to user3
-    set statusline+=%{SLGit()}
+    set statusline+=%{SLGit(15)}
     set statusline+=%4*     " colour to user4
     set statusline+=%{SLRarr()}
     set statusline+=%5*     " colour to user5

@@ -74,4 +74,6 @@ elseif g:colors_name == 'plain'
 
     highlight clear CursorColumn
     highlight link CursorColumn CursorLine
+
+    highlight Pmenu guibg=#000000 ctermbg=0 term=standout
 endif

@@ -77,6 +77,7 @@ let g:bufExplorerShowUnlisted = 1
 let g:bufExplorerSortBy = 'fullpath'
 
 let g:netrw_sort_sequence='[\/]$,*'
+set suffixes-=.h            " vim-vinegar uses this setting
 
 nnoremap <F8> :TagbarToggle<CR>
 
@@ -250,7 +251,7 @@ set listchars=tab:>-,trail:-,extends:>,precedes:<
 " The real symbols I want
 silent! set listchars=tab:␉·,trail:·,extends:⏵,precedes:⏴,nbsp:␣
 
-silent! set fillchars=vert:│,fold:‧,foldsep:│,diff:\ ,foldopen:┬,foldclose:═
+silent! set fillchars=vert:│,fold:‧,foldsep:┆,diff:\ ,foldopen:┬,foldclose:═
 
 set linebreak           " When wrapping lines, break them at 'breakat' instead of anywhere
 set showbreak=▷         " Show an indicator on soft-wrapped lines
