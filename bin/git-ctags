@@ -109,20 +109,25 @@ def filter_tags_file(old_file, new_file, removed):
 def add_to_tags_file(top_dir, tags_file, added):
     "Scan the given files for tags and append them to the tags file."
     if len(added) == 0: return True
-    args = ['ctags', '-f', tags_file, '-L', '-', '-a']
+    args = ['ctags', '-f', tags_file, '-L', '-', '-a', '--quiet']
     args += [ '--verbose=yes' if 'DEBUG' in os.environ else '--verbose=no' ]
 
-    with subprocess.Popen(args, stdin=subprocess.PIPE,
-            universal_newlines=True, cwd=top_dir) as proc:
-        if os.path.isfile(os.path.join(top_dir, '.ctags')):
-            with open(os.path.join(top_dir, '.ctags'), 'rt') as infile:
-                for line in infile:
-                    proc.stdin.write(line)
-        for file in added:
-            proc.stdin.write(file+"\n")
+    try:
+        with subprocess.Popen(args, stdin=subprocess.PIPE,
+                universal_newlines=True, cwd=top_dir) as proc:
+            if os.path.isfile(os.path.join(top_dir, '.ctags')):
+                with open(os.path.join(top_dir, '.ctags'), 'rt') as infile:
+                    for line in infile:
+                        proc.stdin.write(line)
+            for file in added:
+                proc.stdin.write(file+"\n")
 
-        proc.communicate()
-    return True
+            proc.communicate()
+        return True
+    except FileNotFoundError:
+        # Perhaps ctags isn't installed on this system
+        print("{} not found, tags may be stale".format(args[0]))
+        return False
 
 ##
 ## Main Program
