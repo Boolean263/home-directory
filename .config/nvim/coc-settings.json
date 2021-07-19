@@ -1,3 +1,4 @@
 {
-    "snippets.userSnippetsDirectory": "~/.vim/snippets/"
+    "snippets.userSnippetsDirectory": "~/.vim/snippets/",
+    "pairs.enableCharacters": ["(", "[", "<", "'", "\"", "`"]
 }
