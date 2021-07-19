@@ -121,6 +121,7 @@ Plug 'Boolean263/vim-surround', { 'branch':'289-use-matchpairs' }  " cs([ - chan
 Plug 'tpope/vim-commentary'     " Comment stuff out with `gc…`
 Plug 'tpope/vim-apathy'         " make `gf` etc. less C-specific
 "Plug 'tpope/vim-endwise'        " auto-add `endif` etc. when appropriate
+Plug 'justinmk/vim-sneak'       " Use `sxy` to jump to next occurrence of xy
 Plug 'tpope/vim-eunuch'         " UNIX shell commands, make '#!' files +x
 Plug 'wellle/targets.vim'       " Text objects, eg. `di'` delete inside quote
 Plug 'chaoren/vim-wordmotion'   " Let `w`/`e` motion recognize underscores, camelcase, etc.
