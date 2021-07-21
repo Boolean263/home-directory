@@ -15,7 +15,7 @@ for repo in \
     dirname=${repo%%.git}
     dirname=${dirname##*/}
     if [ -d "$dirname" ] ; then
-        (cd "$dirname" && git fetch)
+        (cd "$dirname" && git pull)
     else
         git clone "$repo"
     fi
