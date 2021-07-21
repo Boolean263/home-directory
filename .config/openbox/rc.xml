@@ -808,24 +808,36 @@
 
   # end of the example
 -->
+    <!-- Keep dialogs on top -->
     <application type="dialog">
       <layer>above</layer>
     </application>
-    <application name="xeyes">
-      <decor>no</decor>
-    </application>
-    <application name="Steam">
-      <desktop>4</desktop>
+
+    <!-- Vertically maximize all normal windows -->
+    <application type="normal">
       <maximized>Vertical</maximized>
     </application>
+
+    <!-- Let xeyes have its own shape -->
+    <application name="xeyes">
+      <decor>no</decor>
+      <maximized>false</maximized>
+    </application>
+
+    <!-- other rules -->
+
+    <application name="Steam">
+      <desktop>4</desktop>
+    </application>
+
     <application name="discord">
       <desktop>1</desktop>
       <position force="no">
         <x>0</x>
         <y>0</y>
       </position>
-      <maximized>Vertical</maximized>
     </application>
+
   </applications>
 </openbox_config>
 <!-- vim:set shiftwidth=2: -->
