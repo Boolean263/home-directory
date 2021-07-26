@@ -83,12 +83,21 @@ let g:ale_sign_column_always = 1
 let g:ale_sign_error = "\u2717"
 let g:ale_sign_warning = "\u26A0"
 let g:ale_completion_enabled = 1
-let g:ale_hover_cursor = 1
+let g:ale_hover_cursor = 0
+let g:ale_hover_to_preview = 1
+let g:ale_lint_on_insert_leave = 1
+let g:ale_lint_on_text_changed = "normal"
+let g:ale_completion_delay = 500
+let g:ale_lint_delay = 1000
 
 nnoremap <F8> :TagbarToggle<CR>
 
 nmap ]h <Plug>(GitGutterNextHunk)
 nmap [h <Plug>(GitGutterPrevHunk)
+
+" for wellle/targets.vim
+" "change in argument" but don't eat all the whitespace
+nmap cia cIa
 
 " for inkarkat/vim-mark
 let g:mwDefaultHighlightingPalette = 'extended'
@@ -340,6 +349,9 @@ noremap Y y$
 vmap < <gv
 vmap > >gv
 
+" pairing with gv, reselect pasted text
+nnoremap gp `[v`]
+
 " (open and) focus the quickfix window
 nnoremap <Leader>q :copen<CR>
 
@@ -349,6 +361,9 @@ nnoremap <Leader>l :lopen<CR>
 " :help changelist
 nnoremap ]c g,
 nnoremap [c g;
+
+nnoremap ]e :ALENext<cr>
+nnoremap [e :ALEPrevious<cr>
 
 " Use ↑/↓ in the wildmenu (see above)
 " Source: https://vi.stackexchange.com/a/22628/9661
