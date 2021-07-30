@@ -15,7 +15,7 @@ fi
 # Tell if a runnable program exists by the given name.
 exists()
 {
-    type -p "$1" >/dev/null
+    which "$1" >/dev/null
 }
 
 # Pure bash was getting slow, so I've got a helper script.
@@ -80,9 +80,10 @@ else
         local TO_END=
         local FORCE=
         local SEP=":"
+        local IFS=""
         local BEFORE=""
         local AFTER=""
-        local SED_SEP=$'\x1F' # sed supports using UNIT SEPARATOR as a delimiter
+        local SED_SEP=$(printf '\x1F') # sed supports using UNIT SEPARATOR as a delimiter
                             # which (probably) won't appear in path names
         while true ; do
             case "$1" in
@@ -96,6 +97,7 @@ else
         local PATHVAR="$1"
         if [ -d "$PATHVAR" ] ; then
             echo "add_to_path: $PATHVAR appears to be a directory, not a path variable" 1>&2
+            return 1
         fi
         shift
         local ADDPATHS=""
@@ -149,23 +151,12 @@ else
         while [ "x$1" != "x" ] ; do
             local DELPATH="$1"
             shift
-            if is_in_path "$PATHVAR" "$DELPATH" ; then
-                if [ "x$tmppath" = "x$DELPATH" ] ; then
-                    # in case it's the entirety of the path
-                    tmppath=""
-                else
-                    # in case it's at the start
-                    tmppath="${tmppath#$DELPATH$SEP}"
-
-                    # in case it's at the end
-                    tmppath="${tmppath%$SEP$DELPATH}"
-
-                    # in case it's in the middle somewhere
-                    tmppath="${tmppath/$SEP$DELPATH$SEP/$SEP}"
-                fi
-            fi
+            export $PATHVAR=$(eval echo "\$$PATHVAR" \
+                | /usr/bin/tr "$SEP" "\n" \
+                | /usr/bin/grep -F -v "$DELPATH" \
+                | /usr/bin/tr "\n" "$SEP")
+            eval export \$PATHVAR="\${$PATHVAR%:}"
         done
-        export $PATHVAR="$tmppath"
     }
 
     ### show_path
@@ -194,7 +185,9 @@ else
 
         eval CONTENTS="\$$PATHVAR"
         unset $PATHVAR
-        IFS="$SEP" read -ra MYARRAY <<< "$CONTENTS"
-        add_to_path -f "$PATHVAR" "${MYARRAY[@]}"
+        local IFS="$SEP"
+        for i in $CONTENTS; do
+            add_to_path -e "$PATHVAR" "$i"
+        done
     }
 fi

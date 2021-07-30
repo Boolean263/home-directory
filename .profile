@@ -28,7 +28,7 @@ fi
 set +a
 unset conf
 
-. "$HOME/env/path_functions.bash"
+. "$HOME/env/path_functions.sh"
 clean_path PATH
 
 export PAGER=$(which less)

@@ -9,7 +9,7 @@
 #
 # See https://superuser.com/a/183980
 
-. "$HOME/env/path_functions.bash"
+. "$HOME/env/path_functions.sh"
 
 # Anything after this case will not be done in non-interactive shells
 case $- in
