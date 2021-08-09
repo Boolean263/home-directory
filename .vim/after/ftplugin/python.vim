@@ -8,10 +8,16 @@ setlocal textwidth=88               " used by black
 
 let b:undo_ftplugin .= " |setlocal expandtab< tabstop< shiftwidth< softtabstop< textwidth<"
 
+function! s:pre_write_python()
+    if ! exists('b:no_black')
+        execute ':Black'
+    endif
+endfunction
+
 if exists(':Black')
     augroup pyblack
         autocmd!
-        autocmd BufWritePre *.py execute ':Black'
+        autocmd BufWritePre *.py call s:pre_write_python()
     augroup END
     let b:undo_ftplugin .= "|augroup! pyblack"
 end
