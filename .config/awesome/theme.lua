@@ -48,6 +48,7 @@ theme.border_marked = "#91231c"
 --theme.taglist_bg_focus = "#ff0000"
 theme.prompt_bg = theme.bg_focus
 theme.prompt_fg = theme.fg_focus
+theme.hotkeys_modifiers_fg = theme.fg_focus
 
 -- Generate taglist squares:
 local taglist_square_size = dpi(4)
