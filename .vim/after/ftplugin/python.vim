@@ -22,3 +22,6 @@ if exists(':Black')
     let b:undo_ftplugin .= "|augroup! pyblack"
 end
 
+if exists(':ALEInfo')
+    let b:ale_linters = ['flake8', 'isort']
+end

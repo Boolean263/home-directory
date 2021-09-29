@@ -1,6 +1,11 @@
 " Custom statusline
 " http://got-ravings.blogspot.com/2008/08/vim-pr0n-making-statuslines-that-own.html
 
+" For when I'm trying vim-airline
+if exists(':AirlineToggle')
+    finish
+endif
+
 " Powerline glyphs
 if !(exists('g:pl_r'))
     if has("gui_running") && has("win32unix")
@@ -63,7 +68,9 @@ function! MyStatusLine() abort
     highlight User2 term=reverse ctermfg=208 ctermbg=172 guifg=#FF8700 guibg=#D78700
     highlight User3 term=reverse ctermfg=0   ctermbg=172 guifg=#000000 guibg=#D78700
     highlight User4 term=reverse ctermfg=172 ctermbg=130 guifg=#D78700 guibg=#AF5F00
-    highlight User5 term=reverse ctermfg=0   ctermbg=130 guifg=#000000 guibg=#AF5F00
+
+    highlight StatusLine term=reverse gui=NONE ctermfg=0   ctermbg=130 guifg=#000000 guibg=#AF5F00
+    highlight StatusLineNC term=reverse gui=NONE ctermfg=0   ctermbg=130 guifg=#000000 guibg=#AF5F00
 
     " The statusline itself
     set ruler               " Only really affects what Ctrl-G shows
@@ -79,7 +86,7 @@ function! MyStatusLine() abort
     set statusline+=%{SLGit(15)}
     set statusline+=%4*     " colour to user4
     set statusline+=%{SLRarr()}
-    set statusline+=%5*     " colour to user5
+    set statusline+=%#StatusLine#   " colour to match statusline
     set statusline+=%{TagName()}
     set statusline+=%=      " Left/Right separator
     set statusline+=%{&ft}  " Another way of showing filetype

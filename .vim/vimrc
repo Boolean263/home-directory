@@ -88,7 +88,14 @@ let g:ale_hover_to_preview = 1
 let g:ale_lint_on_insert_leave = 1
 let g:ale_lint_on_text_changed = "normal"
 let g:ale_completion_delay = 500
-let g:ale_lint_delay = 1000
+let g:ale_lint_delay = 500
+let g:ale_ccls_init_options = {
+            \ 'cache': {
+            \     'directory': '/home/$USER/.cache/ccls',
+            \     'format': 'binary'
+            \     }
+            \ }
+let g:ale_python_auto_pipenv = 1
 
 nnoremap <F8> :TagbarToggle<CR>
 
@@ -113,6 +120,11 @@ nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
 " for vim-pencil
 let g:pencil#conceallevel = 0
 
+" For vim-airline
+let g:airline_powerline_fonts = 1
+let g:airline_detect_paste = 1
+"let g:airline_inactive_alt_sep=1
+let g:airline_skip_empty_sections = 1
 
 " }}}2
 
@@ -179,7 +191,15 @@ if executable('i3')
     Plug 'mboughaba/i3config.vim'
 endif
 Plug 'Boolean263/vim-syntax-libconfig'
+"Plug 'vim-airline/vim-airline'      " For a fancier modeline
 call plug#end() " }}}2
+
+" airline post-config
+"let g:airline_section_a = airline#section#create_left(['%t'])
+"let g:airline_section_b = airline#section#create(['branch'])
+"let g:airline_section_c = airline#section#create(['tagbar'])
+"let g:airline_section_x = airline#section#create(['filetype'])
+
 " }}}1
 
 let g:xml_syntax_folding=1      " see :help xml-folding
