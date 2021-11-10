@@ -215,6 +215,7 @@ set shiftround                      " force <</>> to always align to shiftwidth
 set noincsearch                     " disable incremental search
 set hlsearch                        " hilight search terms
 set showcmd                         " show current pending command in last line
+set splitbelow splitright           " new splits start beneath/right of current
 
 set scrolloff=4                     " number of lines to keep visible at top/bottom of screen
 
