@@ -3,6 +3,7 @@
 import sys
 import argparse
 import os
+import re
 
 from collections import OrderedDict
 from collections.abc import Mapping

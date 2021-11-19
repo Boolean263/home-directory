@@ -28,7 +28,8 @@
 shopt -s execfail
 
 #exec startxfce4
-exec openbox-session
+#exec openbox-session
+exec awesome
 
 ##########
 ## Simplest xsession: failsafe

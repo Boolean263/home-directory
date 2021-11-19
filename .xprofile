@@ -19,6 +19,5 @@
 xrdb "$HOME/.Xresources" >/dev/null 2>&1
 
 "$HOME/bin/fixkeys" >/dev/null 2>&1
-"$HOME/bin/fixrandr.sh" >/dev/null 2>&1 || :
 
 [ -f "$HOME/.xprofile.local" ] && . "$HOME/.xprofile.local" || :

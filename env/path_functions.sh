@@ -189,5 +189,4 @@ else
         for i in $CONTENTS; do
             add_to_path -e "$PATHVAR" "$i"
         done
-    }
 fi
