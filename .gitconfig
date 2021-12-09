@@ -12,6 +12,7 @@
     excludesFile = ~/git-config/gitignore
     #attributesFile = ~/git-config/gitattributes
     fileMode = false
+    symlinks = true
 
 [color]
     branch = true
