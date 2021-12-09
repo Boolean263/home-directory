@@ -1,0 +1,74 @@
+# vim:noet sts=0 ts=25 list fileencoding=utf-8:
+# vim:listchars=tab\:\ .,space\:·,trail\:·:
+#
+# Digraphs from vim (:help digraphs)
+# Most of these are straight ports, but some I've tweaked
+
+⒈	1.
+⒉	2.
+⒊	3.
+⒋	4.
+⒌	5.
+⒍	6.
+⒎	7.
+⒏	8.
+⒐	9.
+─	hh
+━	HH
+│	vv
+┃	VV
+┄	3-
+┅	3_
+┆	3|
+┇	3!
+┈	4-
+┉	4_
+┊	4|
+┋	4!
+┌	dr
+┍	dR
+┎	Dr
+┏	DR
+┐	dl
+┑	dL
+┒	Dl
+┓	DL
+└	ur
+┕	uR
+┖	Ur
+┗	UR
+┘	ul
+┙	uL
+┚	Ul
+┛	UL
+├	vr
+┝	vR
+┠	Vr
+┣	VR
+┤	vl
+┥	vL
+┨	Vl
+┫	VL
+┬	dh
+┯	dH
+┰	Dh
+┳	DH
+┴	uh
+┷	uH
+┸	Uh
+┻	UH
+┼	vh
+┿	vH
+╂	Vh
+╋	VH
+╱	FD
+╲	BD
+▀	TB
+▄	LB
+█	FB
+▌	lB
+▐	RB
+░	1S
+▒	2S
+▓	3S
+
