@@ -6,6 +6,9 @@ if xrdb -query | grep -q '^awesome\.started:\s*true$'; then
 fi
 echo 'awesome.started: true' | xrdb -merge -
 
+AWESOME_CONFIG_DIR="$HOME/.config/awesome"
+cd "$AWESOME_CONFIG_DIR"
+
 # Clone some extra repos here
 for repo in \
     https://github.com/streetturtle/awesome-buttons.git \
@@ -13,7 +16,7 @@ for repo in \
     https://github.com/xinhaoyuan/layout-machi.git \
 ; do
     dirname=${repo%%.git}
-    dirname=${dirname##*/}
+    dirname="$AWESOME_CONFIG_DIR/${dirname##*/}"
     if [ -d "$dirname" ] ; then
         (cd "$dirname" && git pull)
     else
