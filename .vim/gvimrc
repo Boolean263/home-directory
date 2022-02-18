@@ -10,7 +10,7 @@ endif
 "set guifont=Ubuntu\ Mono\ 10
 "set guifont=DejaVu\ Sans\ Mono\ 9
 "set guifont=Source\ Code\ Pro\ 10,Source_Code_Pro:h10:cANSI:qDRAFT
-set guifont=Iosevka\ Fixed\ Medium\ 11
+set guifont=Iosevka\ Fixed\ Medium\ 11,Iosevka_Fixed_Extended:h11:cANSI:qDRAFT
 
 "--------------------------------
 " Font test: oO0Q il1IL| sS$

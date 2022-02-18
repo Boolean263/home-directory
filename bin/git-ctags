@@ -109,7 +109,8 @@ def filter_tags_file(old_file, new_file, removed):
 def add_to_tags_file(top_dir, tags_file, added):
     "Scan the given files for tags and append them to the tags file."
     if len(added) == 0: return True
-    args = ['ctags', '-f', tags_file, '-L', '-', '-a', '--quiet']
+    #args = ['ctags', '-f', tags_file, '-L', '-', '-a', '--quiet']
+    args = ['ctags', '-f', tags_file, '-L', '-', '-a']
     args += [ '--verbose=yes' if 'DEBUG' in os.environ else '--verbose=no' ]
 
     try:
