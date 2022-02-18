@@ -225,6 +225,17 @@ set autoread                        " automatically reload the file if it's chan
 set display=lastline                " don't show partial lines as @'s
 set lazyredraw                      " don't redraw screen during macro execution
 
+set cinoptions+=t0                  " don't indent C function types
+set cinoptions+=:0                  " C case labels at same indentation as switch
+set cinoptions+=l1                  " C case labels align { } around case as I want
+set cinoptions+=N-s                 " C++ namespace doesn't affect indent
+set cinoptions+=E-s                 " C++ 'extern C' doesn't affect indent
+set cinoptions+=(0                  " really, just read the help at this point
+set cinoptions+=ks                  " extra indent in eg. if() conditions across multiple lines
+set cinoptions+=j1                  " indent Java anonymous classes
+set cinoptions+=J1                  " indent Javascript object declarations
+" see also 'cinkeys' which can cause reindenting in Insert mode
+
 if version > 742
     set signcolumn=yes              " always show sign column
 else
