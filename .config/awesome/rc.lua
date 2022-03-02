@@ -558,6 +558,7 @@ for i = 1, 9 do
                         local tag = screen.tags[i]
                         if tag then
                            tag:view_only()
+                           awful.client.focus.byidx(0)
                         end
                   end,
                   {description = "view tag #"..i, group = "tag"}),
@@ -578,7 +579,7 @@ for i = 1, 9 do
                           local tag = client.focus.screen.tags[i]
                           if tag then
                               client.focus:move_to_tag(tag)
-                              tag:view_only()
+                              --tag:view_only()
                           end
                      end
                   end,
@@ -654,15 +655,14 @@ awful.rules.rules = {
       }, properties = { floating = true }},
 
     { rule = { floating = true },
-      properties = { titlebars_enabled = true }
+      --properties = { titlebars_enabled = true },
+      callback = awful.titlebar.show
     },
 
     -- Add titlebars to normal clients and dialogs
-    --[[ Commented out because I kind of like the no-titlebar look
     { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = true }
+      }, properties = { titlebars_enabled = true }, callback = awful.titlebar.hide
     },
-    --]]
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
@@ -739,4 +739,36 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
+-- When switching tags, focus the window that's under the mouse
+-- https://stackoverflow.com/a/52802148/6692652
+screen.connect_signal( "tag::history::update", function()
+  gears.timer( {  timeout = 0.1,
+                    autostart = true,
+                    single_shot = true,
+                    callback =  function()
+                      local n = mouse.object_under_pointer()
+                      if n ~= nil and n ~= client.focus then
+                        client.focus = n end
+                      end
+                  } )
+end)
+
+-- doesn't work
+--[[
+client.connect_signal("property::floating", function(c)
+  gears.timer( {  timeout = 0.1,
+                    autostart = true,
+                    single_shot = true,
+                    callback =  function()
+                      if c.floating then
+                        awful.titlebar:show(c)
+                      else
+                        awful.titlebar:hide(c)
+                      end
+                    end
+                  } )
+end)
+--]]
+
 -- }}}
