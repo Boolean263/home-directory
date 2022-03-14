@@ -38,10 +38,14 @@ if [[ -z "${BASH_VERSION:-}" ]]; then
 fi
 
 # Avoid duplicate inclusion
-if [[ "${__bp_imported:-}" == "defined" ]]; then
+if [[ -n "${bash_preexec_imported:-}" ]]; then
     return 0
 fi
-__bp_imported="defined"
+bash_preexec_imported="defined"
+
+# WARNING: This variable is no longer used and should not be relied upon.
+# Use ${bash_preexec_imported} instead.
+__bp_imported="${bash_preexec_imported}"
 
 # Should be available to each precmd and preexec
 # functions, should they want it. $? and $_ are available as $? and $_, but
@@ -75,7 +79,8 @@ __bp_require_not_readonly() {
 # history even if it starts with a space.
 __bp_adjust_histcontrol() {
     local histcontrol
-    histcontrol="${HISTCONTROL//ignorespace}"
+    histcontrol="${HISTCONTROL:-}"
+    histcontrol="${histcontrol//ignorespace}"
     # Replace ignoreboth with ignoredups
     if [[ "$histcontrol" == *"ignoreboth"* ]]; then
         histcontrol="ignoredups:${histcontrol//ignoreboth}"
@@ -89,6 +94,10 @@ __bp_adjust_histcontrol() {
 # run interactively by the user; it's set immediately after the prompt hook,
 # and unset as soon as the trace hook is run.
 __bp_preexec_interactive_mode=""
+
+# These arrays are used to add functions to be run before, or after, prompts.
+declare -a precmd_functions
+declare -a preexec_functions
 
 # Trims leading and trailing whitespace from $2 and writes it to the variable
 # name passed as $1
@@ -159,7 +168,7 @@ __bp_set_ret_value() {
 __bp_in_prompt_command() {
 
     local prompt_command_array
-    IFS=$'\n;' read -rd '' -a prompt_command_array <<< "$PROMPT_COMMAND"
+    IFS=$'\n;' read -rd '' -a prompt_command_array <<< "${PROMPT_COMMAND:-}"
 
     local trimmed_arg
     __bp_trim_whitespace trimmed_arg "${1:-}"
@@ -297,7 +306,8 @@ __bp_install() {
 
     local existing_prompt_command
     # Remove setting our trap install string and sanitize the existing prompt command string
-    existing_prompt_command="${PROMPT_COMMAND//$__bp_install_string[;$'\n']}" # Edge case of appending to PROMPT_COMMAND
+    existing_prompt_command="${PROMPT_COMMAND:-}"
+    existing_prompt_command="${existing_prompt_command//$__bp_install_string[;$'\n']}" # Edge case of appending to PROMPT_COMMAND
     existing_prompt_command="${existing_prompt_command//$__bp_install_string}"
     __bp_sanitize_string existing_prompt_command "$existing_prompt_command"
 
@@ -328,7 +338,7 @@ __bp_install_after_session_init() {
     __bp_require_not_readonly PROMPT_COMMAND HISTCONTROL HISTTIMEFORMAT || return
 
     local sanitized_prompt_command
-    __bp_sanitize_string sanitized_prompt_command "$PROMPT_COMMAND"
+    __bp_sanitize_string sanitized_prompt_command "${PROMPT_COMMAND:-}"
     if [[ -n "$sanitized_prompt_command" ]]; then
         PROMPT_COMMAND=${sanitized_prompt_command}$'\n'
     fi;
