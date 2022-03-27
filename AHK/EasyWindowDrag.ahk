@@ -37,6 +37,7 @@ If (A_AhkVersion < "1.0.39.00")
     ExitApp
 }
 
+#MenuMaskKey vkFF
 
 ; This is the setting that runs smoothest on my
 ; system. Depending on your video card and cpu
@@ -158,4 +159,17 @@ Return
 #z::
 MouseGetPos,,,rwinid
 WinSet, Bottom,,ahk_id %rwinid%
+Return
+
+#f::
+; Toggle "focus" mode -- ie, borderless fullscreen
+WinGet MX, MinMax, A
+If MX {
+    WinSet, Style, +0xC40000, A
+    WinRestore A
+}
+Else {
+    WinSet, Style, -0xC40000, A
+    WinMaximize A
+}
 Return
