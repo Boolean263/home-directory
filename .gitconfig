@@ -88,8 +88,8 @@
 
     #diff
     cdiff = diff --cached
-    vdiff = !git diff ${1+"$@"} | vless
-    vcdiff = !git diff --cached ${1+"$@"} | vless
+    vdiff = -c "core.pager=~/bin/vless" diff --color=never
+    vcdiff = -c "core.pager=~/bin/vless" diff --color=never --cached
 
     changes= diff --name-status -r
 
