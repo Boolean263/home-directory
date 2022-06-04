@@ -1,3 +1,9 @@
+" GVim loads settings in this order (condensed from `:help gui-init`):
+" 1. ALL non-GUI settings (see ~/.vim/vimrc)
+" 2. System GUI configs
+" 3. $GVIMINIT (as an Ex command line) or ~/.vim/gvimrc
+" 4. (only if 'exrc' is set) $PWD/.gvimrc
+
 set columns=84 lines=50
 set guioptions=acegirLt
 
@@ -5,12 +11,17 @@ if exists('&guiheadroom')
     set guiheadroom=64
 endif
 
+if exists('&renderoptions')
+    set renderoptions=type:directx,gamma:1.0,contrast:0.5,level:1,geom:1,renmode:4,taamode:1
+endif
+
+
 " Note: Most GUIs will let you `set guifont=*` to get a font chooser.
 "set guifont=Noto\ Mono\ 9
 "set guifont=Ubuntu\ Mono\ 10
 "set guifont=DejaVu\ Sans\ Mono\ 9
 "set guifont=Source\ Code\ Pro\ 10,Source_Code_Pro:h10:cANSI:qDRAFT
-set guifont=Iosevka\ Fixed\ Medium\ 11,Iosevka_Fixed_Extended:h11:cANSI:qDRAFT
+set guifont=Iosevka\ Fixed\ Medium\ 11,Iosevka_Fixed_Medium:h11:cANSI:qDRAFT
 
 "--------------------------------
 " Font test: oO0Q il1IL| sS$
