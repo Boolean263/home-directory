@@ -8,47 +8,215 @@
 " 6. after/plugin/**/*.vim in 'runtimepath' (which includes ~/.vim)
 " 7. -c/+cmd command line options
 
-if filereadable(expand("~/.exrc"))
-    " Get my simple prefs from .exrc.
-    source ~/.exrc
-    " But undo the mappings there so they don't interfere with the ones
-    " I set below
-    unmap 
-    unmap! 
-else
-    " Simple vi prefs
-    set autoindent
-    set shiftwidth=4
-    set ruler
-    set showmode
-endif
+" "Tiny-mode" vim is very restricted compared to standard vim.
+" It doesn't even really support 'if' statements.
+" Accordingly, this file sets as many prefs as possible that will work with
+" basic vim, then re-sets them when we know we are not using tiny-mode vim.
 
-" The next line fails in Windows
-silent! language en_US.UTF-8
+" Get my simple prefs from .exrc.
+source ~/.exrc
+" But undo its mappings so they don't interfere with the ones I set below
+unmap 
+unmap! 
+
+" GENERAL SETTINGS {{{1
+
+silent! language en_US.UTF-8        " fails on Windows
 set encoding=utf-8
 set fileencodings=ucs-bom,utf-8,latin1
-autocmd BufEnter * if &fileencoding == "" && &modifiable == 1 | set fileencoding=utf-8 nomodified | endif
+set modeline                        " allow modelines to work
+set backspace=indent,eol,start      " backspace across lines, etc.
+set expandtab                       " expand tabs to spaces
+set softtabstop=-1                  " soft tab stops match shiftwidth
+set shiftround                      " force <</>> to always align to shiftwidth
+set noincsearch                     " disable incremental search
+set hlsearch                        " hilight search terms
+set showcmd                         " show current pending command in last line
+set splitbelow splitright           " new splits start beneath/right of current
+
+set scrolloff=4                     " number of lines to keep visible at top/bottom of screen
+
+set updatetime=250                  " save swap and update CursorHold
+set autoread                        " automatically reload the file if it's changed outside of vim and not inside
+
+set display=lastline                " don't show partial lines as @'s
+set lazyredraw                      " don't redraw screen during macro execution
+
+set cinoptions+=t0                  " don't indent C function types
+set cinoptions+=:0                  " C case labels at same indentation as switch
+set cinoptions+=l1                  " C case labels align { } around case as I want
+set cinoptions+=N-s                 " C++ namespace doesn't affect indent
+set cinoptions+=E-s                 " C++ 'extern C' doesn't affect indent
+set cinoptions+=(0                  " really, just read the help at this point
+set cinoptions+=ks                  " extra indent in eg. if() conditions across multiple lines
+set cinoptions+=j1                  " indent Java anonymous classes
+set cinoptions+=J1                  " indent Javascript object declarations
+" see also 'cinkeys' which can cause reindenting in Insert mode
+
+silent! set signcolumn=yes          " always show sign column
+
+" My default seems to be croql; 'help fo-table' says the default is tcq
+set formatoptions=                  " clear it out
+set formatoptions+=t                " auto-wrap text on textwidth
+set formatoptions+=c                " auto-wrap comments on textwidth
+set formatoptions+=r                " auto-insert comment leader for Enter
+set formatoptions+=o                " auto-insert comment leader for o/O
+set formatoptions+=j                " remove comment leader when joining
+set formatoptions+=q                " let 'gq' format comments
+silent! set formatoptions+=/        " don't continue // comments
+
+" Highlight the current line and column, and column after textwidth
+" The colours for these are set below
+set nocursorline nocursorcolumn colorcolumn=+1
+
+" Use histogram-based diffs where possible
+if has('nvim-0.3.2') || has("patch-8.1.0360")
+    set diffopt=filler,internal,algorithm:histogram,indent-heuristic
+endif
+
+" Set the directory for saving swap files and undo history
+set directory=$TEMP/daperry/vim//
+set   undodir=$TEMP/daperry/vim//
+set undofile
+silent! call mkdir(&directory, "p", 0700)
+
+set list                " Show non-printable pseudocharacters
+" Fallback symbols if vim has trouble with UTF-8
+set listchars=tab:>-,trail:-,extends:>,precedes:<
+" The real symbols I want
+silent! set listchars=tab:␉·,trail:·,extends:⏵,precedes:⏴,nbsp:␣
+silent! set fillchars=vert:│,fold:‧,foldsep:┆,diff:\ ,foldopen:┬,foldclose:═
+
+set linebreak           " When wrapping lines, break them at 'breakat' instead of anywhere
+set showbreak=▷         " Show an indicator on soft-wrapped lines
+set breakindent         " indent wrapped lines to the same level as the base line
+
+" Command-line tab-completion enhancements
+set wildmenu                " Show an auto-completion menu ←/→ changes choice (but see keybindings)
+set wildmode=longest:full   " When tab is pressed, fill longest, then show menu
+
+" Matched pairs
+set matchpairs+=‘:’,“:”,«:»
+
+set foldcolumn=2                    " Show a 2-char wide fold column at the left
+set foldlevelstart=0                " And close all folds upon loading a file
+set foldmethod=marker               " Default folding method
+
+set hidden                          " lets you switch away from unsaved buffers
+
+" Minimal statusline
+set ruler                           " Only really affects what Ctrl-G shows
+set laststatus=2                    " Always show status line
+set statusline=%t%m%r%=%y%l:%c\ %P/%L
+
+" auto-complete options; see :help ins-completion
+" see also https://vimways.org/2018/you-should-be-using-tags-in-vim/
+" see also https://vim.wikia.com/wiki/Make_Vim_completion_popup_menu_work_just_like_in_an_IDE
+set complete=.,t,i
+set completeopt=menuone,preview
+set shortmess+=c
+
+" }}}1
+
+" KEY MAPPINGS {{{1
+" NB. I'm using <Space> instead of <Leader> here because vim-tiny
+" doesn't allow reassigning mapleader
+
+nnoremap <Space>/ :noh<CR>
+nnoremap <Space>c /^\(<<<<<<<\\|=======\\|>>>>>>>\)<CR>
+
+" Set current working directory to the directory holding the current file
+nnoremap <Space>d :cd %:p:h<CR>:pwd<CR>
+" Show current working directory
+nnoremap <Space>p :pwd<CR>
+
+set pastetoggle=<F9>                " key that toggles paste mode
+
+" Since most of us have Ctrl-S hardwired into our brains
+nnoremap <C-S> :wa<CR>
+inoremap <C-S> <C-O>:wa<CR>
+
+" Set Ctrl-Backspace to delete word (gui)
+inoremap <C-BS> <C-W>
+cnoremap <C-BS> <C-W>
+
+" Set Ctrl-Backspace to delete word (tui)
+inoremap <C-H> <C-W>
+cnoremap <C-H> <C-W>
+
+" Allow Ctrl-W to be something else
+inoremap <C-W> <Nop>
+cnoremap <C-W> <Nop>
+
+" Make n/N searching always search forward/backward respectively
+noremap <expr>n 'Nn'[v:searchforward]
+noremap <expr>N 'nN'[v:searchforward]
+
+" Use Shift-Insert to paste the clipboard at the current location
+inoremap <S-Insert> <C-O>:set paste<CR><C-R>*<C-O>:set nopaste<CR>
+cnoremap <S-Insert> <C-R>*
+
+" Don't let 'x' wipe out the delete register
+noremap x "_x
+
+" Move through visual lines rather than physical lines
+noremap j gj
+noremap k gk
+noremap 0 g0
+noremap $ g$
+
+" Vi treats 'Y' like 'yy' ;
+" this is more consistent with 'C'/'D'
+noremap Y y$
+
+" Some nice tweaks to working with visual mode
+" `gv` re-selects the last selection
+vmap < <gv
+vmap > >gv
+
+" pairing with gv, reselect pasted text
+nnoremap gp `[v`]
+
+" (open and) focus the quickfix window
+nnoremap <Space>q :copen<CR>
+
+" (open and) focus the location window
+nnoremap <Space>l :lopen<CR>
+
+" :help changelist
+nnoremap ]c g,
+nnoremap [c g;
+
+" Use ↑/↓ in the wildmenu (see above)
+" Source: https://vi.stackexchange.com/a/22628/9661
+set wildcharm=<C-Z>
+cnoremap <expr> <up> wildmenumode() ? "\<left>" : "\<up>"
+cnoremap <expr> <down> wildmenumode() ? "\<right>" : "\<down>"
+cnoremap <expr> <left> wildmenumode() ? "\<up>" : "\<left>"
+cnoremap <expr> <right> wildmenumode() ? " \<bs>\<C-Z>" : "\<right>"
+
+" List buffers and let you choose one
+nnoremap <Space>b :ls<cr>:b<space>
+
+" autocomplete from tag
+inoremap <C-]> <C-X><C-]>
+" autocomplete from keywords in the current and included files
+inoremap <C-N> <C-X><C-I>
+" autocomplete from definitions/macros
+inoremap <C-D> <C-X><C-D>
+" }}}1
+
+" *********************
+" Anything after this line is not seen by vim-tiny.
+if !1 | finish | endif
+" *********************
 
 let mapleader=" "
 
-" HELPER FUNCTIONS {{{1
-
-" Ignore a specific expected exception for a command that may not work
-" in all versions of vim. Example usage:
-" Ignore E539 set formatoptions+=/
-function! CatchException(ex, ...)
-    try
-        exe join(a:000, " ")
-    catch
-        if v:exception !~# '^Vim\%((\a\+)\)\=:' . a:ex . ':'
-            throw 'Re-throwing:' . v:exception
-        endif
-    endtry
-endfunction
-command! -nargs=+ Ignore call CatchException(<f-args>)
-" }}}1
-
 " PLUGINS {{{1
+
+" Much of this configuration must be done before plugins are loaded,
+" so they affect the plugins at load time.
 " Configuration {{{2
 let g:tagbar_type_diff = {
     \'ctagstype':'diff',
@@ -61,6 +229,9 @@ let g:tagbar_type_make = {
         \ 't:targets'
     \]
 \}
+
+let g:xml_syntax_folding=1      " see :help xml-folding
+let g:c_no_comment_fold=1
 
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
@@ -153,14 +324,16 @@ let g:airline_skip_empty_sections = 1
 
 " }}}2
 
+" Auto-installation {{{2
 let $VIMHOME=expand('<sfile>:p:h')
 " vim-plug (https://github.com/junegunn/vim-plug) settings
 " Automatically install vim-plug and run PlugInstall if vim-plug not found
-if empty(glob('$VIMHOME/autoload/plug.vim')) && &shell =~ 'sh$'
+if empty(glob('$VIMHOME/autoload/plug.vim')) && executable('curl')
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
+" }}}2
 
 silent! call plug#begin('$VIMHOME/bundle') " {{{2
 " use silent! to suppress warning messages about missing git in Windows
@@ -199,17 +372,10 @@ Plug 'jlanzarotta/bufexplorer'  " Improved buffer explorer
 Plug 'rust-lang/rust.vim'       " Rust programming language support
 Plug 'kana/vim-textobj-user'    " User-defined text objects, prereq for next plugin
 Plug 'preservim/vim-textobj-sentence' " Enhance vim's idea of what a sentence is
-if executable('nope-node')
-    Plug 'neoclide/coc.nvim'    " Big completion engine
-else
-    "Plug 'vim-syntastic/syntastic'  " Syntax checking/linting on file save
-    Plug 'dense-analysis/ale'       " Asynchronous Linting Engine
-    if has('python3')
-        Plug 'SirVer/ultisnips'     " Code snippets (fails horribly if no python3)
-        Plug 'pgilad/vim-skeletons' " file skeletons using ultisnips
-    endif
-endif
+Plug 'dense-analysis/ale'       " Asynchronous Linting Engine
 if has('python3')
+    Plug 'SirVer/ultisnips'     " Code snippets (fails horribly if no python3)
+    Plug 'pgilad/vim-skeletons' " file skeletons using ultisnips
     Plug 'psf/black', { 'tag': 'stable', 'for': 'python' } " Python code formatting
 endif
 if executable('i3')
@@ -218,301 +384,12 @@ endif
 Plug 'Boolean263/vim-syntax-libconfig'
 "Plug 'vim-airline/vim-airline'      " For a fancier modeline
 call plug#end() " }}}2
+" Note that the plugins haven't actually been loaded yet. They've been added
+" to 'runtimepath' so they will be loaded once this `.vimrc` file is finished.
+" (See the comment at the very start of this file.)
+" The distinction is important because it means we can't test/use plugin
+" features in this file.
 
-" airline post-config
-"let g:airline_section_a = airline#section#create_left(['%t'])
-"let g:airline_section_b = airline#section#create(['branch'])
-"let g:airline_section_c = airline#section#create(['tagbar'])
-"let g:airline_section_x = airline#section#create(['filetype'])
-
-" }}}1
-
-let g:xml_syntax_folding=1      " see :help xml-folding
-let g:c_no_comment_fold=1
-
-" GENERAL SETTINGS {{{1
-
-set modeline                        " allow modelines to work
-set backspace=indent,eol,start      " backspace across lines, etc.
-set expandtab                       " expand tabs to spaces
-set softtabstop=-1                  " soft tab stops match shiftwidth
-set shiftround                      " force <</>> to always align to shiftwidth
-set noincsearch                     " disable incremental search
-set hlsearch                        " hilight search terms
-set showcmd                         " show current pending command in last line
-set splitbelow splitright           " new splits start beneath/right of current
-
-set scrolloff=4                     " number of lines to keep visible at top/bottom of screen
-
-set updatetime=250                  " save swap and update CursorHold
-set autoread                        " automatically reload the file if it's changed outside of vim and not inside
-
-set display=lastline                " don't show partial lines as @'s
-set lazyredraw                      " don't redraw screen during macro execution
-
-set cinoptions+=t0                  " don't indent C function types
-set cinoptions+=:0                  " C case labels at same indentation as switch
-set cinoptions+=l1                  " C case labels align { } around case as I want
-set cinoptions+=N-s                 " C++ namespace doesn't affect indent
-set cinoptions+=E-s                 " C++ 'extern C' doesn't affect indent
-set cinoptions+=(0                  " really, just read the help at this point
-set cinoptions+=ks                  " extra indent in eg. if() conditions across multiple lines
-set cinoptions+=j1                  " indent Java anonymous classes
-set cinoptions+=J1                  " indent Javascript object declarations
-" see also 'cinkeys' which can cause reindenting in Insert mode
-
-if version > 742
-    set signcolumn=yes              " always show sign column
-else
-    let g:gitgutter_sign_column_always=1
-endif
-
-" My default seems to be croql; 'help fo-table' says the default is tcq
-set formatoptions=                  " clear it out
-set formatoptions+=t                " auto-wrap text on textwidth
-set formatoptions+=c                " auto-wrap comments on textwidth
-set formatoptions+=r                " auto-insert comment leader for Enter
-set formatoptions+=o                " auto-insert comment leader for o/O
-set formatoptions+=j                " remove comment leader when joining
-set formatoptions+=q                " let 'gq' format comments
-Ignore E539 set formatoptions+=/    " don't continue // comments
-
-" https://vimways.org/2018/formatting-lists-with-vim/
-if 0 " disabled because I never really use it, if it even works
-    set formatoptions+=n                " format 'numbered' lists based on formatlistpat
-    set formatlistpat=^\\s*                 " Optional leading whitespace
-    set formatlistpat+=[                    " Start character class
-    set formatlistpat+=\\[({]\\?            " |  Optionally match opening punctuation
-    set formatlistpat+=\\(                  " |  Start group
-    set formatlistpat+=[0-9]\\+             " |  |  Numbers
-    set formatlistpat+=\\\|                 " |  |  or
-    set formatlistpat+=[a-zA-Z]\\+          " |  |  Letters
-    set formatlistpat+=\\)                  " |  End group
-    set formatlistpat+=[\\]:.)}             " |  Closing punctuation
-    set formatlistpat+=]                    " End character class
-    set formatlistpat+=\\s\\+               " One or more spaces
-    set formatlistpat+=\\\|                 " or
-    set formatlistpat+=^\\s*[-–+o*•]\\s\\+  " Bullet points
-endif
-
-" Use histogram-based diffs where possible
-if has('nvim-0.3.2') || has("patch-8.1.0360")
-    set diffopt=filler,internal,algorithm:histogram,indent-heuristic
-endif
-
-" Set the directory for saving swap files and undo history
-set directory=$TEMP/daperry/vim//
-execute "set undodir=" . &directory
-set undofile
-silent! call mkdir(&directory, "p", 0700)
-
-" Highlight the current line and column, and column after textwidth
-" The colours for these are set below
-set nocursorline nocursorcolumn colorcolumn=+1
-"augroup cursorcoords
-"    autocmd!
-"    autocmd WinLeave * set nocursorline nocursorcolumn
-"    autocmd WinEnter * set cursorline cursorcolumn
-"augroup END
-
-"set number
-"set relativenumber
-"set numberwidth=2
-
-" Show non-printable pseudocharacters
-set list
-" Fallback symbols if vim has trouble with UTF-8
-set listchars=tab:>-,trail:-,extends:>,precedes:<
-" The real symbols I want
-silent! set listchars=tab:␉·,trail:·,extends:⏵,precedes:⏴,nbsp:␣
-
-silent! set fillchars=vert:│,fold:‧,foldsep:┆,diff:\ ,foldopen:┬,foldclose:═
-
-set linebreak           " When wrapping lines, break them at 'breakat' instead of anywhere
-set showbreak=▷         " Show an indicator on soft-wrapped lines
-set breakindent         " indent wrapped lines to the same level as the base line
-
-" for :grep
-if executable('rg')
-    set grepprg=rg\ --vimgrep
-endif
-cabbrev rg silent grep!
-
-" Command-line tab-completion enhancements
-set wildmenu                " Show an auto-completion menu ←/→ changes choice (but see keybindings)
-set wildmode=longest:full   " When tab is pressed, fill longest, then show menu
-
-" Matched pairs
-set matchpairs+=‘:’,“:”,«:»
-
-" }}}1
-
-" KEY MAPPINGS {{{1
-
-nnoremap <Leader>/ :noh<CR>
-nnoremap <Leader>c /^\(<<<<<<<\\|=======\\|>>>>>>>\)<CR>
-
-" Set current working directory to the directory holding the current file
-nnoremap <Leader>d :cd %:p:h<CR>:pwd<CR>
-" Show current working directory
-nnoremap <Leader>p :pwd<CR>
-
-" Why don't these first three work? Bug in clever-f perhaps
-"noremap <Leader>f <Plug>(clever-f-reset)
-"noremap <Space>f <Plug>(clever-f-reset)
-"noremap <Leader>f jk
-"noremap <Space>f jk
-
-set pastetoggle=<F9>                " key that toggles paste mode
-
-" Since most of us have Ctrl-S hardwired into our brains
-nnoremap <C-S> :wa<CR>
-inoremap <C-S> <C-O>:wa<CR>
-
-" Set Ctrl-Backspace to delete word (gui)
-inoremap <C-BS> <C-W>
-cnoremap <C-BS> <C-W>
-
-" Set Ctrl-Backspace to delete word (tui)
-inoremap <C-H> <C-W>
-cnoremap <C-H> <C-W>
-
-" Allow Ctrl-W to be something else
-inoremap <C-W> <Nop>
-cnoremap <C-W> <Nop>
-
-" Make n/N searching always search forward/backward respectively
-noremap <expr>n 'Nn'[v:searchforward]
-noremap <expr>N 'nN'[v:searchforward]
-
-" Use Shift-Insert to paste the clipboard at the current location
-inoremap <S-Insert> <C-O>:set paste<CR><C-R>*<C-O>:set nopaste<CR>
-cnoremap <S-Insert> <C-R>*
-
-" Don't let 'x' wipe out the delete register
-noremap x "_x
-
-" Move through visual lines rather than physical lines
-noremap j gj
-noremap k gk
-noremap 0 g0
-noremap $ g$
-
-" Vi treats 'Y' like 'yy' ;
-" this is more consistent with 'C'/'D'
-noremap Y y$
-
-" Some nice tweaks to working with visual mode
-" `gv` re-selects the last selection
-vmap < <gv
-vmap > >gv
-
-" pairing with gv, reselect pasted text
-nnoremap gp `[v`]
-
-" (open and) focus the quickfix window
-nnoremap <Leader>q :copen<CR>
-
-" (open and) focus the location window
-nnoremap <Leader>l :lopen<CR>
-
-" :help changelist
-nnoremap ]c g,
-nnoremap [c g;
-
-nnoremap ]e :ALENext<cr>
-nnoremap [e :ALEPrevious<cr>
-
-" Use ↑/↓ in the wildmenu (see above)
-" Source: https://vi.stackexchange.com/a/22628/9661
-set wildcharm=<C-Z>
-cnoremap <expr> <up> wildmenumode() ? "\<left>" : "\<up>"
-cnoremap <expr> <down> wildmenumode() ? "\<right>" : "\<down>"
-cnoremap <expr> <left> wildmenumode() ? "\<up>" : "\<left>"
-cnoremap <expr> <right> wildmenumode() ? " \<bs>\<C-Z>" : "\<right>"
-
-" }}}1
-
-" Folding management {{{1
-set foldcolumn=2                    " Show a 2-char wide fold column at the left
-set foldlevelstart=0                " And close all folds upon loading a file
-set foldmethod=marker               " Default folding method
-
-" Better fold messages, from
-" https://www.reddit.com/r/vim/comments/fwjpi4/here_is_how_to_retain_indent_level_on_folds/
-function! NeatFoldText()
-    let indent_level = indent(v:foldstart)
-    let indent = repeat(' ',indent_level)
-    let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
-    let lines_count = v:foldend - v:foldstart + 1
-    let lines_count_text = printf("%10s", lines_count . ' lines') . ' '
-    let foldchar = matchstr(&fillchars, 'fold:\zs.')
-    let foldtextstart = strpart(repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
-    let foldtextend = lines_count_text . repeat(foldchar, 8)
-    let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
-    return indent . foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
-endfunction
-set foldtext=NeatFoldText()
-
-" Better fold navigation, from
-" https://vim.fandom.com/wiki/Navigate_to_the_next_open_fold
-function! GoToOpenFold(direction)
-    if (a:direction == "next")
-        normal zj
-        let start = line('.')
-        while foldclosed(start) != -1
-            let start = start + 1
-        endwhile
-    else
-        normal zk
-        let start = line('.')
-        while foldclosed(start) != -1
-            let start = start - 1
-        endwhile
-    endif
-    call cursor(start, 0)
-endfunction
-"noremap <silent> ]z :call GoToOpenFold("next")<CR>
-"noremap <silent> [z :call GoToOpenFold("prev")<CR>
-noremap ]z zj
-noremap [z zk
-" }}}1
-
-" Buffer management {{{1
-set hidden " lets you switch away from unsaved buffers
-
-" List buffers and let you choose one
-" Vanilla method:
-"nnoremap <leader>b :ls<cr>:b<space>
-
-" Plugin method:
-nnoremap <leader>b :BufExplorer<CR>
-
-" }}}1
-
-" I forget what this does so I'm commenting it out.
-" Maybe re-add and comment in after/ftplugin/qf.vim
-" augroup quickfix
-"     autocmd!
-"     autocmd QuickFixCmdPost [^l]* cwindow
-" augroup END
-
-" auto-complete options; see :help ins-completion {{{1
-" see also https://vimways.org/2018/you-should-be-using-tags-in-vim/
-" see also https://vim.wikia.com/wiki/Make_Vim_completion_popup_menu_work_just_like_in_an_IDE
-set complete=.,t,i
-set completeopt=menuone,preview
-" autocomplete from tag
-inoremap <C-]> <C-X><C-]>
-" autocomplete from keywords in the current and included files
-inoremap <C-N> <C-X><C-I>
-" autocomplete from definitions/macros
-inoremap <C-D> <C-X><C-D>
-
-" For COC and the like {{{2
-set shortmess+=c
-
-" }}}2
 " }}}1
 
 " nvim doesn't (yet) support clipboard=autoselect
@@ -520,3 +397,10 @@ set shortmess+=c
 if has('nvim') && &clipboard !~ '\<autoselect'
     vnoremap <LeftRelease> "*ygv
 endif
+
+" for :grep
+if executable('rg')
+    set grepprg=rg\ --vimgrep
+    set grepformat^=%f:%l:%c:%m
+endif
+

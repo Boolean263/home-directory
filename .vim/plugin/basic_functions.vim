@@ -47,3 +47,17 @@ function UndoFT(...)
 
 endfunction
 command! -nargs=+ UndoFT call UndoFT(<f-args>)
+
+" Ignore a specific expected exception for a command that may not work
+" in all versions of vim. Example usage:
+" Ignore E539 set formatoptions+=/
+function! CatchException(ex, ...)
+    try
+        exe join(a:000, " ")
+    catch
+        if v:exception !~# '^Vim\%((\a\+)\)\=:' . a:ex . ':'
+            throw 'Re-throwing:' . v:exception
+        endif
+    endtry
+endfunction
+command! -nargs=+ Ignore call CatchException(<f-args>)
