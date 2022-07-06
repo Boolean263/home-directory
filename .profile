@@ -35,7 +35,7 @@ export PAGER=$(which less)
 export VISUAL=$(which nvim vim vi 2>/dev/null | head -n 1)
 export EDITOR="$VISUAL"
 export GIT_EDITOR="$VISUAL -f"
-#export GVIM="$HOME/bin/ngvim"
+#export GVIM="X" # If it's not executable, then `~/bin/g` will fall back on vim
 
 export LESS="-R"
 exists lesspipe && eval "$(lesspipe)" || :

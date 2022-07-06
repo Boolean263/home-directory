@@ -11,11 +11,15 @@ sub debug
         if $ENV{G_DEBUG};
 }
 
-sub which($)
+sub which(@)
 {
-    my $bin = `which $_[0] 2>/dev/null`;
-    chomp $bin;
-    return $bin;
+    for(@_)
+    {
+        my $bin = `which $_[0] 2>/dev/null`;
+        chomp $bin;
+        return $bin if $bin;
+    }
+    return undef;
 }
 
 sub shell_quote(@)
@@ -49,8 +53,8 @@ sub separate_process(@)
 ### Main program
 
 my $basename = `basename $0`; chomp $basename;
-my $gvim = $ENV{GVIM};
-my $vim = $ENV{VISUAL} || which('vim');
+my $gvim = $ENV{GVIM} || which(qw(neovide nvim-qt gvim));
+my $vim = $ENV{VISUAL} || which(qw(vim vi));
 my @vim_args;
 my @vim_tail;
 my $remote;
@@ -84,6 +88,7 @@ if($ENV{DISPLAY})
         {
             unshift @vim_args, '--remote-silent' if $gvim =~ m(/gvim$);
         }
+        unshift @vim_args, '--notabs' if $gvim =~ m(/neovide$);
         debug("running gvim: ", $gvim, @vim_args);
         do_or_die($gvim, @vim_args);
     }
