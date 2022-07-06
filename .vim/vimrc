@@ -211,6 +211,10 @@ inoremap <C-D> <C-X><C-D>
 if !1 | finish | endif
 " *********************
 
+if exists('&renderoptions')
+    set renderoptions=type:directx,gamma:1.0,contrast:0.5,level:1,geom:1,renmode:4,taamode:1
+endif
+
 let mapleader=" "
 
 " PLUGINS {{{1
