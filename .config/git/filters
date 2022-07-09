@@ -1,7 +1,7 @@
 # vim:set filetype=gitconfig:
 #
 # This file contains git diff and filter drivers as used in my
-# gitattributes file. It's included from my ~/.gitconfig file,
+# gitattributes file. It's included from my ~/.config/git/config file,
 # and uses the same syntax.
 
 

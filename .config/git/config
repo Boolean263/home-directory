@@ -9,8 +9,6 @@
     # Use $GIT_EDITOR instead
     #editor = vim -f
     pager = ~/bin/dif
-    excludesFile = ~/git-config/gitignore
-    #attributesFile = ~/git-config/gitattributes
     fileMode = false
     symlinks = true
 
@@ -40,8 +38,8 @@
     first-run = false
 
 [init]
-    #templateDir = ~/git-config/templates/default
-    templateDir = ~/git-config/templates/git-ctags
+    #templateDir = templates/default
+    templateDir = templates/git-ctags
     defaultBranch = main
 
 [clone]
@@ -68,10 +66,10 @@
     showUntrackedFiles = no
 
 [http]
-    cookiefile = ~/git-config/gitcookies
+    cookiefile = cookies
 
 [include]
-    file = ~/git-config/git-filters
+    file = filters
 
 [mergetool "ours"]
     cmd = /bin/cp -v --no-preserve=timestamps "$LOCAL" "$MERGED"

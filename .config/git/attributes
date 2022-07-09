@@ -1,7 +1,7 @@
 # This file contains gitattributes that are applied globally across
 # all git repos I work on (subject to their own attributes of course).
 # It relies on the diff and filter drivers I define in
-# ~/git-config/git-filters (see my ~/.gitconfig).
+# ~/.config/git/filters (see my ~/.config/git/config).
 
 # We can define our own attributes with the [attr] keyword. The 'binary'
 # attribute is built-in, but I redefine it here to give a more useful
