@@ -43,6 +43,8 @@ colorscheme plain
 if ! exists('g:colors_name')
     " Something went wrong loading the colorscheme. Have this block
     " to prevent further errors.
+    " Use a default colorscheme.
+    colorscheme darkblue
 elseif g:colors_name == 'dracula'
     "highlight CursorLine   term=none cterm=none ctermbg=238 guibg=#222222
     "highlight CursorLine NONE
@@ -61,7 +63,7 @@ elseif g:colors_name == 'dracula'
     "highlight DiffChange   term=none cterm=none ctermbg=17 guibg=#00005F
     "highlight DiffText     term=underline cterm=underline ctermbg=20 guibg=#0000D7
 elseif g:colors_name == 'plain'
-    highlight Normal ctermfg=251 ctermbg=0 guifg=#CCCCCC guibg=#222222
+    "highlight Normal ctermfg=251 ctermbg=234 guifg=#CCCCCC guibg=#222222
     highlight clear SignColumn
     highlight SignColumn term=none cterm=none ctermbg=black guibg=black
     highlight clear GitGutterAdd

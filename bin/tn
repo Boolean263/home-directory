@@ -28,7 +28,7 @@ if [ $# -eq 0 ] ; then
     fi
 elif [ $# -eq 1 ] ; then
     if which tmux >/dev/null 2>&1 ; then
-        tmux attach-session -t "$1" 2>/dev/null || $PREFIX tmux new-session -s "$1"
+        tmux attach-session -t "$1" 2>/dev/null || $PREFIX tmux new-session -t "$1"
     elif which screen >/dev/null 2>&1 ; then
         screen -S "$1" -x -RR
     else
