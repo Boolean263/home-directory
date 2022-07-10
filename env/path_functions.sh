@@ -47,7 +47,7 @@ add_to_path()
     local IFS=""
     local BEFORE=""
     local AFTER=""
-    local SED_SEP=$(printf '\x1F') # sed supports using UNIT SEPARATOR as a delimiter
+    local SED_SEP="$(/bin/printf '\x1F')" # sed supports using UNIT SEPARATOR as a delimiter
     # which (probably) won't appear in path names
     while true ; do
         case "$1" in
