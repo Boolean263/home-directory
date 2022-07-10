@@ -8,6 +8,17 @@
 # and then source this file with something like
 #    source /dev/stdin < <(sed 's/^\(.*\)()$/function \1/' etc/env/path_functions.bash)
 
+if type exists 2>&1 | grep -q function; then
+    return
+fi
+
+### exists
+# Tell if a runnable program exists with the given name.
+exists()
+{
+    which "$1" >/dev/null 2>&1
+}
+
 ### is_in_path
 # Returns true if the directory in TESTPATH is a member in the path
 # variable PATHVAR.
