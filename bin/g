@@ -15,7 +15,7 @@ sub which(@)
 {
     for(@_)
     {
-        my $bin = `which $_[0] 2>/dev/null`;
+        my $bin = `which $_ 2>/dev/null`;
         chomp $bin;
         return $bin if $bin;
     }
@@ -54,7 +54,7 @@ sub separate_process(@)
 
 my $basename = `basename $0`; chomp $basename;
 my $gvim = $ENV{GVIM} || which(qw(neovide nvim-qt gvim));
-my $vim = $ENV{VISUAL} || which(qw(vim vi));
+my $vim = $ENV{VISUAL} || which(qw(nvim vim vi));
 my @vim_args;
 my @vim_tail;
 my $remote;
