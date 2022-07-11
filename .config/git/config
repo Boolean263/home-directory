@@ -38,8 +38,9 @@
     first-run = false
 
 [init]
-    #templateDir = templates/default
-    templateDir = templates/git-ctags
+    # templateDir doesn't work as a relative path to ~/.config/git
+    #templateDir = ~/.config/git/templates/default
+    templateDir = ~/.config/git/templates/git-ctags
     defaultBranch = main
 
 [clone]
