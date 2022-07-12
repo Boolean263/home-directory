@@ -4,8 +4,8 @@
 
 set -eu
 
-RG=$(which -a rg | grep -v $(readlink -f "$0") | head -n 1)
-ACK=$(which -a ack | grep -v $(readlink -f "$0") | head -n 1)
+RG=$(which -a rg 2>/dev/null | grep -v $(readlink -f "$0") | head -n 1)
+ACK=$(which -a ack 2>/dev/null | grep -v $(readlink -f "$0") | head -n 1)
 IAM=$(basename "$0")
 MYARGS=""
 
