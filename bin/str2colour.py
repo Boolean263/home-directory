@@ -344,26 +344,6 @@ RGB2SHORT_DICT, SHORT2RGB_DICT = _create_dicts()
 #######################################################################
 
 
-def byte_split(u32):
-    ret_val = []
-    for i in range(0, 4):
-        val = (u32 >> (8*i)) & 0xFF
-        ret_val.append(val)
-    return ret_val
-
-
-def from_crc32(in_str, parts=None):
-    if parts is None:
-        parts = (0, 1, 2)
-    crc = byte_split(binascii.crc32(bytes(str(in_str), 'utf-8')))
-    crc[0] ^= crc[3] & 0x0F
-    crc[1] ^= (crc[3] >> 4) & 0x0F
-    crc[2] ^= crc[3]
-
-    return "#{:02X}{:02X}{:02X}".format(crc[parts[0]], crc[parts[1]],
-                                        crc[parts[2]])
-
-
 class XTColour(Color):
 
     ansi = True
@@ -376,8 +356,7 @@ class XTColour(Color):
             pass
         except TypeError:
             pass
-        return super().__init__(color=color, picker=from_crc32, pick_key=None,
-                                **kwargs)
+        return super().__init__(color=color, **kwargs)
 
     def set_xcolour(self, color):
         if not 0 <= int(color) <= 255:
@@ -388,18 +367,36 @@ class XTColour(Color):
         return rgb2short(self.hex_l)
 
     def get_fg_str(self):
+        if not XTColour.ansi:
+            return ""
         n, _ = self.xcolour
-        return "\x1B[38;5;{0}m".format(n) if XTColour.ansi else ""
+        return "\x1B[38;5;{0}m".format(n)
 
     def set_fg_str(self, val):
         raise NotImplemented
 
     def get_bg_str(self):
+        if not XTColour.ansi:
+            return ""
         n, _ = self.xcolour
-        return "\x1B[48;5;{0}m".format(n) if XTColour.ansi else ""
+        return "\x1B[48;5;{0}m".format(n)
 
     def set_bg_str(self, val):
         raise NotImplemented
+
+    def is_light(self):
+        return self.luminance >= 0.7
+
+    def make_light(self):
+        if not self.is_light():
+            self.luminance = 0.7
+
+    def is_dark(self):
+        return self.luminance <= 0.3
+
+    def make_dark(self):
+        if not self.is_dark():
+            self.luminance = 0.3
 
 #######################################################################
 
@@ -409,20 +406,49 @@ if __name__ == '__main__':
     xt_reset = "\x1B[0m" if XTColour.ansi else ""
 
     parser = argparse.ArgumentParser(
-        description="Generates a hexadecimal colour code for a given string in the xterm-256color space")
+        description="Generates complementary hexadecimal colour codes for a given string in the xterm-256color space")
+    lightdark = parser.add_mutually_exclusive_group()
+    lightdark.add_argument('-l', '--light', action="store_true",
+                           help="force a light background colour")
+    lightdark.add_argument('-d', '--dark', action="store_true",
+                           help="force a dark background colour")
     parser.add_argument('instring', type=str,
                         help="string from which to generate a colour")
 
     args = parser.parse_args()
-    bg = XTColour(pick_for=args.instring)
-    fg = XTColour("#000000" if bg.luminance > 0.4 else "#FFFFFF")
-    #print("BG: {}, H={}, S={}, L={}".format(bg, bg.hue, bg.saturation, bg.luminance))
+
+    salt = ""
+    while True:
+        bg = XTColour(pick_for=args.instring, pick_key=lambda x: salt+x)
+        _, h = bg.xcolour
+        t = XTColour(h)
+        if not (t.red == t.green == t.blue):
+            break
+        salt += "foo"
+    if False:
+        print("BG: {}, H={}, S={}, L={}, R={}, G={}, B={}".format(bg, bg.hue,
+                                                              bg.saturation,
+                                                              bg.luminance,
+                                                              bg.red, bg.green,
+                                                              bg.blue))
+    if args.dark: bg.make_dark()
+    if args.light: bg.make_light()
+
+    fg = XTColour("#000000" if bg.is_light() > 0.5 else "#FFFFFF")
     comp = XTColour(bg)
     comp.hue += 0.5
+    if comp.is_light() and bg.is_light(): comp.make_dark()
+    if comp.is_dark() and bg.is_dark(): comp.make_light()
+
     t1 = XTColour(bg)
     t1.hue += (1/3)
+    if t1.is_light() and bg.is_light(): t1.make_dark()
+    if t1.is_dark() and bg.is_dark(): t1.make_light()
+
     t2 = XTColour(bg)
     t2.hue -= (1/3)
+    if t2.is_light() and bg.is_light(): t2.make_dark()
+    if t2.is_dark() and bg.is_dark(): t2.make_light()
 
     fgs, fgh = fg.xcolour
     bgs, bgh = bg.xcolour
@@ -430,8 +456,8 @@ if __name__ == '__main__':
     t1s, t1h = t1.xcolour
     t2s, t2h = t2.xcolour
 
-    print("{0}{1}foreground\t{2}\t{3}{4}".format(fg.fg_str, bg.bg_str, fgs, fgh, xt_reset))
     print("{0}{1}background\t{2}\t{3}{4}".format(fg.fg_str, bg.bg_str, bgs, bgh, xt_reset))
+    print("{0}{1}foreground\t{2}\t{3}{4}".format(fg.fg_str, bg.bg_str, fgs, fgh, xt_reset))
     print("{0}{1}complement\t{2}\t{3}{4}".format(comp.fg_str, bg.bg_str, cs, ch, xt_reset))
     print("{0}{1}t1\t{2}\t{3}{4}".format(t1.fg_str, bg.bg_str, t1s, t1h, xt_reset))
     print("{0}{1}t2\t{2}\t{3}{4}".format(t2.fg_str, bg.bg_str, t2s, t2h, xt_reset))
