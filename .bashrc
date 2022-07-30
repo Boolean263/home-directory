@@ -70,18 +70,18 @@ shopt -s histappend
 save_errcode() {
     code=${?##0}
 }
-timer_start() {
-    timer=$SECONDS
-}
-timer_stop() {
-    [ -n "$timer" ] && timer_show=$(($SECONDS - $timer)) || timer_show=0
-    unset timer
-    if [ $timer_show -gt 0 ] ; then
-        timer_show="⏳${timer_show}s "
-    else
-        timer_show=""
-    fi
-}
+#timer_start() {
+#    timer=$SECONDS
+#}
+#timer_stop() {
+#    [ -n "$timer" ] && timer_show=$(($SECONDS - $timer)) || timer_show=0
+#    unset timer
+#    if [ $timer_show -gt 0 ] ; then
+#        timer_show="⏳${timer_show}s "
+#    else
+#        timer_show=""
+#    fi
+#}
 
 # Semantic prompt areas (stolen from wezterm; see
 # https://gitlab.freedesktop.org/Per_Bothner/specifications/blob/master/proposals/semantic-prompts.md
@@ -95,8 +95,8 @@ _SEM_OUTPUT=`semantic_prompt C`
 semantic_output() { echo -n "$_SEM_OUTPUT" ; }
 semantic_errcode() { semantic_prompt D $code ; }
 
-preexec_functions+=(semantic_output timer_start)
-precmd_functions+=(save_errcode timer_stop semantic_errcode)
+preexec_functions+=(semantic_output)
+precmd_functions+=(save_errcode semantic_errcode)
 
 my_prompt()
 {
@@ -106,30 +106,49 @@ my_prompt()
     # Tell terminal that this is the start of the prompt
     PS+=('\[$_SEM_PS1')
 
+    # Set colours I like
+    local background=29
+    local foreground=252
+    local complement=9
+    local t1=231
+    local t2=231
+
+    # Get per-host colours if I can
+    if which str2colour.py > /dev/null 2>&1 ; then
+        local allcolours=$(str2colour.py -d $HOSTNAME)
+        while read varname cnum rgb ; do
+            [ -n "$varname" ] || continue
+            eval "$varname=$cnum"
+        done <<< "$allcolours"
+    fi
+
     # Reset any character sets or whatever, and clear the first line
     PS+=($(tput rmacs))
-    PS+=('$(tput setab $(($HISTCMD % 2 ? 29 : 32)))')
-    PS+=($(tput setaf 252)$(tput el)'\]')
+    PS+=($(tput setab $background))
+    PS+=($(tput setaf $foreground)$(tput el)'\]')
 
     # Add time
-    PS+=('$timer_show')
+    #PS+=('$timer_show')
 
     # Add error if any
     PS+=('`echo "${code:+\['$(tput setaf 9)'\]\a⚠ $code }"`')
 
+    # Add hostname
+    PS+=("\[$(tput setaf complement)\]$HOSTNAME")
+
     # Add chroot if any
-    PS+=('${debian_chroot:+"\['$(tput setaf 231)'\]$debian_chroot:"}')
+    PS+=('${debian_chroot:+"\['$(tput setaf $t1)'\]:$debian_chroot"}')
 
     # Add working directory
-    PS+=('\['$(tput setaf 252)'\]📂\w')
+    PS+=(' \['$(tput setaf $foreground)'\]📂\w')
 
     # Add git prompt and end line
-    PS+=('`__git_ps1 " %s"`')
+    PS+=('\['$(tput setaf $t2)'\]`__git_ps1 " %s"`')
     PS+=("\[$SGR0\]")
     PS+=($'\n')
 
     # Give the hostname, command number, and actual prompt
-    PS+=('\['$(tput setaf 2)'\]\h \!\$\['$(tput sgr0)'\] ')
+    PS+=('\['$(tput sgr0)'\]\!\$ ')
 
     # Tell terminal that this is the start of the user input
     PS+=('\[$_SEM_INPUT\]')
@@ -155,3 +174,5 @@ bind -f "$INPUTRC"
 /bin/stty stop undef start undef erase ^? werase ^H
 
 [ -f "$HOME/.bashrc.local" ] && . "$HOME/.bashrc.local" || true
+
+# vim:setl foldmethod=marker:
