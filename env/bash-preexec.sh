@@ -9,7 +9,7 @@
 # Author: Ryan Caloras (ryan@bashhub.com)
 # Forked from Original Author: Glyph Lefkowitz
 #
-# V0.4.1
+# V0.5.0
 #
 
 # General Usage:
@@ -33,7 +33,8 @@
 #  either of these after bash-preexec has been installed it will most likely break.
 
 # Make sure this is bash that's running and return otherwise.
-if [[ -z "${BASH_VERSION:-}" ]]; then
+# Use POSIX syntax for this line:
+if [ -z "${BASH_VERSION-}" ]; then
     return 1;
 fi
 
@@ -156,6 +157,8 @@ __bp_precmd_invoke_cmd() {
             "$precmd_function"
         fi
     done
+
+    __bp_set_ret_value "$__bp_last_ret_value"
 }
 
 # Sets a return value in $?. We may want to get access to the $? variable in our
