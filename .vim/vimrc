@@ -204,6 +204,10 @@ inoremap <C-]> <C-X><C-]>
 inoremap <C-N> <C-X><C-I>
 " autocomplete from definitions/macros
 inoremap <C-D> <C-X><C-D>
+
+" Neovide sees C-6 as different from C-^
+nnoremap <C-6> <C-^>
+
 " }}}1
 
 " *********************
