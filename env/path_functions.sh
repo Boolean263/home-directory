@@ -8,10 +8,6 @@
 # and then source this file with something like
 #    source /dev/stdin < <(sed 's/^\(.*\)()$/function \1/' etc/env/path_functions.bash)
 
-if type exists 2>&1 | grep -q function; then
-    return
-fi
-
 ### exists
 # Tell if a runnable program exists with the given name.
 exists()
@@ -27,7 +23,9 @@ is_in_path()
     local PATHVAR="$1"
     local TESTPATH="$2"
     local SEP=":"
-    eval echo \$$PATHVAR | grep -q '\(^\|'"$SEP"'\)'"$TESTPATH"'\('"$SEP"'\|$\)' 2>/dev/null
+    eval echo \$$PATHVAR \
+        | grep -q '\(^\|'"$SEP"'\)'"$TESTPATH"'\('"$SEP"'\|$\)' \
+        2>/dev/null
     return $?
 }
 
@@ -47,8 +45,9 @@ add_to_path()
     local IFS=""
     local BEFORE=""
     local AFTER=""
-    local SED_SEP="$(/bin/printf '\x1F')" # sed supports using UNIT SEPARATOR as a delimiter
-    # which (probably) won't appear in path names
+    local SED_SEP="$(/bin/printf '\x1F')"   # sed supports using UNIT SEPARATOR
+                                            # as a delimiter which (probably)
+                                            # won't appear in path names
     while true ; do
         case "$1" in
             -e) TO_END=1 ; shift ;;
@@ -60,7 +59,8 @@ add_to_path()
     done
     local PATHVAR="$1"
     if [ -d "$PATHVAR" ] ; then
-        echo "add_to_path: $PATHVAR appears to be a directory, not a path variable" 1>&2
+        echo "add_to_path: " \
+            "$PATHVAR appears to be a directory, not a path variable" 1>&2
         return 1
     fi
     shift
@@ -85,10 +85,12 @@ add_to_path()
     elif [ "x$EXPANDED_PATH" = "x" ] ; then
         export $PATHVAR="$ADDPATHS"
     elif ! [ "x$BEFORE" = "x" ] && is_in_path "$PATHVAR" "$BEFORE" ; then
-        local SEDPATH=$(eval echo "\$$PATHVAR" | /bin/sed -r "s$SED_SEP"'(^|'"$SEP"')('"$BEFORE"')('"$SEP"'|$)'"$SED_SEP"'\1'"$ADDPATHS$SEP"'\2\3'"$SED_SEP")
+        local SEDPATH=$(eval echo "\$$PATHVAR" \
+            | /bin/sed -r "s$SED_SEP"'(^|'"$SEP"')('"$BEFORE"')('"$SEP"'|$)'"$SED_SEP"'\1'"$ADDPATHS$SEP"'\2\3'"$SED_SEP")
         export $PATHVAR="$SEDPATH"
     elif ! [ "x$AFTER" = "x" ] && is_in_path "$PATHVAR" "$AFTER" ; then
-        local SEDPATH=$(eval echo "\$$PATHVAR" | /bin/sed -r "s$SED_SEP"'(^|'"$SEP"')('"$AFTER"')('"$SEP"'|$)'"$SED_SEP"'\1\2'"$SEP$ADDPATHS"'\3'"$SED_SEP")
+        local SEDPATH=$(eval echo "\$$PATHVAR" \
+            | /bin/sed -r "s$SED_SEP"'(^|'"$SEP"')('"$AFTER"')('"$SEP"'|$)'"$SED_SEP"'\1\2'"$SEP$ADDPATHS"'\3'"$SED_SEP")
         export $PATHVAR="$SEDPATH"
     elif [ "x$TO_END" = "x" ] ; then
         export $PATHVAR="$ADDPATHS$SEP$EXPANDED_PATH"
@@ -104,7 +106,8 @@ del_from_path()
     local PATHVAR="$1"
     local SEP=":"
     if [ -d "$PATHVAR" ] ; then
-        echo "del_from_path: $PATHVAR appears to be a directory, not a path variable" 1>&2
+        echo "del_from_path: " \
+            "$PATHVAR appears to be a directory, not a path variable" 1>&2
     fi
     shift
     if [ "x$1" = "x" ] ; then
