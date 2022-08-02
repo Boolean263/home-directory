@@ -116,6 +116,8 @@ set complete=.,t,i
 set completeopt=menuone,preview
 set shortmess+=c
 
+set foldopen+=jump
+
 " }}}1
 
 " KEY MAPPINGS {{{1
