@@ -1,25 +1,12 @@
-# .bash_profile is called by bash when a LOGIN shell is started.
-# .bashrc is called by bash when a NON-LOGIN shell is started.
-#
-# .profile and .bash_profile (which see) are intended for things that
-# apply to the whole session, such as environment variables and some
-# shell startup programs.
-#
-# .bashrc is for stuff that only applies to the shell itself.
-#
-# See https://superuser.com/a/183980
-
-. "$HOME/env/path_functions.sh"
-
-# Anything after this case will not be done in non-interactive shells
-case $- in
-    *i*) ;;
-    *) return;
-esac
+#!/bin/bash
+# ~/.bashrc: sourced by bash for non-login interactive shells
+# (and, thanks to my .bash_profile, for login interactive shells too).
+# This is the place to put things that apply to the interactive shell
+# itself: aliases, functions, shell options, etc.
+# (Source: <https://superuser.com/a/183980/627623>)
 
 . "$HOME/env/git-prompt.sh"
 . "$HOME/env/bash-preexec.sh"
-# bash-preexec.sh seems cool. See also PROMPT_COMMAND (built in to bash)
 
 # If this is a remote host being ssh'd into, launch tmux or screen if we can
 if [ -n "$SSH_CONNECTION" ] && ! [ -e "$HOME/.no-tmux" ] ; then
@@ -46,6 +33,8 @@ if [ -n "$TMUX" ] ; then
     preexec_functions+=(tfixenv)
 fi
 
+shopt -s direxpand
+
 set match-hidden-files off
 
 # enable programmable completion features (you don't need to enable
@@ -59,10 +48,11 @@ fi
 export HISTCONTROL="ignorespace:ignoredups:erasedups"
 export HISTSIZE=100000
 export HISTFILESIZE=100000
-shopt -s histreedit
-shopt -s histappend
+shopt -s histreedit histappend
 
-[ -f ~/.bash_aliases ] && . ~/.bash_aliases || :
+if [ -f ~/.bash_aliases ] ; then
+    . ~/.bash_aliases
+fi
 
 # Custom Prompt {{{1
 
@@ -173,6 +163,8 @@ bind -f "$INPUTRC"
 # Terminal setup
 /bin/stty stop undef start undef erase ^? werase ^H
 
-[ -f "$HOME/.bashrc.local" ] && . "$HOME/.bashrc.local" || true
+if [ -f "$HOME/.bashrc.local" ] ; then
+    . "$HOME/.bashrc.local"
+fi
 
-# vim:setl foldmethod=marker:
+# vim:set foldmethod=marker:

@@ -1,20 +1,10 @@
-# Initialization script for ksh,
-# based on my .bashrc
-
-is_interactive(){
-    [ -n "$PS1" ]
-}
+# Initialization script for ksh, based on my .bashrc.
+# As with that file, this file is only read by ksh for interactive shells.
 
 # This is needed to allow bash function definitions to work in ksh.
 # Even then it only really works with `function foo`-style definitions,
 # not `foo()`-style.
 alias local=typeset
-
-# Anything after this case will not be done in non-interactive shells
-case $- in
-    *i*) ;;
-    *) return;
-esac
 
 # If this is a remote host being ssh'd into, launch tmux or screen if we can
 if [ -n "$SSH_CONNECTION" ] && ! [ -e "$HOME/.no-tmux" ] ; then
@@ -26,11 +16,7 @@ if [ -n "$SSH_CONNECTION" ] && ! [ -e "$HOME/.no-tmux" ] ; then
             ln -sf "$SSH_AUTH_SOCK" "$SOCK"
             export SSH_AUTH_SOCK="$SOCK"
         fi
-        if $(which tmux >/dev/null 2>&1) ; then
-            exec sh -c 'tmux attach-session -t ssh || exec tmux new-session -s ssh'
-        elif $(which screen >/dev/null 2>&1) ; then
-            exec screen -S ssh -x -RR
-        fi
+        ~/bin/tn ssh && exit 0
     fi
 fi
 
@@ -42,10 +28,8 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-[ -f ~/.profile ] && . ~/.profile || :
-
 # User specific environment and startup programs.
-. "$HOME/env/git-prompt.sh"
+. <("$HOME/bash2ksh.sed" "$HOME/env/git-prompt.sh")
 
 # The custom prompt is surprisingly similar to what I can do in bash.
 # The main difference is there are no backslash-escapes so you need to
@@ -71,4 +55,6 @@ set -o vi
 # Terminal setup
 /bin/stty stop undef start undef erase ^? werase ^H
 
-[ -f "$HOME/.kshrc.local" ] && . "$HOME/.kshrc.local" || true
+if [ -f "$HOME/.kshrc.local" ] ; then
+    . "$HOME/.kshrc.local"
+fi

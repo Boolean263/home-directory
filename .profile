@@ -1,21 +1,17 @@
 #!/bin/sh
-# ~/.profile: executed by the command interpreter for login shells.
-# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
-# exists.
-# I call it from my ~/.bash_profile (which see, and which also runs
-# my .bashrc for login shells).
+# ~/.profile: traditionally used to configure session-wide settings.
+# Mainly environment variables, possibly some startup programs.
+# This file gets sourced by login shells. It *may* also get called
+# by the login manager or desktop environment.
+# (Source: <https://superuser.com/a/183980/627623>)
 # I also call it from my ~/.xprofile (which in turn can be called by
 # my ~/.xsession) -- this means I can't have bash-isms in here.
 
-# the default umask is set in /etc/profile; for setting the umask
-# for ssh logins, install and configure the libpam-umask package.
-#umask 022
-
-# Try to prevent dash from choking, but it doesn't seem to work
-[ "${0#*-}" = "dash" ] && export PS1='[\u@\h \W]\$ ' || :
-
-# Get environment from ~/.config/environment.d/ files.
+# More recently, some desktop environments *don't* use this file,
+# but use files in ~/.config/environment.d/ instead.
 # See ~/.config/environment.d/README.md for more information.
+# In an attempt to reduce duplicate settings, I'm moving what settings
+# I can into there, and using this structure to load them from there.
 # Test for ENV_TEST_ENVD (which I set in ~/.config/environment.d/)
 # to avoid needless re-setting.
 ENVIRONMENTD="$HOME/.config/environment.d"
@@ -35,7 +31,6 @@ export PAGER=$(which less)
 export VISUAL=$(which nvim vim vi 2>/dev/null | head -n 1)
 export EDITOR="$VISUAL"
 export GIT_EDITOR="$VISUAL -f"
-#export GVIM="X" # If it's not executable, then `~/bin/g` will fall back on vim
 
 export LESS="-R"
 exists lesspipe && eval "$(lesspipe)" || :
@@ -79,6 +74,15 @@ if [ -r /proc/cpuinfo ] ; then
     export MAKEFLAGS=-j$CMAKE_BUILD_PARALLEL_LEVEL
 fi
 
-[ -d "/tmp" ] && export TEMP="/tmp" || :
+if [ -d "/tmp" ] ; then
+    export TEMP="/tmp"
+fi
 
-[ -f "$HOME/.profile.local" ] && . "$HOME/.profile.local" || :
+# Use ISO 8601 datetimes when possible
+if locale -a | grep -iq "en_dk" ; then
+    export LC_TIME=en_DK.UTF-8
+fi
+
+if [ -f "$HOME/.profile.local" ] ; then
+    . "$HOME/.profile.local"
+fi

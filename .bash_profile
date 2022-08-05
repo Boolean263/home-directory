@@ -1,20 +1,19 @@
-# .bash_profile is called by bash when a LOGIN shell is started.
-# .bashrc is called by bash when a NON-LOGIN shell is started.
-# As per https://superuser.com/a/183980/627623 :
-#
-# ~/.profile is the place to put stuff that applies to your whole session, such
-# as programs that you want to start when you log in (but not graphical
-# programs, they go into a different file), and environment variable
-# definitions.
-#
-# ~/.bashrc is the place to put stuff that applies only to bash itself, such as
-# alias and function definitions, shell options, and prompt settings. (You
-# could also put key bindings there, but for bash they normally go into
-# ~/.inputrc.)
-#
-# Based on that logic, and the recommendation in the above answer, this script
-# now calls .profile and .bashrc, not the other way around.
+#!/bin/bash
+# ~/.bash_profile: this file is sourced instead of ~/.profile
+# when bash is launched as a login shell. So, let's just use it
+# to source ~/.profile, and then if we're an interactive shell,
+# to also source ~/.bashrc .
+# (Source: <https://superuser.com/a/183980/627623>)
 
-if [ -r ~/.profile ]; then . ~/.profile; fi
-case "$-" in *i*) if [ -r ~/.bashrc ]; then . ~/.bashrc; fi;; esac
+if [ -r ~/.profile ] ; then
+    . ~/.profile
+fi
+
+case "$-" in
+    *i*)
+        if [ -r ~/.bashrc ]; then
+            . ~/.bashrc
+        fi
+        ;;
+esac
 
