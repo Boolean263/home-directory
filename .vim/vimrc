@@ -347,6 +347,7 @@ endif
 
 silent! call plug#begin('$VIMHOME/bundle') " {{{2
 " use silent! to suppress warning messages about missing git in Windows
+Plug 'junegunn/vim-plug'        " The plugin manager itself
 Plug 'tpope/vim-vinegar'        " Improvements to netrw, which press '-' to see
 Plug 'tpope/vim-characterize'   " type `ga` to show the unicode codepoint
 Plug 'tpope/vim-fugitive'       " Git wrapper
@@ -383,6 +384,7 @@ Plug 'rust-lang/rust.vim'       " Rust programming language support
 Plug 'kana/vim-textobj-user'    " User-defined text objects, prereq for next plugin
 Plug 'preservim/vim-textobj-sentence' " Enhance vim's idea of what a sentence is
 Plug 'dense-analysis/ale'       " Asynchronous Linting Engine
+Plug 'itchyny/lightline.vim'    " Light-weight status line plugin
 if has('python3')
     Plug 'SirVer/ultisnips'     " Code snippets (fails horribly if no python3)
     Plug 'pgilad/vim-skeletons' " file skeletons using ultisnips

@@ -71,6 +71,7 @@
 
 [include]
     file = filters
+    file = ~/.gitconfig.local
 
 [mergetool "ours"]
     cmd = /bin/cp -v --no-preserve=timestamps "$LOCAL" "$MERGED"

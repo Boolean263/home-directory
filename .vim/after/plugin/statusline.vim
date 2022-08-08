@@ -1,8 +1,8 @@
 " Custom statusline
 " http://got-ravings.blogspot.com/2008/08/vim-pr0n-making-statuslines-that-own.html
 
-" For when I'm trying vim-airline
-if exists(':AirlineToggle')
+" For when I'm trying vim-airline or vim-statusline
+if exists(':AirlineToggle') || exists('*lightline#enable')
     finish
 endif
 
