@@ -151,8 +151,8 @@ inoremap <C-W> <Nop>
 cnoremap <C-W> <Nop>
 
 " Make n/N searching always search forward/backward respectively
-noremap <expr>n 'Nn'[v:searchforward]
-noremap <expr>N 'nN'[v:searchforward]
+noremap <expr>n 'Nn'[v:searchforward].'zo'
+noremap <expr>N 'nN'[v:searchforward].'zo'
 
 " Use Shift-Insert to paste the clipboard at the current location
 inoremap <S-Insert> <C-O>:set paste<CR><C-R>*<C-O>:set nopaste<CR>

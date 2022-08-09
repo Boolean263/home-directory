@@ -93,7 +93,7 @@ function! LightlineGitbranch()
 endfunction
 
 function! LightlineTag()
-    if !(exists(':TagBar'))
+    if !(exists(':Tagbar'))
         return ""
     endif
     let l:tag_name = tagbar#currenttag("%s", "", "f")
