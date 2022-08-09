@@ -7,6 +7,7 @@
 
 . "$HOME/env/git-prompt.sh"
 . "$HOME/env/bash-preexec.sh"
+. "$HOME/env/path_functions.sh"
 
 # If this is a remote host being ssh'd into, launch tmux or screen if we can
 if [ -n "$SSH_CONNECTION" ] && ! [ -e "$HOME/.no-tmux" ] ; then
