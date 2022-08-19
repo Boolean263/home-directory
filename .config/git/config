@@ -60,6 +60,12 @@
 
 [diff]
     #tool = kdiff3
+    mnemonicPrefix = true
+    algorithm = minimal
+
+[difftool "qfdiff"]
+    cmd = ~/.config/git/qfdiff.sh $BASE $REMOTE $LOCAL
+    trustExitCode = true
 
 [status]
     # Hide the list of untracked files in `git status` and `git commit`.
@@ -90,8 +96,9 @@
     cdiff = diff --cached
     vdiff = -c "core.pager=~/bin/vless" diff --color=never
     vcdiff = -c "core.pager=~/bin/vless" diff --color=never --cached
+    qfdiff = difftool --tool=qfdiff
 
-    changes= diff --name-status -r
+    changes= diff --name-only
 
     # log
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
