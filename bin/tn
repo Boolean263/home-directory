@@ -1,48 +1,62 @@
 #!/bin/sh
+set -e
 
 # Protect against nested sessions
-if [ -n "$TMUX" ] || [ -n "$STY" ] ; then
-    echo "You're already in a session ($TMUX$STY)" 1>&2
-    exit 1
-fi
+#if [ -n "$TMUX" ] || [ -n "$STY" ] ; then
+#    echo "You're already in a session ($TMUX$STY)" 1>&2
+#    exit 1
+#fi
 
-fail()
-{
+NAME=${1:-default}
+MUXER=$(which tmux screen 2>/dev/null | head -n 1)
+
+if [ -z "$MUXER" ] ; then
     echo "Neither tmux nor screen are installed" 1>&2
     exit 1
-}
-
-PREFIX=""
-if [ -z "$SSH_AUTH_SOCK" ] ; then
-    PREFIX="$PREFIX ssh-agent"
 fi
-
-if [ $# -eq 0 ] ; then
-    # Fall back on creating a new session
-    if which tmux >/dev/null 2>&1 ; then
-        $PREFIX tmux
-    elif which screen >/dev/null 2>&1 ; then
-        screen
-    else
-        fail
-    fi
-elif [ $# -eq 1 ] ; then
-    if which tmux >/dev/null 2>&1 ; then
-        tmux attach-session -t "$1" 2>/dev/null || $PREFIX tmux new-session -t "$1"
-    elif which screen >/dev/null 2>&1 ; then
-        screen -S "$1" -x -RR
-    else
-        fail
-    fi
-else
-    muxer=$(which tmux screen 2>/dev/null | head -n 1)
-    if [ -n "$muxer" ] ; then
-        cat 1>&2 <<EOT
+if [ $# -gt 1 ] ; then
+    cat 1>&2 <<EOT
 Usage: $(basename $0) [session-name]
 For more complex usage, run $muxer directly.
 EOT
-        exit 1
-    else
-        fail
-    fi
+    exit 1
 fi
+
+AGENT=""
+if [ -z "$SSH_AUTH_SOCK" ] && which ssh-agent >/dev/null 2>&1 ; then
+    AGENT="$AGENT ssh-agent"
+fi
+
+case "$MUXER" in
+    *tmux*)
+        $AGENT "$MUXER" start-server
+        if ! "$MUXER" has-session -t "$NAME" >/dev/null 2>&1 ; then
+            # Session didn't exist, create it now
+            cd ~
+            "$MUXER" new-session -d -s "$NAME" -n "$NAME"
+            if [ -f "$HOME/.tmux/$NAME.conf" ] ; then
+                "$MUXER" source-file "$HOME/.tmux/$NAME.conf" -t "$NAME"
+            elif [ -x "$HOME/.tmux/$NAME.sh" ] ; then
+                "$HOME/.tmux/$NAME.sh"
+            fi
+        fi
+        if [ -z "$TMUX" ] ; then
+            # If we aren't already in a tmux session, attach the new one
+            "$MUXER" attach-session -t "$NAME"
+        else
+            "$MUXER" switch-client -t "$NAME"
+        fi
+        ;;
+    *screen*)
+        # Protect against nested sessions
+        if [ -n "$STY" ] ; then
+            echo "You're already in a session ($STY)" 1>&2
+            exit 1
+        fi
+        $AGENT "$MUXER" -S "$NAME" -x -RR
+        ;;
+    *)
+        echo "I don't know what to do with '$MUXER'." 1>&2
+        exit 1
+        ;;
+esac
