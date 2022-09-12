@@ -1,23 +1,18 @@
-#!/bin/bash
+#!/bin/sh
 
 # According to the man page of man itself, MANPAGER doesn't support
 # pipes and stuff, and suggests a wrapper script instead. This
 # is that script.
 
 # Test for nvim in $VISUAL, use it if it is
-if [ -n "$VISUAL" ] ; then
-    if [ "$VISUAL" != "${VISUAL%/nvim}" ] ; then
-        # nvim's built-in man browser is awesome
+case "$VISUAL" in
+    */nvim*)
         exec "$VISUAL" +Man! -
-    else
-        NOTERM=""
-
-        if [ "$VISUAL" != "${VISUAL%/vim}" ] ; then
-            # Vim-specific
-            NOTERM="--not-a-term"
-        fi
-        exec col -b -x | "$VISUAL" -M -Rn -c 'set ft=man' $NOTERM -
-    fi
-else
-    exec "$PAGER" ${1+"$@"}
-fi
+        ;;
+    */vim*)
+        exec col -b -x | "$VISUAL" -M -Rn -c 'set ft=man' -
+        ;;
+    *)
+        exec "$PAGER" ${1+"$@"}
+        ;;
+esac
