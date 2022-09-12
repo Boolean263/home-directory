@@ -53,7 +53,15 @@ case "$MUXER" in
             echo "You're already in a session ($STY)" 1>&2
             exit 1
         fi
-        $AGENT "$MUXER" -S "$NAME" -x -RR
+        if ! "$MUXER" -ls -S "$NAME" >/dev/null 2>&1 ; then
+            # Session didn't exist, create it now
+            cd ~
+            $AGENT "$MUXER" -S "$NAME" -d -m
+            if [ -f "$HOME/.screen/$NAME.screenrc" ] ; then
+                "$MUXER" -S "$NAME" -X source "$HOME/.screen/$NAME.screenrc"
+            fi
+        fi
+        "$MUXER" -S "$NAME" -x -RR
         ;;
     *)
         echo "I don't know what to do with '$MUXER'." 1>&2
