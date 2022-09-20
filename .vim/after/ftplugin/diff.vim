@@ -40,9 +40,10 @@ function! DiffFoldLevel()
     endif
 endfunction
 
-" For use with sectional-couch.vim
-setlocal paragraphs=/^@@/
-setlocal sections=/^diff/
+if exists('g:sectional_couch')
+    setlocal paragraphs=/^@@/
+    setlocal sections=/^diff/
+endif
 
 let b:undo_ftplugin .= " | setlocal modeline< foldmethod< foldexpr<"
     \ . " paragraphs< sections<"
