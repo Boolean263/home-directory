@@ -46,10 +46,13 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # Shell history
+export HISTFILE="$HOME/.bash_history"
 export HISTCONTROL="ignorespace:ignoredups:erasedups"
 export HISTSIZE=100000
 export HISTFILESIZE=100000
-shopt -s histreedit histappend
+export HISTIGNORE="gits:ls:ll:m:pwd"
+export HISTTIMEFORMAT="%Y-%m-%dT%H:%M:%S%Z"
+shopt -s histreedit histappend checkwinsize cmdhist direxpand
 
 if [ -f ~/.bash_aliases ] ; then
     . ~/.bash_aliases
