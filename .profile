@@ -33,7 +33,9 @@ export EDITOR="$VISUAL"
 export GIT_EDITOR="$VISUAL -f"
 
 export LESS="-R"
-exists lesspipe && eval "$(lesspipe)" || :
+if exists lesspipe ; then
+    eval "$(lesspipe)"
+fi
 
 export FIGNORE="CVS:\~:.o:.svn:.git:.lo"
 

@@ -5,9 +5,17 @@
 # itself: aliases, functions, shell options, etc.
 # (Source: <https://superuser.com/a/183980/627623>)
 
+. "$HOME/env/path_functions.sh"
+set match-hidden-files off
+
+# Nothing after this will run for non-interactive shells
+case "$-" in
+    *i*) ;;
+    *) return ;;
+esac
+
 . "$HOME/env/git-prompt.sh"
 . "$HOME/env/bash-preexec.sh"
-. "$HOME/env/path_functions.sh"
 
 # If this is a remote host being ssh'd into, launch tmux or screen if we can
 if [ -n "$SSH_CONNECTION" ] && ! [ -e "$HOME/.no-tmux" ] ; then
@@ -36,8 +44,6 @@ fi
 
 shopt -s direxpand
 
-set match-hidden-files off
-
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -49,9 +55,9 @@ fi
 export HISTFILE="$HOME/.bash_history"
 export HISTCONTROL="ignorespace:ignoredups:erasedups"
 export HISTSIZE=100000
-export HISTFILESIZE=100000
+export HISTFILESIZE=1000000
 export HISTIGNORE="gits:ls:ll:m:pwd"
-export HISTTIMEFORMAT="%Y-%m-%dT%H:%M:%S%Z"
+export HISTTIMEFORMAT="%Y-%m-%dT%H:%M:%S%Z "
 shopt -s histreedit histappend checkwinsize cmdhist direxpand
 
 if [ -f ~/.bash_aliases ] ; then
