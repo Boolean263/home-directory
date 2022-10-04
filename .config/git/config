@@ -43,14 +43,14 @@
     templateDir = ~/.config/git/templates/git-ctags
     defaultBranch = main
 
-[clone]
-    recurse-submodules = true
-
 [pull]
     rebase = true
 
 [fetch]
     prune = true
+    recurseSubmodules = true
+    # parallel=0 uses a "reasonable default"; parallel=1 disables
+    parallel = 0
 
 [push]
     default = tracking
@@ -72,6 +72,11 @@
     # To see untracked files use `git status -uall`
     showUntrackedFiles = no
 
+[submodule]
+    recurse = true
+    # fetchJobs=0 uses a "reasonable default"; fetchJobs=1 disables
+    fetchJobs = 0
+
 [http]
     cookiefile = cookies
 
@@ -90,7 +95,7 @@
     # lots stolen from https://git.wiki.kernel.org/index.php/Aliases
     # and https://gist.github.com/992097
 
-    fa = fetch --all
+    fa = fetch --all --tags
 
     #diff
     cdiff = diff --cached
