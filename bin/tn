@@ -35,7 +35,9 @@ case "$MUXER" in
             cd ~
             "$MUXER" new-session -d -s "$NAME" -n "$NAME"
             if [ -f "$HOME/.tmux/$NAME.conf" ] ; then
-                "$MUXER" source-file "$HOME/.tmux/$NAME.conf" -t "$NAME"
+                # This command causes an error but works correctly.
+                # Add `|| :` to satisfy `set -e`
+                "$MUXER" source-file "$HOME/.tmux/$NAME.conf" -t "$NAME" || :
             elif [ -x "$HOME/.tmux/$NAME.sh" ] ; then
                 "$HOME/.tmux/$NAME.sh"
             fi
