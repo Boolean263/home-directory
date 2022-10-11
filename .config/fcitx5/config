@@ -52,6 +52,10 @@ CompactInputMethodInformation=True
 ShowFirstInputMethodInformation=True
 # Default page size
 DefaultPageSize=5
+# Override Xkb Option
+OverrideXkbOption=True
+# Custom Xkb Option
+CustomXkbOption="-I/home/smiley/.config/xkb /home/smiley/.config/xkb/keymap/default"
 # Force Enabled Addons
 EnabledAddons=
 # Force Disabled Addons
