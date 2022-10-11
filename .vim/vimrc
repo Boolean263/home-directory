@@ -210,6 +210,8 @@ inoremap <C-D> <C-X><C-D>
 " Neovide sees C-6 as different from C-^
 nnoremap <C-6> <C-^>
 
+" For parity with 'D' in visual mode
+vnoremap Y :'<,'>y<cr>
 " }}}1
 
 " *********************
