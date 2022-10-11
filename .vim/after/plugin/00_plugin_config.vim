@@ -10,3 +10,9 @@ if exists(':ALENext')
     nnoremap ]e :ALENext<cr>
     nnoremap [e :ALEPrevious<cr>
 endif
+
+if exists('g:loaded_altr')
+    " Can't use nnoremap for <Plug> mappings
+    nmap ]r <Plug>(altr-forward)
+    nmap [r <Plug>(altr-back)
+endif

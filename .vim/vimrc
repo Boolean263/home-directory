@@ -398,6 +398,7 @@ if executable('i3')
 endif
 Plug 'Boolean263/vim-syntax-libconfig'
 Plug 'vimwiki/vimwiki'          " a personal wiki for vim
+Plug 'kana/vim-altr'            " Switch between eg. foo.c/foo.h
 call plug#end() " }}}2
 " Note that the plugins haven't actually been loaded yet. They've been added
 " to 'runtimepath' so they will be loaded once this `.vimrc` file is finished.
