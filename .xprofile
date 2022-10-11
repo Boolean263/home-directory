@@ -20,4 +20,6 @@ xrdb "$HOME/.Xresources" >/dev/null 2>&1
 
 "$HOME/bin/fixkeys" >/dev/null 2>&1
 
-[ -f "$HOME/.xprofile.local" ] && . "$HOME/.xprofile.local" || :
+if [ -f "$HOME/.xprofile.local" ] ; then
+    . "$HOME/.xprofile.local"
+fi
