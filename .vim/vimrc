@@ -387,6 +387,7 @@ Plug 'kana/vim-textobj-user'    " User-defined text objects, prereq for next plu
 Plug 'preservim/vim-textobj-sentence' " Enhance vim's idea of what a sentence is
 Plug 'dense-analysis/ale'       " Asynchronous Linting Engine
 Plug 'itchyny/lightline.vim'    " Light-weight status line plugin
+"Plug 'vim-airline/vim-airline'      " For a fancier modeline
 if has('python3')
     Plug 'SirVer/ultisnips'     " Code snippets (fails horribly if no python3)
     Plug 'pgilad/vim-skeletons' " file skeletons using ultisnips
@@ -396,7 +397,7 @@ if executable('i3')
     Plug 'mboughaba/i3config.vim'
 endif
 Plug 'Boolean263/vim-syntax-libconfig'
-"Plug 'vim-airline/vim-airline'      " For a fancier modeline
+Plug 'vimwiki/vimwiki'          " a personal wiki for vim
 call plug#end() " }}}2
 " Note that the plugins haven't actually been loaded yet. They've been added
 " to 'runtimepath' so they will be loaded once this `.vimrc` file is finished.
