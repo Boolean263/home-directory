@@ -48,5 +48,5 @@ esac
 /usr/bin/diff "$old_file" "$new_file" | /usr/bin/grep -v '^[<>-]' | \
     while read line ; do
         printf '%s' "$path"
-        echo "$line" | /usr/bin/sed -E 's/^[0-9]+)([^0-9].*)$/\1: \1\2/'
+        echo "$line" | /usr/bin/sed -E 's/^([0-9]+)([^0-9].*)$/\1: \1\2/'
     done
