@@ -5,31 +5,47 @@ base_branch="home"
 repodir="${1:-$HOME}"
 cd "$repodir"
 cur_branch=$(git symbolic-ref --short HEAD)
+stashed=
+pulled=
 
 # Fetch upstream and update to it
-git stash
+if ! git diff --quiet || ! git diff --cached --quiet ; then
+    stashed=1
+    git stash push
+fi
 if [ "$cur_branch" != "$base_branch" ] ; then
     git checkout "$base_branch"
 fi
 git fetch --all
-git pull || exit 1
+
+if git pull ; then
+    pulled=1
+fi
 
 # If we weren't in the base branch, go back to it
 # and pull its changes into our current branch
 if [ "$cur_branch" != "$base_branch" ] ; then
     git checkout "$cur_branch"
-    if ! git rebase "$base_branch" ; then
+    if [-n "$pulled" ] && ! git rebase "$base_branch" ; then
         echo "Launching subshell for resolving rebase issues"
         bash
     fi
 fi
-git stash pop
+if [ -n "$stashed" ] ; then
+    git stash pop
+fi
 
 # Update things that may have been affected by the merge
-lesskey
-(cd "$repodir/.terminfo" && ./regen.sh) >/dev/null 2>&1
-[ -z "$DISPLAY" ] || xrdb "$HOME/.Xresources"
-v -c 'PlugUpdate | qa'
-if which npm >/dev/null 2>&1 ; then
-    (cd "$HOME/.config/coc/extensions/" && npm install)
+if [ -n "$pulled" ] ; then
+    lesskey -o "$repodir/.less" -- "$repodir/.lesskey"
+    (cd "$repodir/.terminfo" && ./regen.sh) >/dev/null 2>&1
+    if [ -n "$DISPLAY" ] && [ "$repodir" = "$HOME" ] && exists xrdb ; then
+        xrdb "$HOME/.Xresources"
+    fi
+    if [ "$repodir" = "$HOME" ] ; then
+        v -c 'PlugUpgrade | PlugUpdate | qa'
+    fi
+    if exists npm ; then
+        (cd "$repodir/.config/coc/extensions/" && npm install)
+    fi
 fi
