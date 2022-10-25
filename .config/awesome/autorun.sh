@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Prevent from running more than once per X session
-if xrdb -query | grep -q '^awesome\.started:\s*true$'; then
+if xrdb -query | grep -Eq '^awesome\.started:\s*true$'; then
     exit
 fi
 echo 'awesome.started: true' | xrdb -merge -
