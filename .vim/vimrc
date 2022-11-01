@@ -150,6 +150,10 @@ cnoremap <C-H> <C-W>
 inoremap <C-W> <Nop>
 cnoremap <C-W> <Nop>
 
+" Use Enter and Backspace to go into/back from a tag definition
+nnoremap <Enter> <C-]>
+nnoremap <BS> <C-T>
+
 " Make n/N searching always search forward/backward respectively
 noremap <expr>n 'Nn'[v:searchforward].'zo'
 noremap <expr>N 'nN'[v:searchforward].'zo'
