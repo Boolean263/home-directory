@@ -152,6 +152,7 @@ cnoremap <C-W> <Nop>
 
 " Use Enter and Backspace to go into/back from a tag definition
 nnoremap <Enter> <C-]>
+nnoremap g<Enter> g<C-]>
 nnoremap <BS> <C-T>
 
 " Make n/N searching always search forward/backward respectively
