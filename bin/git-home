@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Explicitly include path functions
+. "$HOME/env/path_functions.sh"
+
 # Figure out the current branch
 base_branch="home"
 repodir="${1:-$HOME}"
