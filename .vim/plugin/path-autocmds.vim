@@ -6,6 +6,9 @@ function! s:wiresharkdev()
     if exists('g:sectional_couch')
         setl sections=/^{/\ /^}/
     endif
+    packadd termdebug
+    command! TSDB execute 'Termdebug '.$BUILDPATH.'/run/tshark'
+    command! WSDB execute 'Termdebug '.$BUILDPATH.'/run/wireshark'
 endfunction
 augroup wireshark-dev
     autocmd!
