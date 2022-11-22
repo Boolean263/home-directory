@@ -46,6 +46,7 @@ if [ -n "$pulled" ] ; then
         xrdb "$HOME/.Xresources"
     fi
     if [ "$repodir" = "$HOME" ] ; then
+        "$HOME/.config/locale/regen.sh"
         v -c 'PlugUpgrade | PlugUpdate | qa'
     fi
     if exists npm ; then
