@@ -116,7 +116,7 @@ set complete=.,t,i
 set completeopt=menuone,preview
 set shortmess+=c
 
-set foldopen+=jump
+set foldopen+=jump,quickfix
 
 " }}}1
 
@@ -392,6 +392,7 @@ Plug 'kana/vim-textobj-user'    " User-defined text objects, prereq for next plu
 Plug 'preservim/vim-textobj-sentence' " Enhance vim's idea of what a sentence is
 Plug 'dense-analysis/ale'       " Asynchronous Linting Engine
 Plug 'itchyny/lightline.vim'    " Light-weight status line plugin
+Plug 'romainl/vim-qf'           " Handy mappings and functions for quickfix windows
 "Plug 'vim-airline/vim-airline'      " For a fancier modeline
 if has('python3')
     Plug 'SirVer/ultisnips'     " Code snippets (fails horribly if no python3)
