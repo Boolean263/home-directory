@@ -80,10 +80,14 @@ if [ -d "/tmp" ] ; then
     export TEMP="/tmp"
 fi
 
-# Use ISO 8601 datetimes when possible
-if locale -a | grep -iq "en_dk" ; then
-    export LC_TIME=en_DK.UTF-8
+# Use my custom-generated locale
+if "$HOME/.config/locale/regen.sh" ; then
+    export LOCPATH="$HOME/.local/locale"
+    export LANG=en_CA.UTF-8
+    export LC_ALL=en_CA.UTF-8
 fi
+# ... but still collate ASCIIbetically
+export LC_COLLATE=POSIX
 
 if [ -f "$HOME/.profile.local" ] ; then
     . "$HOME/.profile.local"
