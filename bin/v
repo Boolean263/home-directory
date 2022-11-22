@@ -1,2 +1,2 @@
 #!/bin/sh
-exec $EDITOR ${1+"$@"}
+exec "$EDITOR" ${1+"$@"}
