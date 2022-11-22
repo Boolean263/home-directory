@@ -29,7 +29,7 @@ fi
 # and pull its changes into our current branch
 if [ "$cur_branch" != "$base_branch" ] ; then
     git checkout "$cur_branch"
-    if [-n "$pulled" ] && ! git rebase "$base_branch" ; then
+    if [ -n "$pulled" ] && ! git rebase "$base_branch" ; then
         echo "Launching subshell for resolving rebase issues"
         bash
     fi
