@@ -2,28 +2,46 @@
 
 import argparse
 import logging
+import os
 import sys
 
 # This script uses logging for its informational output.
 # For any sort of informational message that isn't part of this script's
-# intended function, you can use `logger.debug()`/`.info()`/`.warning()`/
+# intended function, you can use `log.debug()`/`.info()`/`.warning()`/
 # `.error()`/`.critical()` to get the message out. The default output level
 # is set to warning in the main function, adjusted as high as critical or as
 # low as debug by user options.
-logger = logging.getLogger(__name__)
-logger.addHandler(logging.NullHandler())
+log = logging.getLogger(__name__)
+log.addHandler(logging.NullHandler())
 
 #
 # Functions
 #
 
 
-def between(input, lower=0, upper=100):
-    "Return the input, or the lower or upper bound if the input is beyond those."
-    return max(lower, min(input, upper))
+def create_console_logger(verbose: int):
+    """
+    Create a console logger and set its verbosity from
+    command-line arguments.
+    """
+    console_handler = logging.StreamHandler()
+    console_handler.setFormatter(logging.Formatter("%(levelname)s: %(message)s"))
+    log.addHandler(console_handler)
+    if args.verbose < 1:
+        console_handler.setLevel(logging.ERROR)
+    elif args.verbose == 1:
+        console_handler.setLevel(logging.WARN)
+    elif args.verbose == 2:
+        console_handler.setLevel(logging.INFO)
+    else:
+        console_handler.setLevel(logging.DEBUG)
+    # sub-loggers are limited to what the master logger will log
+    if log.level == 0:
+        log.setLevel(min((x.level for x in log.handlers)))
 
 
 ${0:# (additional functions go here)}
+
 
 #
 # Main Program
@@ -31,36 +49,13 @@ ${0:# (additional functions go here)}
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="${1:summarize your script}")
     parser.add_argument(
-        "-v", "--verbose", action="count", default=0, help="Increase verbosity"
+        "-v", "--verbose", action="count", default=1, help="Increase verbosity"
     )
     parser.add_argument(
         "-q", "--quiet", action="count", default=0, help="Decrease verbosity"
     )
 
     args = parser.parse_args()
-
-    # Set up console logging
-    loghandler = logging.StreamHandler(stream=sys.stderr)
-    loghandler.setFormatter(logging.Formatter(style="{", fmt="{levelname}: {message}"))
-    logger.addHandler(loghandler)
-    verbosity = between(
-        logging.WARNING + (10 * (args.quiet - args.verbose)),
-        logging.DEBUG,
-        logging.CRITICAL,
-    )
-    logger.setLevel(verbosity)
+    create_console_logger(args.verbose - args.quiet)
 
     # Continue with your main script activity here
-
-
-# Editor modelines - http://www.wireshark.org/tools/modelines.html
-#
-# Local variables:
-# c-basic-offset: 4
-# tab-width: 4
-# indent-tabs-mode: nil
-# coding: utf-8
-# End:
-#
-# vi:set shiftwidth=4 tabstop=4 expandtab fileencoding=utf-8:
-# :indentSize=4:tabSize=4:noTabs=true:coding=utf-8:
