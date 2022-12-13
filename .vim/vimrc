@@ -322,9 +322,9 @@ nmap cia cIa
 " for inkarkat/vim-mark
 let g:mwDefaultHighlightingPalette = 'extended'
 
-nmap <Leader>m <Plug>MarkSet
-nmap <Leader>r <Plug>MarkRegex
-nmap <Leader>M <Plug>MarkConfirmAllClear
+nmap <Leader>mm <Plug>MarkSet
+nmap <Leader>mr <Plug>MarkRegex
+nmap <Leader>mc <Plug>MarkConfirmAllClear
 nmap ]m <Plug>MarkSearchAnyNext
 nmap [m <Plug>MarkSearchAnyPrev
 nmap <Plug>IgnoreMarkSearchNext <Plug>MarkSearchNext
