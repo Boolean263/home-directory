@@ -61,3 +61,12 @@ function! CatchException(ex, ...)
     endtry
 endfunction
 command! -nargs=+ Ignore call CatchException(<f-args>)
+
+" Leverage Ctrl-L to clear search highlighting when it redraws the screen
+" NB. :nohlsearch does nothing if called from a function
+function! RefreshScreen()
+    if &diff
+        diffupdate
+    endif
+endfunction
+nnoremap <silent> <C-l> :call RefreshScreen()\|nohlsearch<cr><C-l>
