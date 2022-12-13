@@ -1,7 +1,9 @@
 #!/bin/sh
 #
 # NB. In "pure" sh mode, `echo -ne` doesn't work. Use `printf`.
-PRINTF=/usr/bin/printf
+# (the shell builtin is much faster than the separate binary)
+#PRINTF=/usr/bin/printf
+PRINTF=printf
 
 title()
 {
@@ -118,7 +120,7 @@ test_utf8()
     title 'ASCII' '1lI|DO08Bb6gq'
     title 'Accents' 'C’est ça, la bibliothèque, août, noël, mañana'
     title 'Combo' 'S̶t̶r̶i̶k̶e̶o̶u̶t̶'
-    title 'Symbols' '2H₂ + O₂ ⇌ 2H₂O   aⁱ-bⁱ   ☺☹♠♥♣♦♤♡♧♢ 😀🙂😐🙁☹️  1–2  but—why?'
+    title 'Symbols' '2H₂ + O₂ ⇌ 2H₂O   aⁱ-bⁱ   ☺☹♠♥♣♦♤♡♧♢ 😀🙂😐🙁😦  1–2  but—why?'
     title 'Boxes' '█ ▁▂▃▄▅▆▇█  ░░▒▒▓▓██'
     echo '         ▉ ╔══╦══╗  ┌──┬──┐  ╭──┬──╮  ╭──┬──╮  ┏━━┳━━┓  ┎┒┏┑   ╷  ╻ ┏┯┓ ┌┰┐  '
     echo '         ▊ ║┌─╨─┐║  │╔═╧═╗│  │╒═╪═╕│  │╓─╁─╖│  ┃┌─╂─┐┃  ┗╃╄┙  ╶┼╴╺╋╸┠┼┨ ┝╋┥  '
