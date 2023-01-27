@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # NB. In "pure" sh mode, `echo -ne` doesn't work. Use `printf`.
-# (the shell builtin is much faster than the separate binary)
+# (the shell builtin is MUCH faster than the separate binary)
 #PRINTF=/usr/bin/printf
 PRINTF=printf
 
@@ -48,11 +48,17 @@ show_effects()
     tput dim;   $PRINTF "Dim$spc"
     tput sitm;  $PRINTF "Ital$spc"
     tput smul;  $PRINTF "Und$spc"
-    $PRINTF     '\e[21mDblUnd'"$spc"
     tput blink; $PRINTF "Blink$spc"
     tput invis; $PRINTF "Invis$spc"
-    $PRINTF     '\e[9mStkout'"$spc"
     tput bold dim sitm smul ; $PRINTF "Combo"
+    newline
+
+    title 'More'
+    $PRINTF     '\e[21mDblUnd'"$spc"
+    $PRINTF     '\e[9mStkout'"$spc"
+    $PRINTF     '\e[4;3mCurl'"$spc"
+    $PRINTF     '\e[4;4mDot'"$spc"
+    $PRINTF     '\e[4;5mDash'"$spc"
     newline
 }
 
@@ -70,7 +76,7 @@ basic_colours()
 
 show_256colours()
 {
-    local C=232
+    local C=232 # colour number
     title 'Grays'
     while [ $C -lt 256 ] ; do
         setbg $C
@@ -80,19 +86,21 @@ show_256colours()
     done
     newline
 
-    title 'Cube'
-    newline
-    C=16
-    for R in 0 1 2 3 4 5 ; do # row
-        C=$(( 16+(6*$R) ))
+    local FG BG
+    for R in 0 2 4 ; do # row
+        title "256"
+        FG=$(( 16+(6*$R) ))
+        BG=$(( 16+(6*($R+1)) ))
         for N in 0 1 2 3 4 5 ; do # cube face
             $PRINTF ' '
             for X in 0 1 2 3 4 5 ; do # column
-                setbg $(( $C+$X ))
-                $PRINTF ' '
+                setfg $(( $FG+$X ))
+                setbg $(( $BG+$X ))
+                $PRINTF '▀'
             done
             tput sgr0
-            C=$(( $C+36 ))
+            FG=$(( $FG+36 ))
+            BG=$(( $BG+36 ))
         done
         newline
     done
@@ -102,7 +110,7 @@ show_truecolour()
 {
     # I borrowed this algorithm from an awk script found on the internet
     title 'RGB'
-    local N=69 # Number of columns to show
+    local N=$(tput cols) ; N=$(($N-11)) # Number of columns to show
     for C in $(seq 0 $N) ; do
         local r=$(( 255 - ( ($C*255/$N) % 256) ))
         local g=$(( $C*510/$N ))
@@ -131,9 +139,10 @@ test_utf8()
     echo '         ▏ ╚══╩══╝  └──┴──┘  ╰──┴──╯  ╰──┴──╯  ┗━━┻━━┛          └╌╌┘ ╎ ┗╍╍┛ ┋'
 }
 
-title 'TERM' "$TERM    COLORTERM: $COLORTERM"
+title "Size" "$(tput cols)×$(tput lines)"
+title 'Env' "TERM=$TERM COLORTERM=$COLORTERM SHELL=$SHELL"
 test_utf8
 show_effects
 basic_colours
-show_truecolour
 show_256colours
+show_truecolour
