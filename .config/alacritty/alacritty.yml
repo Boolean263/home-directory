@@ -2,19 +2,13 @@
 # vim:sw=2:
 
 env:
-  # Override the terminal to one that supports truecolor
-  # (default is xterm-256color, but for whatever reason
-  # that causes tmux to not realize it has truecolour mode.
-  # this TERM does)
-  #TERM: st-256color
-  # The above seems to be fixed (at least on linux)
-
+  # Alert programs that we can support full RGB colours
   COLORTERM: truecolor
 
 window:
   dimensions:
     columns: 85
-    rows: 50
+    lines: 50
 
 font:
   size: 10.0
