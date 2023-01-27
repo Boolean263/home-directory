@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 git rev-parse --git-dir >/dev/null
 UPSTREAM="${UPSTREAM:-upstream}"
@@ -16,12 +16,13 @@ if git status --porcelain -uno | grep -q '^[A-Z]' ; then
     exit 1
 fi
 
+set -e
 if [ "$CURBRANCH" != "$MAINBRANCH" ] ; then
     git checkout "$MAINBRANCH"
 fi
-git fetch --all -v \
-    && git merge "$UPSTREAM/$MAINBRANCH" \
-    && git push
+git fetch --all -v
+git merge "$UPSTREAM/$MAINBRANCH"
+git push
 if [ "$CURBRANCH" != "$MAINBRANCH" ] ; then
     git checkout "$CURBRANCH"
 fi
