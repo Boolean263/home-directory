@@ -2,7 +2,7 @@
 <!-- Openbox configuration: hotkeys and whatnot -->
 <openbox_config xmlns="http://openbox.org/3.4/rc" xmlns:xi="http://www.w3.org/2001/XInclude">
   <resistance>
-    <strength>10</strength>
+    <strength>20</strength>
     <screen_edge_strength>20</screen_edge_strength>
   </resistance>
   <focus>
@@ -133,10 +133,10 @@
     <!-- 'Center', 'Top', or 'Fixed' -->
     <popupFixedPosition>
       <!-- these are used if popupPosition is set to 'Fixed' -->
-      <x>10</x>
+      <x>Center</x>
       <!-- positive number for distance from left edge, negative number for
          distance from right edge, or 'Center' -->
-      <y>10</y>
+      <y>Center</y>
       <!-- positive number for distance from top edge, negative number for
          distance from bottom edge, or 'Center' -->
     </popupFixedPosition>
@@ -216,9 +216,7 @@
     <keybind key="W-C-8"><action name="SendToDesktop"><to>8</to><follow>yes</follow></action></keybind>
     <keybind key="W-C-9"><action name="SendToDesktop"><to>9</to><follow>yes</follow></action></keybind>
     <keybind key="W-C-0"><action name="SendToDesktop"><to>0</to><follow>yes</follow></action></keybind>
-    <keybind key="W-d">
-      <action name="ToggleShowDesktop"/>
-    </keybind>
+    <keybind key="W-d"><action name="ToggleShowDesktop"/></keybind>
     <!-- Keybindings for windows -->
     <keybind key="A-F4">
       <action name="Close"/>
@@ -349,7 +347,7 @@
         <command>obsession-logout</command>
       </action>
     </keybind>
-    <keybind key="W-S-Down">
+    <keybind key="W-S-Up">
       <action name="ToggleMaximize">
         <direction>vertical</direction>
       </action>
@@ -381,6 +379,7 @@
         <action name="Unshade"/>
       </mousebind>
       <mousebind button="W-Left" action="Drag">
+        <action name="Raise"/>
         <action name="Move"/>
       </mousebind>
       <mousebind button="W-Right" action="Drag">
@@ -811,11 +810,6 @@
     <!-- Keep dialogs on top -->
     <application type="dialog">
       <layer>above</layer>
-    </application>
-
-    <!-- Vertically maximize all normal windows -->
-    <application type="normal">
-      <maximized>Vertical</maximized>
     </application>
 
     <!-- Let xeyes have its own shape -->
