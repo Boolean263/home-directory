@@ -28,14 +28,12 @@ unset conf
 clean_path PATH
 
 export PAGER=$(which less)
-export VISUAL=$(which nvim vim vi 2>/dev/null | head -n 1)
+export VISUAL=$(which nvim vim vi nvi 2>/dev/null | head -n 1)
 export EDITOR="$VISUAL"
 export GIT_EDITOR="$VISUAL -f"
 
 export LESS="-R"
-if exists lesspipe ; then
-    eval "$(lesspipe)"
-fi
+eval "$(lessfile)"
 
 export FIGNORE="CVS:\~:.o:.svn:.git:.lo"
 
