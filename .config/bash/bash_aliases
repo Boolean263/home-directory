@@ -21,13 +21,11 @@ else
 fi
 alias gpg="gpg2"
 
-alias ..="cd .."
-alias ~="cd ~"
-alias -- -="cd -"
-
 alias cp="/bin/cp --preserve=all"
 
 # Runs the previous command as root
 alias please='sudo $(fc -ln -1)'
 
-[ -f "~/.bash_aliases.local" ] && . "~/.bash_aliases.local" || :
+if [ -f "$XDG_CONFIG_HOME/bash/bash_aliases.local" ] ; then
+    . "$XDG_CONFIG_HOME/bash/bash_aliases.local"
+fi
