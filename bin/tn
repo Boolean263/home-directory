@@ -34,12 +34,12 @@ case "$MUXER" in
             # Session didn't exist, create it now
             cd ~
             "$MUXER" new-session -d -s "$NAME" -n "$NAME"
-            if [ -f "$HOME/.tmux/$NAME.conf" ] ; then
+            if [ -f "$XDG_CONFIG_HOME/tmux/$NAME.conf" ] ; then
                 # This command causes an error but works correctly.
                 # Add `|| :` to satisfy `set -e`
-                "$MUXER" source-file "$HOME/.tmux/$NAME.conf" -t "$NAME" || :
-            elif [ -x "$HOME/.tmux/$NAME.sh" ] ; then
-                "$HOME/.tmux/$NAME.sh"
+                "$MUXER" source-file "$XDG_CONFIG_HOME/tmux/$NAME.conf" -t "$NAME" || :
+            elif [ -x "$XDG_CONFIG_HOME/tmux/$NAME.sh" ] ; then
+                "$XDG_CONFIG_HOME/tmux/$NAME.sh"
             fi
         fi
         if [ -z "$TMUX" ] ; then
@@ -59,8 +59,8 @@ case "$MUXER" in
             # Session didn't exist, create it now
             cd ~
             $AGENT "$MUXER" -S "$NAME" -d -m
-            if [ -f "$HOME/.screen/$NAME.screenrc" ] ; then
-                "$MUXER" -S "$NAME" -X source "$HOME/.screen/$NAME.screenrc"
+            if [ -f "$XDG_CONFIG_HOME/screen/$NAME.screenrc" ] ; then
+                "$MUXER" -S "$NAME" -X source "$XDG_CONFIG_HOME/screen/$NAME.screenrc"
             fi
         fi
         "$MUXER" -S "$NAME" -x -RR

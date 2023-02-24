@@ -22,7 +22,7 @@ if [ -d "$ENVIRONMENTD" ] ; then
     done
 fi
 set +a
-unset conf
+unset conf ENVIRONMENTD
 
 . "$HOME/env/path_functions.sh"
 clean_path PATH

@@ -52,7 +52,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # Shell history
-export HISTFILE="$HOME/.bash_history"
+export HISTFILE="$XDG_STATE_HOME/bash/history"
 export HISTCONTROL="ignorespace:ignoredups:erasedups"
 export HISTSIZE=100000
 export HISTFILESIZE=1000000
@@ -60,8 +60,8 @@ export HISTIGNORE="gits:ls:ll:m:pwd"
 export HISTTIMEFORMAT="%Y-%m-%dT%H:%M:%S%Z "
 shopt -s histreedit histappend checkwinsize cmdhist direxpand
 
-if [ -f ~/.bash_aliases ] ; then
-    . ~/.bash_aliases
+if [ -f $XDG_CONFIG_HOME/bash/bash_aliases ] ; then
+    . $XDG_CONFIG_HOME/bash/bash_aliases
 fi
 
 # Custom Prompt {{{1

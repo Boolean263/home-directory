@@ -6,11 +6,14 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 # }}}1
 
+compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
+export HISTFILE="$XDG_STATE_HOME/zsh/history"
+
 # I got this idea from https://github.com/tomsquest/dotfiles
-source ~/.zsh/oh-my-zsh.zsh
-source ~/.zsh/config.zsh
-#source ~/.zsh/completion.zsh
-source ~/.zsh/aliases.zsh
+source $ZDOTDIR/oh-my-zsh.zsh
+source $ZDOTDIR/config.zsh
+#source $ZDOTDIR/completion.zsh
+source $ZDOTDIR/aliases.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ ! -f $ZDOTDIR/.p10k.zsh ]] || source $ZDOTDIR/.p10k.zsh
