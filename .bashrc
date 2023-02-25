@@ -60,9 +60,7 @@ export HISTIGNORE="gits:ls:ll:m:pwd"
 export HISTTIMEFORMAT="%Y-%m-%dT%H:%M:%S%Z "
 shopt -s histreedit histappend checkwinsize cmdhist direxpand
 
-if [ -f $XDG_CONFIG_HOME/bash/bash_aliases ] ; then
-    . $XDG_CONFIG_HOME/bash/bash_aliases
-fi
+. $XDG_CONFIG_HOME/bash/bash_aliases
 
 # Custom Prompt {{{1
 
@@ -160,7 +158,8 @@ unset -f my_prompt
 export PS2="$_SEM_PS2$PS2$_SEM_INPUT"
 # }}}1
 
-if [ -f "$HOME/.lesskey" ] && [ "$HOME/.lesskey" -nt "$HOME/.less" ] ; then
+if [ -f "$XDG_CONFIG_HOME/lesskey" ] && \
+        [ "$XDG_CONFIG_HOME/lesskey" -nt "$XDG_CONFIG_HOME/less" ] ; then
     lesskey
 fi
 
