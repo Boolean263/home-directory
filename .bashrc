@@ -158,9 +158,8 @@ unset -f my_prompt
 export PS2="$_SEM_PS2$PS2$_SEM_INPUT"
 # }}}1
 
-if [ -f "$XDG_CONFIG_HOME/lesskey" ] && \
-        [ "$XDG_CONFIG_HOME/lesskey" -nt "$XDG_CONFIG_HOME/less" ] ; then
-    lesskey
+if [ "$LESSKEYIN" -nt "$LESSKEY" ] ; then
+    lesskey -o "$LESSKEY" -- "$LESSKEYIN"
 fi
 
 # Try out vi command mode for grins
