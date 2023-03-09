@@ -60,7 +60,7 @@ export HISTIGNORE="gits:ls:ll:m:pwd"
 export HISTTIMEFORMAT="%Y-%m-%dT%H:%M:%S%Z "
 shopt -s histreedit histappend checkwinsize cmdhist direxpand
 
-. $XDG_CONFIG_HOME/bash/bash_aliases
+. "${XDG_CONFIG_HOME:-$HOME/.config}/bash/bash_aliases"
 
 # Custom Prompt {{{1
 
