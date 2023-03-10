@@ -1,2 +1,2 @@
 # msys2's tmux has trouble with crlf files
-.tmux.conf      text eol=lf
+.config/tmux/tmux.conf      text eol=lf
