@@ -15,13 +15,13 @@
 # Test for ENV_TEST_ENVD (which I set in ~/.config/environment.d/)
 # to avoid needless re-setting.
 ENVIRONMENTD="$HOME/.config/environment.d"
-set -a
 if [ -d "$ENVIRONMENTD" ] ; then
+    set -a
     for conf in $(ls "$ENVIRONMENTD"/*.conf | sed 's/ /?/g'); do
         . "$conf"
     done
+    set +a
 fi
-set +a
 unset conf ENVIRONMENTD
 
 . "$HOME/env/path_functions.sh"
@@ -79,7 +79,7 @@ if [ -d "/tmp" ] ; then
 fi
 
 # Use my custom-generated locale
-if "$HOME/.config/locale/regen.sh" ; then
+if "$XDG_CONFIG_HOME/locale/regen.sh" ; then
     export LOCPATH="$HOME/.local/locale"
     export LANG=en_CA.UTF-8
     export LC_ALL=en_CA.UTF-8
