@@ -96,6 +96,10 @@
     # and https://gist.github.com/992097
 
     fa = fetch --all --tags
+    ff = merge --ff-only
+    faff = !git fetch --all --tags && git merge --ff-only
+
+    squash = merge --squash
 
     #diff
     cdiff = diff --cached
@@ -142,8 +146,6 @@
 
     s = status --short
 
-    ff = merge --ff-only
-    squash = merge --squash
 
     rb = rebase
     rbc = rebase --continue
