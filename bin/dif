@@ -14,10 +14,13 @@ usage()
     fi
     cat 1>&2 <<EOT
 Wrapper around diff and possibly diff-so-fancy. Or, pager for
-outside calls to diff.
+outside calls to diff, particularly from git.
 
-Usage:
-    $0 [diff-options]
+Command line usage:
+    $0 [diff-options] file1 file2
+
+Git usage:
+    git config --global core.pager "$0"
 
 EOT
     exit 1
@@ -29,13 +32,19 @@ EOT
 
 [ "${1:-}" = "-h" ] && usage
 
-DSF=$(which colordiff diff-so-fancy tee 2>/dev/null | head -n 1)
+DSF=$(which diff-so-fancy colordiff tee 2>/dev/null | head -n 1)
 
 # If we're being used as a pager, don't call diff
 (
 if [ -t 0 ] ; then
+    # We're being used on the command line.
+    # Run diff with my preferred options.
     diff -u ${1+"$@"}
 else
+    # We're being used as a pager.
+    # Standard input is likely already in diff format,
+    # so just spit it out again.
+    # The part after the `fi` will make it pretty.
     tee
 fi
 ) | "$DSF" | "$PAGER" -FX
