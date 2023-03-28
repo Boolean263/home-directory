@@ -111,13 +111,11 @@
     </font>
   </theme>
   <desktops>
-    <number>6</number>
+    <number>3</number>
     <firstdesk>1</firstdesk>
     <names>
-      <name>Desk 1</name>
-      <name>Desk 2</name>
-      <name>Desk 3</name>
-      <name>Desk 4</name>
+      <name>General</name>
+      <name>Dev</name>
     </names>
     <popupTime>875</popupTime>
     <!-- The number of milliseconds to show the popup for when switching
@@ -139,11 +137,11 @@
          distance from bottom edge, or 'Center' -->
     </popupFixedPosition>
   </resize>
-  <!-- You can reserve a portion of your screen where windows will not cover when
-     they are maximized, or when they are initially placed.
-     Many programs reserve space automatically, but you can use this in other
-     cases. -->
   <margins>
+    <!-- You can reserve a portion of your screen where windows will not cover when
+      they are maximized, or when they are initially placed.
+      Many programs reserve space automatically, but you can use this in other
+      cases. -->
     <top>0</top>
     <bottom>0</bottom>
     <left>0</left>
@@ -236,6 +234,16 @@
     <keybind key="W-C-9"><action name="SendToDesktop"><to>9</to><follow>yes</follow></action></keybind>
     <keybind key="W-C-0"><action name="SendToDesktop"><to>0</to><follow>yes</follow></action></keybind>
     <keybind key="W-d"><action name="ToggleShowDesktop"/></keybind>
+    <keybind key="W-C-d">
+      <action name="AddDesktop">
+        <where>current</where>
+      </action>
+    </keybind>
+    <keybind key="W-C-F4">
+      <action name="RemoveDesktop">
+        <where>current</where>
+      </action>
+    </keybind>
     <!-- Keybindings for windows -->
     <keybind key="A-F4">
       <action name="Close"/>
@@ -325,10 +333,14 @@
         <command>exo-open --launch FileManager</command>
       </action>
     </keybind>
-    <!-- Launch scrot when Print is pressed -->
     <keybind key="Print">
       <action name="Execute">
-        <command>scrot</command>
+        <command>xscreenshot</command>
+      </action>
+    </keybind>
+    <keybind key="W-S-S">
+      <action name="Execute">
+        <command>xscreenshot -s</command>
       </action>
     </keybind>
     <keybind key="W-Return">
@@ -359,6 +371,14 @@
       <action name="Execute">
         <command>obsession-logout</command>
       </action>
+    </keybind>
+    <keybind key="W-Up">
+      <action name="ToggleMaximize">
+        <direction>both</direction>
+      </action>
+    </keybind>
+    <keybind key="W-Down">
+      <action name="Iconify"/>
     </keybind>
     <keybind key="W-S-Up">
       <action name="ToggleMaximize">
