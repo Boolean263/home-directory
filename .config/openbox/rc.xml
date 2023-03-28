@@ -338,6 +338,11 @@
         <command>xscreenshot</command>
       </action>
     </keybind>
+    <keybind key="A-Print">
+      <action name="Execute">
+        <command>xscreenshot -u -w</command>
+      </action>
+    </keybind>
     <keybind key="W-S-S">
       <action name="Execute">
         <command>xscreenshot -s</command>
