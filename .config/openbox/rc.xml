@@ -313,16 +313,6 @@
         <direction>left</direction>
       </action>
     </keybind>
-    <keybind key="W-Up">
-      <action name="DirectionalCycleWindows">
-        <direction>up</direction>
-      </action>
-    </keybind>
-    <keybind key="W-Down">
-      <action name="DirectionalCycleWindows">
-        <direction>down</direction>
-      </action>
-    </keybind>
     <!-- Keybindings for running applications -->
     <keybind key="W-e">
       <action name="Execute">
@@ -872,4 +862,4 @@
 
   </applications>
 </openbox_config>
-<!-- vim:set shiftwidth=2: -->
+<!-- vim:set shiftwidth=2 foldlevel=1: -->
