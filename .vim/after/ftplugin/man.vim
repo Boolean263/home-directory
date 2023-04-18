@@ -32,3 +32,8 @@ let b:undo_ftplugin .= ""
     \ . " |silent! nunmap <buffer> <end>"
     \ . " |silent! nunmap <buffer> <home>"
     \ . " |silent! nunmap <buffer> <space>"
+
+if exists(':IndentGuidesDisable')
+    IndentGuidesDisable
+    let b:undo_ftplugin .= " | IndentGuidesEnable"
+endif

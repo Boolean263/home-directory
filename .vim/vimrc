@@ -339,6 +339,8 @@ let g:airline_detect_paste = 1
 "let g:airline_inactive_alt_sep=1
 let g:airline_skip_empty_sections = 1
 
+let g:indent_guides_enable_on_vim_startup = 1
+
 " }}}2
 
 " Auto-installation {{{2
@@ -405,6 +407,7 @@ endif
 Plug 'Boolean263/vim-syntax-libconfig'
 Plug 'vimwiki/vimwiki'          " a personal wiki for vim
 Plug 'kana/vim-altr'            " Switch between eg. foo.c/foo.h
+Plug 'preservim/vim-indent-guides' " Shading in tabstops for indents
 call plug#end() " }}}2
 " Note that the plugins haven't actually been loaded yet. They've been added
 " to 'runtimepath' so they will be loaded once this `.vimrc` file is finished.

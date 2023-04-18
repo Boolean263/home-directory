@@ -5,3 +5,7 @@ if version > 742
     setlocal signcolumn=no
     let b:undo_ftplugin .= " | setlocal signcolumn<"
 endif
+if exists(':IndentGuidesDisable')
+    IndentGuidesDisable
+    let b:undo_ftplugin .= " | IndentGuidesEnable"
+endif
