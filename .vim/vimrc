@@ -10,12 +10,16 @@
 
 " "Tiny-mode" vim is very restricted compared to standard vim.
 " It doesn't even really support 'if' statements.
-" Accordingly, this file sets as many prefs as possible that will work with
-" basic vim, then re-sets them when we know we are not using tiny-mode vim.
+" It's the default vim install on some minimal environments, but can also
+" be installed (and tested) via the vim-tiny package and vim.tiny executable.
+" This file sets as many prefs as possible that will work with
+" vim-tiny, then re-sets them when we know we are not using tiny-mode vim.
 
-" Get my simple prefs from .exrc.
+" Vim isn't installed by default on some systems (eg. OpenBSD) but a
+" classic vi editor is. It reads those prefs from ~/.exrc, which I also
+" maintain. I source it here to reduce setting duplication.
 source ~/.exrc
-" But undo its mappings so they don't interfere with the ones I set below
+" But undo its mappings so they don't interfere with the ones I set below.
 unmap 
 unmap! 
 
@@ -65,9 +69,12 @@ set formatoptions+=j                " remove comment leader when joining
 set formatoptions+=q                " let 'gq' format comments
 silent! set formatoptions+=/        " don't continue // comments
 
-" Highlight the current line and column, and column after textwidth
-" The colours for these are set below
-set nocursorline nocursorcolumn colorcolumn=+1
+" Highlight the column after textwidth
+set colorcolumn=+1
+
+" Don't highlight the current line or column by default for performance
+" (but see plugin/crosshairs.vim)
+set nocursorline nocursorcolumn
 
 " Use histogram-based diffs where possible
 if has('nvim-0.3.2') || has("patch-8.1.0360")
@@ -99,7 +106,6 @@ set wildmode=longest:full   " When tab is pressed, fill longest, then show menu
 set matchpairs+=‘:’,“:”,«:»
 
 set foldcolumn=2                    " Show a 2-char wide fold column at the left
-set foldlevelstart=0                " And close all folds upon loading a file
 set foldmethod=marker               " Default folding method
 
 set hidden                          " lets you switch away from unsaved buffers

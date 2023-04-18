@@ -1,7 +1,11 @@
-" This file is the configuration for the standard vi editor.
-" I source it from my ~/.vimrc to try and reduce duplicate config files.
+" This file is the configuration for the classic vi editor.
+" I source it from my (n)vim config to try and reduce duplicate config files.
 "
-" When tested on openbsd, these were the default settings:
+" Classic vi is installed by default on OpenBSD, and can be installed
+" on Debian/Ubuntu by installing the 'nvi' package and running '/usr/bin/nvi'.
+"
+" When tested on OpenBSD, these were the default settings reported by
+" ':set all':
 " altwerase       noexrc          matchtime=7     scroll=18       nottywerase
 " noautoindent    noextended      mesg            nosearchincr    noverbose
 " autoprint       filec=" "       noprint=""      nosecure        warn
