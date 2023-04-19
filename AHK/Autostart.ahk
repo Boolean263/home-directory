@@ -7,7 +7,33 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ;----- Your autoexecute commands -----
 
+; Bring window to top
+#a::
+MouseGetPos,,,rwinid
+WinSet, Top,,ahk_id %rwinid%
+Return
+
+; Send window to bottom
+#z::
+MouseGetPos,,,rwinid
+WinSet, Bottom,,ahk_id %rwinid%
+Return
+
+; Toggle "focus" mode -- ie, borderless fullscreen
+#f::
+WinGet MX, MinMax, A
+If MX {
+    WinSet, Style, +0xC40000, A
+    WinRestore A
+}
+Else {
+    WinSet, Style, -0xC40000, A
+    WinMaximize A
+}
+Return
+
 ;----- Included scripts -----
+#Include ChangeResolution.ahk
 ;#Include MoveInactiveWin.ahk
 ;#Include EasyWindowDrag.ahk
 ;; GoSub SKeySetup

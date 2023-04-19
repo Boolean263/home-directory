@@ -199,26 +199,3 @@ Sleep 0
 KeyWait LWin  ; This prevents the keyboard's auto-repeat feature from interfering.
 return
 
-; My additions
-#a::
-MouseGetPos,,,rwinid
-WinSet, Top,,ahk_id %rwinid%
-Return
-
-#z::
-MouseGetPos,,,rwinid
-WinSet, Bottom,,ahk_id %rwinid%
-Return
-
-#f::
-; Toggle "focus" mode -- ie, borderless fullscreen
-WinGet MX, MinMax, A
-If MX {
-    WinSet, Style, +0xC40000, A
-    WinRestore A
-}
-Else {
-    WinSet, Style, -0xC40000, A
-    WinMaximize A
-}
-Return
