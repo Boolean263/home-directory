@@ -1,4 +1,7 @@
-﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+﻿; Change screen resolution with a hotkey.
+; From https://www.tcg.com/blog/quickly-change-windows-10-resolution-with-autohotkey/
+
+#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
@@ -11,6 +14,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
     ChangeResolution(32,1920,1080,60)
     return
 
+; Colour depth, width, height, refresh rate
 ChangeResolution( cD, sW, sH, rR ) {
     VarSetCapacity(dM,156,0)
     NumPut(156,2,&dM,36)
