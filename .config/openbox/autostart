@@ -9,5 +9,10 @@ else
     term &
 fi
 
+compositor=$(which picom compton xcompmgr 2>/dev/null | head -n 1)
+if [ -n "$compositor" ] ; then
+    $compositor &
+fi
+
 A="${XDG_CONFIG_HOME:-$HOME/.config}/openbox/autostart.local" 
 test -x $A && $A
