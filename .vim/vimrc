@@ -222,7 +222,9 @@ inoremap <C-D> <C-X><C-D>
 nnoremap <C-6> <C-^>
 
 " For parity with 'D' in visual mode
-vnoremap Y :'<,'>y<cr>
+" (NB. vim forcibly puts `'<,'>` after the `:` in this mapping,
+" so I no longer explicitly add that here)
+vnoremap Y :y<cr>
 " }}}1
 
 " *********************
