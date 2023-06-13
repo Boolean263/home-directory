@@ -1,9 +1,9 @@
 ! Reload your resources with the command:
-!   xrdb $HOME/.Xresources
-#include ".Xresources.d/xscreensaver"
-#include ".Xresources.d/rxvt"
-#include ".Xresources.d/xterm"
-#include ".Xresources.d/nethack"
+!   xrdb -I$XDG_CONFIG_HOME/Xresources.d $XDG_CONFIG_HOME/.Xresources
+#include "xscreensaver"
+#include "rxvt"
+#include "xterm"
+#include "nethack"
 
 ! For my TV; I had to set this manually, perhaps because my AV system
 ! got in the way
