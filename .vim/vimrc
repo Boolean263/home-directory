@@ -83,11 +83,16 @@ if has('nvim-0.3.2') || has("patch-8.1.0360")
     set diffopt=filler,internal,algorithm:histogram,indent-heuristic
 endif
 
-" Set the directory for saving swap files and undo history
-set directory=$TEMP/daperry/vim//
-set   undodir=$TEMP/daperry/vim//
+if !has('nvim')
+    " Set the directory for saving swap files and undo history.
+    " Neovim already uses XDG directories for this.
+    set directory=$XDG_STATE_HOME/vim//
+    set   undodir=$XDG_STATE_HOME/vim//
+
+    " neovim creates the directory if needed, but vim doesn't.
+    silent! call mkdir(&directory, "p", 0700)
+endif
 set undofile
-silent! call mkdir(&directory, "p", 0700)
 
 set list                " Show non-printable pseudocharacters
 " Fallback symbols if vim has trouble with UTF-8
