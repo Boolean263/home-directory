@@ -27,7 +27,7 @@
 " These are my preferences.
 set autoindent
 set shiftwidth=4
-set tabstop=4
+set tabstop=8
 set ruler
 set showmode
 

@@ -16,8 +16,10 @@
 " vim-tiny, then re-sets them when we know we are not using tiny-mode vim.
 
 " Vim isn't installed by default on some systems (eg. OpenBSD) but a
-" classic vi editor is. It reads those prefs from ~/.exrc, which I also
-" maintain. I source it here to reduce setting duplication.
+" classic vi editor is. (This variation can be installed and tested on
+" a Debian-like system with the nvi package and executable.)
+" It reads those prefs from ~/.exrc, which I also maintain.
+" I source it here to reduce setting duplication.
 source ~/.exrc
 " But undo its mappings so they don't interfere with the ones I set below.
 unmap 
@@ -26,7 +28,7 @@ unmap! 
 " GENERAL SETTINGS {{{1
 
 silent! language en_US.UTF-8        " fails on Windows
-set encoding=utf-8
+set encoding=utf-8                  " vim-internal character encoding
 set fileencodings=ucs-bom,utf-8,latin1
 set modeline                        " allow modelines to work
 set backspace=indent,eol,start      " backspace across lines, etc.
@@ -407,7 +409,7 @@ Plug 'romainl/vim-qf'           " Handy mappings and functions for quickfix wind
 if has('python3')
     Plug 'SirVer/ultisnips'     " Code snippets (fails horribly if no python3)
     Plug 'pgilad/vim-skeletons' " file skeletons using ultisnips
-    Plug 'psf/black', { 'tag': 'stable', 'for': 'python' } " Python code formatting
+    "Plug 'psf/black', { 'tag': 'stable', 'for': 'python' } " Python code formatting
 endif
 if executable('i3')
     Plug 'mboughaba/i3config.vim'
