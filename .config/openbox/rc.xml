@@ -330,7 +330,7 @@
     </keybind>
     <keybind key="A-Print">
       <action name="Execute">
-        <command>xscreenshot -u -w</command>
+        <command>xscreenshot -u</command>
       </action>
     </keybind>
     <keybind key="W-S-S">

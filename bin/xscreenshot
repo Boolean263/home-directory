@@ -1,9 +1,12 @@
 #!/bin/sh
 # Helper script for quickly taking screenshots and copying them to the clipboard.
 
-# Save to Screenshots folder, then compress and copy into clipboard
-#scrot ${1:+"$@"} -f -F ~/Screenshots/%Y%m%d-%H%M%S.png \
-#    -e 'optipng -preserve $f ; xclip -i -selection clipboard -t image/png $f'
-
-# Direct to clipboard
-scrot ${1:+"$@"} -f - | xclip -i -selection clipboard -t image/png
+if [ "$1" = "-D" ] ; then
+    # Overload -D to mean "direct to clipboard" if it's the first option
+    shift
+    scrot ${1:+"$@"} -f - | xclip -i -selection clipboard -t image/png
+else
+    # Save to Screenshots folder, then compress and copy into clipboard
+    scrot ${1:+"$@"} -f -F ~/Screenshots/%Y%m%d-%H%M%S.png \
+        -e 'optipng -preserve $f ; xclip -i -selection clipboard -t image/png $f ; notify-send -i "$f" "Screenshot saved" "$f"'
+fi
