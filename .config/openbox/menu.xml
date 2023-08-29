@@ -6,7 +6,7 @@
                 file:///usr/share/openbox/menu.xsd">
 
 <menu id="desktop-app-menu" label="Applications"
-    execute="obamenu" />
+    execute="obmenu-generator -i" />
 <menu id="quickstart-menu" label="QuickLaunch"
     execute="dir2menu.py /home/smiley/.config/quickstart" />
 
