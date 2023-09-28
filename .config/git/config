@@ -146,6 +146,7 @@
 
     s = status --short
 
+    tracked = ls-tree --full-tree -r --name-only HEAD
 
     rb = rebase
     rbc = rebase --continue
