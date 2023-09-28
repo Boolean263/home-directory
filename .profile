@@ -15,7 +15,7 @@
 # Test for ENV_TEST_ENVD (which I set in ~/.config/environment.d/)
 # to avoid needless re-setting.
 ENVIRONMENTD="$HOME/.config/environment.d"
-if [ -d "$ENVIRONMENTD" ] ; then
+if [ -d "$ENVIRONMENTD" ] && [ -z "$ENV_TEST_ENVD" ] ; then
     set -a
     for conf in $(ls "$ENVIRONMENTD"/*.conf | sed 's/ /?/g'); do
         . "$conf"
