@@ -42,6 +42,8 @@ set splitbelow splitright           " new splits start beneath/right of current
 
 set scrolloff=4                     " number of lines to keep visible at top/bottom of screen
 
+set title                           " set title of window to titlestring
+
 set updatetime=250                  " save swap and update CursorHold
 set autoread                        " automatically reload the file if it's changed outside of vim and not inside
 
