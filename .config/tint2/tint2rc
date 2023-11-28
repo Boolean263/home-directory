@@ -159,9 +159,9 @@ task_normal_background_id = 3
 task_active_background_id = 3
 task_urgent_background_id = 4
 task_iconified_background_id = 2
-mouse_left = toggle_iconify
-mouse_middle = none
-mouse_right = close
+mouse_left = toggle
+mouse_middle = close
+mouse_right = iconify
 mouse_scroll_up = toggle
 mouse_scroll_down = iconify
 
