@@ -89,7 +89,7 @@ if($ENV{DISPLAY})
         }
         if($gvim =~ m(/neovide$))
         {
-            unshift @vim_args, '--notabs', '--geometry', $geometry);
+            unshift @vim_args, '--notabs', '--geometry', $geometry;
             push @vim_args, '--';
         }
         debug("running gvim: ", $gvim, @vim_args, @ARGV, @vim_tail);
