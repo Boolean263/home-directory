@@ -58,6 +58,7 @@ my $vim = $ENV{VISUAL} || which(qw(nvim vim vi));
 my @vim_args;
 my @vim_tail;
 my $remote;
+my $geometry = '80x50';
 
 if($basename eq 'gro')
 {
@@ -88,7 +89,7 @@ if($ENV{DISPLAY})
         }
         if($gvim =~ m(/neovide$))
         {
-            unshift @vim_args, '--notabs';
+            unshift @vim_args, '--notabs', '--geometry', $geometry);
             push @vim_args, '--';
         }
         debug("running gvim: ", $gvim, @vim_args, @ARGV, @vim_tail);
