@@ -88,6 +88,10 @@ fi
 # ... but still collate ASCIIbetically
 export LC_COLLATE=POSIX
 
+if exists luarocks ; then
+    eval $(luarocks path --no-bin)
+fi
+
 if [ -f "$HOME/.profile.local" ] ; then
     . "$HOME/.profile.local"
 fi
