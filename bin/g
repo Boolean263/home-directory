@@ -109,6 +109,10 @@ if($ENV{DISPLAY})
             }
             push @vim_args, '--';
         }
+        elsif($gvim =~ m(/nvim-qt$)) {
+            # nvim-qt's unit for --geometry is pixels, not characters
+            push @vim_args, '--';
+        }
         debug("running gvim: ", $gvim, @vim_args, @ARGV, @vim_tail);
         do_or_die($gvim, @vim_args, @ARGV, @vim_tail);
     }
