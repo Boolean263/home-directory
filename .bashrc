@@ -53,6 +53,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # Shell history
+shopt -s histreedit histappend checkwinsize cmdhist direxpand
 mkdir -p "$XDG_STATE_HOME/bash"
 export HISTFILE="$XDG_STATE_HOME/bash/history"
 export HISTCONTROL="ignorespace:ignoredups:erasedups"
@@ -60,7 +61,6 @@ export HISTSIZE=100000
 export HISTFILESIZE=1000000
 export HISTIGNORE="gits:ls:ll:m:pwd"
 export HISTTIMEFORMAT="%Y-%m-%dT%H:%M:%S%Z "
-shopt -s histreedit histappend checkwinsize cmdhist direxpand
 
 . "$XDG_CONFIG_HOME/bash/bash_aliases"
 
