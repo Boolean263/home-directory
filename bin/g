@@ -50,6 +50,14 @@ sub separate_process(@)
     do_or_die(@_);
 }
 
+sub version_from_string($)
+{
+    # parse the version number from a string such as "tmux 1.2.3"
+    my $s = shift;
+    $s =~ s/[^\d.]//g;
+    return version->parse($s);
+}
+
 ### Main program
 
 my $basename = `basename $0`; chomp $basename;
@@ -85,11 +93,20 @@ if($ENV{DISPLAY})
     {
         if($remote)
         {
-            unshift @vim_args, '--remote-silent' if $gvim =~ m(/gvim$);
+            # The following errors out if no filenames are provided
+            #unshift @vim_args, '--remote-silent' if $gvim =~ m(/gvim$);
         }
         if($gvim =~ m(/neovide$))
         {
-            unshift @vim_args, '--notabs', '--geometry', $geometry;
+            # This doesn't actually work; neovide detects it's not
+            # outputting to a terminal and creates a new window instead
+            my $neovide_version = version_from_string(`$gvim --version`);
+            if ($neovide_version >= version->parse("0.12.0")) {
+                unshift @vim_args, '--no-tabs', '--grid', $geometry;
+            }
+            else {
+                unshift @vim_args, '--notabs', '--geometry', $geometry;
+            }
             push @vim_args, '--';
         }
         debug("running gvim: ", $gvim, @vim_args, @ARGV, @vim_tail);
@@ -119,11 +136,7 @@ if($ENV{DISPLAY})   # X but no gvim
 if($ENV{TMUX})      # tmux
 {
     # tmux ≥ 2.1 does what you'd expect.
-    my $tmux_version = `tmux -V`;
-    chomp $tmux_version;
-    $tmux_version =~ s/^tmux\s*//;
-    $tmux_version =~ s/[^\d.]*$//;
-    $tmux_version = version->parse($tmux_version);
+    my $tmux_version = version_from_string(`tmux -V`);
     if($tmux_version >= version->parse("2.1"))
     {
         do_or_die( qw(tmux new-window), $vim, @vim_args, @ARGV, @vim_tail );
