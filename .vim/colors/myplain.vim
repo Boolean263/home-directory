@@ -17,3 +17,4 @@ highlight clear CursorColumn
 highlight link CursorColumn CursorLine
 
 highlight Pmenu guibg=#000000 ctermbg=0 term=standout
+highlight PmenuSel guibg=#CCCCCC guifg=#222222 ctermbg=251 ctermfg=234 term=reverse

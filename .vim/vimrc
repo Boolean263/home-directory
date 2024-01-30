@@ -128,7 +128,7 @@ set statusline=%t%m%r%=%y%l:%c\ %P/%L
 " see also https://vimways.org/2018/you-should-be-using-tags-in-vim/
 " see also https://vim.wikia.com/wiki/Make_Vim_completion_popup_menu_work_just_like_in_an_IDE
 set complete=.,t,i
-set completeopt=menuone,preview
+set completeopt=menuone,preview,longest
 set shortmess+=c
 
 set foldopen+=jump,quickfix
@@ -221,11 +221,11 @@ cnoremap <expr> <right> wildmenumode() ? " \<bs>\<C-Z>" : "\<right>"
 nnoremap <Space>b :ls<cr>:b<space>
 
 " autocomplete from tag
-inoremap <C-]> <C-X><C-]>
+"inoremap <C-]> <C-X><C-]>
 " autocomplete from keywords in the current and included files
-inoremap <C-N> <C-X><C-I>
+"inoremap <C-N> <C-X><C-I>
 " autocomplete from definitions/macros
-inoremap <C-D> <C-X><C-D>
+"inoremap <C-D> <C-X><C-D>
 
 " Neovide sees C-6 as different from C-^
 nnoremap <C-6> <C-^>
@@ -267,7 +267,7 @@ let g:tagbar_type_make = {
 let g:xml_syntax_folding=1      " see :help xml-folding
 let g:c_no_comment_fold=1
 
-let g:UltiSnipsJumpForwardTrigger = '<tab>'
+let g:UltiSnipsExpandOrJumpTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
 
 let g:syntastic_check_on_open = 1
@@ -422,7 +422,7 @@ if executable('i3')
     Plug 'mboughaba/i3config.vim'
 endif
 Plug 'Boolean263/vim-syntax-libconfig'
-Plug 'vimwiki/vimwiki'          " a personal wiki for vim
+"Plug 'vimwiki/vimwiki'          " a personal wiki for vim
 Plug 'kana/vim-altr'            " Switch between eg. foo.c/foo.h
 Plug 'preservim/vim-indent-guides' " Shading in tabstops for indents
 Plug 'junegunn/vim-peekaboo'    " Sidebar for register contents
