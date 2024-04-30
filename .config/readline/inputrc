@@ -23,7 +23,7 @@ set show-mode-in-prompt on
 set emacs-mode-string ""
 set vi-cmd-mode-string "CMD│"
 set vi-ins-mode-string "INS│"
-set keyseq-timeout 20
+set keyseq-timeout 200
 
 # Make vi-insert mode more vim-like (or emacs-like, I guess)
 set keymap vi-insert
@@ -51,6 +51,8 @@ set keymap vi-command
 
 # Bindings to make vi mode more like vim
 # https://github.com/dannycolin/dotfiles/blob/master/user/console/.inputrc
+# NB. the time you have to enter multi-key commands is set by
+# 'keyseq-timeout' above
 set keymap vi-command
 Control-l: clear-screen
 "#": insert-comment
