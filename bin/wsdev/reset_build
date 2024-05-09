@@ -1,0 +1,5 @@
+#!/bin/sh
+
+: "${BUILDPATH:?BUILDPATH not set}"
+
+rm -rf "$BUILDPATH"

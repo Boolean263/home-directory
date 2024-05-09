@@ -1,0 +1,17 @@
+#!/bin/sh
+
+: "${BUILDPATH:?BUILDPATH not set}"
+
+export WIRESHARK_LOG_LEVEL=
+export WIRESHARK_LOG_DOMAINS=
+
+set -e
+m --target test-programs
+set +e
+
+python3 -m pytest "$SRCPATH" ${1:+"$@"}
+rv=$?
+if [ $rv -gt 0 ] ; then
+    python3 -m pytest "$SRCPATH" --lf --log-cli-level=info
+fi
+exit $rv

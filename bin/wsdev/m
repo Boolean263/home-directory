@@ -1,0 +1,6 @@
+#!/bin/sh
+
+: "${BUILDPATH:?BUILDPATH not set}"
+
+[ -d "$BUILDPATH" ] || cm
+cmake --build "$BUILDPATH" ${1:+"$@"}
