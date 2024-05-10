@@ -2,8 +2,7 @@
 
 : "${BUILDPATH:?BUILDPATH not set}"
 
-export WIRESHARK_LOG_LEVEL=
-export WIRESHARK_LOG_DOMAINS=
+unset WIRESHARK_LOG_LEVEL WIRESHARK_LOG_DOMAINS
 
 set -e
 m --target test-programs
