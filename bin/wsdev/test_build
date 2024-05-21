@@ -17,6 +17,7 @@ Options:
     -x, --exitfirst             Passed to pytest
     -k EXPRESSION               Passed to pytest
 EOT
+    exit 1
 }
 
 DO_RESET=
