@@ -2,15 +2,80 @@
 
 : "${BUILDPATH:?BUILDPATH not set}"
 
-unset WIRESHARK_LOG_LEVEL WIRESHARK_LOG_DOMAINS
+usage()
+{
+    if [ -n "$*" ] ; then
+        echo "Error: $*" 1>&2
+        echo 1>&2
+    fi
+    cat 1>&2 <<EOT
+Build and test Wireshark. For use with 'git bisect'.
+
+Options:
+    -c[ARGS], --clean[=ARGS]    Clean build tree before building
+                                (pass ARGS to initial cmake command line)
+    -DVAR=VAL                   Passed to initial cmake command line
+    -x, --exitfirst             Passed to pytest
+    -k EXPRESSION               Passed to pytest
+EOT
+    exit 1
+}
+
+DO_RESET=
+MY_CMAKE_ARGS=""
+MY_WSTEST_ARGS=""
+
+while [ -n "$1" ] ; do
+    case "$1" in
+        -c|--clean)
+            DO_RESET=1
+            ;;
+        -cd|-dc)
+            DO_RESET=1
+            MY_CMAKE_ARGS="$MY_CMAKE_ARGS -DCMAKE_BUILD_TYPE=Debug"
+            ;;
+        -c*)
+            DO_RESET=1
+            MY_CMAKE_ARGS="$MY_CMAKE_ARGS ${1#-c}"
+            ;;
+        --clean=*)
+            DO_RESET=1
+            MY_CMAKE_ARGS="$MY_CMAKE_ARGS ${1#--clean=}"
+            ;;
+        -D*)
+            MY_CMAKE_ARGS="$MY_CMAKE_ARGS $1"
+            ;;
+        -x|--exitfirst)
+            MY_WSTEST_ARGS="$MY_WSTEST_ARGS -x"
+            ;;
+        -k)
+            shift
+            MY_WSTEST_ARGS="$MY_WSTEST_ARGS -k '$1'"
+            ;;
+        --)
+            break
+            ;;
+        -h|--help)
+            usage
+            ;;
+        *)
+            usage "Unrecognized options"
+            ;;
+    esac
+    shift
+done
 
 set -e
-m --target test-programs
-set +e
 
-python3 -m pytest "$SRCPATH" ${1:+"$@"}
-rv=$?
-if [ $rv -gt 0 ] ; then
-    python3 -m pytest "$SRCPATH" --lf --log-cli-level=info
+if [ -n "$DO_RESET" ] ; then
+    reset_build
 fi
-exit $rv
+if ! [ -d "$BUILDPATH" ] ; then
+    cm $MY_CMAKE_ARGS
+fi
+
+m
+
+m --target test-programs
+unset WIRESHARK_LOG_LEVEL WIRESHARK_LOG_DOMAINS
+python3 -m pytest "$SRCPATH" $MY_WSTEST_ARGS
