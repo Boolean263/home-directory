@@ -32,6 +32,12 @@ Else {
 }
 Return
 
+; Restart Windows Explorer
+!^Insert::
+Process, Close, explorer.exe
+; it automatically restarts on its own
+Return
+
 ;----- Included scripts -----
 #Include ChangeResolution.ahk
 ;#Include MoveInactiveWin.ahk
