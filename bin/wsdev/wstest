@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 : "${BUILDPATH:?BUILDPATH not set}"
 
@@ -22,8 +22,8 @@ EOT
 }
 
 DO_RESET=
-MY_CMAKE_ARGS=""
-MY_WSTEST_ARGS=""
+declare -a MY_CMAKE_ARGS
+declare -a MY_WSTEST_ARGS
 
 while [ -n "$1" ] ; do
     case "$1" in
@@ -32,25 +32,25 @@ while [ -n "$1" ] ; do
             ;;
         -cd|-dc)
             DO_RESET=1
-            MY_CMAKE_ARGS="$MY_CMAKE_ARGS -DCMAKE_BUILD_TYPE=Debug"
+            MY_CMAKE_ARGS+=("-DCMAKE_BUILD_TYPE=Debug")
             ;;
         -c*)
             DO_RESET=1
-            MY_CMAKE_ARGS="$MY_CMAKE_ARGS ${1#-c}"
+            MY_CMAKE_ARGS+=("${1#-c}")
             ;;
         --clean=*)
             DO_RESET=1
-            MY_CMAKE_ARGS="$MY_CMAKE_ARGS ${1#--clean=}"
+            MY_CMAKE_ARGS+=("${1#--clean=}")
             ;;
-        -D*)
-            MY_CMAKE_ARGS="$MY_CMAKE_ARGS $1"
+        -[CD]*)
+            MY_CMAKE_ARGS+=("${1}")
             ;;
         -x|--exitfirst)
-            MY_WSTEST_ARGS="$MY_WSTEST_ARGS -x"
+            MY_WSTEST_ARGS+=("-x")
             ;;
         -k)
             shift
-            MY_WSTEST_ARGS="$MY_WSTEST_ARGS -k '$1'"
+            MY_WSTEST_ARGS+=("-k" "$1")
             ;;
         --)
             break
@@ -71,11 +71,11 @@ if [ -n "$DO_RESET" ] ; then
     reset_build
 fi
 if ! [ -d "$BUILDPATH" ] ; then
-    cm $MY_CMAKE_ARGS
+    cm "${MY_CMAKE_ARGS[@]}"
 fi
 
 m
 
 m --target test-programs
 unset WIRESHARK_LOG_LEVEL WIRESHARK_LOG_DOMAINS
-python3 -m pytest "$SRCPATH" $MY_WSTEST_ARGS
+python3 -m pytest "$SRCPATH" "${MY_WSTEST_ARGS[@]}"
