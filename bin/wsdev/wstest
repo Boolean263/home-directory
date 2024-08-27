@@ -15,7 +15,7 @@ Options:
     -c[ARGS], --clean[=ARGS]    Clean build tree before building
                                 (pass ARGS to initial cmake command line)
     -DVAR=VAL                   Passed to initial cmake command line
-    -x, --exitfirst             Passed to pytest
+    -x, --exitfirst, -v…        Passed to pytest
     -k EXPRESSION               Passed to pytest
 EOT
     exit 1
@@ -45,8 +45,8 @@ while [ -n "$1" ] ; do
         -[CD]*)
             MY_CMAKE_ARGS+=("${1}")
             ;;
-        -x|--exitfirst)
-            MY_WSTEST_ARGS+=("-x")
+        -x|--exitfirst|-v*)
+            MY_WSTEST_ARGS+=("$1")
             ;;
         -k)
             shift
