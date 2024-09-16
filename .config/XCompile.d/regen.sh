@@ -17,4 +17,3 @@ include "%L"
 EOT
 
 fixkeys
-killall -HUP fcitx fcitx5

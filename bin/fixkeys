@@ -12,3 +12,5 @@ else
     # For a local X session, go hog wild
     xkbcomp -w 1 -I$XKBHOME $XKBHOME/keymap/default $DISPLAY
 fi
+
+killall -HUP fcitx fcitx5
