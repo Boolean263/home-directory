@@ -7,6 +7,16 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ;----- Your autoexecute commands -----
 
+; en-dash on Ctrl+NumpadSub, em-dash on Ctrl+Alt+NumpadSub
+; (these are MS Word shortcuts that I'm making global)
+^NumpadSub::
+Send, {U+2013}
+Return
+
+^!NumpadSub::
+Send, {U+2014}
+Return
+
 ; Bring window to top
 #a::
 MouseGetPos,,,rwinid
