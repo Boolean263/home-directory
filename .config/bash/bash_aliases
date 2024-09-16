@@ -27,6 +27,8 @@ alias cp="/bin/cp --preserve=all"
 # Runs the previous command as root
 alias please='sudo $(fc -ln -1)'
 
+alias drun="docker run -it --rm"
+
 if [ -f "$XDG_CONFIG_HOME/bash/bash_aliases.local" ] ; then
     . "$XDG_CONFIG_HOME/bash/bash_aliases.local"
 fi
