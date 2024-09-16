@@ -56,6 +56,7 @@ fi
 shopt -s histreedit histappend checkwinsize cmdhist direxpand
 mkdir -p "$XDG_STATE_HOME/bash"
 export HISTFILE="$XDG_STATE_HOME/bash/history"
+# bash-preexec removes ignorespace from HISTCONTROL :(
 export HISTCONTROL="ignorespace:ignoredups:erasedups"
 export HISTSIZE=100000
 export HISTFILESIZE=1000000
