@@ -16,7 +16,7 @@ set hideremotes 0
 set showlocalchanges 1
 set datetimeformat {%Y-%m-%d %H:%M:%S}
 set limitdiffs 1
-set uicolor #0e1013
+set uicolor #222233
 set want_ttk 0
 set bgcolor #000000
 set fgcolor #cccccc
@@ -53,12 +53,12 @@ set linkfgcolor blue
 set circleoutlinecolor black
 set diffbgcolors {{#220000} #002200}
 set web_browser xdg-open
-set geometry(main) 1374x1348+1801+0
+set geometry(main) 1325x1348+1774+0
 set geometry(state) normal
-set geometry(topwidth) 1372
-set geometry(topheight) 406
-set geometry(pwsash0) "893 1"
-set geometry(pwsash1) "1186 1"
-set geometry(botwidth) 1132
-set geometry(botheight) 930
+set geometry(topwidth) 1323
+set geometry(topheight) 425
+set geometry(pwsash0) "859 1"
+set geometry(pwsash1) "1184 1"
+set geometry(botwidth) 1039
+set geometry(botheight) 911
 set permviews {}
