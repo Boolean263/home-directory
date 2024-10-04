@@ -135,7 +135,7 @@ my_prompt()
     PS+=('`echo "${code:+\['$(tput setaf 9)'\]\a⚠ $code }"`')
 
     # Add hostname
-    PS+=("\[$(tput setaf complement)\]$HOSTNAME")
+    PS+=("\[$(tput setaf $complement)\]$HOSTNAME")
 
     # Add chroot if any
     PS+=('${debian_chroot:+"\['$(tput setaf $t1)'\]:$debian_chroot"}')
