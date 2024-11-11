@@ -13,4 +13,8 @@ augroup filetypedetect
 
     " Use markdown syntax in vim, but let Windows recognize it as text
     au! BufNewFile,BufRead *.md.txt setfiletype markdown
+
+    " Some people use .ah2 to distinguish AutoHotKey scripts that
+    " are written for v2 rather than the deprecated v1
+    au! BufNewFile,BufRead *.ah2 setfiletype autohotkey
 augroup END
