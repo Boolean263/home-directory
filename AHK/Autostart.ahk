@@ -89,3 +89,4 @@
 
 ;----- Included scripts -----
 #Include ChangeResolution.ahk
+#include SimpleWindowDrag.ah2
