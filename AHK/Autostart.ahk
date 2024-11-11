@@ -1,55 +1,62 @@
 ﻿;----- Common settings -----
-#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
-; #Warn  ; Enable warnings to assist with detecting common errors.
-SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
-SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
-
+#Requires AutoHotkey v2.0
 
 ;----- Your autoexecute commands -----
 
 ; en-dash on Ctrl+NumpadSub, em-dash on Ctrl+Alt+NumpadSub
 ; (these are MS Word shortcuts that I'm making global)
 ^NumpadSub::
-Send, {U+2013}
-Return
+{
+    Send "{U+2013}"
+}
 
 ^!NumpadSub::
-Send, {U+2014}
-Return
+{
+    Send "{U+2014}"
+}
 
 ; Bring window to top
 #a::
-MouseGetPos,,,rwinid
-WinSet, Top,,ahk_id %rwinid%
-Return
+{
+    MouseGetPos(,,&rwinid)
+    WinActivate(Integer(rwinid))
+}
 
 ; Send window to bottom
 #z::
-MouseGetPos,,,rwinid
-WinSet, Bottom,,ahk_id %rwinid%
-Return
+{
+    MouseGetPos(,,&rwinid)
+    WinMoveBottom(Integer(rwinid))
+}
 
 ; Toggle "focus" mode -- ie, borderless fullscreen
 #f::
-WinGet MX, MinMax, A
-If MX {
-    WinSet, Style, +0xC40000, A
-    WinRestore A
+{
+    ; Toggle the border and titlebar of the current window
+    WinSetStyle("^0xC40000", "A")
+
+    ; Now see which we did
+    MX := WinGetStyle("A")
+    if (MX & 0xC40000) {
+        ; Window now has both; we must be exiting focus mode
+        WinRestore("A")
+    }
+    else {
+        ; Window now has neither; we must be entering focus mode
+        WinMaximize("A")
+    }
 }
-Else {
-    WinSet, Style, -0xC40000, A
-    WinMaximize A
-}
-Return
 
 ; Restart Windows Explorer
 !^Insert::
-Process, Close, explorer.exe
-; it automatically restarts on its own
-Return
+{
+    ProcessClose("explorer.exe")
+    ; it automatically restarts on its own
+}
 
 ;----- Included scripts -----
 #Include ChangeResolution.ahk
+; BELOW HERE HAS NOT YET BEEN EXAMINED FOR AHK 2
 ;#Include MoveInactiveWin.ahk
 ;#Include EasyWindowDrag.ahk
 ;; GoSub SKeySetup
