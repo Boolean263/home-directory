@@ -1,5 +1,6 @@
 ﻿;----- Common settings -----
-#Requires AutoHotkey v2.0
+#Requires AutoHotkey v2
+#SingleInstance force
 
 ;----- Your autoexecute commands -----
 

@@ -3,7 +3,7 @@
 
 ; Updated to AHK v2 using
 ; https://www.reddit.com/r/AutoHotkey/comments/11w816x/autohotkey_v2_code_to_change_screen_resolution/
-#Requires AutoHotkey v2.0
+#Requires AutoHotkey v2
 
 #PgUp::
 {
