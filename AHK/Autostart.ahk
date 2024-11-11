@@ -54,27 +54,38 @@
     ; it automatically restarts on its own
 }
 
+; Test VD.ahk from https://github.com/FuPeiJiang/VD.ahk/tree/v2_port
+#Include VD.ah2
+
+; Win+num to switch to that desktop
+; Win+Ctrl+num to bring current window to that desktop
+#1::
+{
+    VD.goToDesktopNum(1)
+}
+#2::
+{
+    VD.goToDesktopNum(2)
+}
+#3::
+{
+    VD.goToDesktopNum(3)
+}
+#^1::
+{
+    VD.MoveWindowToDesktopNum("A", 1)
+    VD.goToDesktopNum(1)
+}
+#^2::
+{
+    VD.MoveWindowToDesktopNum("A", 2)
+    VD.goToDesktopNum(2)
+}
+#^3::
+{
+    VD.MoveWindowToDesktopNum("A", 3)
+    VD.goToDesktopNum(3)
+}
+
 ;----- Included scripts -----
 #Include ChangeResolution.ahk
-; BELOW HERE HAS NOT YET BEEN EXAMINED FOR AHK 2
-;#Include MoveInactiveWin.ahk
-;#Include EasyWindowDrag.ahk
-;; GoSub SKeySetup
-;; GoSub PariSetup
-;; GoSub ClockSetup
-;; GoSub ClipPadSetup
-;; 
-;; SKeySetup:
-;; #Include c:\t\AutoHotKey\SKey.ahk
-;; 
-;; PariSetup:
-;; #Include c:\t\AutoHotKey\pari.ahk
-;; 
-;; ClockSetup:
-;; #Include c:\t\AutoHotKey\Clock.ahk
-;; 
-;; ClipPadSetup:
-;; #Include c:\t\AutoHotKey\ClipPad.ahk
-
-;----- Shared subroutines, functions -----
-;...
