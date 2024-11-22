@@ -1,0 +1,40 @@
+#!/bin/sh
+
+usage()
+{
+    if [ -n "$*" ] ; then
+        echo "Error: $*" 1>&2
+        echo 1>&2
+    fi
+    cat 1>&2 <<EOT
+Dump Tshark text output to text files for comparison.
+
+Usage: $0 input-file.pcap output-base [tshark options...]
+
+This script will run your input file through tshark with the options
+you specify, plus -nVr, and put the output in output-base-1pass.txt .
+Then it will add -2 to the tshark options for output-base-2pass.txt .
+
+Run this script before and after making dissector changes, so you can
+diff the results.
+EOT
+    exit 1
+}
+
+CAPFILE="$1"
+if [ -z "$CAPFILE" ] ; then
+    usage "no capture file specified"
+fi
+if ! [ -r "$CAPFILE" ] ; then
+    usage "capture file not readable: $CAPFILE"
+fi
+shift
+
+OUTBASE="$1"
+if [ -z "$OUTBASE" ] ; then
+    usage "no output base specified"
+fi
+shift
+
+tshark    ${1+"$@"} -nVr "$CAPFILE" > "${OUTBASE}-1pass.txt"
+tshark -2 ${1+"$@"} -nVr "$CAPFILE" > "${OUTBASE}-2pass.txt"
