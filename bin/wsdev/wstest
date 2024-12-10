@@ -76,6 +76,11 @@ fi
 
 m
 
-m --target test-programs
-unset WIRESHARK_LOG_LEVEL WIRESHARK_LOG_DOMAINS
-python3 -m pytest "$SRCPATH" "${MY_WSTEST_ARGS[@]}"
+if grep -q '^ENABLE_ASAN:BOOL=1$' "$BUILDPATH/CMakeCache.txt" ; then
+    echo "Skipping tests (ASAN output causes failures)"
+    exit 1
+else
+    m --target test-programs
+    unset WIRESHARK_LOG_LEVEL WIRESHARK_LOG_DOMAINS
+    "$HOME/bin/alternate-home.sh" python3 -m pytest "$SRCPATH" "${MY_WSTEST_ARGS[@]}"
+fi
