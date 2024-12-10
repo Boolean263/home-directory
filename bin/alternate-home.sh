@@ -4,7 +4,7 @@ set -eu
 
 usage()
 {
-    if [ -n "$1" ] ; then
+    if [ -n "${1:-}" ] ; then
         echo "Error: $@" 1>&2
         echo 1>&2
     fi
@@ -20,6 +20,10 @@ EOT
 
 USE_DIR=
 TMP_HOME=
+
+if [ -z "${1:-}" ] ; then
+    usage "missing command"
+fi
 
 case "$1" in
     ""|-h|--help)
@@ -49,11 +53,11 @@ else
     export HOME="$TMP_HOME"
 fi
 
-CMD="$1"
-shift
+CMD="${1:-}"
 if [ -z "$CMD" ] ; then
-    usage
+    usage "missing command"
 fi
+shift
 
 set +e
 "$CMD" ${1:+"$@"}
@@ -64,7 +68,12 @@ if [ -n "$TMP_HOME" ] ; then
     if [ $RV -eq 0 ] ; then
         rm -rf "$TMP_HOME"
     else
-        echo "[keeping temporary home directory] $TMP_HOME"
+        TMP_CONTENTS=$(ls -A "$TMP_HOME" | head)
+        if [ -n "$TMP_CONTENTS" ] ; then
+            echo "[keeping temporary home directory] $TMP_HOME" 1>&2
+        else
+            rm -rf "$TMP_HOME"
+        fi
     fi
 fi
 exit $RV
