@@ -1,0 +1,59 @@
+#!/bin/sh
+: "${BUILDPATH:?BUILDPATH not set}"
+
+usage() {
+    cat 1>&2 <<EOT
+Wrapper to quickly run valgrind tools.
+
+Usage: $0 <tool> [wireshark|tshark [options ...]]
+
+Tools
+    cg - callgrind into $BUILDPATH/callgrind.out
+    mc - memcheck into $BUILDPATH/memcheck.out
+EOT
+    exit 1
+}
+
+if [ -z "$1" ] ; then
+    usage
+fi
+VGTOOL="$1"
+shift
+if [ -n "$1" ] ; then
+    PROGNAME="$1"
+    shift
+else
+    PROGNAME="wireshark"
+fi
+
+unset WIRESHARK_LOG_LEVEL
+
+case "$VGTOOL" in
+    cg)
+        valgrind \
+            --tool=callgrind \
+            --callgrind-out-file="$BUILDPATH/callgrind.out" \
+            --dump-instr=yes \
+            --simulate-cache=yes \
+            --collect-jumps=yes \
+            "$WS_BIN_PATH/$PROGNAME" ${1+"$@"} \
+        && kcachegrind "$BUILDPATH/callgrind.out" &
+        ;;
+    mc)
+        . "$SRCPATH/tools/debug-alloc.env"
+        if grep -q '^ENABLE_ASAN:BOOL=1$' "$BUILDPATH/CMakeCache.txt" ; then
+            echo "ASAN won't run through valgrind" 1>&2
+            exit 1
+        fi
+        valgrind \
+            --tool=memcheck \
+            --log-file="$BUILDPATH/memcheck.out" \
+            --leak-check=full \
+            "$WS_BIN_PATH/$PROGNAME" ${1+"$@"} \
+        && g "$BUILDPATH/memcheck.out"
+        ;;
+    *)
+        echo "Invalid tool '$VGTOOL'" 1>&2
+        usage
+        ;;
+esac
