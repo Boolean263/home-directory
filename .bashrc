@@ -99,6 +99,15 @@ semantic_errcode() { semantic_prompt D $code ; }
 preexec_functions+=(semantic_output)
 precmd_functions+=(save_errcode semantic_errcode)
 
+# Add an indicator and newline when a program doesn't end its
+# output with one. https://www.vidarholen.net/contents/blog/?p=878
+prompt_nonewline()
+{
+    tput setaf 9
+    printf "◀%$((COLUMNS-1))s\\r"
+}
+precmd_functions+=(prompt_nonewline)
+
 my_prompt()
 {
     local -a PS
