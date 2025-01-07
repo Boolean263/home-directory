@@ -14,7 +14,8 @@ Build and test Wireshark. For use with 'git bisect'.
 Options:
     -c[ARGS], --clean[=ARGS]    Clean build tree before building
                                 (pass ARGS to initial cmake command line)
-    -DVAR=VAL                   Passed to initial cmake command line
+    -cd                         Clean tree and create a debug build
+    -DVAR=VAL, -Ccachefile.txt  Passed to initial cmake command line
     -x, --exitfirst, -v…        Passed to pytest
     -k EXPRESSION               Passed to pytest
 EOT
@@ -32,7 +33,7 @@ while [ -n "$1" ] ; do
             ;;
         -cd|-dc)
             DO_RESET=1
-            MY_CMAKE_ARGS+=("-DCMAKE_BUILD_TYPE=Debug")
+            MY_CMAKE_ARGS+=("-DCMAKE_BUILD_TYPE=Debug" "-DENABLE_UBSAN=1")
             ;;
         -c*)
             DO_RESET=1

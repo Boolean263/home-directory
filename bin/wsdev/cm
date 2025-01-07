@@ -3,4 +3,4 @@
 : "${BUILDPATH:?BUILDPATH not set}"
 
 mkdir -p "$BUILDPATH"
-cmake -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ${1+"$@"} -S "$SRCPATH" -B "$BUILDPATH"
+cmake -G Ninja -Werror=dev -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ${1+"$@"} -S "$SRCPATH" -B "$BUILDPATH"
