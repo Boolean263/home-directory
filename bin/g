@@ -99,7 +99,9 @@ if($ENV{DISPLAY})
         if($gvim =~ m(/neovide$))
         {
             # This doesn't actually work; neovide detects it's not
-            # outputting to a terminal and creates a new window instead
+            # outputting to a terminal and creates a new window instead.
+            # I have other problems with neovide as well, including that
+            # it seems to crash easily when it can't find my neovim install.
             my $neovide_version = version_from_string(`$gvim --version`);
             if ($neovide_version >= version->parse("0.12.0")) {
                 unshift @vim_args, '--no-tabs', '--grid', $geometry;
@@ -110,8 +112,12 @@ if($ENV{DISPLAY})
             push @vim_args, '--';
         }
         elsif($gvim =~ m(/nvim-qt$)) {
-            # nvim-qt's unit for --geometry is pixels, not characters
-            push @vim_args, '--';
+            # nvim-qt's unit for --geometry is pixels, not characters,
+            # so we can't set the size here.
+            #
+            # Arguments for nvim-qt come first, followed by '--'
+            # and then [n]vim arguments.
+            unshift @vim_args, '--';
         }
         debug("running gvim: ", $gvim, @vim_args, @ARGV, @vim_tail);
         do_or_die($gvim, @vim_args, @ARGV, @vim_tail);
