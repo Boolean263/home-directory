@@ -15,12 +15,8 @@ if exists('&renderoptions')
     set renderoptions=type:directx,gamma:1.0,contrast:0.5,level:1,geom:1,renmode:4,taamode:1
 endif
 
-
-" Note: Most GUIs will let you `set guifont=*` to get a font chooser.
-"set guifont=Noto\ Mono\ 9
-"set guifont=Ubuntu\ Mono\ 10
-"set guifont=DejaVu\ Sans\ Mono\ 9
-"set guifont=Source\ Code\ Pro\ 10,Source_Code_Pro:h10:cANSI:qDRAFT
+" Set the font I want to use.
+" NB: Most GUIs will let you `set guifont=*` to get a font chooser.
 
 let s:fontface='Iosevka Fixed Medium'
 let s:fontsize=11
@@ -33,11 +29,16 @@ elseif exists("g:neovide")
     " so the catch-all below causes it to generate an error
     let &guifont=s:fontface .. ':h' .. s:fontsize
     "let g:dap='Did it with neovide &guifont'
+elseif has("gui_win32")
+    " this is the format found in `set guifont?` after using `set guifont=*`
+    let &guifont=substitute(s:fontface, ' ', '_', 'g') .. ':h' .. s:fontsize .. ':W500:cDEFAULT:qDEFAULT'
 else
-    " Shotgun approach
-    " XXX: Figure out if Windows needs anything special here
+    " Shotgun approach I was using before, just pile things together
+    " and hope the client takes the first one that works.
+    " Old versions of neovide didn't support that, and even modern
+    " nvim-qt gives an error about fonts it's skipping that don't work.
     "set guifont=Iosevka\ Fixed\ Medium\ 11,Iosevka_Fixed_Medium:h11:cANSI:qDRAFT
-    let &guifont=s:fontface .. ' ' .. s:fontsize .. ',' .. substitute(s:fontface, ' ', '_', 'g') .. ':h' .. s:fontsize .. ':cANSI:qDCRAFT'
+    let &guifont=s:fontface .. ' ' .. s:fontsize .. ',' .. substitute(s:fontface, ' ', '_', 'g') .. ':h' .. s:fontsize .. ':cDEFAULT:qDEFAULT'
     "let g:dap='Fell back with &guifont'
 endif
 
