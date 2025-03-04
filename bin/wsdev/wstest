@@ -26,6 +26,16 @@ DO_RESET=
 declare -a MY_CMAKE_ARGS
 declare -a MY_WSTEST_ARGS
 
+MY_CMAKE_DEBUG_ARGS=(
+    "-DCMAKE_BUILD_TYPE=Debug"
+    # Sanitizer tests listed here in their CMakeLists order.
+    # Currently all disabled based on msys not liking any of them.
+    #"-DENABLE_ASAN=1"          # Address sanitizer checks (heavy impact)
+    #"-DENABLE_TSAN=1"          # Thread sanitizer checks
+    #"-DENABLE_UBSAN=1"         # Undefined behaviour checks
+    #"-DENABLE_LSAN=1"          # Leak sanitizer checks (slight impact)
+)
+
 while [ -n "$1" ] ; do
     case "$1" in
         -c|--clean)
@@ -33,7 +43,10 @@ while [ -n "$1" ] ; do
             ;;
         -cd|-dc)
             DO_RESET=1
-            MY_CMAKE_ARGS+=("-DCMAKE_BUILD_TYPE=Debug" "-DENABLE_UBSAN=1")
+            MY_CMAKE_ARGS+=( "${MY_CMAKE_DEBUG_ARGS[@]}" )
+            ;;
+        -d)
+            MY_CMAKE_ARGS+=( "${MY_CMAKE_DEBUG_ARGS[@]}" )
             ;;
         -c*)
             DO_RESET=1
