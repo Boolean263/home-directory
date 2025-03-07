@@ -5,6 +5,14 @@ import sys
 import sysconfig
 import os
 import os.path
+import importlib.util
+
+import argparse
+
+parser = argparse.ArgumentParser(
+    description="Print useful information about the current Python interpreter.")
+parser.add_argument('-m', '--module', type=str, action='append', help='Python modules to locate')
+args = parser.parse_args()
 
 sc = sysconfig.get_config_vars()
 
@@ -62,3 +70,9 @@ if False:
     for p in site.getsitepackages():
         print(f"    {p}")
     print()
+
+if args.module:
+    print("Module locations:")
+    for m in args.module:
+        spec = importlib.util.find_spec(m)
+        print(f"    {m}: {spec.origin if spec else 'Not found'}")
