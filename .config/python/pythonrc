@@ -1,4 +1,9 @@
-# Recommended by xdg-ninja to move ~/.python_history somewhere else
+# This file is executed when Python is run in interactive mode,
+# since my PYTHONSTARTUP env var points here.
+# <https://docs.python.org/3/using/cmdline.html#envvar-PYTHONSTARTUP>
+#
+# Its contents were recommended by xdg-ninja
+# to move ~/.python_history somewhere else.
 
 import os
 import atexit
