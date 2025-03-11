@@ -31,6 +31,14 @@
 }
 
 ; Toggle "focus" mode -- ie, borderless fullscreen
+; Some programs have their own hotkey for this
+#HotIf WinActive("ahk_class MozillaWindowClass") ; or WinActive(...)
+    #f::
+    {
+        Send "{F11}"
+    }
+; For programs that don't, we can make it happen
+#HotIf
 #f::
 {
     ; Toggle the border and titlebar of the current window
