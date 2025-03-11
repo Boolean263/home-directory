@@ -2,6 +2,9 @@
 #Requires AutoHotkey v2
 #SingleInstance force
 
+; Make all future #Include's relative to this directory
+#include "%A_ScriptDir%"
+
 ;----- Your autoexecute commands -----
 
 ; en-dash on Ctrl+NumpadSub, em-dash on Ctrl+Alt+NumpadSub
