@@ -87,7 +87,7 @@ elsif($basename eq 'g')
     $remote++;
 }
 
-if($ENV{DISPLAY})
+if($ENV{DISPLAY} || $ENV{MSYSTEM})
 {
     if($gvim && -x $gvim)
     {
