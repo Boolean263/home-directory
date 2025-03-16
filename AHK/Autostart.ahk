@@ -7,6 +7,15 @@
 
 ;----- Your autoexecute commands -----
 
+; Toggle CapsLock by pressing both Shift keys
+; (I typically remap CapsLock to Ctrl, either through the Registry
+; or directly in my keyboard firmware)
+<+RShift::
+>+LShift::
+{
+    SetCapsLockState !GetKeyState('CapsLock', 'T')
+}
+
 ; en-dash on Ctrl+NumpadSub, em-dash on Ctrl+Alt+NumpadSub
 ; (these are MS Word shortcuts that I'm making global)
 ^NumpadSub::
