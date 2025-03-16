@@ -1,5 +1,8 @@
 ; V2 script taken from
 ; https://www.autohotkey.com/boards/viewtopic.php?p=560229&sid=ac4bc268ef4b418b42d5c6aaa10a31ac#p560229
+; With changes by me:
+; - Allow resizing only horizontally or vertically by r+win+drag
+;   of non-corner sides
 
 
 ; Simple Window Drag 
@@ -102,16 +105,51 @@ LWin & RButton:: {
         return
     ; Get the initial window position and size.
     WinGetPos(&KDE_WinX1, &KDE_WinY1, &KDE_WinW, &KDE_WinH, "ahk_id " KDE_id)
-    ; Define the window region the mouse is currently in.
-    ; The four regions are Up and Left, Up and Right, Down and Left, Down and Right.
-    If (KDE_X1 < KDE_WinX1 + KDE_WinW / 2)
-        KDE_WinLeft := 1
-    Else
-        KDE_WinLeft := -1
-    If (KDE_Y1 < KDE_WinY1 + KDE_WinH / 2)
-        KDE_WinUp := 1
-    Else
-        KDE_WinUp := -1
+; Original code:
+;   ; Define the window region the mouse is currently in.
+;   ; The four regions are Up and Left, Up and Right, Down and Left, Down and Right.
+;   If (KDE_X1 < KDE_WinX1 + KDE_WinW / 2)
+;       KDE_WinLeft := 1
+;   Else
+;       KDE_WinLeft := -1
+;   If (KDE_Y1 < KDE_WinY1 + KDE_WinH / 2)
+;       KDE_WinUp := 1
+;   Else
+;       KDE_WinUp := -1
+; My revision, to use nine regions instead of four:
+    If (KDE_X1 < KDE_WinX1 + KDE_WinW / 3) {
+        KDE_dX := 1
+        KDE_dW := -1
+    }
+    Else If (KDE_X1 > KDE_WinX1 + 2*(KDE_WinW / 3)) {
+        KDE_dX := 0
+        KDE_dW := 1
+    }
+    Else {
+        KDE_dX := 0
+        KDE_dW := 0
+    }
+    If (KDE_Y1 < KDE_WinY1 + KDE_WinH / 3) {
+        KDE_dY := 1
+        KDE_dH := -1
+    }
+    Else If (KDE_Y1 > KDE_WinY1 + 2*(KDE_WinH / 3)) {
+        KDE_dY := 0
+        KDE_dH := 1
+    }
+    Else {
+        KDE_dY := 0
+        KDE_dH := 0
+    }
+    ; If they grab the middle region of the window...
+    if KDE_dX = 0 and KDE_dY = 0 and KDE_dW = 0 and KDE_dH = 0 {
+        ; Could just stop
+        ;return
+        ; Or could treat it like a move
+        KDE_dX := 1
+        KDE_dY := 1
+    }
+; Back to the original
     Loop {
         KDE_Button := GetKeyState("RButton", "P") ? "D" : "U" ; Break if button has been released.
         if (KDE_Button = "U")
@@ -122,7 +160,19 @@ LWin & RButton:: {
         KDE_X2 -= KDE_X1 ; Obtain an offset from the initial mouse position.
         KDE_Y2 -= KDE_Y1
         ; Then, act according to the defined region.
-        WinMove(KDE_WinX1 + (KDE_WinLeft + 1) / 2 * KDE_X2, KDE_WinY1 + (KDE_WinUp + 1) / 2 * KDE_Y2, KDE_WinW - KDE_WinLeft * KDE_X2, KDE_WinH - KDE_WinUp * KDE_Y2, "ahk_id " KDE_id)  ; X of resized window
+; Original code, but reformatted for my own understanding:
+;       WinMove(KDE_WinX1 + (KDE_WinLeft + 1) / 2 * KDE_X2,
+;               KDE_WinY1 + (KDE_WinUp + 1) / 2 * KDE_Y2,
+;               KDE_WinW - KDE_WinLeft * KDE_X2,
+;               KDE_WinH - KDE_WinUp * KDE_Y2,
+;               "ahk_id " KDE_id)
+; My revision:
+        WinMove(KDE_WinX1 + (KDE_dX * KDE_X2),
+                KDE_WinY1 + (KDE_dY * KDE_Y2),
+                KDE_WinW  + (KDE_dW * KDE_X2),
+                KDE_WinH  + (KDE_dH * KDE_Y2),
+                "ahk_id " KDE_id)
+; Back to the original
         KDE_X1 := (KDE_X2 + KDE_X1) ; Reset the initial position for the next iteration.
         KDE_Y1 := (KDE_Y2 + KDE_Y1)
     }
