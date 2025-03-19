@@ -75,6 +75,12 @@
     ; it automatically restarts on its own
 }
 
+; Shut down Windows
+^!F4::
+{
+    Shutdown(9)
+}
+
 ; Test VD.ahk from https://github.com/FuPeiJiang/VD.ahk/tree/v2_port
 #Include VD.ah2
 
