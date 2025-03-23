@@ -404,7 +404,6 @@ Plug 'rhysd/vim-clang-format'   " clang-format C/C++ code (:ClangFormat)
 Plug 'https://gitlab.com/HiPhish/info.vim.git' " Read infodocs in vim
 Plug 'Boolean263/sectional-couch.vim' " My section navigation plugin
 Plug 'Boolean263/vim-filetype-debsymbols' " Debian symbols files
-Plug 'godlygeek/tabular', { 'on': ['Tabularize', 'Tab'] } " Line up text based on a regexp
 Plug 'jlanzarotta/bufexplorer'  " Improved buffer explorer
 Plug 'rust-lang/rust.vim'       " Rust programming language support
 Plug 'kana/vim-textobj-user'    " User-defined text objects, prereq for next plugin
