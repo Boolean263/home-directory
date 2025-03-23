@@ -1,4 +1,4 @@
-BoldAsFont=-1
+BoldAsFont=yes
 Font=Iosevka Fixed Medium
 BoldAsColour=no
 AllowBlinking=yes
@@ -13,3 +13,5 @@ DeleteSendsDEL=no
 Answerback=MinTTY
 FontHeight=12
 FontWeight=500
+Locale=en_US
+Charset=UTF-8
