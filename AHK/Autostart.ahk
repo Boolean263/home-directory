@@ -45,9 +45,16 @@
 ; Toggle "focus" mode -- ie, borderless fullscreen
 ; Some programs have their own hotkey for this
 #HotIf WinActive("ahk_class MozillaWindowClass") ; or WinActive(...)
+    ; These programs use F11
     #f::
     {
         Send "{F11}"
+    }
+#HotIf WinActive("ahk_class mintty")
+    ; These programs use Alt+Enter
+    #f::
+    {
+        Send "!{Enter}"
     }
 ; For programs that don't, we can make it happen
 #HotIf
