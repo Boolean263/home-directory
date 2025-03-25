@@ -18,15 +18,13 @@
 
 ; en-dash on Ctrl+NumpadSub, em-dash on Ctrl+Alt+NumpadSub
 ; (these are MS Word shortcuts that I'm making global)
-^NumpadSub::
-{
-    Send "{U+2013}"
-}
+^NumpadSub::Send "{U+2013}"
+^!NumpadSub::Send "{U+2014}"
 
-^!NumpadSub::
-{
-    Send "{U+2014}"
-}
+; Just the proper unicode symbols for the operator keys.
+; Note that programs like Calculator don't recognize them.
+NumpadMult::Send "{U+00D7}"
+NumpadDiv::Send "{U+00F7}"
 
 ; Bring window to top
 #a::
@@ -75,50 +73,38 @@
     }
 }
 
-; Restart Windows Explorer
-!^Insert::
-{
-    ProcessClose("explorer.exe")
-    ; it automatically restarts on its own
-}
+; Close Windows Explorer so it restarts
+!^Insert::ProcessClose("explorer.exe")
 
 ; Shut down Windows
-^!F4::
-{
-    Shutdown(9)
-}
+^!F4::Shutdown(9)
 
-; Test VD.ahk from https://github.com/FuPeiJiang/VD.ahk/tree/v2_port
+; Manage virtual desktops
+; VD.ahk from https://github.com/FuPeiJiang/VD.ahk/tree/v2_port
 #Include VD.ah2
+
+; Windows already has:
+; - Add desktop with Win+Ctrl+D
+; - Remove current desktop with Win+Ctrl+F4
 
 ; Win+num to switch to that desktop
 ; Win+Ctrl+num to bring current window to that desktop
-#1::
-{
-    VD.goToDesktopNum(1)
+MyVD(ThisHotkey) {
+    n := Integer(SubStr(ThisHotkey, -1))
+    try {
+        if InStr(ThisHotkey, "^") {
+            VD.MoveWindowToDesktopNum("A", n)
+        }
+        VD.goToDesktopNum(n)
+    }
+    catch Error {
+        ; Probably a desktop number that doesn't exist
+    }
 }
-#2::
-{
-    VD.goToDesktopNum(2)
-}
-#3::
-{
-    VD.goToDesktopNum(3)
-}
-#^1::
-{
-    VD.MoveWindowToDesktopNum("A", 1)
-    VD.goToDesktopNum(1)
-}
-#^2::
-{
-    VD.MoveWindowToDesktopNum("A", 2)
-    VD.goToDesktopNum(2)
-}
-#^3::
-{
-    VD.MoveWindowToDesktopNum("A", 3)
-    VD.goToDesktopNum(3)
+
+Loop 9 {
+    Hotkey("#" A_Index, MyVD)
+    Hotkey("#^" A_Index, MyVD)
 }
 
 ;----- Included scripts -----
