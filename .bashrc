@@ -44,13 +44,26 @@ fi
 
 shopt -s direxpand
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-export BASH_COMPLETION_USER_FILE="$XDG_CONFIG_HOME/bash/bash_completion"
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-    . /etc/bash_completion
+# Shell completion should be automatically handled by the
+# bash-completion package. As of version 2.9 of that package (since 2019)
+# it should automatically read $XDG_CONFIG_HOME/bash_completion
+# at shell start, and also find per-command completions on-demand from
+# $XDG_DATA_HOME/bash-completion/completions/ in files named for the command.
+# This should happen automatically, and it does for my msys terminal window,
+# but it doesn't for shells in a tmux session in that same window, so
+# here we are. Sigh.
+if [ -f "/etc/profile.d/bash_completion.sh" ] ; then
+    . "/etc/profile.d/bash_completion.sh"
 fi
+#if shopt -q progcomp && ! shopt -oq posix ; then
+#    for _bc in /etc/bash_completion /usr/share/bash-completion/bash_completion
+#    do
+#        if [ -f "$_bc" ] ; then
+#            . "$_bc"
+#        fi
+#    done
+#    unset _bc
+#fi
 
 # Shell history
 shopt -s histreedit histappend checkwinsize cmdhist direxpand
