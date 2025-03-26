@@ -6,7 +6,6 @@
 # (Source: <https://superuser.com/a/183980/627623>)
 
 . "$HOME/env/path_functions.sh"
-set match-hidden-files off
 
 # Nothing after this will run for non-interactive shells
 case "$-" in
@@ -52,7 +51,9 @@ shopt -s direxpand
 # This should happen automatically, and it does for my msys terminal window,
 # but it doesn't for shells in a tmux session in that same window, so
 # here we are. Sigh.
-if [ -f "/etc/profile.d/bash_completion.sh" ] ; then
+if  [ -z "$BASH_COMPLETION_VERSINFO" ] &&
+    [ -f "/etc/profile.d/bash_completion.sh" ]
+then
     . "/etc/profile.d/bash_completion.sh"
 fi
 #if shopt -q progcomp && ! shopt -oq posix ; then

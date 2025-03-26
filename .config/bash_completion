@@ -1,0 +1,51 @@
+# vim:set syntax=sh:
+
+# If the bash-completion package is installed, it adds a /etc/profile.d
+# file to source $XDG_CONFIG_HOME/bash_completion (this file!)
+# and then its system file /usr/share/bash-completion/bash_completion .
+# That file does a bunch of stuff, and then sources the file
+# $BASH_COMPLETION_USER_FILE (default: ~/.bash_completion).
+#
+# Note: That means this file (and any file it sources) doesn't see
+# any of the helper stuff in the system file, but the
+# $BASH_COMPLETION_USER_FILE does.
+#
+# (I used to point that env var at this file, and then wonder why it
+# got called twice. Hopefully I've remedied that now, but I've left
+# some protections in this file, just in case.)
+#
+# On a related note, the directory $BASH_COMPLETION_USER_DIR (default:
+# $XDG_DATA_HOME/bash-completion) may contain a 'completions' directory
+# with files named after commands. Bash completions in these files
+# are sourced on demand when the respective commands are used.
+# I believe these files _will_ have access to the helper stuff
+# set up in the system file, but I haven't tested it.
+# Note: such files override the equivalent files in
+# /usr/share/bash-completion/completions/ .
+
+#####
+# Keep ourselves from being recursively re-called.
+# The "bash-completion" package does this usually.
+#####
+[ -n "$MY_BASH_COMPLETION" ] && return
+export MY_BASH_COMPLETION="$XDG_CONFIG_HOME/bash_completion"
+
+#####
+# These options work together to limit what sorts of files/dirs
+# show up in tab completion.
+#####
+set match-hidden-files off
+export FIGNORE="CVS:~:.o:.svn:.git:.lo"
+
+#####
+# Source my local bash-completion helper scripts if any.
+#####
+for i in $(LC_ALL=C command ls "$XDG_CONFIG_HOME/bash_completion.d/"*.bash) ; do
+    . "$i"
+done
+
+#####
+# Now that we're done, unset $MY_BASH_COMPLETION so we can be called
+# again later (eg, in a tmux subshell).
+#####
+unset MY_BASH_COMPLETION
