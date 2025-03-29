@@ -1,19 +1,19 @@
 ; V2 script taken from
 ; https://www.autohotkey.com/boards/viewtopic.php?p=560229&sid=ac4bc268ef4b418b42d5c6aaa10a31ac#p560229
 ; With changes by me:
-; - Allow resizing only horizontally or vertically by r+win+drag
-;   of non-corner sides
+; - Allow resizing only horizontally or vertically by r+win+drag of non-corner sides
+; - removed `return` so I can #include it in other scripts
 
 
-; Simple Window Drag 
+; Simple Window Drag
 ; --------------------------------------------------
 ; version : 1.0.0
 ; -> Script by Tomé Sulmont (tome.sulmont@laposte.net)
 ;
 ; Includes modified versions of :
-; 	- Easy Window Dragging KDE style - by Jonny
-; 	- Middle Mouse Button Gestures (diagonal) - by Drozdman
-;	- Hyper Window Snap - by Andrew Moore and Jeff Axelrod
+; - Easy Window Dragging KDE style - by Jonny
+; - Middle Mouse Button Gestures (diagonal) - by Drozdman
+; - Hyper Window Snap - by Andrew Moore and Jeff Axelrod
 ;
 ; https://www.autohotkey.com
 ;
@@ -21,25 +21,25 @@
 ; key press and a mouse :
 ;   1) Hold down the LWin key and LEFT-click anywhere inside a window to drag it to
 ;   a new location.
-; 	2) Hold down LWin and RIGHT-click-drag anywhere inside a window to easily resize it.
+;   2) Hold down LWin and RIGHT-click-drag anywhere inside a window to easily resize it.
 ;   3) Hold down LWin and MIDDLE-click-drag to perform different actions : maximize,
 ;   always on top or snap a window.
-; 	4) Hold down LWin and MIDDLE-click without moving to minimize the window under
+;   4) Hold down LWin and MIDDLE-click without moving to minimize the window under
 ;   the mouse cursor.
 ;
 ; Shortcuts :
-;  LWin + Left Button   + Drag					    : Move a window.
-;  LWin + Right Button  + Drag						: Resize a window.
-;  LWin + Middle Button + Drag Up					: Maximize/Restore a window.
-;  LWin + Middle Button + Drag Down 					: Always On Top a window.
-;  LWin + Middle Button + Drag Right 				: Snap to the Right half.
-;  LWin + Middle Button + Drag Left 					: Snap to the Left half.
-;  LWin + Middle Button + Drag Top Right Corner 		: Snap to the Top-Right quarter.
-;  LWin + Middle Button + Drag Top Left Corner 		: Snap to the Top-Left quarter.
-;  LWin + Middle Button + Drag Bottom Right Corner 	: Snap to Bottom-Right quarter.
-;  LWin + Middle Button + Drag Bottom Left Corner 	: Snap to the Bottom-Left quarter.
-;  LWin + Middle Button + Motionless 				: Minimize a window.
-;  LWin + Numpad                                     : Snap the active window.
+;  LWin + Left Button   + Drag                      : Move a window.
+;  LWin + Right Button  + Drag                      : Resize a window.
+;  LWin + Middle Button + Drag Up                   : Maximize/Restore a window.
+;  LWin + Middle Button + Drag Down                 : Always On Top a window.
+;  LWin + Middle Button + Drag Right                : Snap to the Right half.
+;  LWin + Middle Button + Drag Left                 : Snap to the Left half.
+;  LWin + Middle Button + Drag Top Right Corner     : Snap to the Top-Right quarter.
+;  LWin + Middle Button + Drag Top Left Corner      : Snap to the Top-Left quarter.
+;  LWin + Middle Button + Drag Bottom Right Corner  : Snap to Bottom-Right quarter.
+;  LWin + Middle Button + Drag Bottom Left Corner   : Snap to the Bottom-Left quarter.
+;  LWin + Middle Button + Motionless                : Minimize a window.
+;  LWin + Numpad                                    : Snap the active window.
 
 ; Note
 ; --------------------------------------------------
@@ -47,7 +47,7 @@
 If (VerCompare(A_AhkVersion, "1.0.39.00") < 0) {
     msgResult := MsgBox("This script may not work properly with your version of AutoHotkey. Continue?", "", 20)
     if (msgResult = "No")
-        ExitApp()
+        return
 }
 
 
@@ -56,7 +56,7 @@ If (VerCompare(A_AhkVersion, "1.0.39.00") < 0) {
 ; This is the setting that runs smoothest on my system. Depending on your video card and cpu power, you may want to raise or lower this value.
 SetWinDelay(2)
 CoordMode("Mouse")
-return
+;return
 
 
 ; Mouse Gesture
@@ -105,18 +105,7 @@ LWin & RButton:: {
         return
     ; Get the initial window position and size.
     WinGetPos(&KDE_WinX1, &KDE_WinY1, &KDE_WinW, &KDE_WinH, "ahk_id " KDE_id)
-; Original code:
-;   ; Define the window region the mouse is currently in.
-;   ; The four regions are Up and Left, Up and Right, Down and Left, Down and Right.
-;   If (KDE_X1 < KDE_WinX1 + KDE_WinW / 2)
-;       KDE_WinLeft := 1
-;   Else
-;       KDE_WinLeft := -1
-;   If (KDE_Y1 < KDE_WinY1 + KDE_WinH / 2)
-;       KDE_WinUp := 1
-;   Else
-;       KDE_WinUp := -1
-; My revision, to use nine regions instead of four:
+    ; Determine whether we're in the left, center, or right third of the window.
     If (KDE_X1 < KDE_WinX1 + KDE_WinW / 3) {
         KDE_dX := 1
         KDE_dW := -1
@@ -129,6 +118,7 @@ LWin & RButton:: {
         KDE_dX := 0
         KDE_dW := 0
     }
+    ; Determine whether we're in the top, middle, or bottom third.
     If (KDE_Y1 < KDE_WinY1 + KDE_WinH / 3) {
         KDE_dY := 1
         KDE_dH := -1
@@ -141,15 +131,14 @@ LWin & RButton:: {
         KDE_dY := 0
         KDE_dH := 0
     }
-    ; If they grab the middle region of the window...
+    ; If we grabbed the middle center of the window...
     if KDE_dX = 0 and KDE_dY = 0 and KDE_dW = 0 and KDE_dH = 0 {
-        ; Could just stop
+        ; Could just stop...
         ;return
-        ; Or could treat it like a move
+        ; Or could treat it like a move.
         KDE_dX := 1
         KDE_dY := 1
     }
-; Back to the original
     Loop {
         KDE_Button := GetKeyState("RButton", "P") ? "D" : "U" ; Break if button has been released.
         if (KDE_Button = "U")
@@ -159,20 +148,11 @@ LWin & RButton:: {
         WinGetPos(&KDE_WinX1, &KDE_WinY1, &KDE_WinW, &KDE_WinH, "ahk_id " KDE_id)
         KDE_X2 -= KDE_X1 ; Obtain an offset from the initial mouse position.
         KDE_Y2 -= KDE_Y1
-        ; Then, act according to the defined region.
-; Original code, but reformatted for my own understanding:
-;       WinMove(KDE_WinX1 + (KDE_WinLeft + 1) / 2 * KDE_X2,
-;               KDE_WinY1 + (KDE_WinUp + 1) / 2 * KDE_Y2,
-;               KDE_WinW - KDE_WinLeft * KDE_X2,
-;               KDE_WinH - KDE_WinUp * KDE_Y2,
-;               "ahk_id " KDE_id)
-; My revision:
         WinMove(KDE_WinX1 + (KDE_dX * KDE_X2),
                 KDE_WinY1 + (KDE_dY * KDE_Y2),
                 KDE_WinW  + (KDE_dW * KDE_X2),
                 KDE_WinH  + (KDE_dH * KDE_Y2),
                 "ahk_id " KDE_id)
-; Back to the original
         KDE_X1 := (KDE_X2 + KDE_X1) ; Reset the initial position for the next iteration.
         KDE_Y1 := (KDE_Y2 + KDE_Y1)
     }
