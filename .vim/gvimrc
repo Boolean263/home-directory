@@ -5,20 +5,22 @@
 " 4. (only if 'exrc' is set) $PWD/.gvimrc
 
 set columns=84 lines=50
-set guioptions=acegirLt
+set guioptions=acegirL
 
-if exists('&guiheadroom')
+if exists('+guiheadroom')
     set guiheadroom=64
 endif
 
-if exists('&renderoptions')
+if exists('+renderoptions')
     set renderoptions=type:directx,gamma:1.0,contrast:0.5,level:1,geom:1,renmode:4,taamode:1
 endif
 
 " Set the font I want to use.
-" NB: Most GUIs will let you `set guifont=*` to get a font chooser.
+" NB: Some GUIs will let you `set guifont=*` to get a font chooser.
 
-let s:fontface='Iosevka Fixed Medium'
+" Windows NeoVide can't find the font if it has "Medium" on the end
+"let s:fontface='Iosevka Fixed Medium'
+let s:fontface='Iosevka Fixed'
 let s:fontsize=11
 if exists(':GuiFont')
     " nvim-qt does its own thing
@@ -32,6 +34,7 @@ elseif exists("g:neovide")
 elseif has("gui_win32")
     " this is the format found in `set guifont?` after using `set guifont=*`
     let &guifont=substitute(s:fontface, ' ', '_', 'g') .. ':h' .. s:fontsize .. ':W500:cDEFAULT:qDEFAULT'
+    "let g:dap='Did it with gui_win32 &guifont'
 else
     " Shotgun approach I was using before, just pile things together
     " and hope the client takes the first one that works.

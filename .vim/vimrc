@@ -147,7 +147,8 @@ nnoremap <Space>d :cd %:p:h<CR>:pwd<CR>
 " Show current working directory
 nnoremap <Space>p :pwd<CR>
 
-set pastetoggle=<F9>                " key that toggles paste mode
+" key that toggles paste mode (removed in neovim, it handles pasting smartly)
+if exists('+pastetoggle') | set pastetoggle=<F9> | endif
 
 " Since most of us have Ctrl-S hardwired into our brains
 nnoremap <C-S> :wa<CR>
@@ -241,16 +242,12 @@ vnoremap Y :y<cr>
 if !1 | finish | endif
 " *********************
 
-if exists('&renderoptions')
-    set renderoptions=type:directx,gamma:1.0,contrast:0.5,level:1,geom:1,renmode:4,taamode:1
-endif
-
 let mapleader=" "
 
 " PLUGINS {{{1
 
 " Much of this configuration must be done before plugins are loaded,
-" so they affect the plugins at load time.
+" so they affect the plugins at their load time.
 " Configuration {{{2
 let g:tagbar_type_diff = {
     \'ctagstype':'diff',
