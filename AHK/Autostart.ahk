@@ -107,6 +107,10 @@ Loop 9 {
     Hotkey("#^" A_Index, MyVD)
 }
 
+; Allow toggling hover-focus
+#include xmouse-focus.ahk
+#T::SetWinHoverFocus("Toggle")
+
 ;----- Included scripts -----
 #Include ChangeResolution.ahk
 #include SimpleWindowDrag.ah2
