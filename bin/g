@@ -96,13 +96,13 @@ if($ENV{DISPLAY} || $ENV{MSYSTEM})
             # The following errors out if no filenames are provided
             #unshift @vim_args, '--remote-silent' if $gvim =~ m(/gvim$);
         }
-        if($gvim =~ m(/neovide$))
+        if($gvim =~ m(/neovide[^/]*$))
         {
             # This doesn't actually work; neovide detects it's not
             # outputting to a terminal and creates a new window instead.
             # I have other problems with neovide as well, including that
             # it seems to crash easily when it can't find my neovim install.
-            my $neovide_version = version_from_string(`$gvim --version`);
+            my $neovide_version = version_from_string(`"$gvim" --version`);
             if ($neovide_version >= version->parse("0.12.0")) {
                 unshift @vim_args, '--no-tabs', '--grid', $geometry;
             }
