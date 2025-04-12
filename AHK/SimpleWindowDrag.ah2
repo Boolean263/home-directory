@@ -1,8 +1,10 @@
+#Requires AutoHotkey v2
 ; V2 script taken from
 ; https://www.autohotkey.com/boards/viewtopic.php?p=560229&sid=ac4bc268ef4b418b42d5c6aaa10a31ac#p560229
 ; With changes by me:
 ; - Allow resizing only horizontally or vertically by r+win+drag of non-corner sides
 ; - removed `return` so I can #include it in other scripts
+; - some flow tweaks, largely just to familiarize myself with the AHK language
 
 
 ; Simple Window Drag
@@ -63,48 +65,45 @@ CoordMode("Mouse")
 ; --------------------------------------------------
 LWin & LButton:: {
     MouseGetPos(, , &KDE_id) ; Get the window id
+    KDE_id := "ahk_id " KDE_id
     ; Abort if it's the desktop.
-    ClassWin := WinGetClass("ahk_id " KDE_id)
+    ClassWin := WinGetClass(KDE_id)
     if (ClassWin = "WorkerW")
         return
     ; If the window is maximized, restore the initial position
     ; and size of the window and center the mouse.
-    KDE_Win := WinGetMinMax("ahk_id " KDE_id)
-    If KDE_Win {
-        WinRestore("ahk_id " KDE_id)
-        WinGetPos(&KDE_WinX1, &KDE_WinY1, &KDE_WinW, &KDE_WinH, "ahk_id " KDE_id)
+    If WinGetMinMax(KDE_id) {
+        WinRestore(KDE_id)
+        WinGetPos(&KDE_WinX1, &KDE_WinY1, &KDE_WinW, &KDE_WinH, KDE_id)
         MouseMove((KDE_WinX1 + (KDE_WinW / 2)), (KDE_WinY1 + (KDE_WinH / 2)), 0)
     }
 
     ; Move the window.
     MouseGetPos(&KDE_X1, &KDE_Y1)
-    WinGetPos(&KDE_WinX1, &KDE_WinY1, , , "ahk_id " KDE_id)
-    Loop {
-        KDE_Button := GetKeyState("LButton", "P") ? "D" : "U" ; Break if button has been released.
-        if (KDE_Button = "U")
-            break
+    WinGetPos(&KDE_WinX1, &KDE_WinY1, , , KDE_id)
+    While GetKeyState("LButton", "P") { ; Loop while button is pressed.
         MouseGetPos(&KDE_X2, &KDE_Y2) ; Get the current mouse position.
         KDE_X2 -= KDE_X1 ; Obtain an offset from the initial mouse position.
         KDE_Y2 -= KDE_Y1
         KDE_WinX2 := (KDE_WinX1 + KDE_X2) ; Apply this offset to the window position.
         KDE_WinY2 := (KDE_WinY1 + KDE_Y2)
-        WinMove(KDE_WinX2, KDE_WinY2, , , "ahk_id " KDE_id) ; Move the window to the new position.
+        WinMove(KDE_WinX2, KDE_WinY2, , , KDE_id) ; Move the window to the new position.
     }
     return
 }
 LWin & RButton:: {
     ; Get the mouse position and window id,
     MouseGetPos(&KDE_X1, &KDE_Y1, &KDE_id)
+    KDE_id := "ahk_id " KDE_id
     ; Abort if it's the desktop.
-    ClassWin := WinGetClass("ahk_id " KDE_id)
+    ClassWin := WinGetClass(KDE_id)
     if (ClassWin = "WorkerW")
         return
     ; Abort if the window is maximized.
-    KDE_Win := WinGetMinMax("ahk_id " KDE_id)
-    If KDE_Win
+    if WinGetMinMax(KDE_id)
         return
     ; Get the initial window position and size.
-    WinGetPos(&KDE_WinX1, &KDE_WinY1, &KDE_WinW, &KDE_WinH, "ahk_id " KDE_id)
+    WinGetPos(&KDE_WinX1, &KDE_WinY1, &KDE_WinW, &KDE_WinH, KDE_id)
     ; Determine whether we're in the left, center, or right third of the window.
     If (KDE_X1 < KDE_WinX1 + KDE_WinW / 3) {
         KDE_dX := 1
@@ -139,20 +138,17 @@ LWin & RButton:: {
         KDE_dX := 1
         KDE_dY := 1
     }
-    Loop {
-        KDE_Button := GetKeyState("RButton", "P") ? "D" : "U" ; Break if button has been released.
-        if (KDE_Button = "U")
-            break
+    While GetKeyState("RButton", "P") { ; Loop while button is pressed.
         MouseGetPos(&KDE_X2, &KDE_Y2) ; Get the current mouse position.
         ; Get the current window position and size.
-        WinGetPos(&KDE_WinX1, &KDE_WinY1, &KDE_WinW, &KDE_WinH, "ahk_id " KDE_id)
+        WinGetPos(&KDE_WinX1, &KDE_WinY1, &KDE_WinW, &KDE_WinH, KDE_id)
         KDE_X2 -= KDE_X1 ; Obtain an offset from the initial mouse position.
         KDE_Y2 -= KDE_Y1
         WinMove(KDE_WinX1 + (KDE_dX * KDE_X2),
                 KDE_WinY1 + (KDE_dY * KDE_Y2),
                 KDE_WinW  + (KDE_dW * KDE_X2),
                 KDE_WinH  + (KDE_dH * KDE_Y2),
-                "ahk_id " KDE_id)
+                KDE_id)
         KDE_X1 := (KDE_X2 + KDE_X1) ; Reset the initial position for the next iteration.
         KDE_Y1 := (KDE_Y2 + KDE_Y1)
     }
@@ -160,8 +156,9 @@ LWin & RButton:: {
 }
 LWin & MButton:: {
     MouseGetPos(&X1, &Y1, &KDE_id) ; Get the window id
+    KDE_id := "ahk_id " KDE_id
     ; Abort if it's the desktop.
-    ClassWin := WinGetClass("ahk_id " KDE_id)
+    ClassWin := WinGetClass(KDE_id)
     if (ClassWin = "WorkerW")
         return
     KeyWait("MButton")
@@ -288,51 +285,50 @@ GetMonitorIndexFromWindow(windowHandle) {
 ; --------------------------------------------------
 ; Add Title Id to diferanciate diferent multiple instances (explorer or chrome for exemple) ?
 GestureTR(KDE_id) {	; gesture top/right
-    WinActivate("ahk_id " KDE_id) ; Activate the window
+    WinActivate(KDE_id) ; Activate the window
     SnapActiveWindow("top", "right", "half")
     return
 }
 GestureDR(KDE_id) {	; gesture down/right
-    WinActivate("ahk_id " KDE_id) ; Activate the window
+    WinActivate(KDE_id) ; Activate the window
     SnapActiveWindow("bottom", "right", "half")
     return
 }
 GestureTL(KDE_id) {	; gesture top/left
-    WinActivate("ahk_id " KDE_id) ; Activate the window
+    WinActivate(KDE_id) ; Activate the window
     SnapActiveWindow("top", "left", "half")
     return
 }
 GestureDL(KDE_id) {	; gesture down/left
-    WinActivate("ahk_id " KDE_id) ; Activate the window
+    WinActivate(KDE_id) ; Activate the window
     SnapActiveWindow("bottom", "left", "half")
     return
 }
 GestureU(KDE_id) {	; gesture up
     ; Toggle between maximized and restored state.
-    KDE_Win := WinGetMinMax("ahk_id " KDE_id)
-    If KDE_Win
-        WinRestore("ahk_id " KDE_id)
+    If WinGetMinMax(KDE_id)
+        WinRestore(KDE_id)
     Else
-        WinMaximize("ahk_id " KDE_id)
+        WinMaximize(KDE_id)
     return
 }
 GestureD(KDE_id) {	; Gesture down
-    WinActivate("ahk_id " KDE_id) ; Activate the window
-    WinSetAlwaysOnTop(-1, "ahk_id " KDE_id)
+    WinActivate(KDE_id) ; Activate the window
+    WinSetAlwaysOnTop(-1, KDE_id)
     return
 }
 GestureL(KDE_id) {	; gesture left
-    WinActivate("ahk_id " KDE_id) ; Activate the window
+    WinActivate(KDE_id) ; Activate the window
     SnapActiveWindow("top", "left", "full")
     return
 }
 GestureR(KDE_id) { ; gesture right
-    WinActivate("ahk_id " KDE_id) ; Activate the window
+    WinActivate(KDE_id) ; Activate the window
     SnapActiveWindow("top", "right", "full")
     return
 }
 NoMove(KDE_id) { ; gesture no move
-    WinMinimize("ahk_id " KDE_id) ; Minimize the window
+    WinMinimize(KDE_id) ; Minimize the window
     return
 }
 
@@ -371,8 +367,7 @@ LWin & Numpad5:: {
     ClassWin := WinGetClass("A") ; Abort if it's the desktop.
     if (ClassWin = "WorkerW")
         return
-    KDE_Win := WinGetMinMax("A")
-    If KDE_Win
+    If WinGetMinMax("A")
         WinRestore("A")
     Else
         WinMaximize("A")
