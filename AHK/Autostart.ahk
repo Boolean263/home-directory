@@ -30,7 +30,8 @@ NumpadDiv::Send "{U+00F7}"
 #a::
 {
     MouseGetPos(,,&rwinid)
-    WinActivate(Integer(rwinid))
+    WinMoveTop(Integer(rwinid))
+    ;WinActivate(Integer(rwinid))
 }
 
 ; Send window to bottom
@@ -77,7 +78,8 @@ NumpadDiv::Send "{U+00F7}"
 !^Insert::ProcessClose("explorer.exe")
 
 ; Shut down Windows
-^!F4::Shutdown(9)
+;^!F4::Shutdown(9)
+^!F4::Shutdown(1)
 
 ; Manage virtual desktops
 ; VD.ahk from https://github.com/FuPeiJiang/VD.ahk/tree/v2_port
