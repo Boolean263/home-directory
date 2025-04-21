@@ -16,15 +16,22 @@
     SetCapsLockState !GetKeyState('CapsLock', 'T')
 }
 
-; en-dash on Ctrl+NumpadSub, em-dash on Ctrl+Alt+NumpadSub
-; (these are MS Word shortcuts that I'm making global)
-^NumpadSub::Send "{U+2013}"
-^!NumpadSub::Send "{U+2014}"
-
-; Just the proper unicode symbols for the operator keys.
+; Attach some fun stuff to the number pad.
 ; Note that programs like Calculator don't recognize them.
-NumpadMult::Send "{U+00D7}"
-NumpadDiv::Send "{U+00F7}"
+; The #HotIf documentation suggests this method for detecting
+; multiple tyeps of window in a performant way.
+GroupAdd("UsesNumpad", "Calculator ahk_class ApplicationFrameWindow")
+GroupAdd("UsesNumpad", "ahk_exe OpenMPT.exe")
+#HotIf not WinActive("ahk_group UsesNumpad")
+    ; en-dash on Ctrl+NumpadSub, em-dash on Ctrl+Alt+NumpadSub
+    ; (these are MS Word shortcuts that I'm making global)
+    ^NumpadSub::Send "{U+2013}"
+    ^!NumpadSub::Send "{U+2014}"
+
+    ; Just the proper unicode symbols for the operator keys.
+    NumpadMult::Send "{U+00D7}"
+    NumpadDiv::Send "{U+00F7}"
+#HotIf
 
 ; Bring window to top
 #a::
@@ -42,23 +49,28 @@ NumpadDiv::Send "{U+00F7}"
 }
 
 ; Toggle "focus" mode -- ie, borderless fullscreen
-; Some programs have their own hotkey for this
-#HotIf WinActive("ahk_class MozillaWindowClass") ; or WinActive(...)
-    ; These programs use F11
+; Some programs have their own hotkey for this...
+GroupAdd("Focus_F11", "ahk_class MozillaWindowClass")
+GroupAdd("Focus_AltEnter", "ahk_class mintty")
+
+#HotIf WinActive("ahk_group Focus_F11")
     #f::
     {
+        WinMoveTop("A")
         Send "{F11}"
     }
-#HotIf WinActive("ahk_class mintty")
-    ; These programs use Alt+Enter
+#HotIf WinActive("ahk_group Focus_AltEnter")
     #f::
     {
+        WinMoveTop("A")
         Send "!{Enter}"
     }
 ; For programs that don't, we can make it happen
 #HotIf
 #f::
 {
+    WinMoveTop("A")
+
     ; Toggle the border and titlebar of the current window
     WinSetStyle("^0xC40000", "A")
 
@@ -108,10 +120,6 @@ Loop 9 {
     Hotkey("#" A_Index, MyVD)
     Hotkey("#^" A_Index, MyVD)
 }
-
-; Allow toggling hover-focus
-#include xmouse-focus.ahk
-#T::SetWinHoverFocus("Toggle")
 
 ;----- Included scripts -----
 #Include ChangeResolution.ahk
