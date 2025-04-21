@@ -1,7 +1,9 @@
 #Requires AutoHotkey v2
+; Adapted from https://superuser.com/a/1209478
 
-SetWinHoverFocus(aOn, aRaise := False, aActTimeout := 250) {
-    ; Adapted from https://superuser.com/a/1209478
+; According to https://www.autohotkey.com/docs/v2/Concepts.htm#nothing
+; the empty string is used to represent a non-value or default value.
+SetWinHoverFocus(aOn, aRaise := "", aActTimeout := "") {
 
     ; This system call parameter enables or disables the setting
     ; "Activate a window by hovering over it with the mouse"
@@ -25,14 +27,20 @@ SetWinHoverFocus(aOn, aRaise := False, aActTimeout := 250) {
     SPI_GETACTIVEWNDTRKTIMEOUT := 0x2002
     SPI_SETACTIVEWNDTRKTIMEOUT := 0x2003
 
+    DllCall("SystemParametersInfo", "UInt", SPI_GETACTIVEWINDOWTRACKING, "UInt", 0, "UIntP", &current := 0, "UInt", 0)
     if (aOn = "toggle") {
-        DllCall("SystemParametersInfo", "UInt", SPI_GETACTIVEWINDOWTRACKING, "UInt", 0, "UIntP", &current := 0, "UInt", 0)
         aOn := !current
     }
 
     DllCall("SystemParametersInfo", "UInt", SPI_SETACTIVEWINDOWTRACKING, "UInt", 0, "UInt", aOn ? 1 : 0, "UInt", 0)
-    DllCall("SystemParametersInfo", "UInt", SPI_SETACTIVEWNDTRKZORDER, "UInt", 0, "UInt", aRaise ? 1 : 0, "UInt", 0)
-    DllCall("SystemParametersInfo", "UInt", SPI_SETACTIVEWNDTRKTIMEOUT, "UInt", 0, "UInt", aActTimeout, "UInt", 0)
+
+    if (aRaise != "")
+        DllCall("SystemParametersInfo", "UInt", SPI_SETACTIVEWNDTRKZORDER, "UInt", 0, "UInt", aRaise ? 1 : 0, "UInt", 0)
+
+    if (IsInteger(aActTimeout) and Number(aActTimeout) >= 0)
+        DllCall("SystemParametersInfo", "UInt", SPI_SETACTIVEWNDTRKTIMEOUT, "UInt", 0, "UInt", Number(aActTimeout), "UInt", 0)
+
+    return current
 }
 
 ; If I'm running this file directly, toggle the setting and exit.
