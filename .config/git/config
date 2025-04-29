@@ -53,7 +53,7 @@
     parallel = 0
 
 [push]
-    default = tracking
+    default = upstream
 
 [apply]
     whitespace = fix
