@@ -78,6 +78,8 @@ SetWinHoverFocus(True)
 
 ; Temporarily disable hover-focus when specific windows happen
 GroupAdd("NoHoverFocus", "ahk_exe OpenWith.exe")
+GroupAdd("NoHoverFocus", "ahk_class XamlExplorerHostIslandWindow ahk_exe explorer.exe")
+GroupAdd("NoHoverFocus", "ahk_class Windows.UI.Core.CoreWindow ahk_exe ShellExperienceHost.exe")
 GroupAdd("NoHoverFocus", "ahk_exe PowerToys.PowerLauncher.exe")
 GroupAdd("NoHoverFocus", "ahk_class UnityContainerWndClass ahk_exe Unity.exe")
 WinEvent.Show(XWT_WinShownCallback, "ahk_group NoHoverFocus")

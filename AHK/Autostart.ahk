@@ -121,6 +121,9 @@ Loop 9 {
     Hotkey("#^" A_Index, MyVD)
 }
 
+; Win+P to toggle pinning window to all desktops
+#p::VD.TogglePinWindow("A")
+
 ;----- Included scripts -----
 #Include ChangeResolution.ahk
 #include SimpleWindowDrag.ah2
