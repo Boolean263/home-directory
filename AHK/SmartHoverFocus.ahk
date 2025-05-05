@@ -63,7 +63,7 @@ XWT_HandleMessage(wParam, lParam, Msg, hWnd) {
 OnMessage(0x281, XWT_HandleMessage) ; WM_WTSESSION_CHANGE
 
 XWT_ResetMenu(ItemName, ItemPos, MyMenu) {
-    xWT_Enable(True)
+    XWT_Enable(True)
 }
 
 ; Create our menu item
