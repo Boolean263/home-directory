@@ -4,6 +4,8 @@
 
 if exists(':BufExplorer')
     nnoremap <leader>b :BufExplorer<CR>
+    let g:bufExplorerFindActive=0 " always bring selected buffer into the current window
+    let g:bufExplorerOnlyOneTab=0 " Show in all tabs where buffer was used.
 endif
 
 if exists(':ALENext')
