@@ -92,6 +92,15 @@ if exists luarocks ; then
     eval $(luarocks path --no-bin)
 fi
 
-if [ -f "$HOME/.profile.local" ] ; then
-    . "$HOME/.profile.local"
+# Pull in any other profile tweaks from separeate files
+# (replaces my old optional ~/.profile.local file)
+PROFILE_D="$HOME/.config/profile.d"
+if [ -d "$PROFILE_D" ] ; then
+    set -a
+    for conf in $(ls "$PROFILE_D"/*.sh | sed 's/ /?/g'); do
+        . "$conf"
+    done
+    set +a
 fi
+unset conf PROFILE_D
+
