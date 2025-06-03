@@ -2,6 +2,8 @@
 
 : "${BUILDPATH:?BUILDPATH not set}"
 
+. "$HOME/env/path_functions.sh"
+
 usage()
 {
     if [ -n "$*" ] ; then
@@ -96,5 +98,6 @@ if grep -q '^ENABLE_ASAN:BOOL=1$' "$BUILDPATH/CMakeCache.txt" ; then
 else
     m --target test-programs
     unset WIRESHARK_LOG_LEVEL WIRESHARK_LOG_DOMAINS
+    add_to_path PATH "$WS_BIN_PATH"
     "$HOME/bin/alternate-home.sh" python3 -m pytest "$SRCPATH" "${MY_WSTEST_ARGS[@]}"
 fi

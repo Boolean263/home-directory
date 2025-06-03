@@ -2,5 +2,8 @@
 
 : "${BUILDPATH:?BUILDPATH not set}"
 
+. "$HOME/env/path_functions.sh"
+del_from_path PATH "$WS_BIN_PATH"
+
 [ -d "$BUILDPATH" ] || cm
 cmake --build "$BUILDPATH" ${1:+"$@"}
