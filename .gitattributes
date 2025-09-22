@@ -1,2 +1,12 @@
+# This is the .gitattributes file for my home directory repo.
+# For settings meant to apply to any repo I use, see
+# $XDG_CONFIG_HOME/git/attributes
+#
+# "When more than one pattern matches the path, a later line overrides an
+# earlier line. This overriding is done per attribute." - gitattributes(5)
+
+# Explicitly specify that any file should be examined for textyness
+* text=auto
+
 # msys2's tmux has trouble with crlf files
 .config/tmux/tmux.conf      text eol=lf
