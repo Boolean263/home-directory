@@ -5,9 +5,11 @@ use warnings;
 use utf8;
 use version;
 
+binmode STDERR => ':utf8';
+
 sub debug
 {
-    print STDERR join(" ", @_)
+    print STDERR join(" ", @_, "\n")
         if $ENV{G_DEBUG};
 }
 
@@ -35,6 +37,11 @@ sub shell_quote(@)
 
 sub do_or_die(@)
 {
+    if ($ENV{G_DEBUG}) {
+        my $l = '['; # '⟬';
+        my $r = ']'; # '⟭';
+        print STDERR "Running: $l".join("$r $l", @_, "$r\n");
+    }
     exec(@_) or die "Failed to run $_[0]: $!\n";
 }
 
@@ -91,35 +98,62 @@ if($ENV{DISPLAY} || $ENV{MSYSTEM})
 {
     if($gvim && -x $gvim)
     {
+        $gvim =~ m(/([^/]+)(?:\.exe)$)i;
+        my $gbase = lc($1);
+        #debug("gvim='$gvim' gbase='$gbase'");
         if($remote)
         {
             # The following errors out if no filenames are provided
             #unshift @vim_args, '--remote-silent' if $gvim =~ m(/gvim$);
         }
-        if($gvim =~ m(/neovide[^/]*$))
+        if($gbase eq 'neovide')
         {
+            # Like with nvim-qt, neovide-specific arguments come first,
+            # followed by '--' and then [n]vim arguments.
+            my @nvide_args;
+
             # This doesn't actually work; neovide detects it's not
             # outputting to a terminal and creates a new window instead.
             # I have other problems with neovide as well, including that
             # it seems to crash easily when it can't find my neovim install.
             my $neovide_version = version_from_string(`"$gvim" --version`);
             if ($neovide_version >= version->parse("0.12.0")) {
-                unshift @vim_args, '--no-tabs', '--grid', $geometry;
+                push @nvide_args, '--no-tabs', '--grid', $geometry;
             }
             else {
-                unshift @vim_args, '--notabs', '--geometry', $geometry;
+                push @nvide_args, '--notabs', '--geometry', $geometry;
             }
-            push @vim_args, '--';
+
+            if (grep { $_ eq '-f' } @ARGV) {
+                push @nvide_args, '--no-fork';
+                @ARGV = grep { $_ ne '-f' } @ARGV;
+            }
+            else {
+                # Haven't tested this on Linux recently
+                push @nvide_args, '--fork';
+            }
+
+            # Keep this at the end
+            @vim_args = (@nvide_args, '--', @vim_args);
         }
-        elsif($gvim =~ m(/nvim-qt$)) {
-            # nvim-qt's unit for --geometry is pixels, not characters,
-            # so we can't set the size here.
-            #
+        elsif($gbase eq 'nvim-qt') {
             # Arguments for nvim-qt come first, followed by '--'
             # and then [n]vim arguments.
-            unshift @vim_args, '--';
+            my @nqt_args;
+
+            # nvim-qt doesn't directly respect `vim -f` so...
+            if (grep { $_ eq '-f' } @ARGV) {
+                push @nqt_args, '--nofork';
+                @ARGV = grep { $_ ne '-f' } @ARGV;
+            }
+
+            # nvim-qt's unit for --geometry is pixels, not characters,
+            # so we can't set the size here.
+
+            # Keep this at the end
+            @vim_args = (@nqt_args, '--', @vim_args);
         }
-        debug("running gvim: ", $gvim, @vim_args, @ARGV, @vim_tail);
+        #debug("running gvim: ", $gvim, @vim_args, @ARGV, @vim_tail);
         do_or_die($gvim, @vim_args, @ARGV, @vim_tail);
     }
 }
