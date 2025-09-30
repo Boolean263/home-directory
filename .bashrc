@@ -17,7 +17,8 @@ esac
 . "$HOME/env/bash-preexec.sh"
 
 # If this is a remote host being ssh'd into, launch tmux or screen if we can
-if [ -n "$SSH_CONNECTION" ] && ! [ -e "$HOME/.no-tmux" ] ; then
+if [ -n "$SSH_CONNECTION" ] && ! [ -e "$HOME/.no-tmux" ] &&
+        which screen tmux 2>/dev/null | grep -q . ; then
     # Protect against nested sessions
     if [ -z "$TMUX" ] && [ -z "$STY" ] ; then
         # Move ssh auth sock to a consistent location
