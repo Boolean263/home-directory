@@ -1,10 +1,22 @@
 #!/bin/sh
 
+# Version-specific configuration for tmux
+tmux setenv -g TMUX_VERSION $(tmux -V | grep -Eo '[0-9]+\.[0-9]+')
+
+
 : ${TMUX_VERSION:?TMUX_VERSION not set}
 
 # Tmux configuration that may be version-dependent goes here
 # to keep my main .tmux.conf file from getting too messy.
 # (That's less frequent now that I'm only interested in 2.x versions)
+
+# Use tmux's terminfo if we have it handy,
+# otherwise fall back on screen's.
+if infocmp tmux-256color >/dev/null ; then
+    tmux set -g default-terminal tmux-256color
+else
+    tmux set -g default-terminal screen-256color
+fi
 
 # tmux needs to be told about terminals that have truecolour support.
 # Rather than list them all I'll test the env var COLORTERM
