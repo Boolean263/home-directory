@@ -166,6 +166,9 @@
     <!-- 'Left', 'Middle', 'Right' -->
   </dock>
   <keyboard>
+    <!-- Note: A bunch of my keybinds seem to fail when NumLock is on.
+         TBD if there's a way to fix that here.
+    -->
     <chainQuitKey>C-g</chainQuitKey>
     <!-- General keybinds -->
     <keybind key="XF86AudioLowerVolume">
