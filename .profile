@@ -34,7 +34,7 @@ export EDITOR="$VISUAL"
 export GIT_EDITOR="$VISUAL -f"
 
 export LESS="-R"
-eval "$(lessfile)"
+eval "$(if_exists lessfile)"
 
 export FIGNORE="CVS:\~:.o:.svn:.git:.lo"
 
@@ -46,19 +46,6 @@ export UBUNTU_MENUPROXY=
 
 export MANPAGER="$HOME/bin/manpager"
 export PERLDOC_PAGER="$PAGER"
-
-# Use fcitx if we can; otherwise,
-# Force apps to use the classic X input method, chiefly to support
-# the settings in my .XCompose file.
-myim=$(which fcitx5 fcitx 2>/dev/null | head -n 1)
-myim=${myim:-xim}
-exists fcitx && myim=fcitx || myim=xim
-export CLUTTER_IM_MODULE=$myim
-export QT_IM_MODULE=$myim
-export QT4_IM_MODULE=$myim
-export GTK_IM_MODULE=$myim
-export XMODIFIERS="@im=$myim"
-unset myim
 
 # Go all in on Wayland if it's in use
 if [ -n "$WAYLAND_DISPLAY" ] ; then
@@ -88,9 +75,7 @@ fi
 # ... but still collate ASCIIbetically
 export LC_COLLATE=POSIX
 
-if exists luarocks ; then
-    eval $(luarocks path --no-bin)
-fi
+eval $(if_exists luarocks path --no-bin)
 
 # Pull in any other profile tweaks from separate files
 # (replaces my old optional ~/.profile.local file)
@@ -98,7 +83,7 @@ PROFILE_D="$HOME/.config/profile.d"
 if [ -d "$PROFILE_D" ] ; then
     set -a
     for conf in $(ls "$PROFILE_D"/*.sh | sed 's/ /?/g'); do
-        . "$conf"
+        [ -f "$conf" ] && . "$conf"
     done
     set +a
 fi
