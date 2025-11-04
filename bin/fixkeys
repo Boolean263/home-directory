@@ -13,4 +13,12 @@ else
     xkbcomp -w 1 -I$XKBHOME $XKBHOME/keymap/default $DISPLAY
 fi
 
+# fcitx may just die when asked to hup, so restart it
 killall -HUP fcitx fcitx5
+sleep 2
+if ! pgrep -a fcitx ; then
+    FCITX=$(which fcitx fcitx5 2>/dev/null | head -n 1)
+    if [ -n "$FCITX" ] ; then
+        "$FCITX"
+    fi
+fi
