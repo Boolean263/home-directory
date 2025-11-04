@@ -3,6 +3,9 @@
 #
 # XCompile syntax: The desired output is first, then a tab character,
 # then the input sequence.
+#
+# Note that multi-key outputs work in standard X, but not in fcitx.
+# (Some GTK programs warn that multi-key replacements are non-standard.)
 
 #Hello World	yo
 
