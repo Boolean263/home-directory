@@ -17,6 +17,22 @@ exists()
     command -v "$1" >/dev/null 2>&1
 }
 
+### if_exists
+# If a runnable program exists with the given name, run it.
+# Otherwise do nothing and generate no output.
+# Mainly meant for my shell profile and helper scripts
+# so they aren't cluttered with extra checks for optional steps.
+if_exists()
+{
+    local PROGRAM="$1"
+    shift
+    if exists "$PROGRAM" ; then
+        "$PROGRAM" ${1+"$@"}
+    else
+        :
+    fi
+}
+
 ### is_in_path
 # Returns true if the directory in TESTPATH is a member in the path
 # variable PATHVAR. Meant to be a helper function.
@@ -180,6 +196,10 @@ clean_path()
         esac
     done
     local PATHVAR="$1"
+    if [ "x$PATHVAR" = "x" ] ; then
+        echo "clean_path: no PATHVAR specified" 1>&2
+        return 1
+    fi
     local i
     local CONTENTS
 
@@ -187,6 +207,6 @@ clean_path()
     unset $PATHVAR
     local IFS="$SEP"
     for i in $CONTENTS; do
-        add_to_path "-s$SEP" -e "$PATHVAR" "$i"
+        add_to_path -q "-s$SEP" -e "$PATHVAR" "$i"
     done
 }

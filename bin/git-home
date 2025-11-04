@@ -40,7 +40,7 @@ fi
 
 # Update things that may have been affected by the merge
 if [ -n "$pulled" ] ; then
-    lesskey -o "$repodir/.config/less" -- "$repodir/.config/lesskey"
+    if_exists lesskey -o "$repodir/.config/less" -- "$repodir/.config/lesskey"
     (cd "$repodir/.local/share/terminfo" && ./regen.sh) >/dev/null 2>&1
     if [ -n "$DISPLAY" ] && [ "$repodir" = "$HOME" ] && exists xrdb ; then
         xrdb -I"$XDG_CONFIG_HOME/Xresources.d" "$XDG_CONFIG_HOME/Xresources" >/dev/null 2>&1
