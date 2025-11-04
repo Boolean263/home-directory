@@ -92,7 +92,7 @@ if exists luarocks ; then
     eval $(luarocks path --no-bin)
 fi
 
-# Pull in any other profile tweaks from separeate files
+# Pull in any other profile tweaks from separate files
 # (replaces my old optional ~/.profile.local file)
 PROFILE_D="$HOME/.config/profile.d"
 if [ -d "$PROFILE_D" ] ; then
