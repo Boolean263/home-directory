@@ -33,6 +33,21 @@ GroupAdd("UsesNumpad", "ahk_exe OpenMPT.exe")
     NumpadDiv::Send "{U+00F7}"
 #HotIf
 
+; Bring in some of my "AltGr" mappings from Linux.
+; Note that Windows's ACTUAL AltGr is LCtrl+RAlt,
+; but I'm only using RAlt since that's how I'm used to it.
+; The syntax for that is: >!
+>!8::Send "{U+2022}"    ; Bullet
+>!+8::Send "{U+2B51}"   ; Star bullet
+>!-::Send "{U+00AD}"    ; Soft hyphen
+>!+-::Send "{U+2011}"   ; Non-breaking hyphen
+>![::Send "{U+2018}"    ; Left single quote
+>!]::Send "{U+2019}"    ; Right single quote
+>!+[::Send "{U+201C}"   ; Left double quote
+>!+]::Send "{U+201D}"   ; Right double quote
+>!Space::Send "{U+00A0}" ; Non-breaking space
+>!+Space::Send "{U+200B}" ; Zero-width non-breaking space
+
 ; Bring window to top
 #a::
 {
