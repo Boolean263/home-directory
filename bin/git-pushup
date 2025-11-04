@@ -1,8 +1,14 @@
 #!/bin/sh
 
-git remote -v | while read rname rurl rtype ; do
+git remote -v | while read -r rname rurl rtype ; do
     [ "$rtype" = "(push)" ]          || continue
     [ "$rurl" = "file:///dev/null" ] && continue
-    echo "# $rname"
-    git push "$rname" ${1+"$@"}
+    if [ -n "$1" ] ; then
+        echo "# $rname"
+        git push "$rname" ${1+"$@"}
+    else
+        BRANCH="$(git symbolic-ref --short HEAD)"
+        echo "# $rname (branch: $BRANCH)"
+        git push "$rname" "$BRANCH"
+    fi
 done
