@@ -88,5 +88,8 @@ xkb_symbols "my_8level" {
 
 partial modifier_keys
 xkb_symbols "num_bksp" {
-    replace key <NMLK> { [ BackSpace ] };
+    // Programs like `numlockx` can only toggle NumLock
+    // if there's a key somewhere that can generate Num_Lock.
+    //replace key <NMLK> { [ BackSpace ] };
+    key <NMLK> { type="FOUR_LEVEL", [ BackSpace, BackSpace, BackSpace, Num_Lock ] };
 };
