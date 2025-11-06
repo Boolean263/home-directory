@@ -40,7 +40,7 @@ sub do_or_die(@)
     if ($ENV{G_DEBUG}) {
         my $l = '['; # '⟬';
         my $r = ']'; # '⟭';
-        print STDERR "Running: $l".join("$r $l", @_, "$r\n");
+        print STDERR "Running: $l".join("$r $l", @_)."$r\n";
     }
     exec(@_) or die "Failed to run $_[0]: $!\n";
 }
@@ -98,7 +98,7 @@ if($ENV{DISPLAY} || $ENV{MSYSTEM})
 {
     if($gvim && -x $gvim)
     {
-        $gvim =~ m(/([^/]+)(?:\.exe)$)i;
+        $gvim =~ m(/([^/]+)(?:\.exe)?$)i;
         my $gbase = lc($1);
         #debug("gvim='$gvim' gbase='$gbase'");
         if($remote)
