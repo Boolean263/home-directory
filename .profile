@@ -1,4 +1,6 @@
 #!/bin/sh
+# shellcheck disable=SC1090,SC1091
+#
 # ~/.profile: traditionally used to configure session-wide settings.
 # Mainly environment variables, possibly some startup programs.
 # This file gets sourced by login shells. It *may* also get called
@@ -18,7 +20,7 @@ ENVIRONMENTD="$HOME/.config/environment.d"
 #if [ -d "$ENVIRONMENTD" ] && [ -z "$ENV_TEST_ENVD" ] ; then
 if [ -d "$ENVIRONMENTD" ] ; then
     set -a
-    for conf in $(ls "$ENVIRONMENTD"/*.conf | sed 's/ /?/g'); do
+    for conf in $(find "$ENVIRONMENTD" -maxdepth 1 -type f -name '*.conf' | sed 's/ /?/g'); do
         . "$conf"
     done
     set +a
@@ -28,10 +30,11 @@ unset conf ENVIRONMENTD
 . "$HOME/env/path_functions.sh"
 clean_path PATH
 
-export PAGER=$(which less)
-export VISUAL=$(which nvim vim vi nvi 2>/dev/null | head -n 1)
-export EDITOR="$VISUAL"
-export GIT_EDITOR="$VISUAL -f"
+PAGER="$(command -v less)"
+VISUAL="$(which nvim vim vi nvi 2>/dev/null | head -n 1)"
+EDITOR="$VISUAL"
+GIT_EDITOR="$VISUAL -f"
+export PAGER VISUAL EDITOR GIT_EDITOR
 
 export LESS="-R"
 eval "$(if_exists lessfile)"
@@ -58,8 +61,9 @@ export GPGKEY="310835C6"
 
 # Build in parallel when possible
 if [ -r /proc/cpuinfo ] ; then
-    export CMAKE_BUILD_PARALLEL_LEVEL=$(grep -c ^processor /proc/cpuinfo)
-    export MAKEFLAGS=-j$CMAKE_BUILD_PARALLEL_LEVEL
+    CMAKE_BUILD_PARALLEL_LEVEL="$(grep -c ^processor /proc/cpuinfo)"
+    MAKEFLAGS="${MAKEFLAGS:+$MAKEFLAGS }-j$CMAKE_BUILD_PARALLEL_LEVEL"
+    export CMAKE_BUILD_PARALLEL_LEVEL MAKEFLAGS
 fi
 
 if [ -d "/tmp" ] ; then
@@ -75,14 +79,14 @@ fi
 # ... but still collate ASCIIbetically
 export LC_COLLATE=POSIX
 
-eval $(if_exists luarocks path --no-bin)
+eval "$(if_exists luarocks path --no-bin)"
 
 # Pull in any other profile tweaks from separate files
 # (replaces my old optional ~/.profile.local file)
 PROFILE_D="$HOME/.config/profile.d"
 if [ -d "$PROFILE_D" ] ; then
     set -a
-    for conf in $(ls "$PROFILE_D"/*.sh | sed 's/ /?/g'); do
+    for conf in $(find "$PROFILE_D" -maxdepth 1 -type f -name '*.sh' | sed 's/ /?/g'); do
         [ -f "$conf" ] && . "$conf"
     done
     set +a

@@ -1,4 +1,6 @@
 #!/bin/bash
+# shellcheck disable=SC1090,SC1091
+#
 # ~/.bashrc: sourced by bash for non-login interactive shells
 # (and, thanks to my .bash_profile, for login interactive shells too).
 # This is the place to put things that apply to the interactive shell
@@ -104,12 +106,12 @@ save_errcode() {
 semantic_prompt() {
     printf '\e]133;%s;%s\a' "$1" "$2"
 }
-_SEM_PS1=`semantic_prompt P k=i`
-_SEM_PS2=`semantic_prompt P k=c`
-_SEM_INPUT=`semantic_prompt B`
-_SEM_OUTPUT=`semantic_prompt C`
+_SEM_PS1="$(semantic_prompt P k=i)"
+_SEM_PS2="$(semantic_prompt P k=c)"
+_SEM_INPUT="$(semantic_prompt B)"
+_SEM_OUTPUT="$(semantic_prompt C)"
 semantic_output() { echo -n "$_SEM_OUTPUT" ; }
-semantic_errcode() { semantic_prompt D $code ; }
+semantic_errcode() { semantic_prompt D "$code" ; }
 
 preexec_functions+=(semantic_output)
 precmd_functions+=(save_errcode semantic_errcode)
@@ -126,9 +128,11 @@ precmd_functions+=(prompt_nonewline)
 my_prompt()
 {
     local -a PS
-    local SGR0=$(tput sgr0)
+    local SGR0
+    SGR0="$(tput sgr0)"
 
     # Tell terminal that this is the start of the prompt
+    # shellcheck disable=SC2016 # I don't want $_SEM_PS1 expanded here
     PS+=('\[$_SEM_PS1')
 
     # Set colours I like
@@ -136,51 +140,59 @@ my_prompt()
     local foreground=252
     local complement=9
     local t1=231
+    # shellcheck disable=SC2034 # I don't currently use $t2 but str2colour outputs it
     local t2=231
 
     # Get per-host colours if I can
     if which str2colour.py > /dev/null 2>&1 ; then
-        local allcolours=$(str2colour.py -d $HOSTNAME)
-        while read varname cnum rgb ; do
+        local allcolours
+        allcolours="$(str2colour.py -d "$HOSTNAME")"
+        # shellcheck disable=SC2034 # I don't use $rgb but don't want it in $cnum
+        while read -r varname cnum rgb ; do
             [ -n "$varname" ] || continue
             eval "$varname=$cnum"
         done <<< "$allcolours"
     fi
 
     # Reset any character sets or whatever, and clear the first line
-    PS+=($(tput rmacs))
-    PS+=($(tput setab $background))
-    PS+=($(tput setaf $foreground)$(tput el)'\]')
+    PS+=("$(tput rmacs)")
+    PS+=("$(tput setab $background)")
+    PS+=("$(tput setaf $foreground)$(tput el)\]")
 
     # Add time
+    # shellcheck disable=SC2016 # I don't want $timer_show expanded here
     #PS+=('$timer_show')
 
     # Add error if any
-    PS+=('`echo "${code:+\['$(tput setaf 9)'\]\a⚠ $code }"`')
+    # shellcheck disable=SC2016 # I don't want $code expanded here
+    PS+=('$(echo "${code:+\['"$(tput setaf 9)"'\]\a⚠ $code }")')
 
     # Add hostname
     PS+=("\[$(tput setaf $complement)\]$HOSTNAME")
 
     # Add chroot if any
-    PS+=('${debian_chroot:+"\['$(tput setaf $t1)'\]:$debian_chroot"}')
+    # shellcheck disable=SC2016 # I don't want $debian_chroot expanded here
+    PS+=('${debian_chroot:+"\['"$(tput setaf $t1)"'\]:$debian_chroot"}')
 
     # Add working directory
-    PS+=(' \['$(tput setaf $foreground)'\]📂\w')
+    PS+=(' \['"$(tput setaf $foreground)"'\]📂\w')
 
     # Add git prompt and end line
-    PS+=('\['$(tput setaf $t2)'\]`__git_ps1 " %s"`')
+    PS+=('\['"$(tput setaf $t2)"'\]$(__git_ps1 " %s")')
     PS+=("\[$SGR0\]")
     PS+=($'\n')
 
     # Give the hostname, command number, and actual prompt
-    PS+=('\['$(tput sgr0)'\]\!\$ ')
+    PS+=('\['"$(tput sgr0)"'\]\!\$ ')
 
     # Tell terminal that this is the start of the user input
+    # shellcheck disable=SC2016 # I don't want $_SEM_INPUT expanded here
     PS+=('\[$_SEM_INPUT\]')
 
     printf '%s' "${PS[@]}"
 }
-export PS1="$(my_prompt)"
+PS1="$(my_prompt)"
+export PS1
 unset -f my_prompt
 export PS2="$_SEM_PS2$PS2$_SEM_INPUT"
 # }}}1
