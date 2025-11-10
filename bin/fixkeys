@@ -10,15 +10,16 @@ if [ -n "$XRDP_SESSION" ] ; then
         -option compose:menu
 else
     # For a local X session, go hog wild
-    xkbcomp -w 1 -I$XKBHOME $XKBHOME/keymap/default $DISPLAY
+    xkbcomp -w 1 -I"$XKBHOME" "$XKBHOME/keymap/default" "$DISPLAY"
 fi
 
 # fcitx may just die when asked to hup, so restart it
-killall -HUP fcitx fcitx5
-sleep 2
-if ! pgrep -a fcitx ; then
-    FCITX=$(which fcitx fcitx5 2>/dev/null | head -n 1)
-    if [ -n "$FCITX" ] ; then
-        "$FCITX"
+if killall -HUP fcitx fcitx5 ; then
+    sleep 2
+    if ! pgrep -a fcitx ; then
+        FCITX=$(which fcitx fcitx5 2>/dev/null | head -n 1)
+        if [ -n "$FCITX" ] ; then
+            "$FCITX"
+        fi
     fi
 fi
