@@ -4,11 +4,8 @@ set -eu
 
 usage()
 {
-    if [ -n "${1:-}" ] ; then
-        echo "Error: $@" 1>&2
-        echo 1>&2
-    fi
     cat 1>&2 <<EOT
+${1:+Error: $*}
 This script runs the given command with HOME set to
 a temporary directory.
 
@@ -47,7 +44,8 @@ unset \
     XDG_RUNTIME_DIR
 
 if [ -n "$USE_DIR" ] ; then
-    export HOME=$(readlink -f "$USE_DIR")
+    HOME="$(readlink -f "$USE_DIR")"
+    export HOME
 else
     TMP_HOME=$(mktemp -p "${TMPDIR:-/tmp}" -d alternate-home.XXXXXX)
     export HOME="$TMP_HOME"
@@ -68,9 +66,9 @@ if [ -n "$TMP_HOME" ] ; then
     if [ $RV -eq 0 ] ; then
         rm -rf "$TMP_HOME"
     else
-        TMP_CONTENTS=$(ls -A "$TMP_HOME" | head)
+        TMP_CONTENTS=$(find "$TMP_HOME" -type f -size +0 -print -quit)
         if [ -n "$TMP_CONTENTS" ] ; then
-            echo "[keeping temporary home directory] $TMP_HOME" 1>&2
+            echo "[keeping non-empty temporary home directory] $TMP_HOME" 1>&2
         else
             rm -rf "$TMP_HOME"
         fi
