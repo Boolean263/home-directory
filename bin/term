@@ -1,39 +1,49 @@
-#!/bin/bash
+#!/bin/sh
 #
 # This script exists for two reasons:
 # 1) so that I can launch one script to get a terminal emulator without
 #    having to worry about which ones are installed on a given system
 # 2) document what I do and don't like about particular terminal emulators
 #    for my future self
+#
+# The terminal features I'm most interested in:
+#   * Distinguish Backspace from Ctrl-Backspace. Required.
+#     Most terminals already send ^? for Backspace and ^H for Ctrl-Backspace.
+#     Outliers should be configurable to do the same to become my regular.
+#     I use `stty erase ^? werase ^H` in my ~/.bashrc.
+#   * Unicode glyph support. Very nice to have.
+#   * Unicode combining-character (overstrike) support. Nice to have.
+#   * Truecolour support, or at least 256-colour support. Nice to have.
+#   * Image output support would be fun to play with, but until tmux
+#     knows how to handle it, isn't worth examining.
+#   * SendEvents was something I used to use a lot at work, but not any more.
+#
 
 # My global settings, which can be overridden by command-line options.
 FONTFACE="Iosevka Fixed"
 FONTSIZE="10"
 GEOMETRY="85x56"
 
-# My preferred terminals, in order. With unneccessary `cat`
-# to let me reorder lines on a whim.
-PREFERRED_TERMS=$(cat <<EOT
+# My preferred terminals, in order.
+PREFERRED_TERMS='
     alacritty
     st stterm
     xfce4-terminal
     urxvt rxvt-unicode rxvt
     xterm
     gnome-terminal
-EOT
-)
+'
 # Terminals I've taken out of the rotation can be pasted here for reference.
-cat >/dev/null <<EOT
+: '
     konsole
     lxterminal
     mate-terminal
     kitty
     wezterm
-EOT
+'
 
 usage()
 {
-    [ -n "$*" ] && echo -e "Error: $*\n" 1>&2
     cat 1>&2 <<EOT
 This is a wrapper to try and open my preferred terminal with my preferred
 settings. Not all terminals support all settings.
@@ -82,6 +92,7 @@ GX="${GEOMETRY%x*}"
 GY="${GEOMETRY#*x}"
 
 # Figure out which of my preferred terms is installed, in order
+# shellcheck disable=SC2086
 TERMEMU="$(which $PREFERRED_TERMS 2>/dev/null | head -1)"
 if [ -n "$dowhich" ]; then
     if [ -n "$TERMEMU" ] ; then
@@ -98,7 +109,8 @@ fi
 export COLORTERM="truecolor"
 case "$TERMEMU" in
     */alacritty)
-        # GPU-accelerated terminal.
+        # GPU-accelerated terminal written in Rust.
+        # https://alacritty.org/
         # Seems to work quite well so far, supports Ctrl-Backspace and
         # true colours and overstrike fonts and SendEvents.
         # The colours are a bit washed out by default, but I
@@ -107,13 +119,14 @@ case "$TERMEMU" in
         # ~/.config/alacritty/alacritty.yml
             #--dimensions $GX $GY \
         exec "$TERMEMU" \
-            -o window.dimensions.columns=$GX \
-            -o window.dimensions.lines=$GY \
+            -o window.dimensions.columns="$GX" \
+            -o window.dimensions.lines="$GY" \
             -qq \
             ${1+"$@"}
     ;;
     */wezterm)
         # Another terminal written in Rust.
+        # https://wezterm.org/
         # Supports sixel and iTerm2 imaging protocols.
         # Has the same xdotool/SendKeys bug as kitty does.
         # Config is in ~/.config/wezterm/wezterm.lua
@@ -125,10 +138,11 @@ case "$TERMEMU" in
             #--config "font_size=$FONTSIZE" \
     ;;
     */kitty)
-        # Kitty terminal emulator: I'm trying this one out for a while.
-        # Supports everything st does, and more.
+        # Kitty terminal emulator: https://sw.kovidgoyal.net/kitty/
         # Has problems with xdotool, but that's more of a problem
         # at work than at home.
+        # Author won't fix <https://github.com/kovidgoyal/kitty/issues/2261>
+        # and is pretty opinionated in general.
         # Still pretty buggy last I looked.
         # Config is in ~/.config/kitty/kitty.conf
         exec "$TERMEMU" \
@@ -139,12 +153,11 @@ case "$TERMEMU" in
             ${1+"$@"}
     ;;
     */st|*/stterm)
-        # st.suckless.org - This is my current favourite.
+        # "suckless" simple terminal.
+        # https://st.suckless.org/
         # It supports Ctrl-Backspace (with a slight compile-time tweak),
         # truecolor, and has good unicode support overall (except for
         # combining characters like used in strikeout.pl).
-        # (Though I've recently discovered it doesn't do combining
-        # characters very well.)
         # Very lightweight, and not dependent on libvte like many of the
         # others here.
         # Only downside is I need to build it from source to get my tweaks,
@@ -162,6 +175,7 @@ case "$TERMEMU" in
         #
         # konsole doesn't allow much command-line customizing, including
         # fonts.
+        # (I wonder how much of this has changed since I wrote the above.)
         exec "$TERMEMU" --hide-menubar --hide-tabbar ${1+"$@"}
     ;;
     */*rxvt*)
@@ -170,7 +184,7 @@ case "$TERMEMU" in
         # customizable with perl. Fell out of my favour because you need to
         # manually specify the fonts that carry the unicode glyphs you want.
         # Still decent though.
-        # See also ~/.Xresources.d/rxvt
+        # See also ~/.config/Xresources.d/rxvt
         unset COLORTERM
         exec "$TERMEMU" -geometry "$GEOMETRY" -fn "xft:$FONTFACE:size=$FONTSIZE" ${1+"$@"}
     ;;
@@ -178,7 +192,8 @@ case "$TERMEMU" in
         # The good old classic xterm. Pretty much guaranteed to be on
         # any system. Supports 256 colours, and Ctrl-Backspace.
         # Piss-poor unicode support though, so it's fairly low on my list.
-        # See also ~/.Xresources.d/xterm
+        # To support SendEvents, add `-xrm allowSendEvents:true` to the command line.
+        # See also ~/.config/Xresources.d/xterm
         unset COLORTERM
         exec "$TERMEMU" -geometry "$GEOMETRY" -fa "$FONTFACE:size=$FONTSIZE" \
             -lc ${1+"$@"}
@@ -202,7 +217,7 @@ case "$TERMEMU" in
     ;;
     */lxterminal)
         # Another lightweight terminal, not very customizable.
-        # Truecolor, unicode, Ctrl-Backspace (as ^H), etc.
+        # Part of the LXDE desktop environment.
         exec "$TERMEMU" --geometry="$GEOMETRY" ${1+"$@"}
     ;;
     *)
