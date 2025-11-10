@@ -48,6 +48,9 @@ GroupAdd("UsesNumpad", "ahk_exe OpenMPT.exe")
 >!Space::Send "{U+00A0}" ; Non-breaking space
 >!+Space::Send "{U+200B}" ; Zero-width non-breaking space
 
+; Launch Windows Terminal with Win+Enter
+#Enter::Run("wt", EnvGet("HOME"))
+
 ; Bring window to top
 #a::
 {
