@@ -108,6 +108,9 @@ GroupAdd("Focus_AltEnter", "ahk_class mintty")
 !^Insert::ProcessClose("explorer.exe")
 
 ; Shut down Windows
+; Note: Either of these seems to do a 'full' shutdown,
+; so on the next startup, my startup items don't start launching
+; until I unlock the computer. Start > Shutdown doesn't have this problem.
 ;^!F4::Shutdown(9)
 ^!F4::Shutdown(1)
 
@@ -143,5 +146,5 @@ Loop 9 {
 #p::VD.TogglePinWindow("A")
 
 ;----- Included scripts -----
-#Include ChangeResolution.ahk
+;#Include ChangeResolution.ahk
 #include SimpleWindowDrag.ah2
