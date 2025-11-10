@@ -1,4 +1,5 @@
 #!/bin/sh
+# shellcheck disable=SC3043 # don't warn on `local` since most shells support it
 #
 # Shell functions for manipulating colon-separated paths.
 # Mainly useful by other shell scripts, but sometimes handy manually too.
@@ -41,7 +42,7 @@ is_in_path()
     local PATHVAR="$1"
     local TESTPATH="$2"
     local SEP="${3:-:}"
-    eval echo \$$PATHVAR \
+    eval echo "\$$PATHVAR" \
         | grep -q '\(^\|'"$SEP"'\)'"$TESTPATH"'\('"$SEP"'\|$\)' \
         2>/dev/null
     return $?
@@ -67,7 +68,9 @@ add_to_path()
     local IFS=""
     local BEFORE=""
     local AFTER=""
-    local SED_SEP="$(/bin/printf '\x1F')"   # sed supports using UNIT SEPARATOR
+    local SEDPATH
+    local SED_SEP
+    SED_SEP="$(/bin/printf '\x1F')"         # sed supports using UNIT SEPARATOR
                                             # as a delimiter which (probably)
                                             # won't appear in path names
     while true ; do
@@ -90,11 +93,11 @@ add_to_path()
     fi
     shift
     local ADDPATHS=""
-    if [ "x$BEFORE" != "x" ] && [ "x$AFTER" != "x" ] ; then
+    if [ -n "$BEFORE" ] && [ -n "$AFTER" ] ; then
         echo "add_to_path: -b and -a cannot both be specified" 1>&2
         return 1
     fi
-    while [ "x$1" != "x" ] ; do
+    while [ -n "$1" ] ; do
         if [ "$FORCE" = "1" ] ; then
             del_from_path "-s$SEP" "$PATHVAR" "$1"
         fi
@@ -112,22 +115,22 @@ add_to_path()
         shift
     done
     eval local EXPANDED_PATH="\$$PATHVAR"
-    if [ "x$ADDPATHS" = "x" ] ; then
+    if [ -z "$ADDPATHS" ] ; then
         : # do nothing
-    elif [ "x$EXPANDED_PATH" = "x" ] ; then
-        export $PATHVAR="$ADDPATHS"
-    elif ! [ "x$BEFORE" = "x" ] && is_in_path "$PATHVAR" "$BEFORE" "$SEP" ; then
-        local SEDPATH=$(eval echo "\$$PATHVAR" \
+    elif [ -z "$EXPANDED_PATH" ] ; then
+        export "$PATHVAR"="$ADDPATHS"
+    elif [ -n "$BEFORE" ] && is_in_path "$PATHVAR" "$BEFORE" "$SEP" ; then
+        SEDPATH=$(eval echo "\$$PATHVAR" \
             | /bin/sed -r "s$SED_SEP"'(^|'"$SEP"')('"$BEFORE"')('"$SEP"'|$)'"$SED_SEP"'\1'"$ADDPATHS$SEP"'\2\3'"$SED_SEP")
-        export $PATHVAR="$SEDPATH"
-    elif ! [ "x$AFTER" = "x" ] && is_in_path "$PATHVAR" "$AFTER" "$SEP" ; then
-        local SEDPATH=$(eval echo "\$$PATHVAR" \
+        export "$PATHVAR"="$SEDPATH"
+    elif [ -n "$AFTER" ] && is_in_path "$PATHVAR" "$AFTER" "$SEP" ; then
+        SEDPATH=$(eval echo "\$$PATHVAR" \
             | /bin/sed -r "s$SED_SEP"'(^|'"$SEP"')('"$AFTER"')('"$SEP"'|$)'"$SED_SEP"'\1\2'"$SEP$ADDPATHS"'\3'"$SED_SEP")
-        export $PATHVAR="$SEDPATH"
-    elif [ "x$TO_END" = "x" ] ; then
-        export $PATHVAR="$ADDPATHS$SEP$EXPANDED_PATH"
+        export "$PATHVAR"="$SEDPATH"
+    elif [ -z "$TO_END" ] ; then
+        export "$PATHVAR"="$ADDPATHS$SEP$EXPANDED_PATH"
     else
-        export $PATHVAR="$EXPANDED_PATH$SEP$ADDPATHS"
+        export "$PATHVAR"="$EXPANDED_PATH$SEP$ADDPATHS"
     fi
 }
 
@@ -148,11 +151,11 @@ del_from_path()
             "$PATHVAR appears to be a directory, not a path variable" 1>&2
     fi
     shift
-    if [ "x$1" = "x" ] ; then
+    if [ -z "$1" ] ; then
         echo "del_from_path: no paths found: did you forget your PATHVAR?" 1>&2
         return 1
     fi
-    while [ "x$1" != "x" ] ; do
+    while [ -n "$1" ] ; do
         local DELPATH="$1"
         shift
         eval local EXPANDED_PATH="\$$PATHVAR"
@@ -160,7 +163,7 @@ del_from_path()
             | /usr/bin/tr "$SEP" "\n" \
             | /usr/bin/grep -F -v "$DELPATH" \
             | /usr/bin/tr "\n" "$SEP")
-        export $PATHVAR="${EXPANDED_PATH%:}"
+        export "$PATHVAR"="${EXPANDED_PATH%"$SEP"}"
     done
 }
 
@@ -177,11 +180,11 @@ show_path()
         esac
     done
     local PATHVAR="$1"
-    if [ "x$PATHVAR" = "x" ] ; then
+    if [ -z "$PATHVAR" ] ; then
         echo "show_path: no PATHVAR specified" 1>&2
         return 1
     fi
-    eval echo '$'$PATHVAR | /usr/bin/tr "$SEP" '\n'
+    eval echo "\$$PATHVAR" | /usr/bin/tr "$SEP" '\n'
 }
 
 ### clean_path
@@ -196,7 +199,7 @@ clean_path()
         esac
     done
     local PATHVAR="$1"
-    if [ "x$PATHVAR" = "x" ] ; then
+    if [ -z "$PATHVAR" ] ; then
         echo "clean_path: no PATHVAR specified" 1>&2
         return 1
     fi
@@ -204,7 +207,7 @@ clean_path()
     local CONTENTS
 
     eval CONTENTS="\$$PATHVAR"
-    unset $PATHVAR
+    unset "$PATHVAR"
     local IFS="$SEP"
     for i in $CONTENTS; do
         add_to_path -q "-s$SEP" -e "$PATHVAR" "$i"
