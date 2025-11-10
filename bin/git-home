@@ -6,7 +6,7 @@
 # Figure out the current branch
 base_branch="home"
 repodir="${1:-$HOME}"
-cd "$repodir"
+cd "$repodir" || exit
 cur_branch=$(git symbolic-ref --short HEAD)
 stashed=
 pulled=
