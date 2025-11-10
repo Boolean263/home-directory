@@ -1,0 +1,47 @@
+#!/bin/bash
+# Wrapper script for shellcheck to convert CRLF line endings in input files
+# before running it. It's not always enough to ignore/exclude SC1017
+# since shellcheck can get confused about \-continued multiline statements
+# if there are CRLFs, even if ignoring them.
+#
+# Using bash specifically in order to build an array of command-line options.
+# I prefer to use POSIX sh scripts as much as I can, but I figure if I'm
+# running shellcheck, it's probably on a system where I have bash handy.
+
+set -eu
+
+SHELLCHECK=$(which -a shellcheck 2>/dev/null | grep -v "$(readlink -f "$0")" | head -n 1)
+
+if [ -z "$SHELLCHECK" ] ; then
+    echo "shellcheck wrapper: couldn't find the real shellcheck" 1>&2
+    exit 1
+fi
+
+if [ -z "${MSYSTEM:-}" ] ; then
+    # Not an msys install, use shellcheck as intended
+    exec "$SHELLCHECK" ${1+"$@"}
+else
+    # Msys install, run input through `tr`.
+    # But still try to support shellcheck's other command-line options.
+
+    SC_ARGS=()
+    while [ -n "${1:-}" ] ; do
+        case "$1" in
+            --)
+                break
+                ;;
+            -*)
+                SC_ARGS+=( "$1" )
+                ;;
+            *)
+                break
+                ;;
+        esac
+        shift
+    done
+    if [ -z "${1:-}" ] ; then
+        # Run shellcheck without arguments so it shows its help text
+        exec "$SHELLCHECK" "${SC_ARGS[@]}"
+    fi
+    cat ${1+"$@"} | tr -d '\r' | shellcheck "${SC_ARGS[@]}" -
+fi
