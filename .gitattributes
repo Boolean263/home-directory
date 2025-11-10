@@ -8,5 +8,6 @@
 # Explicitly specify that any file should be examined for textyness
 * text=auto
 
-# msys2's tmux has trouble with crlf files
+# Some linux tools have trouble with crlf files
 .config/tmux/tmux.conf      text eol=lf
+.config/shellcheckrc        text eol=lf
