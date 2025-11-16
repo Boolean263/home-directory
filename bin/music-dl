@@ -1,4 +1,5 @@
-#!/usr/bin/env -S youtube-dl --config-location
+#!/usr/bin/env -S yt-dlp --config-location
+# no  !/usr/bin/env -S youtube-dl --config-location
 
 --no-playlist
 --restrict-filenames
