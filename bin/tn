@@ -30,7 +30,7 @@ EOT
 fi
 
 AGENT=
-if [ -z "$SSH_AUTH_SOCK" ] && command -v ssh-agent >/dev/null 2>&1 ; then
+if [ -z "${SSH_AUTH_SOCK:-}" ] && command -v ssh-agent >/dev/null 2>&1 ; then
     AGENT=1
 fi
 
@@ -48,7 +48,7 @@ case "$MUXER" in
                 "$MUXER" run-shell -t "$NAME" "$SESS_PREFIX.sh"
             fi
         fi
-        if [ -z "$TMUX" ] ; then
+        if [ -z "${TMUX:-}" ] ; then
             # If we aren't already in a tmux session, attach the new one
             "$MUXER" attach-session -t "$NAME"
         else
@@ -58,7 +58,7 @@ case "$MUXER" in
     */screen*)
         SESS_PREFIX="$XDG_CONFIG_HOME/screen/sessions/$NAME"
         # Protect against nested sessions
-        if [ -n "$STY" ] ; then
+        if [ -n "${STY:-}" ] ; then
             echo "You're already in a session ($STY)" 1>&2
             exit 1
         fi
