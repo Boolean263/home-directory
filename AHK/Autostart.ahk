@@ -47,6 +47,8 @@ GroupAdd("UsesNumpad", "ahk_exe OpenMPT.exe")
 >!+]::Send "{U+201D}"   ; Right double quote
 >!Space::Send "{U+00A0}" ; Non-breaking space
 >!+Space::Send "{U+200B}" ; Zero-width non-breaking space
+>!d::Send "{U+00B0}"    ; Degree symbol
+>!+d::Send "{U+2B29}"   ; Black small diamond symbol
 
 ; Launch Windows Terminal with Win+Enter
 #Enter::Run("wt", EnvGet("HOME"))
