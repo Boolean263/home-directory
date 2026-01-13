@@ -20,13 +20,17 @@ Options:
     -DVAR=VAL, -Ccachefile.txt  Passed to initial cmake command line
     -x, --exitfirst, -v…        Passed to pytest
     -k EXPRESSION               Passed to pytest
+    --                          Pass all remaining options to pytest
+
 EOT
     exit 1
 }
 
 DO_RESET=
 declare -a MY_CMAKE_ARGS
-declare -a MY_WSTEST_ARGS
+declare -a MY_PYTEST_ARGS
+
+MY_PYTEST_ARGS+=( "--program-path" "${WIRESHARK_BIN_DIR:-$BUILDPATH/run}" )
 
 MY_CMAKE_DEBUG_ARGS=(
     "-DCMAKE_BUILD_TYPE=Debug"
@@ -62,24 +66,26 @@ while [ -n "$1" ] ; do
             MY_CMAKE_ARGS+=("${1}")
             ;;
         -x|--exitfirst|-v*)
-            MY_WSTEST_ARGS+=("$1")
+            MY_PYTEST_ARGS+=("$1")
             ;;
         -k)
             shift
-            MY_WSTEST_ARGS+=("-k" "$1")
+            MY_PYTEST_ARGS+=("-k" "$1")
             ;;
         --)
+            shift
             break
             ;;
         -h|--help)
             usage
             ;;
         *)
-            usage "Unrecognized options"
+            usage "Unrecognized option \"$1\""
             ;;
     esac
     shift
 done
+MY_PYTEST_ARGS+=("$@")
 
 set -e
 
@@ -98,6 +104,5 @@ if grep -q '^ENABLE_ASAN:BOOL=1$' "$BUILDPATH/CMakeCache.txt" ; then
 else
     m --target test-programs
     unset WIRESHARK_LOG_LEVEL WIRESHARK_LOG_DOMAINS
-    add_to_path PATH "$WS_BIN_PATH"
-    "$HOME/bin/alternate-home.sh" python3 -m pytest "$SRCPATH" "${MY_WSTEST_ARGS[@]}"
+    "$HOME/bin/alternate-home.sh" python3 -m pytest "$SRCPATH" "${MY_PYTEST_ARGS[@]}"
 fi
