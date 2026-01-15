@@ -14,18 +14,8 @@
 # See ~/.config/environment.d/README.md for more information.
 # In an attempt to reduce duplicate settings, I'm moving what settings
 # I can into there, and using this structure to load them from there.
-# Test for ENV_TEST_ENVD (which I set in ~/.config/environment.d/)
-# to avoid needless re-setting.
-ENVIRONMENTD="$HOME/.config/environment.d"
-#if [ -d "$ENVIRONMENTD" ] && [ -z "$ENV_TEST_ENVD" ] ; then
-if [ -d "$ENVIRONMENTD" ] ; then
-    set -a
-    for conf in $(find "$ENVIRONMENTD" -maxdepth 1 -type f -name '*.conf' | sed 's/ /?/g'); do
-        . "$conf"
-    done
-    set +a
-fi
-unset conf ENVIRONMENTD
+. "$HOME/env/my_profile_helpers.sh"
+source_all_in "$HOME/.config/environment.d" '*.conf'
 
 . "$HOME/env/path_functions.sh"
 clean_path PATH
@@ -83,13 +73,4 @@ eval "$(if_exists luarocks path --no-bin)"
 
 # Pull in any other profile tweaks from separate files
 # (replaces my old optional ~/.profile.local file)
-PROFILE_D="$HOME/.config/profile.d"
-if [ -d "$PROFILE_D" ] ; then
-    set -a
-    for conf in $(find "$PROFILE_D" -maxdepth 1 -type f -name '*.sh' | sed 's/ /?/g'); do
-        [ -f "$conf" ] && . "$conf"
-    done
-    set +a
-fi
-unset conf PROFILE_D
-
+source_all_in "$HOME/.config/profile.d" '*.sh'

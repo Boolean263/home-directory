@@ -40,9 +40,8 @@ export FIGNORE="CVS:~:.o:.svn:.git:.lo"
 #####
 # Source my local bash-completion helper scripts if any.
 #####
-for i in $(LC_ALL=C command ls "$XDG_CONFIG_HOME/bash_completion.d/"*.bash) ; do
-    . "$i"
-done
+. "$HOME/env/my_profile_helpers.sh"
+source_all_in "$XDG_CONFIG_HOME/bash_completion.d" '*.bash'
 
 #####
 # Now that we're done, unset $MY_BASH_COMPLETION so we can be called

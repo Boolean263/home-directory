@@ -43,12 +43,4 @@ xrdb -I"$XDG_CONFIG_HOME/Xresources.d" "$XDG_CONFIG_HOME/Xresources" >/dev/null 
 
 # Pull in any other profile tweaks from separate files
 # (replaces my old optional ~/.profile.local file)
-PROFILE_D="$HOME/.config/xprofile.d"
-if [ -d "$PROFILE_D" ] ; then
-    set -a
-    for conf in $(find "$PROFILE_D" -maxdepth 1 -type f -name '*.sh' | sed 's/ /?/g'); do
-        [ -f "$conf" ] && . "$conf"
-    done
-    set +a
-fi
-unset conf PROFILE_D
+source_all_in "$HOME/.config/xprofile.d" '*.sh'
