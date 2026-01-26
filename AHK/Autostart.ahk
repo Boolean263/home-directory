@@ -37,18 +37,27 @@ GroupAdd("UsesNumpad", "ahk_exe OpenMPT.exe")
 ; Note that Windows's ACTUAL AltGr is LCtrl+RAlt,
 ; but I'm only using RAlt since that's how I'm used to it.
 ; The syntax for that is: >!
+>!3::Send "{U+2588}"    ; Solid block
 >!8::Send "{U+2022}"    ; Bullet
->!+8::Send "{U+2B51}"   ; Star bullet
+>!+8::Send "{U+25E6}"   ; Hollow bullet
 >!-::Send "{U+00AD}"    ; Soft hyphen
 >!+-::Send "{U+2011}"   ; Non-breaking hyphen
+>!+=::Send "{U+2295}"   ; Circled plus
+>!.::Send "{U+00B7}"    ; Middle dot
 >![::Send "{U+2018}"    ; Left single quote
 >!]::Send "{U+2019}"    ; Right single quote
 >!+[::Send "{U+201C}"   ; Left double quote
 >!+]::Send "{U+201D}"   ; Right double quote
+>!/::Send "{U+FFFD}"    ; Replacement symbol
 >!Space::Send "{U+00A0}" ; Non-breaking space
 >!+Space::Send "{U+200B}" ; Zero-width non-breaking space
 >!d::Send "{U+00B0}"    ; Degree symbol
->!+d::Send "{U+2B29}"   ; Black small diamond symbol
+>!+d::Send "{U+0394}"   ; Delta symbol
+>!l::Send "{U+2113}"    ; Small script L
+>!+l::Send "{U+2112}"   ; Capital script L
+>!m::Send "{U+03BC}"    ; Small mu
+>!+m::Send "{U+039C}"   ; Capital mu
+>!s::Send "{U+00A7}"    ; Section symbol
 
 ; Launch Windows Terminal with Win+Enter
 #Enter::Run("wt", EnvGet("HOME"))
