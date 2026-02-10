@@ -355,6 +355,16 @@ let g:airline_skip_empty_sections = 1
 
 let g:indent_guides_enable_on_vim_startup = 1
 
+" For vim-gitgutter
+" If running the standard Windows (g)vim, give it the path to git
+" to prevent the security concern in 'gitgutter-windows'.
+" Note that vim-gitgutter seems to work poorly with spaces in this variable
+" so I use the `cygpath -d` version which seems to work.
+if &shell =~ '\cmd.exe$'
+    let g:gitgutter_git_executable = 'C:\PROGRA~1\Git\cmd\git.exe'
+endif
+
+
 " }}}2
 
 " Auto-installation {{{2
