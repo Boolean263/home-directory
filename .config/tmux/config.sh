@@ -1,14 +1,15 @@
 #!/bin/sh
 
-# Version-specific configuration for tmux
-tmux setenv -g TMUX_VERSION $(tmux -V | grep -Eo '[0-9]+\.[0-9]+')
-
-
-: ${TMUX_VERSION:?TMUX_VERSION not set}
-
 # Tmux configuration that may be version-dependent goes here
 # to keep my main .tmux.conf file from getting too messy.
-# (That's less frequent now that I'm only interested in 2.x versions)
+# That's less frequent now that I'm only interested in 2.x versions of tmux,
+# but this also is a handy place to do stuff using a slightly
+# more powerful configuration language than tmux's own.
+
+# This was once used in follow-on tests to choose version-specific syntax.
+tmux setenv -g TMUX_VERSION $(tmux -V | grep -Eo '[0-9]+\.[0-9]+')
+
+: ${TMUX_VERSION:?TMUX_VERSION not set}
 
 # Use tmux's terminfo if we have it handy,
 # otherwise fall back on screen's.
@@ -52,4 +53,3 @@ str2colour.py $(hostname) | while read desc xcol col ; do
         tmux set -g window-status-current-style "fg=$complement"
     fi
 done
-
