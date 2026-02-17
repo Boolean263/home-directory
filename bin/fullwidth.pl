@@ -3,29 +3,22 @@
 use 5.016;
 use strict;
 use warnings;
+use utf8;
+use feature 'unicode_strings';
 
 use Getopt::Long;
+use Encode qw(encode decode);
 
-binmode( STDIN, ':utf8' );
-binmode( STDOUT, ':utf8' );
-binmode( STDERR, ':utf8' );
+binmode( STDIN, ':encoding(UTF-8)' );
+binmode( STDOUT, ':encoding(UTF-8)' );
+binmode( STDERR, ':encoding(UTF-8)' );
 
 GetOptions('help|h|?'      => \&usage) or usage();
 
 while(<>)
 {
-    for my $c (unpack 'W*', $_)
-    {
-        if($c == 0x20)
-        {
-            $c = 0x3000;
-        }
-        elsif($c >= 0x21 && $c <= 0x7E)
-        {
-                $c += 0xFEE0;
-        }
-        print pack('W', $c);
-    }
+    s/(.)/fullwidth($1)/eg;
+    print;
 }
 exit 0;
 
@@ -44,4 +37,18 @@ Options:
 
 EOT
     exit 1;
+}
+
+sub fullwidth
+{
+    my $c = ord(shift);
+    if($c == 0x20)
+    {
+        $c = 0x3000;
+    }
+    elsif($c >= 0x21 && $c <= 0x7E)
+    {
+        $c += 0xFEE0;
+    }
+    return chr($c);
 }
