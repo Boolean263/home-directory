@@ -28,7 +28,7 @@ EOT
 
 [ "${1:-}" = "-h" ] && usage
 
-DSF=$(which diff-so-fancy colordiff tee 2>/dev/null | head -n 1)
+DSF=$(which diff-so-fancy colordiff /bin/tee 2>/dev/null | head -n 1)
 
 # If we're being used as a pager, don't call diff
 if [ -t 0 ] ; then
@@ -40,6 +40,6 @@ else
     # Standard input is likely already in diff format,
     # so just spit it out again.
     # The part after the `fi` will make it pretty.
-    tee
+    /bin/tee
 fi \
     | "$DSF" | "$PAGER" -FX
