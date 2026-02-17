@@ -43,4 +43,4 @@ xrdb -I"$XDG_CONFIG_HOME/Xresources.d" "$XDG_CONFIG_HOME/Xresources" >/dev/null 
 
 # Pull in any other profile tweaks from separate files
 # (replaces my old optional ~/.profile.local file)
-source_all_in "$HOME/.config/xprofile.d" '*.sh'
+source_all_in "$HOME/.config/xprofile.d" -name '*.sh'

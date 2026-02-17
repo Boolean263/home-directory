@@ -15,7 +15,7 @@
 # In an attempt to reduce duplicate settings, I'm moving what settings
 # I can into there, and using this structure to load them from there.
 . "$HOME/env/my_profile_helpers.sh"
-source_all_in "$HOME/.config/environment.d" '*.conf'
+source_all_in "$HOME/.config/environment.d" -name '*.conf'
 
 . "$HOME/env/path_functions.sh"
 clean_path PATH
@@ -73,4 +73,4 @@ eval "$(if_exists luarocks path --no-bin)"
 
 # Pull in any other profile tweaks from separate files
 # (replaces my old optional ~/.profile.local file)
-source_all_in "$HOME/.config/profile.d" '*.sh'
+source_all_in "$HOME/.config/profile.d" -name '*.sh'
