@@ -84,7 +84,16 @@ A_TrayMenu.Disable("1&")
 A_IconTip := A_ScriptName
 
 ; Toggle hover-focus with Win+T
-#T::SetWinHoverFocus("Toggle")
+#T::{
+    OldState := SetWinHoverFocus("Toggle")
+    if (OldState) {
+        ; If we just turned off hover-focus,
+        ; clear our locks
+        global XWT_Lock := 0
+        global XWT_OldSetting := False
+        global XWT_LockStr := "No locks"
+    }
+}
 
 ; and turn it on by default
 SetWinHoverFocus(True)
@@ -94,5 +103,6 @@ GroupAdd("NoHoverFocus", "ahk_exe OpenWith.exe")
 GroupAdd("NoHoverFocus", "Task View ahk_class XamlExplorerHostIslandWindow ahk_exe explorer.exe")
 GroupAdd("NoHoverFocus", "ahk_class Windows.UI.Core.CoreWindow ahk_exe ShellExperienceHost.exe")
 GroupAdd("NoHoverFocus", "ahk_exe PowerToys.PowerLauncher.exe")
+GroupAdd("NoHoverFocus", "ahk_exe MediaMonkey.exe")
 GroupAdd("NoHoverFocus", "ahk_class UnityContainerWndClass ahk_exe Unity.exe")
 WinEvent.Show(XWT_WinShownCallback, "ahk_group NoHoverFocus")
