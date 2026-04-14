@@ -68,8 +68,17 @@ sub version_from_string($)
 ### Main program
 
 my $basename = `basename $0`; chomp $basename;
+
 my $gvim = $ENV{GVIM} || which(qw(neovide nvim-qt gvim));
+$gvim =~ m(/([^/]+)(?:\.exe)?$)i;
+my $gbase = lc($1);
+debug("gvim='$gvim' gbase='$gbase'");
+
 my $vim = $ENV{VISUAL} || which(qw(nvim vim vi));
+$vim =~ m(/([^/]+)(?:\.exe)?$)i;
+my $vimbase = lc($1);
+debug("vim='$vim' vimbase='$vimbase'");
+
 my @vim_args;
 my @vim_tail;
 my $remote;
@@ -98,9 +107,6 @@ if($ENV{DISPLAY} || $ENV{MSYSTEM})
 {
     if($gvim && -x $gvim)
     {
-        $gvim =~ m(/([^/]+)(?:\.exe)?$)i;
-        my $gbase = lc($1);
-        #debug("gvim='$gvim' gbase='$gbase'");
         if($remote)
         {
             # The following errors out if no filenames are provided
@@ -124,6 +130,11 @@ if($ENV{DISPLAY} || $ENV{MSYSTEM})
                 push @nvide_args, '--notabs', '--geometry', $geometry;
             }
 
+            if($vim && -x $vim && $vimbase eq 'nvim')
+            {
+                push @nvide_args, '--neovim-bin', $vim;
+            }
+
             if (grep { $_ eq '-f' } @ARGV) {
                 push @nvide_args, '--no-fork';
                 @ARGV = grep { $_ ne '-f' } @ARGV;
@@ -145,6 +156,11 @@ if($ENV{DISPLAY} || $ENV{MSYSTEM})
             if (grep { $_ eq '-f' } @ARGV) {
                 push @nqt_args, '--nofork';
                 @ARGV = grep { $_ ne '-f' } @ARGV;
+            }
+
+            if($vim && -x $vim && $vimbase eq 'nvim')
+            {
+                push @nqt_args, '--nvim', $vim;
             }
 
             # nvim-qt's unit for --geometry is pixels, not characters,
