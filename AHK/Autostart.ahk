@@ -19,7 +19,7 @@
 ; Attach some fun stuff to the number pad.
 ; Note that programs like Calculator don't recognize them.
 ; The #HotIf documentation suggests this method for detecting
-; multiple tyeps of window in a performant way.
+; multiple types of window in a performant way.
 GroupAdd("UsesNumpad", "Calculator ahk_class ApplicationFrameWindow")
 GroupAdd("UsesNumpad", "ahk_exe OpenMPT.exe")
 #HotIf not WinActive("ahk_group UsesNumpad")
@@ -67,7 +67,6 @@ GroupAdd("UsesNumpad", "ahk_exe OpenMPT.exe")
 {
     MouseGetPos(,,&rwinid)
     WinMoveTop(Integer(rwinid))
-    ;WinActivate(Integer(rwinid))
 }
 
 ; Send window to bottom
