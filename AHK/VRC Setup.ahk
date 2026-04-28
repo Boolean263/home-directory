@@ -48,6 +48,6 @@ FindAndClose("i)\\GalaxyCommunication\.exe")
 FindAndClose("i)\\VeraCrypt\.exe")
 FindAndClose("i)\\Telegram\.exe")
 
-FindOrOpen("C:\Program Files (x86)\SlimeVR Server\slimevr.exe")
+;FindOrOpen("C:\Program Files (x86)\SlimeVR Server\slimevr.exe")
 FindOrOpen("C:\Program Files\VRCX\VRCX.exe")
 ;FindOrOpen("C:\Program Files (x86)\Steam\steamapps\common\Bigscreen Beyond Driver\bin\eyetracking\ETClient\BeyondET.exe")
