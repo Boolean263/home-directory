@@ -7,9 +7,8 @@
 # more powerful configuration language than tmux's own.
 
 # This was once used in follow-on tests to choose version-specific syntax.
-tmux setenv -g TMUX_VERSION $(tmux -V | grep -Eo '[0-9]+\.[0-9]+')
-
-: ${TMUX_VERSION:?TMUX_VERSION not set}
+export TMUX_VERSION="$(tmux -V | grep -Eo '[0-9]+\.[0-9]+')"
+tmux setenv -g TMUX_VERSION "$TMUX_VERSION"
 
 # Use tmux's terminfo if we have it handy,
 # otherwise fall back on screen's.
@@ -19,11 +18,12 @@ else
     tmux set -g default-terminal screen-256color
 fi
 
-# tmux needs to be told about terminals that have truecolour support.
-# Rather than list them all I'll test the env var COLORTERM
-if [ "$COLORTERM" = "truecolor" ] ; then
-    tmux set -asq terminal-features ",$TERM:RGB"
-    tmux set -asq terminal-overrides ",$TERM:Tc"
+# tmux needs to be told if its outer terminal has truecolour support.
+# Rather than list them all I'll test the env var COLORTERM.
+# (TMUX_ORIG_TERM is set in my tmux.conf)
+if [ -n "$TMUX_ORIG_TERM" ] && [ -n "$COLORTERM" ] ; then
+    tmux set -asq terminal-features ",$TMUX_ORIG_TERM:RGB"
+    tmux set -asq terminal-overrides ",$TMUX_ORIG_TERM:Tc"
 fi
 
 # This isn't really version specific, it's just cool: per-server colours.
