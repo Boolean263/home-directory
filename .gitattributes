@@ -10,4 +10,5 @@
 
 # Some linux tools have trouble with crlf files
 .config/tmux/tmux.conf      text eol=lf
+.config/tmux/conf.d/*.conf  text eol=lf
 .config/shellcheckrc        text eol=lf

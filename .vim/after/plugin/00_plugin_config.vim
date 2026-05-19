@@ -18,3 +18,10 @@ if exists('g:loaded_altr')
     nmap ]r <Plug>(altr-forward)
     nmap [r <Plug>(altr-back)
 endif
+
+if exists(':TmuxNavigateLeft')
+    nnoremap <silent> <S-Left> :<C-U>TmuxNavigateLeft<cr>
+    nnoremap <silent> <S-Right> :<C-U>TmuxNavigateRight<cr>
+    nnoremap <silent> <S-Up> :<C-U>TmuxNavigateUp<cr>
+    nnoremap <silent> <S-Down> :<C-U>TmuxNavigateDown<cr>
+endif

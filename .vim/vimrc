@@ -235,6 +235,12 @@ nnoremap <C-6> <C-^>
 " (NB. vim forcibly puts `'<,'>` after the `:` in this mapping,
 " so I no longer explicitly add that here)
 vnoremap Y :y<cr>
+
+" Navigate between panes with Shift+arrows
+nnoremap <S-Up> <C-W>k
+nnoremap <S-Down> <C-W>j
+nnoremap <S-Left> <C-W>h
+nnoremap <S-Right> <C-W>l
 " }}}1
 
 " *********************
@@ -364,6 +370,7 @@ if &shell =~ '\cmd.exe$'
     let g:gitgutter_git_executable = 'C:\PROGRA~1\Git\cmd\git.exe'
 endif
 
+let g:tmux_navigator_no_mappings = 1
 
 " }}}2
 
@@ -432,6 +439,7 @@ Plug 'Boolean263/vim-syntax-libconfig'
 Plug 'kana/vim-altr'            " Switch between eg. foo.c/foo.h
 Plug 'Boolean263/vim-indent-guides', {'branch':'154-no-execute'} " Shading in tabstops for indents
 Plug 'junegunn/vim-peekaboo'    " Sidebar for register contents
+Plug 'christoomey/vim-tmux-navigator' " Use same keybindings for switching panes in vim, tmux
 call plug#end() " }}}2
 " Note that the plugins haven't actually been loaded yet. They've been added
 " to 'runtimepath' so they will be loaded once this `.vimrc` file is finished.
