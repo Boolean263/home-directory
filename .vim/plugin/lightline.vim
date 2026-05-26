@@ -34,6 +34,7 @@ let g:lightline = {
             \ },
             \ 'inactive': {
             \   'left': [
+            \       ['windownum'],
             \       ['filename', 'gitbranch'],
             \       ['functag'],
             \   ],
@@ -53,6 +54,7 @@ let g:lightline = {
             \ 'component': {
             \   'lineno': '%P/%L',
             \   'line_column': '%l:%c',
+            \   'windownum': '[%{winnr()}]',
             \ },
             \ 'component_function': {
             \   'filename': 'LightlineFilename',
@@ -103,3 +105,10 @@ function! LightlineTag()
         return ''
     endif
 endfunction
+
+" If we're re-sourcing this file after making changes,
+" reload lightline
+if v:vim_did_enter && exists('*lightline#init')
+    call lightline#init()
+    call lightline#update()
+endif
