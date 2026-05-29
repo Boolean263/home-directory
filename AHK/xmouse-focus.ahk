@@ -1,6 +1,8 @@
 #Requires AutoHotkey v2
 ; Adapted from https://superuser.com/a/1209478
 
+#include system-params.ahk
+
 ; According to https://www.autohotkey.com/docs/v2/Concepts.htm#nothing
 ; the empty string is used to represent a non-value or default value.
 SetWinHoverFocus(aOn, aRaise := "", aActTimeout := "") {
@@ -27,18 +29,18 @@ SetWinHoverFocus(aOn, aRaise := "", aActTimeout := "") {
     SPI_GETACTIVEWNDTRKTIMEOUT := 0x2002
     SPI_SETACTIVEWNDTRKTIMEOUT := 0x2003
 
-    DllCall("SystemParametersInfo", "UInt", SPI_GETACTIVEWINDOWTRACKING, "UInt", 0, "UIntP", &current := 0, "UInt", 0)
+    current := ParamGet(SPI_GETACTIVEWINDOWTRACKING)
     if (aOn = "toggle") {
         aOn := !current
     }
 
-    DllCall("SystemParametersInfo", "UInt", SPI_SETACTIVEWINDOWTRACKING, "UInt", 0, "UInt", aOn ? 1 : 0, "UInt", 0)
+    ParamSet(SPI_SETACTIVEWINDOWTRACKING, , aOn ? 1 : 0)
 
     if (aRaise != "")
-        DllCall("SystemParametersInfo", "UInt", SPI_SETACTIVEWNDTRKZORDER, "UInt", 0, "UInt", aRaise ? 1 : 0, "UInt", 0)
+        ParamSet(SPI_SETACTIVEWNDTRKZORDER, , aRaise ? 1 : 0)
 
     if (IsInteger(aActTimeout) and Number(aActTimeout) >= 0)
-        DllCall("SystemParametersInfo", "UInt", SPI_SETACTIVEWNDTRKTIMEOUT, "UInt", 0, "UInt", Number(aActTimeout), "UInt", 0)
+        ParamSet(SPI_SETACTIVEWNDTRKTIMEOUT, , Number(aActTimeout))
 
     return current
 }
