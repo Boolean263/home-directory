@@ -455,9 +455,9 @@ if has('nvim') && &clipboard !~ '\<autoselect'
     vnoremap <LeftRelease> "*ygv
 endif
 
-" for :grep
-if executable('rg')
-    set grepprg=rg\ --vimgrep
+" for :grep, use my ripgrep wrapper
+if executable('vimgrep')
+    set grepprg=vimgrep
     set grepformat^=%f:%l:%c:%m
 endif
 

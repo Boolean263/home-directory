@@ -8,17 +8,20 @@ RG=$(which -a rg 2>/dev/null | grep -v "$(readlink -f "$0")" | head -n 1)
 ACK=$(which -a ack 2>/dev/null | grep -v "$(readlink -f "$0")" | head -n 1)
 IAM=$(basename "$0")
 WANT_FIND=
+WANT_VIMGREP=
 if [ "$IAM" = "rgfind" ] ; then
     WANT_FIND=1
+elif [ "$IAM" = "vimgrep" ] ; then
+    WANT_VIMGREP=1
 fi
 
 if [ -n "$RG" ] ; then
     if [ -t 1 ] ; then
         # stdout is a terminal, make it pretty
-        "$RG" ${WANT_FIND:+--files} -p ${1+"$@"} | ${PAGER:-less -R} -X -F
+        "$RG" ${WANT_FIND:+--files} ${WANT_VIMGREP:+--vimgrep} -p ${1+"$@"} | ${PAGER:-less -R} -X -F
     else
         # stdout isn't a terminal, treat like normal
-        "$RG" ${WANT_FIND:+--files} ${1+"$@"}
+        "$RG" ${WANT_FIND:+--files} ${WANT_VIMGREP:+--vimgrep} ${1+"$@"}
     fi
 elif [ -n "$ACK" ] ; then
     # Couldn't find rg, can fall back on ack
