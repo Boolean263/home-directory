@@ -26,19 +26,7 @@ EDITOR="$VISUAL"
 GIT_EDITOR="$VISUAL -f"
 export PAGER VISUAL EDITOR GIT_EDITOR
 
-export LESS="-R"
 eval "$(if_exists lessfile)"
-
-export FIGNORE="CVS:\~:.o:.svn:.git:.lo"
-
-export NYTPROF="addpid=1"
-export DBIC_TRACE_PROFILE=console
-export TEST_JOBS=9
-
-export UBUNTU_MENUPROXY=
-
-export MANPAGER="$HOME/bin/manpager"
-export PERLDOC_PAGER="$PAGER"
 
 # Go all in on Wayland if it's in use
 if [ -n "$WAYLAND_DISPLAY" ] ; then
