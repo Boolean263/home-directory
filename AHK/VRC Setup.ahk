@@ -46,7 +46,7 @@ FindAndClose("i)\\GalaxyClient Helper\.exe")
 FindAndClose("i)\\GOG Galaxy Notifications Renderer\.exe")
 FindAndClose("i)\\GalaxyCommunication\.exe")
 FindAndClose("i)\\VeraCrypt\.exe")
-FindAndClose("i)\\Telegram\.exe")
+;FindAndClose("i)\\Telegram\.exe")
 
 ;FindOrOpen("C:\Program Files (x86)\SlimeVR Server\slimevr.exe")
 FindOrOpen("C:\Program Files\VRCX\VRCX.exe")

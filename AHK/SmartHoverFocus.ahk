@@ -49,7 +49,7 @@ XWT_Enable(aDesc := "unspecified") {
 
 XWT_WinShownCallback(hWnd, hook, dwmsEventTime) {
     XWT_Disable(WinGetTitle(hWnd) " ahk_class " WinGetClass(hWnd)) ; " ahk_exe " WinGetProcessName(hWnd))
-    WinActivate(Integer(hWnd))
+    WinActivate Integer(hWnd)
     WinEvent.Close(XWT_WinClosedCallback, Integer(hWnd), 1)
 }
 
