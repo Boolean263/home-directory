@@ -13,4 +13,4 @@ source ~/.vim/vimrc
 "
 " To reduce chances of namespace collisions, I've created
 " $XDG_CONFIG_HOME/nvim/lua/user and plan to put all my own configs therein.
-lua require('user.init')
+lua require('user')
