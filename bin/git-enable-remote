@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -u
+
+if [ -z "$1" ] || [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+    cat 1>&2 <<EOT
+Enable pushing to a git remote previously disabled using 'git disable-remote'.
+
+Usage:
+    git enable-remote REMOTE_NAME [REMOTE_URL]
+
+See also 'git disable-remote'.
+EOT
+    exit 1
+fi
+
+set -e
+REMOTE_URL="${2:-$(git remote get-url "$1")}"
+git remote set-url --push "$1" "$REMOTE_URL"
