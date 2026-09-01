@@ -6,4 +6,4 @@
 del_from_path PATH "$WS_BIN_PATH"
 
 mkdir -p "$BUILDPATH"
-cmake -G Ninja -Werror=dev -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ${1+"$@"} -S "$SRCPATH" -B "$BUILDPATH"
+cmake -G Ninja -Werror=author -DENABLE_CCACHE=On -DCMAKE_EXPORT_COMPILE_COMMANDS=1 ${1+"$@"} -S "$SRCPATH" -B "$BUILDPATH"
