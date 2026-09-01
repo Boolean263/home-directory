@@ -1,7 +1,7 @@
 #Requires AutoHotkey v2
 
-#include AudioDevices.ahk
-SetOutput("BSB2")
+;#include AudioDevices.ahk
+;SetOutput("BSB2")
 
 SetTitleMatchMode("RegEx")
 DetectHiddenWindows(True)
@@ -50,4 +50,3 @@ FindAndClose("i)\\VeraCrypt\.exe")
 
 ;FindOrOpen("C:\Program Files (x86)\SlimeVR Server\slimevr.exe")
 FindOrOpen("C:\Program Files\VRCX\VRCX.exe")
-;FindOrOpen("C:\Program Files (x86)\Steam\steamapps\common\Bigscreen Beyond Driver\bin\eyetracking\ETClient\BeyondET.exe")
