@@ -15,10 +15,10 @@ source_all_in()
     local FROM_DIR="${1:?no directory specified}"
     shift
     local CONF_FILE
-    #local SAIDEBUG=1
+    local SAIDEBUG=
 
     if [ -d "$FROM_DIR" ] ; then
-        [ -n "{$SAIDEBUG:-}" ] && echo "source_all_in start: $FROM_DIR" 1>&2
+        [ -n "${SAIDEBUG:-}" ] && echo "source_all_in start: $FROM_DIR" 1>&2
         # Separating on nulls gives weird errors and doesn't work.
         # We've tried using another delimiter instead...
         #
@@ -38,13 +38,13 @@ source_all_in()
             | sed 's/ /?/g' \
             | LC_COLLATE=POSIX sort)
         do
-            [ -n "{$SAIDEBUG:-}" ] && echo "source_all_in: $CONF_FILE" 1>&2
+            [ -n "${SAIDEBUG:-}" ] && echo "source_all_in: $CONF_FILE" 1>&2
             # shellcheck disable=SC1090 # sourcing non-constant file -- no kidding!
             . "$CONF_FILE"
         done
         set +a
-        [ -n "{$SAIDEBUG:-}" ] && echo "source_all_in end: $FROM_DIR" 1>&2
+        [ -n "${SAIDEBUG:-}" ] && echo "source_all_in end: $FROM_DIR" 1>&2
     else
-        [ -n "{$SAIDEBUG:-}" ] && echo "source_all_in nonexistent dir: $FROM_DIR" 1>&2
+        [ -n "${SAIDEBUG:-}" ] && echo "source_all_in nonexistent dir: $FROM_DIR" 1>&2
     fi
 }
