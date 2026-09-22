@@ -26,6 +26,7 @@ if vim.lsp then
         -- Server   -- Language     Install command
         ----------- --------------- ---------------
         'ruff',     -- Python       pip install ruff
+        'clangd',   -- C/C++        It's complicated because I'm developing on Windows
     }
 
     --[[
@@ -55,4 +56,8 @@ if vim.lsp then
         vim.lsp.buf.signature_help()
     end, { desc = 'LSP signature help' })
 
+    -- Helper function for myself
+    if not vim.lsp.disable then
+        vim.lsp.disable = function(name) vim.lsp.enable(name, false) end
+    end
 end -- vim.lsp
