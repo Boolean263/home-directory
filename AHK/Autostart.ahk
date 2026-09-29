@@ -80,6 +80,7 @@ GroupAdd("UsesNumpad", "ahk_exe OpenMPT.exe")
 ; Some programs have their own hotkey for this...
 GroupAdd("Focus_F11", "ahk_class MozillaWindowClass")
 GroupAdd("Focus_AltEnter", "ahk_class mintty")
+GroupAdd("Focus_AltEnter", "ahk_class TeamsWebView")
 
 #HotIf WinActive("ahk_group Focus_F11")
     #f::
